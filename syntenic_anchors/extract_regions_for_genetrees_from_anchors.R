@@ -52,7 +52,7 @@ bed$genome=NULL
 outfile=paste0('gene_tree_beds/', gene, '_', sp, '.bed')
 
 write.table(bed, outfile, row.names=F, col.names=F, sep='\t', quote=F)
-system(paste0('bedtools getfasta -s -nameOnly -fi genomes/', all$V1[all$V2==sp], '.fasta -bed ', outfile, ' >> gene_tree_unalignedfa/', gene, '.fa'))
+system(paste0('bedtools getfasta -s -nameOnly -fi ../genomes/', all$V1[all$V2==sp], '.fasta -bed ', outfile, ' >> gene_tree_unalignedfa/', gene, '.fa'))
 #### bedtools getfasta -s -fi test.fa -bed test.bed
 }
  ## also do paspalum genomic region!
@@ -67,7 +67,7 @@ bed$genome=NULL
 }
 outfile=paste0('gene_tree_beds/', gene, '_', sp, '.bed')
 write.table(bed, outfile, row.names=F, col.names=F, sep='\t', quote=F)
-system(paste0('bedtools getfasta -s -nameOnly -fi genomes/Pvaginatum_672_v3.0.fa -bed ', outfile, ' >> gene_tree_unalignedfa/', gene, '.fa'))
+system(paste0('bedtools getfasta -s -nameOnly -fi ../genomes/Pvaginatum_672_v3.0.fa -bed ', outfile, ' >> gene_tree_unalignedfa/', gene, '.fa'))
 
  print(paste0(gene, ' the ', which(faf$quickgene==gene), ' gene'))
 }
