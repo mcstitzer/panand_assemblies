@@ -20,12 +20,12 @@ do
 ploidy=$((2*ploidy))
 if [ ! -f ${name}-${ref}.CDS.sam ]
 then
-minimap2 -x splice -t 10 -k 12 -a -p 0.4 -N 20 genomes/${altfa}.fasta ${ref}.CDS.fa > ${name}-${ref}.CDS.sam &
+minimap2 -x splice -t 10 -k 12 -a -p 0.4 -N 20 ../genomes/${altfa}.fasta ${ref}.CDS.fa > ${name}-${ref}.CDS.sam &
 fi
 if [ ! -f ${name}-${ref}-${ploidy} ]
 then
 ## run anchors
-anchorwave proali -t 10 -i $refgff -as ${ref}.CDS.fa -r $reffa -a ${name}-${ref}.CDS.sam -ar ${ref}.CDS.sam -s genomes/${altfa}.fasta -n ${name}-${ref}-${ploidy} -R $ploidy -Q 1 -ns & ##-o ${name}-${ref}.maf -f ${name}-${ref}.f.maf &
+anchorwave proali -t 10 -i $refgff -as ${ref}.CDS.fa -r $reffa -a ${name}-${ref}.CDS.sam -ar ${ref}.CDS.sam -s ../genomes/${altfa}.fasta -n ${name}-${ref}-${ploidy} -R $ploidy -Q 1 -ns & ##-o ${name}-${ref}.maf -f ${name}-${ref}.f.maf &
 fi
-done < panand_sp_ploidy.txt
+done < ../panand_sp_ploidy.txt
 
