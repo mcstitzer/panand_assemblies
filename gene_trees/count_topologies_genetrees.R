@@ -72,6 +72,8 @@ tp$Polyphyletic=!tp$Monophyletic
 tp$NotApplicable=is.na(tp$Monophyletic)
 tpp=tp[!is.na(tp$Count),] %>% group_by(Count, genome) %>% dplyr::summarize(Monophyletic=sum(Monophyletic, na.rm=T), Polyphyletic=sum(Polyphyletic, na.rm=T), NotApplicable=sum(NotApplicable))
 
+
+                                              
 pdf(paste0('~/transfer/genetree_counting.', Sys.Date(), '.pdf'), 35,5)
 ggplot(tp, aes(x=genome,  group=Count, fill=Monophyletic)) + geom_histogram(stat='count', position='dodge') + scale_fill_manual(values=c('slateblue', 'gray'))
 ggplot(tp, aes(x=factor(Count), y=genome,  group=Count, fill=Monophyletic)) + stat_binline() + scale_fill_manual(values=c('slateblue', 'gray'))
@@ -80,4 +82,51 @@ ggplot(melt(tpp[!is.na(tpp$Count),], id.vars=c('genome', 'Count')), aes(x=factor
 
                                               
 dev.off()   
- 
+
+
+
+ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
+names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
+ploidycolorsmonophyletic=sapply(c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf'), function(x) colorspace::lighten(x, amount=0.7))
+names(ploidycolorsmonophyletic)=paste0(c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid'), 'Monophyletic')
+ploidycolorspolyphyletic=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
+names(ploidycolorspolyphyletic)=paste0(c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid'), 'Polyphyletic')
+
+ploidyphyletic=c(ploidycolorsmonophyletic, ploidycolorspolyphyletic)
+                                
+taxonnames=c("Zea mays subsp. parviglumis TIL11", "Zea mays subsp. mays B73v5", "Zea mays subsp. parviglumis TIL01", "Zea mays subsp. mexicana TIL25", "Zea mays subsp. mexicana TIL18", "Zea mays subsp. huehuetengensis", 
+"Zea luxurians", "Zea nicaraguensis", "Zea diploperennis Momo", "Zea diploperennis Gigi", "Tripsacum zoloptense", "Tripsacum dactyloides Southern Hap1", "Tripsacum dactyloides Southern Hap2", 
+"Tripsacum dactyloides Northern Hap2", "Tripsacum dactyloides Northern Hap1", "Tripsacum dactyloides tetraploid", "Urelytrum digitatum", "Vossia cuspidata", "Rhytachne rottboellioides", "Rottboellia tuberculosa", 
+"Hemarthria compressa", "Elionurus tripsacoides", "Schizachyrium scoparium", "Schizachyrium microstachyum", "Andropogon virginius", "Andropogon chinensis", "Andropogon gerardi", 
+"Cymbopogon refractus", "Cymbopogon citratus", "Heteropogon contortus", "Themeda triandra", "Bothriochloa laguroides", "Pogonatherum paniceum", "Sorghum bicolor", 
+"Ischaemum rugosum", "Sorghastrum nutans", "Andropogon tenuifolius", "Thelopogon elegans", "Chrysopogon serrulatus", "Paspalum vaginatum")
+names(taxonnames)=c("zTIL11", "zmB735", "zTIL01", "zTIL25", "zTIL18", "zmhuet", 
+"zluxur", "znicar", "zdmomo", "zdgigi", "tzopol", "tdacs1", "tdacs2", 
+"tdacn2", "tdacn1", "tdactm", "udigit", "vcuspi", "rrottb", "rtuber", 
+"hcompr", "etrips", "sscopa", "smicro", "avirgi", "achine", "agerar", 
+"crefra", "ccitra", "hconto", "ttrian", "blagur", "ppanic", "sbicol", 
+"irugos", "snutan", "atenui", "telega", "cserru", "pvagin")
+
+                                
+all=read.table('../panand_sp_ploidy.txt', header=F)
+all=all[!all$V2 %in% c('tdactm', 'agerjg', 'bdista', 'eophiu', 'osativ', 'svirid', 'tdactn', 'tdacts'),]
+all$boxplotx=all$V3*2
+all$polyploid=all$V3>1
+all$trip=all$V2 %in% c('tdacn1', 'tdacn2', 'tdacs1', 'tdacs2', 'tdactm', 'zdgigi', 'zdmomo', 'zluxur', 'zmB735', 'zmhuet', 'znicar', 'zTIL01', 'zTIL11', 'zTIL18', 'zTIL25')         
+
+
+all$boxplotx[all$boxplotx==2]='Diploid'
+all$boxplotx[all$boxplotx==4 & !all$trip]='Tetraploid'
+all$boxplotx[all$boxplotx==4 & all$trip]='Paleotetraploid'
+all$boxplotx[all$boxplotx==6]='Hexaploid'
+all$boxplotx[all$boxplotx==8]='Octaploid'
+all$boxplotx=factor(all$boxplotx, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid', 'Octaploid'))                                                   
+
+tppp=melt(tpp[!is.na(tpp$Count),], id.vars=c('genome', 'Count'))
+tppp$ploidy=all$boxplotx[match(tppp$genome, all$V1)]
+tppp$phyleticcol=paste0(tppp$ploidy, tppp$variable)
+tppp$genome=as.factor(tppp$genome, levels=names(taxonnames))
+pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,10)
+ggplot(tppp, aes(x=factor(Count), y=value, group=phyleticol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~genome, ncol=1) + scale_fill_manual(values=ploidyphyletic) +   theme( strip.text.y.left = element_text(angle=0), strip.placement = "outside", strip.background = element_blank())
+dev.off()
+                                              
