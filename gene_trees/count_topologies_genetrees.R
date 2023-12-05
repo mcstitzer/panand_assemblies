@@ -134,10 +134,10 @@ tppp$species=factor(tppp$species, levels=taxonnames)
 
                                
 #pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,10)
-pdf(paste0('genetree_synteny.', Sys.Date(), '.pdf'), 5,20)
+pdf(paste0('genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
 
-ggplot(tppp, aes(x=factor(Count), y=value, group=phyleticcol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~species, ncol=1, strip.position='left') + scale_fill_manual(values=ploidyphyletic) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=180))+ theme(legend.position = "none") + ylab('')
-ggplot(tppp[tppp$Count!=0,], aes(x=factor(Count), y=value, group=phyleticcol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~species, ncol=1, strip.position='left') + scale_fill_manual(values=ploidyphyletic) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=180))+ theme(legend.position = "none") + ylab('')
+ggplot(tppp, aes(x=factor(Count), y=value, group=phyleticcol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~species, ncol=1, strip.position='left') + scale_fill_manual(values=ploidyphyletic) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('') + xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 2)
+ggplot(tppp[tppp$Count!=0,], aes(x=factor(Count), y=value, group=phyleticcol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~species, ncol=1, strip.position='left') + scale_fill_manual(values=ploidyphyletic) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 2)
 
 dev.off()
                                               
