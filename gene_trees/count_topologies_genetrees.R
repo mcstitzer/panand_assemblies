@@ -117,16 +117,27 @@ all$trip=all$V2 %in% c('tdacn1', 'tdacn2', 'tdacs1', 'tdacs2', 'tdactm', 'zdgigi
 
 all$boxplotx[all$boxplotx==2]='Diploid'
 all$boxplotx[all$boxplotx==4 & !all$trip]='Tetraploid'
-all$boxplotx[all$boxplotx==4 & all$trip]='Paleotetraploid'
+#all$boxplotx[all$boxplotx==4 & all$trip]='Paleotetraploid'
+all$boxplotx[all$trip]='Paleotetraploid'
 all$boxplotx[all$boxplotx==6]='Hexaploid'
 all$boxplotx[all$boxplotx==8]='Octaploid'
 all$boxplotx=factor(all$boxplotx, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid', 'Octaploid'))                                                   
 
-tppp=melt(tpp[!is.na(tpp$Count),], id.vars=c('genome', 'Count'))
-tppp$ploidy=all$boxplotx[match(tppp$genome, all$V1)]
-tppp$phyleticcol=paste0(tppp$ploidy, tppp$variable)
+tppp=melt(tpp[!is.na(tpp$Count) & !tpp$genome %in% c('tdactm', 'tzopol', 'osativ', 'pprate'),], id.vars=c('genome', 'Count'))
 tppp$genome=as.factor(tppp$genome, levels=names(taxonnames))
-pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,10)
-ggplot(tppp, aes(x=factor(Count), y=value, group=phyleticol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~genome, ncol=1) + scale_fill_manual(values=ploidyphyletic) +   theme( strip.text.y.left = element_text(angle=0), strip.placement = "outside", strip.background = element_blank())
+tppp$ploidy=all$boxplotx[match(tppp$genome, all$V2)]
+tppp$phyleticcol=paste0(tppp$ploidy, tppp$variable)
+## make singletons "monophyletic"
+tppp$phyleticcol[tppp$Count==1]=paste0(tppp$ploidy[tppp$Count==1], 'Monophyletic')
+tppp$species=taxonnames[match(tppp$genome, names(taxonnames))]
+tppp$species=factor(tppp$species, levels=taxonnames)
+
+                               
+#pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,10)
+pdf(paste0('genetree_synteny.', Sys.Date(), '.pdf'), 5,20)
+
+ggplot(tppp, aes(x=factor(Count), y=value, group=phyleticcol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~species, ncol=1, strip.position='left') + scale_fill_manual(values=ploidyphyletic) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=180))+ theme(legend.position = "none") + ylab('')
+ggplot(tppp[tppp$Count!=0,], aes(x=factor(Count), y=value, group=phyleticcol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~species, ncol=1, strip.position='left') + scale_fill_manual(values=ploidyphyletic) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=180))+ theme(legend.position = "none") + ylab('')
+
 dev.off()
                                               
