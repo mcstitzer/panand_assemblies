@@ -16,15 +16,16 @@ filenames=list.files('../scinet_trees/', pattern='RAxML_bipartitionsBranchLabels
 all=read.table('../panand_sp_ploidy.txt')                                
 
 
-b=sapply(1:length(filenames), function(i){ ## ep2 is not there
+b=lapply(1:length(filenames), function(i){ ## ep2 is not there
 
-awt=read.raxml(paste0('../scinet_trees/',filenames[i]))
-awt=as.phylo(awt)
+awto=read.raxml(paste0('../scinet_trees/',filenames[i]))
+awt=as.phylo(awto)
+awt$node.label <- awto@data$bootstrap
 awt$tip.label=gsub('_R_', '', awt$tip.label)
   ## add to make sure outgroup is there, and is monophyletic - otherwise skip this tree
-  if(any(substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate'))){
-    if(is.monophyletic(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate')])){
-  awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate')])
+  if(any(substr(as.phylo(awt)$tip.label,1,5) %in% c('Pavag'))){
+    if(is.monophyletic(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,5) %in% c('Pavag')])){
+  awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,5) %in% c('Pavag')])
 
 ## now keep only six digit code
 awt$tip.label=substr(awt$tip.label,1,6)
@@ -34,6 +35,11 @@ awt=drop.tip(awt, awt$tip.label[grepl('pvagin', awt$tip.label)])
 ## drop non=panand sp
 awt=drop.tip(awt, awt$tip.label[grepl('eophiu', awt$tip.label)])
 awt=drop.tip(awt, awt$tip.label[grepl('agerjg', awt$tip.label)])
+awt=drop.tip(awt, awt$tip.label[grepl('tdacs2', awt$tip.label)])
+awt=drop.tip(awt, awt$tip.label[grepl('tdacn2', awt$tip.label)])
+awt=drop.tip(awt, awt$tip.label[grepl('tdactm', awt$tip.label)])
+awt=drop.tip(awt, awt$tip.label[grepl('tzopol', awt$tip.label)])
+
 return(awt)
 }
 }
