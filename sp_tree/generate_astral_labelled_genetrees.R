@@ -39,6 +39,9 @@ awt=drop.tip(awt, awt$tip.label[grepl('tdacs2', awt$tip.label)])
 awt=drop.tip(awt, awt$tip.label[grepl('tdacn2', awt$tip.label)])
 awt=drop.tip(awt, awt$tip.label[grepl('tdactm', awt$tip.label)])
 awt=drop.tip(awt, awt$tip.label[grepl('tzopol', awt$tip.label)])
+awt=drop.tip(awt, awt$tip.label[grepl('osativ', awt$tip.label)])
+awt=drop.tip(awt, awt$tip.label[grepl('bdista', awt$tip.label)])
+awt=drop.tip(awt, awt$tip.label[grepl('svirid', awt$tip.label)])
 
 return(awt)
 }
