@@ -123,8 +123,8 @@ all$boxplotx[all$boxplotx==6]='Hexaploid'
 all$boxplotx[all$boxplotx==8]='Octaploid'
 all$boxplotx=factor(all$boxplotx, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid', 'Octaploid'))                                                   
 
-tppp=melt(tpp[!is.na(tpp$Count) & !tpp$genome %in% c('tdactm', 'tzopol', 'osativ', 'pprate'),], id.vars=c('genome', 'Count'))
-tppp$genome=as.factor(tppp$genome, levels=names(taxonnames))
+tppp=melt(tpp[!is.na(tpp$Count) & !tpp$genome %in% c('tdactm', 'tzopol', 'osativ', 'pprate', 'tdacs2', 'tdacn2'),], id.vars=c('genome', 'Count'))
+tppp$genome=factor(tppp$genome, levels=names(taxonnames))
 tppp$ploidy=all$boxplotx[match(tppp$genome, all$V2)]
 tppp$phyleticcol=paste0(tppp$ploidy, tppp$variable)
 ## make singletons "monophyletic"
@@ -132,12 +132,23 @@ tppp$phyleticcol[tppp$Count==1]=paste0(tppp$ploidy[tppp$Count==1], 'Monophyletic
 tppp$species=taxonnames[match(tppp$genome, names(taxonnames))]
 tppp$species=factor(tppp$species, levels=taxonnames)
 
-                               
-#pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,10)
-pdf(paste0('genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
+                                
+## double up those haploids
+gc=read.table('../panand_sp_genecopyguess.txt', header=T, sep='\t')
+tg=merge(all, gc, by.x='V2', by.y='X6.letter.code', all=T)
+# tg=tg[tg$genome!='pprate',]
+# tg$V3[tg$genome=='ccitra']=2
+tppp$haploid=(tg$homolog.state=='haploid')[match(tppp$genome, tg$V2)]
+tppp$doubledCount=ifelse(tppp$haploid, tppp$Count*2, tppp$Count)
+                                
+pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
+#pdf(paste0('genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
 
 ggplot(tppp, aes(x=factor(Count), y=value, group=phyleticcol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~species, ncol=1, strip.position='left') + scale_fill_manual(values=ploidyphyletic) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('') + xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 2)
 ggplot(tppp[tppp$Count!=0,], aes(x=factor(Count), y=value, group=phyleticcol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~species, ncol=1, strip.position='left') + scale_fill_manual(values=ploidyphyletic) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 2)
+
+ggplot(tppp, aes(x=factor(doubledCount), y=value, group=phyleticcol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~species, ncol=1, strip.position='left') + scale_fill_manual(values=ploidyphyletic) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('') + xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 2)
+ggplot(tppp[tppp$doubledCount!=0,], aes(x=factor(doubledCount), y=value, group=phyleticcol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~species, ncol=1, strip.position='left') + scale_fill_manual(values=ploidyphyletic) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 2)
 
 dev.off()
                                               
