@@ -110,6 +110,7 @@ names(taxonnames)=c("zTIL11", "zmB735", "zTIL01", "zTIL25", "zTIL18", "zmhuet",
                                 
 all=read.table('../panand_sp_ploidy.txt', header=F)
 all=all[!all$V2 %in% c('tdactm', 'agerjg', 'bdista', 'eophiu', 'osativ', 'svirid', 'tdactn', 'tdacts'),]
+all$V3[all$V2=='ccitra']=2
 all$boxplotx=all$V3*2
 all$polyploid=all$V3>1
 all$trip=all$V2 %in% c('tdacn1', 'tdacn2', 'tdacs1', 'tdacs2', 'tdactm', 'zdgigi', 'zdmomo', 'zluxur', 'zmB735', 'zmhuet', 'znicar', 'zTIL01', 'zTIL11', 'zTIL18', 'zTIL25')         
@@ -136,11 +137,20 @@ tppp$species=factor(tppp$species, levels=taxonnames)
 ## double up those haploids
 gc=read.table('../panand_sp_genecopyguess.txt', header=T, sep='\t')
 tg=merge(all, gc, by.x='V2', by.y='X6.letter.code', all=T)
+tg$homolog.state[substr(tg$V2,1,4)=='tdac']='haploid' ## make sure you've removed tdactm!!!!
+tg$homolog.state[tg$V2 %in% c('sbicol', 'zdmomo', 'zdgigi', 'znicar', 'telega', 'rrottb')]='haploid' ## gigi and momo are clearly not haploid, but do it anyways!!
 # tg=tg[tg$genome!='pprate',]
 # tg$V3[tg$genome=='ccitra']=2
 tppp$haploid=(tg$homolog.state=='haploid')[match(tppp$genome, tg$V2)]
 tppp$doubledCount=ifelse(tppp$haploid, tppp$Count*2, tppp$Count)
-                                
+
+tppp$speciesLabel=ifelse(tppp$haploid, paste0(tppp$species, '*'), as.character(tppp$species))
+tppp$speciesLabel=tppp$species
+levels(tppp$speciesLabel)[levels(tppp$speciesLabel) %in% tppp$species[tppp$haploid]]=paste0(levels(tppp$speciesLabel)[levels(tppp$speciesLabel) %in% tppp$species[tppp$haploid]], '*')
+
+tppp$linetype=NA
+tppp$linetype[tppp$doubledCount%in%1:6]=rep(c('dotted', 'dashed'),3)[tppp$doubledCount[tppp$doubledCount%in%1:6]]
+
 pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
 #pdf(paste0('genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
 
@@ -149,6 +159,11 @@ ggplot(tppp[tppp$Count!=0,], aes(x=factor(Count), y=value, group=phyleticcol, fi
 
 ggplot(tppp, aes(x=factor(doubledCount), y=value, group=phyleticcol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~species, ncol=1, strip.position='left') + scale_fill_manual(values=ploidyphyletic) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('') + xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 2)
 ggplot(tppp[tppp$doubledCount!=0,], aes(x=factor(doubledCount), y=value, group=phyleticcol, fill=phyleticcol)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~species, ncol=1, strip.position='left') + scale_fill_manual(values=ploidyphyletic) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 2)
+
+
+## remove auto/allo distinction
+ggplot(tppp, aes(x=factor(doubledCount, levels=c(0:6)), y=value, group=ploidy, fill=ploidy)) + geom_histogram(stat='identity', position='stack') + facet_wrap(~speciesLabel, ncol=1, strip.position='left') + scale_fill_manual(values=ploidycolors) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('') + xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 2)
+ggplot(tppp[tppp$doubledCount%in% 1:6 & !is.na(tppp$species),], aes(x=doubledCount, y=value, group=ploidy, fill=ploidy)) + geom_vline(xintercept=c(1,3,5), color='snow2', linetype='dotted') + geom_vline(xintercept=c(2,4,6), color='snow3', linetype='dotted') + geom_histogram(stat='identity', position='stack') + facet_wrap(~speciesLabel, ncol=1, strip.position='left') + scale_fill_manual(values=ploidycolors) +   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 2)
 
 dev.off()
                                               
