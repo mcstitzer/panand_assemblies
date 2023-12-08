@@ -97,7 +97,7 @@ ploidyphyletic=c(ploidycolorsmonophyletic, ploidycolorspolyphyletic)
 taxonnames=c("Zea mays subsp. parviglumis TIL11", "Zea mays subsp. mays B73v5", "Zea mays subsp. parviglumis TIL01", "Zea mays subsp. mexicana TIL25", "Zea mays subsp. mexicana TIL18", "Zea mays subsp. huehuetengensis", 
 "Zea luxurians", "Zea nicaraguensis", "Zea diploperennis Momo", "Zea diploperennis Gigi", "Tripsacum zoloptense", "Tripsacum dactyloides Southern Hap1", "Tripsacum dactyloides Southern Hap2", 
 "Tripsacum dactyloides Northern Hap2", "Tripsacum dactyloides Northern Hap1", "Tripsacum dactyloides tetraploid", "Urelytrum digitatum", "Vossia cuspidata", "Rhytachne rottboellioides", "Rottboellia tuberculosa", 
-"Hemarthria compressa", "Elionurus tripsacoides", "Schizachyrium scoparium", "Schizachyrium microstachyum", "Andropogon virginius", "Andropogon chinensis", "Andropogon gerardi", 
+"Hemarthria compressa", "Elionurus tripsacoides", "Schizachyrium scoparium", "Schizachyrium microstachyum", "Andropogon virginicus", "Andropogon chinensis", "Andropogon gerardi", 
 "Cymbopogon refractus", "Cymbopogon citratus", "Heteropogon contortus", "Themeda triandra", "Bothriochloa laguroides", "Pogonatherum paniceum", "Sorghum bicolor", 
 "Ischaemum rugosum", "Sorghastrum nutans", "Andropogon tenuifolius", "Thelopogon elegans", "Chrysopogon serrulatus", "Paspalum vaginatum")
 names(taxonnames)=c("zTIL11", "zmB735", "zTIL01", "zTIL25", "zTIL18", "zmhuet", 
@@ -151,6 +151,9 @@ levels(tppp$speciesLabel)[levels(tppp$speciesLabel) %in% tppp$species[tppp$haplo
 tppp$linetype=NA
 tppp$linetype[tppp$doubledCount%in%1:6]=rep(c('dotted', 'dashed'),3)[tppp$doubledCount[tppp$doubledCount%in%1:6]]
 
+## switch it back, not thinking this through!
+tppp$variable[tppp$Count==1]='NotApplicable'                                
+                                
 pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
 #pdf(paste0('genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
 
@@ -168,7 +171,7 @@ ggplot(tppp[tppp$doubledCount%in% 1:6 & !is.na(tppp$species),], aes(x=doubledCou
 
 ## pies for auto/allo distinction
 tppp %>% group_by(speciesLabel, variable) %>% summarize(n=n(), count=sum(value)) %>% filter(variable!='NotApplicable') %>% mutate(pct = count/sum(count)*100, width=sum(count))%>%
-                                ggplot(aes(x=1, y=width/2, fill=variable, width=width)) + geom_bar(stat='identity', position='fill') + coord_polar(theta='y') + facet_wrap(~speciesLabel, ncol=1, strip.position='left')+   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + theme(axis.ticks=element_blank(), axis.text=element_blank(), panel.grid=element_blank(), panel.border=element_blank())
+                                ggplot(aes(x=width/2, y=pct, fill=variable, width=width)) + geom_bar(stat='identity', position='fill') + coord_polar(theta='y') + facet_wrap(~speciesLabel, ncol=1, strip.position='left')+   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + theme(axis.ticks=element_blank(), axis.text=element_blank(), panel.grid=element_blank(), panel.border=element_blank()) + scale_fill_manual(values=c('#5F4B8BFF', '#E69A8DFF'))
                                 
 dev.off()
                                               
