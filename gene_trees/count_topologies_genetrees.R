@@ -153,6 +153,21 @@ tppp$linetype[tppp$doubledCount%in%1:6]=rep(c('dotted', 'dashed'),3)[tppp$double
 
 ## switch it back, not thinking this through!
 tppp$variable[tppp$Count==1]='NotApplicable'                                
+
+## assembly size, since we don't have flow for everybody
+asize=read.table('../panand_assembly_sizes.txt', header=F)
+asize=asize[asize$V2 %in% tppp$genome,]
+asize$haploid=(tg$homolog.state=='haploid')[match(asize$V2, tg$V2)]
+
+asize$doubledAssembly=ifelse(asize$haploid, asize$V3*2, asize$V3)
+asize$species=taxonnames[match(asize$V2, names(taxonnames))]
+asize$species=factor(asize$species, levels=taxonnames)
+
+asize$speciesLabel=ifelse(asize$haploid, paste0(asize$species, '*'), as.character(asize$species))
+asize$speciesLabel=asize$species
+levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]]=paste0(levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]], '*')
+asize$ploidy=all$boxplotx[match(asize$V2, all$V2)]
+
                                 
 pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
 #pdf(paste0('genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
@@ -172,6 +187,13 @@ ggplot(tppp[tppp$doubledCount%in% 1:6 & !is.na(tppp$species),], aes(x=doubledCou
 ## pies for auto/allo distinction
 tppp %>% group_by(speciesLabel, variable) %>% summarize(n=n(), count=sum(value)) %>% filter(variable!='NotApplicable') %>% mutate(pct = count/sum(count)*100, width=sum(count))%>%
                                 ggplot(aes(x=width/2, y=pct, fill=variable, width=width)) + geom_bar(stat='identity', position='fill') + coord_polar(theta='y') + facet_wrap(~speciesLabel, ncol=1, strip.position='left')+   theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + theme(axis.ticks=element_blank(), axis.text=element_blank(), panel.grid=element_blank(), panel.border=element_blank()) + scale_fill_manual(values=c('#5F4B8BFF', '#E69A8DFF'))
+
+## assembly size
+ggplot(asize, aes(x=doubledAssembly/1e6, y=1, color=ploidy)) + geom_segment(aes(y=1,yend=1, x=0, xend=doubledAssembly/1e6)) + geom_vline(xintercept=c(1,3,5,7,9)*1000, color='snow2', linetype='dotted') + geom_vline(xintercept=c(2,4,6,8,10)*1000, color='snow3', linetype='dotted') + scale_color_manual(values=ploidycolors)  + geom_point(size=4)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left') + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Assembly Size (Mb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+
+## "haploid" assembly size
+ggplot(asize, aes(x=doubledAssembly/1e9/2, y=1, color=ploidy)) + geom_segment(aes(y=1,yend=1, x=0, xend=doubledAssembly/1e9/2)) + geom_vline(xintercept=c(1,3,5), color='snow2', linetype='dotted') + geom_vline(xintercept=c(2,4), color='snow3', linetype='dotted') + scale_color_manual(values=ploidycolors)  + geom_point(size=4)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left') + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Haploid Assembly\nSize (Gb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+                                
                                 
 dev.off()
                                               
