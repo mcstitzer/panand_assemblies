@@ -111,6 +111,7 @@ names(taxonnames)=c("zTIL11", "zmB735", "zTIL01", "zTIL25", "zTIL18", "zmhuet",
 all=read.table('../panand_sp_ploidy.txt', header=F)
 all=all[!all$V2 %in% c('tdactm', 'agerjg', 'bdista', 'eophiu', 'osativ', 'svirid', 'tdactn', 'tdacts'),]
 all$V3[all$V2=='ccitra']=2
+all$V3[all$V2 %in%c('telega', 'rtuber')]=1 ## flow shows this shouldn't be doubled - it's a diploid!!!
 all$boxplotx=all$V3*2
 all$polyploid=all$V3>1
 all$trip=all$V2 %in% c('tdacn1', 'tdacn2', 'tdacs1', 'tdacs2', 'tdactm', 'zdgigi', 'zdmomo', 'zluxur', 'zmB735', 'zmhuet', 'znicar', 'zTIL01', 'zTIL11', 'zTIL18', 'zTIL25')         
@@ -139,6 +140,7 @@ gc=read.table('../panand_sp_genecopyguess.txt', header=T, sep='\t')
 tg=merge(all, gc, by.x='V2', by.y='X6.letter.code', all=T)
 tg$homolog.state[substr(tg$V2,1,4)=='tdac']='haploid' ## make sure you've removed tdactm!!!!
 tg$homolog.state[tg$V2 %in% c('sbicol', 'zdmomo', 'zdgigi', 'znicar', 'telega', 'rrottb')]='haploid' ## gigi and momo are clearly not haploid, but do it anyways!!
+tg$homolog.state[tg$V2%in%c('telega', 'rtuber')]='allelic'
 # tg=tg[tg$genome!='pprate',]
 # tg$V3[tg$genome=='ccitra']=2
 tppp$haploid=(tg$homolog.state=='haploid')[match(tppp$genome, tg$V2)]
@@ -168,6 +170,16 @@ asize$speciesLabel=asize$species
 levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]]=paste0(levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]], '*')
 asize$ploidy=all$boxplotx[match(asize$V2, all$V2)]
 
+## add flow, for supp
+flow=read.table('../panand_flow_cyt.txt', header=T, sep='\t') 
+asize$flow=flow[,2][match(asize$V2, flow[,1])]
+cor.test(asize$doubledAssembly/2, asize$flow, use='complete.obs')
+
+pdf(paste0('~/transfer/supp_flow_assembly.', Sys.Date(), '.pdf'), 4,4)
+## "haploid" assembly size
+ggplot(asize, aes(x=doubledAssembly/1e9/2, y=flow/1000, color=ploidy)) +  scale_color_manual(values=ploidycolors)  + geom_point() + ylab('Genome Size, Flow Cytometry (Gb)')+ xlab('Haploid Assembly\nSize (Gb)') 
+                                
+dev.off()
                                 
 pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
 #pdf(paste0('genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
@@ -197,18 +209,20 @@ ggplot(asize, aes(x=doubledAssembly/1e9/2, y=1, color=ploidy)) + geom_segment(ae
                                 
                                 
 dev.off()
-                                              
+         library(gridGraphics)                                     
 pdf(paste0('~/transfer/genetree_synteny.fig1combo.', Sys.Date(), '.pdf'), 8,10)
 ## "haploid" assembly size
 hgs=ggplot(asize, aes(x=doubledAssembly/1e9/2, y=1, color=ploidy)) + geom_segment(aes(y=1,yend=1, x=0, xend=doubledAssembly/1e9/2)) + geom_vline(xintercept=c(2,4), color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow3', linetype='dotted') + scale_color_manual(values=ploidycolors)  + geom_point(size=4)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', '\\*'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Haploid Assembly\nSize (Gb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
 ## copy bar plots, no label
-cpb=ggplot(tppp[tppp$doubledCount%in% 1:6 & !is.na(tppp$species),], aes(x=doubledCount, y=value, group=ploidy, fill=ploidy)) + geom_hline(xintercept=c(1,3,5), color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow2', linetype='dotted') + geom_vline(xintercept=c(2,4,6), color='snow3', linetype='dotted') + geom_histogram(stat='identity', position='stack') + 
+cpb=ggplot(tppp[tppp$doubledCount%in% 1:6 & !is.na(tppp$species),], aes(x=doubledCount, y=value, group=ploidy, fill=ploidy)) + geom_hline(yintercept=1, color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow2', linetype='dotted') + geom_vline(xintercept=c(2,4,6), color='snow3', linetype='dotted') + geom_histogram(stat='identity', position='stack') + 
         facet_wrap(~speciesLabel, ncol=1, strip.position='left') + scale_fill_manual(values=ploidycolors) +   theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 2)
 ## auto/allo pies, no label
 aap=tppp %>% group_by(speciesLabel, variable) %>% summarize(n=n(), count=sum(value)) %>% filter(variable!='NotApplicable') %>% mutate(pct = count/sum(count)*100, width=sum(count))%>%
                                 ggplot(aes(x=width/2, y=pct, fill=variable, width=width)) + geom_bar(stat='identity', position='fill') + coord_polar(theta='y') + facet_wrap(~speciesLabel, ncol=1, strip.position='left')+   theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + theme(axis.ticks=element_blank(), axis.text=element_blank(), panel.grid=element_blank(), panel.border=element_blank()) + scale_fill_manual(values=c('#5F4B8BFF', '#E69A8DFF')) + ylab('Proportion\nDuplicates\nMonophyletic') + xlab('')
+## densit isn't in this file - done in sp_tree densitree :( will combine in a true figure code when I'm happy!!
+plot_grid( hgs, cpb, aap, align='hv',axis='tb', ncol=3, rel_widths=c(0.7,0.3,0.18), labels=c('b', 'c', 'd'))
+#plot_grid(densit, hgs, cpb, aap, align='hv',axis='tb', ncol=4, rel_widths=c(0.5,0.7,0.3,0.18), labels=c('a','b', 'c', 'd'))
 
-plot_grid(hgs, cpb, aap, align='hv',axis='tb', ncol=3, rel_widths=c(0.7,0.3,0.18), labels=c('b', 'c', 'd'))
 dev.off()
 
 
