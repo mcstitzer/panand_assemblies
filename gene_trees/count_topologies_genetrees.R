@@ -140,7 +140,8 @@ gc=read.table('../panand_sp_genecopyguess.txt', header=T, sep='\t')
 tg=merge(all, gc, by.x='V2', by.y='X6.letter.code', all=T)
 tg$homolog.state[substr(tg$V2,1,4)=='tdac']='haploid' ## make sure you've removed tdactm!!!!
 tg$homolog.state[tg$V2 %in% c('sbicol', 'zdmomo', 'zdgigi', 'znicar', 'telega', 'rrottb')]='haploid' ## gigi and momo are clearly not haploid, but do it anyways!!
-tg$homolog.state[tg$V2%in%c('telega', 'rtuber')]='allelic'
+tg$homolog.state[tg$V2%in%c('telega')]='allelic'
+tg$homolog.state[tg$V2%in%c('rtuber')]='haploid'
 # tg=tg[tg$genome!='pprate',]
 # tg$V3[tg$genome=='ccitra']=2
 tppp$haploid=(tg$homolog.state=='haploid')[match(tppp$genome, tg$V2)]
@@ -180,6 +181,13 @@ pdf(paste0('~/transfer/supp_flow_assembly.', Sys.Date(), '.pdf'), 4,4)
 ggplot(asize, aes(x=doubledAssembly/1e9/2, y=flow/1000, color=ploidy)) +  scale_color_manual(values=ploidycolors)  + geom_point() + ylab('Genome Size, Flow Cytometry (Gb)')+ xlab('Haploid Assembly\nSize (Gb)') 
                                 
 dev.off()
+
+## also write means in text
+asize %>% group_by(ploidy) %>% summarize(flow=mean(flow, na.rm=T), gs=mean(doubledAssembly/2, na.rm=T))
+## MAKE SURE I HAVE THIS
+asize$haploidAssemblySize=asize$doubledAssembly/2
+write.table(asize[,c('V2', 'haploid', 'species', 'speciesLabel', 'ploidy', 'flow', 'haploidAssemblySize')], '~/transfer/panand_assembly_sizes.txt', sep='\t', quote=F, row.names=F, col.names=T)
+
                                 
 pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
 #pdf(paste0('genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
