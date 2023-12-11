@@ -34,20 +34,27 @@ ros%>% arrange(desc(totbp))
 ## my filters - remove repeats with sequence found at least five positions in the genome
 tanr=ros[ros$n>5,] ## n is positions per species
 
-## also try removing totalbp <100000?
-tanl=ros[ros$totbp>100000 | ros$n>5,]
 
+rout=list()
 
 ## write a fasta of unique sequences for each class - there will be some single snp diffs, but for now okay
 for(genome in all$V2){
  to=atl[atl$genome==genome & atl$consensus.primary %in% tanr$consensus.primary[tanr$genome==genome],]
  if(nrow(to)>0){ ## filtered away everything for c serrulatus
- to=to[!duplicated(to$consensus.primary),]
+ to=to %>% group_by(consensus.primary, most.freq.value.N) %>% summarize(bp=sum(width), repeats.identified=sum(repeats.identified))
+# to=to[!duplicated(to$consensus.primary),]
  rownames(to)=1:nrow(to)
  # go=data.frame(seqid=to$name, source='TRASH', type='satellite_DNA', start=to$start+1, end=to$end, score=to$ave.score, strand='.', phase='.', ## start +1 for gff format
  #               attributes=paste0('ID=TandemRepeat', rownames(to), ';Name=', to$most.freq.value.N, 'bp_repeat;Note=consensus_',to$consensus.primary))
  # write.table(go, paste0(genome, '_filteredTandemRepeats.TRASH.gff3'), row.names=F, col.names=F, sep='\t', quote=F)
+  to$genome=genome
+  rout[[genome]]=to
  fa=data.frame(name=paste0('>', genome, '_TandemRepeat', rownames(to), '_', to$most.freq.value.N, 'bp_repeat'), seq=to$consensus.primary)
    write.table(fa, paste0(genome, '_filteredTandemRepeats.TRASH.fa'), row.names=F, col.names=F, sep='\n', quote=F)
   }
  }
+
+trs=do.call(rbind, rout)
+write.table(trs, 'tandem_repeats_by_species.txt', row.names=F, col.names=T, sep='\t', quote=F)
+
+
