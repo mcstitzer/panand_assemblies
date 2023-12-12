@@ -114,9 +114,12 @@ anc=read.tree('temp.tre')
 ancl=lapply(a, function(x) force.ultrametric(x, method='extend'))
 anc=do.call('c', ancl)
 
+## remove really long trees???
+longtrees=which(sapply(anc, function(x) max(nodeHeights(x)[,2]))<0.5)
+ancs=anc[longtrees]            
 ## or scale branches? 
     tree$edge.length <- tree$edge.length / max(nodeHeights(tree)[,2]) * new.tree.length
-ans=do.call('c', lapply(an, function(x){ x$edge.length=x$edge.length/max(nodeHeights(x)[,2])
+ans=do.call('c', lapply(anc, function(x){ x$edge.length=x$edge.length/max(nodeHeights(x)[,2])
          return(force.ultrametric(x, method='extend')) }))
 ##ant <- force.ultrametric(a, method = "extend")
 
@@ -132,6 +135,9 @@ options(ignore.negative.edge=TRUE)
 ggdensitree(anc[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
 ggdensitree(anc[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=F, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
 ggdensitree(ans[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
+ggdensitree(ancs[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
+ggdensitree(ancs[1:200], layout="slanted",lwd=1,tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
+
 ggtree(anc[[1]])
 ggtree(ans[[1]])
 dev.off()
