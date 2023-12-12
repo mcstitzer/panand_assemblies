@@ -111,13 +111,14 @@ anc=do.call('c', lapply(an, function(x){ chronos(x, lambda=0)
 write.tree(anc, 'temp.tre')
 anc=read.tree('temp.tre')
 
-ancl=lapply(a, force.ultrametric)
+ancl=lapply(a, function(x) force.ultrametric(x, method='extend'))
 anc=do.call('c', ancl)
 
 ## or scale branches? 
     tree$edge.length <- tree$edge.length / max(nodeHeights(tree)[,2]) * new.tree.length
 ans=do.call('c', lapply(an, function(x){ x$edge.length=x$edge.length/max(nodeHeights(x)[,2])
-         return(force.ultrametric(x)) }))
+         return(force.ultrametric(x, method='extend')) }))
+##ant <- force.ultrametric(a, method = "extend")
 
 #write.tree(d, paste0('paspalum_anchors_aster.', Sys.Date(), '.tre'))
 pdf('~/transfer/densitree_new.pdf',20,20)
@@ -127,10 +128,12 @@ pdf('~/transfer/densitree_new.pdf',20,20)
 #ggdensitree(ans[1:100], layout="rectangular", lwd=1,tip.order=rev(taxonnames), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
 #ggdensitree(ans[1:100], layout='fan', lwd=1,tip.order=rev(taxonnames), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
 
-
+options(ignore.negative.edge=TRUE)
 ggdensitree(anc[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
+ggdensitree(anc[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=F, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
 ggdensitree(ans[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
-
+ggtree(anc[[1]])
+ggtree(ans[[1]])
 dev.off()
 
 
