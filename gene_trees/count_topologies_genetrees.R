@@ -188,6 +188,39 @@ asize %>% group_by(ploidy) %>% summarize(flow=mean(flow, na.rm=T), gs=mean(doubl
 asize$haploidAssemblySize=asize$doubledAssembly/2
 write.table(asize[,c('V2', 'haploid', 'species', 'speciesLabel', 'ploidy', 'flow', 'haploidAssemblySize')], '~/transfer/panand_assembly_sizes.txt', sep='\t', quote=F, row.names=F, col.names=T)
 
+
+## okay now try ks!
+#ks=read.table('~/transfer/paspalum_omega.txt', header=F)
+#ks=ks[substr(ks$V3,1,3)=='_Pa',]
+# paspdups=unique(ks$V3[substr(ks$V3,1,3)=='_Pa' & substr(ks$V4,1,3)=='_Pa'])
+# ks=ks[!ks$V3 %in% paspdups,]
+ks=fread('../orthoFinderOG_omega_skh/*.omega')
+ks=ks[substr(ks$V3,1,8)==substr(ks$V4,1,8),] ## witin species
+## this is temp for now!!
+taxon=c("_Ab00001", "_Ac00001", "_Ag00001", "_Av00001", "_Bl00001", 
+"_Cc00001", "_Cr00001", "_Cs00001", "_Et00001", "_Hc00001", "_Hp00001", 
+"_Ir00001", "_Pi00001", "_Rr00001", "_Rt00001", 
+ "_Sm00001", "_Sn00001", 
+"_Sobic.0", "_Sobic.K", "_Ss00002", "_Td00001", "_Td00002", 
+"_Te00001", "_Tt00001", "_Ud00001", "_Vc00001", "_Zd00001", 
+"_Zd00003", "_Zh00001", "_Zm00001", "_Zn00001", "_Zv00001", "_Zv00002", 
+"_Zx00002", "_Zx00003")
+names(taxon)=c("atenui", "achine", "agerar",  "avirgi", "blagur",  
+"ccitra", "crefra", "cserru","etrips", "hconto","hcompr",  "irugos",
+"ppanic", "rrottb", "rtuber", "smicro",  "snutan",'sbicol', 'sbicol', "sscopa", 
+ "tdacs1", "tdacn1", "telega","ttrian", "udigit", 
+"vcuspi", "zdgigi", "zdmomo","zmhuet","zmB735","znicar", "zTIL01", "zTIL11", "zTIL18", "zTIL25")
+ks$genome=names(taxon)[match(substr(ks$V4,1,8), taxon)]        
+ks$haploid=(tg$homolog.state=='haploid')[match(ks$genome, tg$V2)]
+
+ks$species=taxonnames[match(ks$genome, names(taxonnames))]
+ks$species=factor(ks$species, levels=taxonnames)
+
+ks$speciesLabel=ifelse(ks$haploid, paste0(ks$species, '*'), as.character(ks$species))
+ks$speciesLabel=ks$species
+levels(ks$speciesLabel)[levels(ks$speciesLabel) %in% ks$species[ks$haploid]]=paste0(levels(ks$speciesLabel)[levels(ks$speciesLabel) %in% ks$species[ks$haploid]], '*')
+ks$ploidy=all$boxplotx[match(ks$genome, all$V2)]
+
                                 
 pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
 #pdf(paste0('genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
@@ -214,9 +247,16 @@ ggplot(asize, aes(x=doubledAssembly/1e6, y=1, color=ploidy)) + geom_segment(aes(
 
 ## "haploid" assembly size
 ggplot(asize, aes(x=doubledAssembly/1e9/2, y=1, color=ploidy)) + geom_segment(aes(y=1,yend=1, x=0, xend=doubledAssembly/1e9/2)) + geom_vline(xintercept=c(2,4), color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow3', linetype='dotted') + scale_color_manual(values=ploidycolors)  + geom_point(size=4)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', '\\*'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Haploid Assembly\nSize (Gb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
-                                
+
+
+## ks
+ggplot(ks, aes(x=V17,  color=ploidy, fill=ploidy)) + geom_density() + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) +  facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', '\\*'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Ks between duplicates') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+ 
                                 
 dev.off()
+
+
+
          library(gridGraphics)                                     
 pdf(paste0('~/transfer/genetree_synteny.fig1combo.', Sys.Date(), '.pdf'), 8,10)
 ## "haploid" assembly size
