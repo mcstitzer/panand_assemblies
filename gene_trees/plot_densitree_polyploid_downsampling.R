@@ -35,7 +35,7 @@ ts2=drop.tip(as.phylo(ts1), ts1@phylo$tip.label[duplicated(str_split_fixed(ts1@p
 #awt=root(ts2, as.phylo(ts2)$tip.label[substr(as.phylo(ts2)$tip.label,1,6) %in% c('osativ', 'bdista')])
 awt=ts2
 awt$tip.label=substr(awt$tip.label,1,6)
-awt=drop.tip(awt, c('Pavag0', 'Pavag1', 'agerjg', 'eophiu', 'svirid', 'bdista', 'osativ', 'tdacn2', 'tdacs2', 'tzopol', 'tdactm'))
+awt=drop.tip(awt, c('zmB735', 'Pavag0', 'Pavag1', 'agerjg', 'eophiu', 'svirid', 'bdista', 'osativ', 'tdacn2', 'tdacs2', 'tzopol', 'tdactm'))
 outdf$ntipssingle[x]=length(awt$tip.label)
 outdf$ntaxa[x]=length(unique(awt$tip.label))
 outtrees[[x]]=awt
@@ -52,10 +52,10 @@ rsp$tip.label[rsp$tip.label=='paspal']='pvagin'
 #a=do.call('c', outtrees[which(outdf$minBS>40 & outdf$meanBS>70 & outdf$ntaxa==40)]) ## removed outgroups, so not 43, it's 40!!!!
 ## run twice - tighter with 33 trees, looser with 958 trees
 a=do.call('c', outtrees[which(outdf$minBS>30 & outdf$meanBS>70 & outdf$ntaxa==36)])
-a=do.call('c', outtrees[which(outdf$meanBS>50  & outdf$ntaxa==36)])
+a=do.call('c', outtrees[which(outdf$meanBS>50  & outdf$ntaxa==35)]) ## 35 for no b73 - change back!
 
 a=root(a, 'pvagin')
-t2=drop.tip(rsp, c('svirid', 'bdista', 'osativ', 'tdacs2', 'tdacn2', 'tdactm', 'tzopol'))
+t2=drop.tip(rsp, c('svirid', 'bdista', 'osativ', 'tdacs2', 'tdacn2', 'tdactm', 'tzopol', 'zmB735'))
 ## rotate nodes to put zea-(dactyloides/zapolotense) closer
 #t2=rotateNodes(t2, MRCA(t2, c('tdacs1', 'tzopol')))
 t2=rotateConstr(t2, rev(t2$tip.label)) ## plots bottom to top
@@ -136,7 +136,7 @@ ggdensitree(anc[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), a
 ggdensitree(anc[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=F, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
 ggdensitree(ans[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
 ggdensitree(ancs[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
-ggdensitree(ancs[1:200], layout="slanted",lwd=1,tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
+ggdensitree(anc[1:50], lwd=1,tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
 
 ggtree(anc[[1]])
 ggtree(ans[[1]])
