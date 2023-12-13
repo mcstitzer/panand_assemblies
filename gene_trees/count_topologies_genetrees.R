@@ -210,7 +210,9 @@ names(taxon)=c("atenui", "achine", "agerar",  "avirgi", "blagur",
 "ppanic", "rrottb", "rtuber", "smicro",  "snutan",'sbicol', 'sbicol', "sscopa", 
  "tdacs1", "tdacn1", "telega","ttrian", "udigit", 
 "vcuspi", "zdgigi", "zdmomo","zmhuet","zmB735","znicar", "zTIL01", "zTIL11", "zTIL18", "zTIL25")
-ks$genome=names(taxon)[match(substr(ks$V4,1,8), taxon)]        
+ks$genome=names(taxon)[match(substr(ks$V4,1,8), taxon)]   
+ks$genome[ks$genome=='zmB735']='zluxur' ##for now, to make the plot look okay
+                                
 ks$haploid=(tg$homolog.state=='haploid')[match(ks$genome, tg$V2)]
 
 ks$species=taxonnames[match(ks$genome, names(taxonnames))]
@@ -220,6 +222,11 @@ ks$speciesLabel=ifelse(ks$haploid, paste0(ks$species, '*'), as.character(ks$spec
 ks$speciesLabel=ks$species
 levels(ks$speciesLabel)[levels(ks$speciesLabel) %in% ks$species[ks$haploid]]=paste0(levels(ks$speciesLabel)[levels(ks$speciesLabel) %in% ks$species[ks$haploid]], '*')
 ks$ploidy=all$boxplotx[match(ks$genome, all$V2)]
+ks=ks[ks$V17<0.3,]
+## don't want to plot those with 0's! 
+dupnums=ks %>% group_by(genome) %>% summarize(n=n())
+ks$V17[ks$genome %in% dupnums$genome[dupnums$n<5000]]=NA      
+
 
                                 
 pdf(paste0('~/transfer/genetree_synteny.', Sys.Date(), '.pdf'), 5,12)
@@ -258,7 +265,7 @@ dev.off()
 
 
          library(gridGraphics)                                     
-pdf(paste0('~/transfer/genetree_synteny.fig1combo.', Sys.Date(), '.pdf'), 8,10)
+pdf(paste0('~/transfer/genetree_synteny.fig1combo.', Sys.Date(), '.pdf'), 9,10)
 ## "haploid" assembly size
 hgs=ggplot(asize, aes(x=doubledAssembly/1e9/2, y=1, color=ploidy)) + geom_segment(aes(y=1,yend=1, x=0, xend=doubledAssembly/1e9/2)) + geom_vline(xintercept=c(2,4), color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow3', linetype='dotted') + scale_color_manual(values=ploidycolors)  + geom_point(size=4)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', '\\*'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Haploid Assembly\nSize (Gb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
 ## copy bar plots, no label
@@ -267,8 +274,11 @@ cpb=ggplot(tppp[tppp$doubledCount%in% 1:6 & !is.na(tppp$species),], aes(x=double
 ## auto/allo pies, no label
 aap=tppp %>% group_by(speciesLabel, variable) %>% summarize(n=n(), count=sum(value)) %>% filter(variable!='NotApplicable') %>% mutate(pct = count/sum(count)*100, width=sum(count))%>%
                                 ggplot(aes(x=width/2, y=pct, fill=variable, width=width)) + geom_bar(stat='identity', position='fill') + coord_polar(theta='y') + facet_wrap(~speciesLabel, ncol=1, strip.position='left')+   theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + theme(axis.ticks=element_blank(), axis.text=element_blank(), panel.grid=element_blank(), panel.border=element_blank()) + scale_fill_manual(values=c('#5F4B8BFF', '#E69A8DFF')) + ylab('Proportion\nDuplicates\nMonophyletic') + xlab('')
+## ks distributions, no label
+ksp=ggplot(ks[!is.na(ks$speciesLabel),], aes(x=V17,  color=ploidy, fill=ploidy)) + geom_density() + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) +  facet_wrap(~speciesLabel, ncol=1, strip.position='left', scales='free_y') + theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Ks Between\nDuplicates') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+                                
 ## densit isn't in this file - done in sp_tree densitree :( will combine in a true figure code when I'm happy!!
-plot_grid( hgs, cpb, aap, align='hv',axis='tb', ncol=3, rel_widths=c(0.7,0.3,0.18), labels=c('b', 'c', 'd'))
+plot_grid( hgs, cpb, aap, ksp, align='hv',axis='tb', ncol=4, rel_widths=c(0.7,0.3,0.18,0.2), labels=c('b', 'c', 'd', 'e'))
 #plot_grid(densit, hgs, cpb, aap, align='hv',axis='tb', ncol=4, rel_widths=c(0.5,0.7,0.3,0.18), labels=c('a','b', 'c', 'd'))
 
 dev.off()
