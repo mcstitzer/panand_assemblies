@@ -278,7 +278,7 @@ aap=tppp %>% group_by(speciesLabel, variable) %>% summarize(n=n(), count=sum(val
 ksp=ggplot(ks[!is.na(ks$speciesLabel),], aes(x=V17,  color=ploidy, fill=ploidy)) + geom_density() + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) +  facet_wrap(~speciesLabel, ncol=1, strip.position='left', scales='free_y') + theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Ks Between\nDuplicates') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
                                 
 ## densit isn't in this file - done in sp_tree densitree :( will combine in a true figure code when I'm happy!!
-plot_grid( hgs, cpb, aap, ksp, align='hv',axis='tb', ncol=4, rel_widths=c(0.7,0.3,0.18,0.2), labels=c('b', 'c', 'd', 'e'))
+plot_grid( hgs, cpb,ksp, aap,  align='hv',axis='tb', ncol=4, rel_widths=c(0.7,0.3,0.18,0.2), labels=c('b', 'c', 'd', 'e'))
 #plot_grid(densit, hgs, cpb, aap, align='hv',axis='tb', ncol=4, rel_widths=c(0.5,0.7,0.3,0.18), labels=c('a','b', 'c', 'd'))
 
 dev.off()
