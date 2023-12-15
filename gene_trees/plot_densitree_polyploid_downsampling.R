@@ -131,7 +131,7 @@ bncs=bnc[longtrees]
                        
 ## or scale branches? 
     tree$edge.length <- tree$edge.length / max(nodeHeights(tree)[,2]) * new.tree.length
-ans=do.call('c', lapply(anc, function(x){ x$edge.length=x$edge.length/max(nodeHeights(x)[,2])
+bncs=do.call('c', lapply(bncs, function(x){ x$edge.length=x$edge.length/max(nodeHeights(x)[,2])
          return(force.ultrametric(x, method='extend')) }))
 ##ant <- force.ultrametric(a, method = "extend")
 
@@ -154,7 +154,7 @@ ggdensitree(ancs[1:200], lwd=1,,tip.order=names(rev(taxonnames)), align.tips=T, 
 
                        
 # Plot multiple trees with aligned tips with tip labels and separate tree colors
-trees.fort <- c(list(bncs[[1]] %>% fortify %>%mutate(tree="black", alpha=1, lwd=2)), lapply(bncs[2:200], function(x) x %>% fortify %>% mutate(tree="snow4", alpha=0.1, lwd=1)))
+trees.fort <- c(list(bncs[[1]] %>% fortify %>%mutate(tree="black", alpha=1, lwd=1.5)), lapply(bncs[2:200], function(x) x %>% fortify %>% mutate(tree="snow4", alpha=0.1, lwd=1)))
 #ggdensitree(trees.fort, aes(colour=tree)) + geom_tiplab(colour='black')                       
                        
 ggdensitree(trees.fort, layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, aes(color=tree, alpha=alpha)) + geom_tiplab(cex=1) + scale_color_manual(values=c('black', 'snow4'))
