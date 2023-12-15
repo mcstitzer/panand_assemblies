@@ -113,10 +113,16 @@ anc=read.tree('temp.tre')
 
 ancl=lapply(a, function(x) force.ultrametric(x, method='extend'))
 anc=do.call('c', ancl)
+bncl=lapply(b, function(x) force.ultrametric(x, method='extend'))
+bnc=do.call('c', bncl)
 
 ## remove really long trees???
 longtrees=which(sapply(anc, function(x) max(nodeHeights(x)[,2]))<0.5)
-ancs=anc[longtrees]            
+ancs=anc[longtrees]     
+longtrees=which(sapply(bnc, function(x) max(nodeHeights(x)[,2]))<0.5)
+bncs=bnc[longtrees]     
+
+                       
 ## or scale branches? 
     tree$edge.length <- tree$edge.length / max(nodeHeights(tree)[,2]) * new.tree.length
 ans=do.call('c', lapply(anc, function(x){ x$edge.length=x$edge.length/max(nodeHeights(x)[,2])
@@ -136,7 +142,17 @@ ggdensitree(anc[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), a
 ggdensitree(anc[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=F, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
 ggdensitree(ans[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
 ggdensitree(ancs[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
-ggdensitree(anc[1:50], lwd=1,tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
+#ggdensitree(anc[1:50], lwd=1,tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
+ggdensitree(ans[1:200],lwd=1,tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
+ggdensitree(ancs[1:200], lwd=1,,tip.order=names(rev(taxonnames)), align.tips=T, color="lightblue", alpha=.3,) + geom_tiplab(cex=1)
+
+                       
+# Plot multiple trees with aligned tips with tip labels and separate tree colors
+trees.fort <- c(list(bncs[[1]] %>% fortify %>%mutate(tree="black", alpha=1, lwd=4)), lapply(bncs[2:200], function(x) x %>% fortify %>% mutate(tree="snow4", alpha=0.1, lwd=1)))
+#ggdensitree(trees.fort, aes(colour=tree)) + geom_tiplab(colour='black')                       
+                       
+ggdensitree(trees.fort, layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, aes(color=tree, alpha=alpha)) + geom_tiplab(cex=1) + scale_color_manual(values=c('black', 'snow4'))
+ggdensitree(rev(trees.fort), layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, aes(color=tree, alpha=alpha)) + geom_tiplab(cex=1) + scale_color_manual(values=c('black', 'snow4'))
 
 ggtree(anc[[1]])
 ggtree(ans[[1]])
