@@ -280,7 +280,7 @@ ksp=ggplot(ks[!is.na(ks$speciesLabel),], aes(x=V17,  color=ploidy, fill=ploidy))
     
 ## densit isn't in this file - done in sp_tree densitree :( will combine in a true figure code when I'm happy!!
 ### densit=ggdensitree(ancs[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, color="ivory4", alpha=.1,)
-densit=ggdensitree(rev(trees.fort), layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, aes(color=tree, alpha=alpha, lwd=lwd)) + scale_color_manual(values=c('black', 'snow4'))+ theme(legend.position = "none") + scale_size_manual(values=c(1,1.5))
+densit=ggdensitree(rev(trees.fort), layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, aes(color=tree, alpha=alpha)) + scale_color_manual(values=c('black', 'snow4'))+ theme(legend.position = "none") 
 
                                 
 #plot_grid( hgs, cpb,ksp, aap,  align='hv',axis='tb', ncol=4, rel_widths=c(0.7,0.3,0.18,0.2), labels=c('b', 'c', 'd', 'e'))
