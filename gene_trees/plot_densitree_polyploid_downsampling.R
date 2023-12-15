@@ -56,6 +56,11 @@ a=do.call('c', outtrees[which(outdf$meanBS>50  & outdf$ntaxa==35)]) ## 35 for no
 
 a=root(a, 'pvagin')
 a=drop.tip(a, 'pvagin')
+
+a=do.call('c', lapply(a, function(x){ root(x, 'pvagin', resolve.root = TRUE)}))
+a=do.call('c', lapply(a, function(x){ drop.tip(x, 'pvagin')}))
+
+                    
 t2=drop.tip(rsp, c('svirid', 'bdista', 'osativ', 'tdacs2', 'tdacn2', 'tdactm', 'tzopol', 'zmB735', 'pvagin'))
 ## rotate nodes to put zea-(dactyloides/zapolotense) closer
 #t2=rotateNodes(t2, MRCA(t2, c('tdacs1', 'tzopol')))
