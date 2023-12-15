@@ -55,7 +55,8 @@ a=do.call('c', outtrees[which(outdf$minBS>30 & outdf$meanBS>70 & outdf$ntaxa==36
 a=do.call('c', outtrees[which(outdf$meanBS>50  & outdf$ntaxa==35)]) ## 35 for no b73 - change back!
 
 a=root(a, 'pvagin')
-t2=drop.tip(rsp, c('svirid', 'bdista', 'osativ', 'tdacs2', 'tdacn2', 'tdactm', 'tzopol', 'zmB735'))
+a=drop.tip(a, 'pvagin')
+t2=drop.tip(rsp, c('svirid', 'bdista', 'osativ', 'tdacs2', 'tdacn2', 'tdactm', 'tzopol', 'zmB735', 'pvagin'))
 ## rotate nodes to put zea-(dactyloides/zapolotense) closer
 #t2=rotateNodes(t2, MRCA(t2, c('tdacs1', 'tzopol')))
 t2=rotateConstr(t2, rev(t2$tip.label)) ## plots bottom to top
@@ -148,7 +149,7 @@ ggdensitree(ancs[1:200], lwd=1,,tip.order=names(rev(taxonnames)), align.tips=T, 
 
                        
 # Plot multiple trees with aligned tips with tip labels and separate tree colors
-trees.fort <- c(list(bncs[[1]] %>% fortify %>%mutate(tree="black", alpha=1, lwd=4)), lapply(bncs[2:200], function(x) x %>% fortify %>% mutate(tree="snow4", alpha=0.1, lwd=1)))
+trees.fort <- c(list(bncs[[1]] %>% fortify %>%mutate(tree="black", alpha=1, lwd=2)), lapply(bncs[2:200], function(x) x %>% fortify %>% mutate(tree="snow4", alpha=0.1, lwd=1)))
 #ggdensitree(trees.fort, aes(colour=tree)) + geom_tiplab(colour='black')                       
                        
 ggdensitree(trees.fort, layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, aes(color=tree, alpha=alpha)) + geom_tiplab(cex=1) + scale_color_manual(values=c('black', 'snow4'))
