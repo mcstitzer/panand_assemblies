@@ -2,12 +2,20 @@ library(rtracklayer)
 library(dplyr)
 library(data.table)
 library(stringr)
+library(plyranges)
+library(ggplot2)
+library(cowplot)
+theme_set(theme_cowplot())
 
 all=read.table('../panand_sp_ploidy.txt')
 all=all[!all$V2 %in% c('pprate', 'tdactm', 'tzopol', 'osativ', 'bdista', 'agerjg', 'svirid', 'eophiu'),]
 
 genomecountlist=vector(mode = "list", length = length(all$V2))
 names(genomecountlist)=all$V2
+
+repeatlengthslist=vector(mode = "list", length = length(all$V2))
+names(repeatlengthslist)=all$V2
+
 
 for( genotype in all$V2){
 ##import gff3
@@ -17,15 +25,19 @@ temp=data.frame(a) #%>% group_by(fam=gsub('_LTR', '', gsub('_INT', '', Name)), C
 if('Note' %in% colnames(temp)){temp$Note=''}
 if(genotype=='zmB735'){temp$Parent=''
                       temp$ltr_identity=NA
-                      temp=temp[,colnames(genomecountlist[[1]])]}
+                      temp=temp[,colnames(temp) %in% colnames(genomecountlist[[1]])]}
+  if(genotype=='znicar'){ ## these guys edta is weird - chr not named with chr!!
+                      temp$seqnames[temp$seqnames %in% 1:10]=paste0('chr', temp$seqnames[temp$seqnames %in% 1:10])}
 temp$genome=genotype
 
 genomecountlist[[genotype]]=temp
-
+repeatlengthslist[[genotype]]=sum(width(reduce(a, ignore.strand=T)))
 }
 
 genomecount=do.call(rbind, genomecountlist)
 genomecount$Identity=as.numeric(genomecount$Identity)
+
+write.table(data.frame(genome=names(repeatlengthslist), repeatbp=unlist(repeatlengthslist)),'total_repeat_bp.txt', row.names=F, col.names=T, sep='\t')
 
 ## add a superfamily based on matchign up to the classification field - note most of these NAs are relics from the B73 annotation being included!!!!!
 genomecount$sup=c(NA, 'DTA', 'DTC', 'DTH', 'DTM', 'DTT', 'DHH', NA,NA,NA,NA,NA,NA,'RLC', 'RLG', 'RLG', 'RLX', 'DTA', 'DTC', 'DTH', 'DTM', 'DTT', NA,NA,NA)[match(genomecount$Classification, c("Cent/CentC", "DNA/DTA", "DNA/DTC", "DNA/DTH", "DNA/DTM", "DNA/DTT", 
@@ -39,6 +51,8 @@ genomecount$sup=c(NA, 'DTA', 'DTC', 'DTH', 'DTM', 'DTT', 'DHH', NA,NA,NA,NA,NA,N
 genomecount$sup[genomecount$source=='TRASH']='TandemRepeat'
 
 
+
+  agc=unlist(reduce(split(as_granges(genomecount, keep_mcols=T), ~c(Name,genome)))) ## merge bookended or overlapping TRs if they're the same repeat consensus
 
 
 ## simple count per genome
@@ -64,7 +78,9 @@ nbp=data.frame(genome=gcng$genome, DTA=gcng$`DNA/DTA`+gcng$`MITE/DTA`, DTC=gcng$
                   DTM=gcng$`DNA/DTM`+gcng$`MITE/DTM`, DTT=gcng$`DNA/DTT`+gcng$`MITE/DTT`, DHH=gcng$`DNA/Helitron`, 
                   RLC=gcng$`LTR/Copia`, RLG=gcng$`LTR/Gypsy`, RLX=gcng$`LTR/unknown`)
 
-
+## get statistics for the paper!
+gs=read.table('../panand_')
+polyploids=gs$V2[gs$ploidy!='Diploid']
           
 t.test(rowSums(nfam[,-1])[nfam$genome%in%polyploids], rowSums(nfam[,-1])[!nfam$genome%in%polyploids])
 t.test(rowSums(ncopy[,-1])[nfam$genome%in%polyploids], rowSums(ncopy[,-1])[!ncopy$genome%in%polyploids])
@@ -99,9 +115,17 @@ genecountlist[[i]]=data.frame(a)
 genes=do.call(rbind, genecountlist)
 genes=genes[genes$type=='gene',]
     
-
+## simple counts of repeats
+pdf(paste0('~/transfer/chromosomes_panand.', Sys.Date(), '.pdf'), 20, 10)
+for(genome in unique(genomecount$genome)){
+for(i in unique(genomecount$seqnames[genomecount$end>50e6 & genomecount$genome==genome])){
+print(ggplot(genomecount[genomecount$seqnames==i & genomecount$genome==genome,], aes(x=start, fill=factor(sup))) + 
+geom_histogram(binwidth=1e6, position='stack') + ggtitle(paste0(genome, i)))}
+}
+dev.off()
 
 ### these edta annotations look really bad at centromeres - they're either calling dtm or rlc in these regions
+### fixed that with trash!!!!
 ### instead, weight by amount of sequence to see if it's actually that bad??
 
 pdf(paste0('~/transfer/chromosomes_panand.mbscaled.genes.', Sys.Date(), '.pdf'), 20, 10)
