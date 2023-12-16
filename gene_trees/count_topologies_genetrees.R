@@ -192,7 +192,10 @@ ggplot(asize, aes(x=doubledAssembly/1e9/2, y=flow/1000, color=ploidy)) +  scale_
 dev.off()
 
 ## also write means in text
-asize %>% group_by(ploidy) %>% summarize(flow=mean(flow, na.rm=T), gs=mean(doubledAssembly/2, na.rm=T))
+asize %>% group_by(ploidy) %>% summarize(flow=mean(flow, na.rm=T), gs=mean(doubledAssembly/2, na.rm=T), repeats=mean(haploidRepeatSize, na.rm=T))
+summary(asize$haploidRepeatSize/asize$haploidAssemblySize)
+
+                                
 ## MAKE SURE I HAVE THIS
 asize$haploidAssemblySize=asize$doubledAssembly/2
 
@@ -279,7 +282,7 @@ dev.off()
          library(gridGraphics)                                     
 pdf(paste0('~/transfer/genetree_synteny.fig1combo.', Sys.Date(), '.pdf'), 11,10)
 ## "haploid" assembly size
-hgs=ggplot(asize, aes(x=doubledAssembly/1e9/2, y=1, color=ploidy)) + geom_segment(aes(y=1,yend=1, x=0, xend=doubledAssembly/1e9/2)) + geom_vline(xintercept=c(2,4), color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow3', linetype='dotted') + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) + geom_point(size=4)+ geom_point(aes(x=haploidRepeatSize/1e9, bg=ploidy), shape=25, size=4)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', '\\*'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Haploid Size (Gb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+hgs=ggplot(asize, aes(x=doubledAssembly/1e9/2, y=1, color=ploidy)) + geom_segment(aes(y=1,yend=1, x=0, xend=doubledAssembly/1e9/2)) + geom_vline(xintercept=c(2,4), color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow3', linetype='dotted') + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) + geom_point(size=4)+ geom_point(aes(x=haploidRepeatSize/1e9, bg=ploidy, y=1.6), shape=25, size=3)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', '\\*'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Haploid Size (Gb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + ylim(0,2)
 ## copy bar plots, no label
 cpb=ggplot(tppp[tppp$doubledCount%in% 1:6 & !is.na(tppp$species),], aes(x=doubledCount, y=value, group=ploidy, fill=ploidy)) + geom_hline(yintercept=0, color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow2', linetype='dotted') + geom_vline(xintercept=c(2,4,6), color='snow3', linetype='dotted') + geom_histogram(stat='identity', position='stack') + 
         facet_wrap(~speciesLabel, ncol=1, strip.position='left') + scale_fill_manual(values=ploidycolors) +   theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text.y=element_blank(), axis.text.x=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 3)
