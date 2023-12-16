@@ -199,7 +199,7 @@ summary(asize$haploidRepeatSize/asize$haploidAssemblySize)
 ## MAKE SURE I HAVE THIS
 asize$haploidAssemblySize=asize$doubledAssembly/2
 
-asize$rawAssemblySize=asize$assemblySize
+asize$rawAssemblySize=asize$V3
 asize$rawRepeatSize=asize$repeatbp
 write.table(asize[,c('V2', 'haploid', 'species', 'speciesLabel', 'ploidy', 'flow', 'rawAssemblySize', 'haploidAssemblySize', 'rawRepeatSize', 'haploidRepeatSize')], '~/transfer/panand_assembly_sizes.txt', sep='\t', quote=F, row.names=F, col.names=T)
 
