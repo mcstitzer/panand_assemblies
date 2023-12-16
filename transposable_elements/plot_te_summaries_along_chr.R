@@ -77,9 +77,21 @@ names(genecountlist)=all$V2
 for( i in all$V2){
 ##import gff3
   if(i!='zluxur'){
+    if(!i %in% c('sbicol', 'zmB735')){
 a=import.gff3(Sys.glob(paste0('../genes/', all$V1[all$V2==i], '*.2.gff3')))
+      }
+    if(i=='sbicol'){
+      a=import.gff3('../genes/Sorghum_bicolor.Sorghum_bicolor_NCBIv3.55.gff3')
+      mcols(a)=mcols(a)[,colnames(mcols(a)) %in% colnames(genecountlist[[1]])]
+      mcols(a)$canonical_transcript=NA
+    }
+    if(i=='zmB735'){
+      a=import.gff3('../genes/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.gff3')
+      mcols(a)=mcols(a)[,colnames(mcols(a)) %in% colnames(genecountlist[[1]])]
+      }
 ## get each fam
 a$genome=i
+a$Name=NULL ## remove Name from liftoff genes
 genecountlist[[i]]=data.frame(a)
 }
 }
