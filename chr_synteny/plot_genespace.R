@@ -33,12 +33,13 @@ gsParam$synteny$blast$synHits=sapply(gsParam$synteny$blast$synHits, function(x) 
 
 ## order bottom to top!!!
 #rip=c('zB73v5', 'zluxur', 'tdacs1', 'tdacn1', 'udigit', 'vcuspi', 'hcompr', 'etrips', 'avirgi', 'achine', 'agerar', 'hconto', 'ppanic', 'sbicol', 'snutan', 'pvagin')
-rip=c('pvagin', 'sbicol', 'ppanic', 'hconto', 'avirgi', 'etrips', 'udigit', 'tdacn1', 'tdacs1', 'zdgigi', 'zTIL25', 'zB73v5')
-simpledips=c('pvagin', 'sbicol', 'avirgi', 'tdacn1', 'tdacs1', 'zdgigi', 'zTIL25', 'zB73v5')
-                                     
+rip=c('pvagin', 'sbicol', 'ppanic', 'hconto', 'avirgi', 'etrips', 'udigit', 'tdacn1', 'tdacs1', 'znicar', 'zTIL25', 'zB73v5')
+simpledips=c('pvagin', 'sbicol', 'avirgi', 'tdacn1', 'tdacs1', 'znicar', 'zTIL25', 'zB73v5')
+otherpoly=c('pvagin', 'sbicol', 'avirgi', 'hconto', 'udigit')
+                                      
 ggthemes <- ggplot2::theme(
   panel.background = ggplot2::element_rect(fill = "white"))
-pdf('~/transfer/rip_plot.pdf',10,10)
+pdf('~/transfer/rip_plot.pdf',10,6)
 um=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=rip,
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=10e6, ## since we're using chr size, we're only doing 10 Mb scafs
@@ -48,8 +49,8 @@ um=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genom
 
 ##if need to invert specific chr
 invchr <- data.frame(
-  genome = c("avirgi", "avirgi", "avirgi", "avirgi"), 
-  chr = c('chr5','chr1','chr10','chr7'))
+  genome = c("avirgi", "avirgi", "avirgi", "avirgi", rep(c('tdacs1', 'tdacn1'),each=6), 'znicar', 'zTIL25', 'zB73v5', 'znicar', 'zTIL25', 'zB73v5'), 
+  chr = c('chr5','chr1','chr10','chr7', rep(paste0('chr', c(10,3,2,6,9,14)),2), 'chr1', 'chr1', 'chr1', 'chr6', 'chr6', 'chr6'))
 excuse=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=simpledips,
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=10e6, ## since we're using chr size, we're only doing 10 Mb scafs
@@ -64,6 +65,18 @@ me=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genom
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
                     )
 ## wtf does this store these these stupid way jsut let me plot
+
+invchr <- data.frame(
+  genome = c("avirgi", "avirgi", "avirgi", "avirgi", rep(c('tdacs1', 'tdacn1'),each=6), 'znicar', 'zTIL25', 'zB73v5', 'znicar', 'zTIL25', 'zB73v5'), 
+  chr = c('chr5','chr1','chr10','chr7', rep(paste0('chr', c(10,3,2,6,9,14)),2), 'chr1', 'chr1', 'chr1', 'chr6', 'chr6', 'chr6'))
+excuse=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=otherpoly,
+                     useOrder=F, ## keep chr position info there!!!
+                     minChrLen2plot=10e6, ## since we're using chr size, we're only doing 10 Mb scafs
+                     invertTheseChrs = invchr,
+                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
+                    )
+
 dev.off()
 
 
