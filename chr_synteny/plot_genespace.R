@@ -35,7 +35,7 @@ gsParam$synteny$blast$synHits=sapply(gsParam$synteny$blast$synHits, function(x) 
 #rip=c('zB73v5', 'zluxur', 'tdacs1', 'tdacn1', 'udigit', 'vcuspi', 'hcompr', 'etrips', 'avirgi', 'achine', 'agerar', 'hconto', 'ppanic', 'sbicol', 'snutan', 'pvagin')
 rip=c('pvagin', 'sbicol', 'ppanic', 'hconto', 'avirgi', 'etrips', 'udigit', 'tdacn1', 'tdacs1', 'znicar', 'zTIL25', 'zB73v5')
 simpledips=c('pvagin', 'sbicol', 'avirgi', 'tdacn1', 'tdacs1', 'znicar', 'zTIL25', 'zB73v5')
-otherpoly=c('pvagin', 'sbicol', 'avirgi', 'hconto', 'udigit')
+otherpoly=c('pvagin', 'sbicol',  'hconto', 'hcompr','udigit')
                                       
 ggthemes <- ggplot2::theme(
   panel.background = ggplot2::element_rect(fill = "white"))
