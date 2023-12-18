@@ -52,7 +52,7 @@ genomecount$sup[genomecount$source=='TRASH']='TandemRepeat'
 
 
 
-  agc=unlist(reduce(split(as_granges(genomecount, keep_mcols=T), ~c(Name,genome)))) ## merge bookended or overlapping TRs if they're the same repeat consensus
+#  agc=unlist(reduce(split(as_granges(genomecount, keep_mcols=T), ~c(Name,genome)))) ## merge bookended or overlapping TRs if they're the same repeat consensus
 
 
 ## simple count per genome
@@ -79,12 +79,19 @@ nbp=data.frame(genome=gcng$genome, DTA=gcng$`DNA/DTA`+gcng$`MITE/DTA`, DTC=gcng$
                   RLC=gcng$`LTR/Copia`, RLG=gcng$`LTR/Gypsy`, RLX=gcng$`LTR/unknown`)
 
 ## get statistics for the paper!
-gs=read.table('../panand_')
-polyploids=gs$V2[gs$ploidy!='Diploid']
-          
-t.test(rowSums(nfam[,-1])[nfam$genome%in%polyploids], rowSums(nfam[,-1])[!nfam$genome%in%polyploids])
-t.test(rowSums(ncopy[,-1])[nfam$genome%in%polyploids], rowSums(ncopy[,-1])[!ncopy$genome%in%polyploids])
-t.test(rowSums(nbp[,-1])[nfam$genome%in%polyploids], rowSums(nbp[,-1])[!nbp$genome%in%polyploids])
+gs=read.table('~/transfer/panand_assembly_sizes.txt', header=T, sep='\t')
+cor.test(gs$haploidAssemblySize, gs$haploidRepeatSize)
+gs$polyploid=gs$ploidy!='Diploid'
+t.test(gs$haploidAssemblySize[gs$polyploid], gs$haploidAssemblySize[!gs$polyploid])
+t.test(gs$haploidRepeatSize[gs$polyploid]/gs$haploidAssemblySize[gs$polyploid], gs$haploidRepeatSize[!gs$polyploid]/gs$haploidAssemblySize[!gs$polyploid])
+t.test(gs$haploidRepeatSize[gs$polyploid & gs$ploidy!='Paleotetraploid']/gs$haploidAssemblySize[gs$polyploid & gs$ploidy!='Paleotetraploid'], gs$haploidRepeatSize[!gs$polyploid & gs$ploidy!='Paleotetraploid']/gs$haploidAssemblySize[!gs$polyploid & gs$ploidy!='Paleotetraploid'])
+
+t.test(rowSums(nfam[,-1])[nfam$genome%in%gs$V2[gs$polyploid]], rowSums(nfam[,-1])[nfam$genome%in%gs$V2[!gs$polyploid]])
+t.test(rowSums(ncopy[,-1])[nfam$genome%in%gs$V2[gs$polyploid]], rowSums(ncopy[,-1])[ncopy$genome%in%gs$V2[!gs$polyploid]])
+t.test(rowSums(nbp[,-1])[nfam$genome%in%gs$V2[gs$polyploid]], rowSums(nbp[,-1])[nbp$genome%in%gs$V2[!gs$polyploid]])
+t.test(rowSums(nfam[,-1])[nfam$genome%in%gs$V2[gs$polyploid& gs$ploidy!='Paleotetraploid']], rowSums(nfam[,-1])[nfam$genome%in%gs$V2[!gs$polyploid& gs$ploidy!='Paleotetraploid']])
+t.test(rowSums(ncopy[,-1])[nfam$genome%in%gs$V2[gs$polyploid& gs$ploidy!='Paleotetraploid']], rowSums(ncopy[,-1])[ncopy$genome%in%gs$V2[!gs$polyploid& gs$ploidy!='Paleotetraploid']])
+t.test(rowSums(nbp[,-1])[nfam$genome%in%gs$V2[gs$polyploid& gs$ploidy!='Paleotetraploid']], rowSums(nbp[,-1])[nbp$genome%in%gs$V2[!gs$polyploid& gs$ploidy!='Paleotetraploid']])
 
          
 genecountlist=vector(mode = "list", length = length(all$V2))
