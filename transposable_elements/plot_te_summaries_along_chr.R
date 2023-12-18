@@ -113,12 +113,15 @@ t.test(rowSums(ncopy[,-1])[nfam$genome%in%gs$V2[gs$polyploid& gs$ploidy!='Paleot
 t.test(rowSums(nbp[,-1])[nfam$genome%in%gs$V2[gs$polyploid& gs$ploidy!='Paleotetraploid']], rowSums(nbp[,-1])[nbp$genome%in%gs$V2[!gs$polyploid& gs$ploidy!='Paleotetraploid']])
 
 ## make summaries of age
-ages=genomecount %>% dplyr::group_by(genome, Method) %>% dplyr::filter(grepl('LTR', type)) %>% dplyr::summarize(copies=dplyr::n(), meanage=mean(as.numeric(Identity), na.rm=T), nIdentical=sum(as.numeric(Identity)==1, na.rm=T)) %>% data.frame()                                  
+ages=genomecount %>% dplyr::group_by(genome, Method) %>% dplyr::filter(grepl('LTR', type)) %>% dplyr::summarize(copies=dplyr::n(), meanage=mean(as.numeric(Identity), na.rm=T), meanage90=mean(as.numeric(Identity)[as.numeric(Identity)>0.9], na.rm=T), nIdentical=sum(as.numeric(Identity)==1, na.rm=T), nYoung=sum(as.numeric(Identity)>0.99, na.rm=T)) %>% data.frame()                                  
 gs$meanage=ages$meanage[match(gs$V2, ages$genome)]
+gs$meanage90=ages$meanage90[match(gs$V2, ages$genome)]
 gs$nIdentical=ages$nIdentical[match(gs$V2, ages$genome)]
+gs$nYoung=ages$nYoung[match(gs$V2, ages$genome)]
 gs$propIdentical=gs$nIdentical/ages$copies[match(gs$V2, ages$genome)]
+gs$propYoung=gs$nYoung/ages$copies[match(gs$V2, ages$genome)]
 
-solos=genomecount %>% dplyr::group_by(genome, Method) %>% dplyr::filter(grepl('LTR', type)) %>% dplyr::summarize(copies=dplyr::n(), nInt=sum(grepl('_INT', Name) & width>1000 & width<50000, na.rm=T), nLTR=sum(grepl('_LTR', Name) & width>100 & width<5000, na.rm=T), nStructural=sum(!is.na(ltr_identity), na.rm=T)) %>% data.frame()                                  
+solos=genomecount %>% dplyr::group_by(genome, Method) %>% dplyr::filter(grepl('LTR', type)) %>% dplyr::summarize(copies=dplyr::n(), nInt=sum(grepl('_INT', Name) & width>1000 & width<50000, na.rm=T), nLTR=sum(grepl('_LTR', Name) & width>100 & width<3000, na.rm=T), nStructural=sum(!is.na(ltr_identity), na.rm=T)) %>% data.frame()                                  
 solos$nStructural[solos$Method=='homology']=solos$nStructural[solos$Method=='structural']
 solos$nIntact=solos$nStructural+solos$nInt
 solos$ratioLTRINT=(solos$nLTR-2*solos$nInt)/solos$nIntact
@@ -133,7 +136,7 @@ nfam100$ploidy=gs$ploidy[match(nfam100$genome, gs$V2)]
 nfam$ploidy[nfam$genome=='zmB735']='Paleotetraploid'
 nfam100$ploidy[nfam100$genome=='zmB735']='Paleotetraploid'
 nfam=nfam[!nfam$genome%in%c('tdacn2', 'tdacs2', 'zmB735'),] ## got to leave out b73 because it's annotated sooooo differently
-nfam100=nfam[!nfam100$genome%in%c('tdacn2', 'tdacs2', 'zmB735'),]
+nfam100=nfam100[!nfam100$genome%in%c('tdacn2', 'tdacs2', 'zmB735'),]
 nfam$totFam=rowSums(nfam[,2:10])
 nfam100$totFam=rowSums(nfam100[,2:10])
 
@@ -158,7 +161,9 @@ fa4=ggplot(nfam100, aes(x=ploidy, y=totFam, color=ploidy)) + geom_boxplot(outlie
                                       scale_color_manual(values=ploidycolors) + xlab('Ploidy') + ylab('TE family count (>100 copies)')+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 ag5=ggplot(gs, aes(x=ploidy, y=meanage, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid",label.y=0.89) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('LTR sequence identity') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
-id6=ggplot(gs, aes(x=ploidy, y=propIdentical, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) +ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid",label.y=0.011) +  
+ag590=ggplot(gs, aes(x=ploidy, y=meanage90, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid",label.y=0.89) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('LTR sequence identity') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+id6=ggplot(gs, aes(x=ploidy, y=propYoung, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) +ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid",label.y=0.011) +  
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Proportion LTRs Identical') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 tebpident=ggplot(gs, aes(x=propIdentical,y=haploidRepeatSize,  color=ploidy)) + geom_point()  + #theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + #ggpubr::stat_compare_means(comparisons=lapply(1:3, function(x) c(combn(unique(gr$group)[1:3], 2)[1,x], combn(unique(gr$group)[1:3], 2)[2,x])),label = 'p.signif', show.legend = F) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + ylab('TE base pairs') + xlab('Proportion LTRs Identical') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
@@ -172,10 +177,17 @@ plot_grid(bp1 + theme(legend.position='NULL'), pr2+ theme(legend.position='NULL'
           legend, nrow=1,labels=c('a', 'b', 'c', 'd', ''))
 plot_grid(tebpident + theme(legend.position='NULL'), tepropident+ theme(legend.position='NULL'), ag5+ theme(legend.position='NULL'), id6+ theme(legend.position='NULL'),
           legend, nrow=1,labels=c('a', 'b', 'c', 'd', ''))
-plot_grid(bp1 + theme(legend.position='NULL'), pr2+ theme(legend.position='NULL'), fa3+ theme(legend.position='NULL'), ag5+ theme(legend.position='NULL'), id6 + theme(legend.position='NULL'),
-          legend, nrow=1,labels=c('a', 'b', 'c', 'd', 'e', ''))
+plot_grid(bp1 + theme(legend.position='NULL'), pr2+ theme(legend.position='NULL'), fa3+ theme(legend.position='NULL'), ag5+ theme(legend.position='NULL'), tepropident+ theme(legend.position='NULL'),
+          legend, align='hv', nrow=1,labels=c('a', 'b', 'c', 'd', 'e', ''))
                                                                                                                                                                                                                                                                                                                               
 dev.off()
+
+pdf(paste0('~/transfer/te_panand_fig5.', Sys.Date(), '.pdf'), 15,4)
+plot_grid(bp1 + theme(legend.position='NULL'), pr2+ theme(legend.position='NULL'), fa3+ theme(legend.position='NULL'), fa4+ theme(legend.position='NULL'), ag5+ theme(legend.position='NULL'),
+          legend, align='hv', nrow=1,labels=c('a', 'b', 'c', 'd', 'e', ''))
+                                                                                                                                                                                                                                                                                                                              
+dev.off()
+
 
 #### read in genes!
 genecountlist=vector(mode = "list", length = length(all$V2))
