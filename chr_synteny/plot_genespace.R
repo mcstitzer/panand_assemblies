@@ -134,16 +134,21 @@ dev.off()
 # maybe this wil update?!?!?!
 hexaploid$plotData$ggplotObj + scale_y_continuous(labels = c('P. vaginatum', 'A. gerardi', 'B. laguroides', 'H. compressa', 'U. digitatum'))
 
-pdf(paste0('~/transfer/rip_plot.', Sys.Date(), '.pdf'), 8,8)
+pdf(paste0('~/transfer/rip_plot.', Sys.Date(), '.pdf'), 10,8)
 ## to switch out my own taxon names, use this!! in glab
 #scale_y_continuous(breaks = (glab$y1+glab$y2)/2, labels = glab$genome, expand = c(0.01, 0.01), name = NULL)
 # maybe this wil update?!?!?! - have to separately load ggplot2 lib
 hex=hexaploid$plotData$ggplotObj + scale_y_continuous(labels = c('P. vaginatum', 'A. gerardi', 'B. laguroides', 'H. compressa', 'U. digitatum')) + ylab('')
-tet=tetraploid$plotData$ggplotObj + scale_y_continuous(labels = c('P. vaginatum', 'S. nutans', 'H. contortus', 'C. citratus', 'A. chinensis', 'S. scoparium', 'E. tripsacoides', 'V. cuspidata')) + yla
-b('')
-dip=diploid$plotData$ggplotObj + scale_y_continuous(labels = c('P. vaginatum', 'C. serrulatus', 'I. rugosum', 'S. bicolor', 'P. paniceum', 'T. triandra', 'C. refracta', 'A. virginicus', 'S. microstac
-hyum', 'R. tuberosum')) + ylab('')
-ptet=paleotetraploid$plotData$ggplotObj + scale_y_continuous(labels = c('P. vaginatum', 'T. dactyloides KS', 'T. dactyloides FL', 'Z. diploperennis Gigi', 'Z. diploperennis Momo', 'Z. nicaraguensis',
- 'Z. mays ssp. mexicana TIL25', 'Z. mays ssp. mexicana TIL18', 'Z. mays ssp. parviglumis TIL01', 'Z. mays ssp. parviglumis TIL11', 'Z. mays ssp. mays B73v5)) + ylab('')
-plot_grid(dip, tet, ptet, hex, align='hv', labels=c('a Diploid', 'b Tetraploid', 'c Paleotetraploid', 'd Hexaploid'), ncol=2)
+tet=tetraploid$plotData$ggplotObj + scale_y_continuous(labels = c('P. vaginatum', 'S. nutans', 'H. contortus', 'C. citratus', 'A. chinensis', 'S. scoparium', 'E. tripsacoides', 'V. cuspidata')) + ylab('')
+dip=diploid$plotData$ggplotObj + scale_y_continuous(labels = c('P. vaginatum', 'C. serrulatus', 'I. rugosum', 'S. bicolor', 'P. paniceum', 'T. triandra', 'C. refracta', 'A. virginicus', 'S. microstachyum', 'R. tuberosum')) + ylab('')
+ptet=paleotetraploid$plotData$ggplotObj + scale_y_continuous(labels = c('P. vaginatum', 'T. dactyloides KS', 'T. dactyloides FL', 'Z. diploperennis Gigi', 'Z. diploperennis Momo', 'Z. nicaraguensis', 'Z. mays ssp. mexicana TIL25', 'Z. mays ssp. mexicana TIL18', 'Z. mays ssp. parviglumis TIL01', 'Z. mays ssp. parviglumis TIL11', 'Z. mays ssp. mays B73v5')) + ylab('')
+#plot_grid(dip, tet, ptet, hex, align='hv', labels=c('a Diploid', 'b Tetraploid', 'c Paleotetraploid', 'd Hexaploid'), ncol=2)
+plot_grid(plot_grid(diploid$plotData$ggplotObj, tetraploid$plotData$ggplotObj,  hex, align='hv', labels=c('a Diploid', 'b Tetraploid', 'c  Hexaploid'), 
+ncol=3, rel_widths=c(0.5,1,1)),
+paleotetraploid$plotData$ggplotObj, ncol=1, rel_heights=c(1,1.5), labels=c('', 'd Paleotetraploid'))
+
+plot_grid(plot_grid(diploid$plotData$ggplotObj, tetraploid$plotData$ggplotObj,  hex, align='hv', labels=c('a Diploid', 'b Tetraploid', 'c  Hexaploid'), 
+ncol=3, rel_widths=c(1,1,1)),
+paleotetraploid$plotData$ggplotObj, ncol=1, rel_heights=c(1,1.5), labels=c('', 'd Paleotetraploid'))
+
 dev.off()
