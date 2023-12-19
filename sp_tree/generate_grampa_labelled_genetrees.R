@@ -44,8 +44,9 @@ awt=drop.tip(awt, awt$tip.label[grepl('bdista', awt$tip.label)])
 awt=drop.tip(awt, awt$tip.label[grepl('svirid', awt$tip.label)])
 
 ## grampa needs blank_species, so use gene name, _, species
-awt$tip.label=paste0(str_split_fixed(filenames[i], '\\.',2)[,2], '_', awt$tip.label)
-      
+awt$tip.label=paste0(str_split_fixed(filenames[i], '\\.',2)[,2], 1:length(awt$tip.label), '_', awt$tip.label) ## not sure, addign in 1:length(awt$tip.label), to see if unique first part is necesary??
+awt$edge.length=NULL
+awt$node.label=NULL      
 return(awt)
 }
 }
@@ -58,3 +59,4 @@ d=do.call("c",b)
 
 
 write.tree(d, paste0('paspalum_anchors_forgrampa.', Sys.Date(), '.tre'))
+write.tree(d[1:100], paste0('paspalum_anchors_forgrampa.test.', Sys.Date(), '.tre'))
