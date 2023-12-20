@@ -22,18 +22,23 @@ sgb73=sg[grepl('zB73v5', sg$V1),]
 sgb73$queryChr=gsub('zB73v5\\.','', sgb73$V1)
 ## this was a bad idea: sgb73$referenceChr=gsub('zB73v5\\.','', sgb73$V1) ## jsut do both so i can use it for both :)
 ## poor mans chromosome lengths
-chrlen=b %>% group_by(queryChr) %>% summarize(xmax=max(queryEnd))
+chrlen=b %>% group_by(queryChr) %>% summarize(xmax=max(referenceEnd))
 sgb73$xmax= chrlen$xmax[match(sgb73$queryChr,chrlen$queryChr)]
-sg$referenceStart=NA
-sg$queryStart=NA
+sgb73$referenceStart=NA
+sgb73$queryStart=NA
 
 pdf('~/transfer/B73v5-tripsacumS.onepathSG.pdf', 16,9)
 ##  trip on x, maize on y
 ggplot(b, aes(x=referenceStart/1e6, y=queryStart/1e6))  + facet_grid(factor(queryChr, levels=c(paste0('chr', 1:10)))~factor(refChr, levels=c(paste0('chr', 1:18))),space='free', scales='free', switch='y')  + xlab('Tripsacum dactyloides chromosome position (Mb)') + ylab('Zea mays chromosome position (Mb)')+theme(strip.text.y.left = element_text(angle = 0), axis.text.x=element_text(angle=45, size=8), axis.text.y=element_text(size=8)) + 
        geom_rect(data=sgb73, inherit.aes=F, aes(xmin=0, xmax=xmax/1e6, ymin=V2/1e6, ymax=V3/1e6, fill=V13), alpha=0.1) + geom_point()+ scale_fill_manual(values=c('red', 'blue'))
 
+ggplot(b, aes(x=referenceStart/1e6, y=queryStart/1e6))  + facet_grid(factor(queryChr, levels=c(paste0('chr', 1:10)))~factor(refChr, levels=c(paste0('chr', c(1,5,8,2,9,14,17,7,10,12,13,3,6,16,4,15,11,18)))),space='free', scales='free', switch='y')  + xlab('Tripsacum dactyloides chromosome position (Mb)') + ylab('Zea mays chromosome position (Mb)')+theme(strip.placement = "outside", strip.text.y.left = element_text(angle = 0), axis.text.x=element_text(angle=45, size=8), axis.text.y=element_text(size=8)) + 
+       geom_rect(data=sgb73, inherit.aes=F, xmax=Inf, aes(xmin=0,  ymin=V2/1e6, ymax=V3/1e6, fill=V13), alpha=0.1) + geom_point()+ scale_fill_manual(values=c('red', 'blue'))
+
+
+
 ggplot(d, aes(y=referenceStart/1e6, x=queryStart/1e6))  + facet_grid(factor(refChr, levels=c(paste0('chr', 1:10)))~factor(queryChr, levels=c(paste0('chr', 1:18))),space='free', scales='free', switch='y')  + xlab('Tripsacum dactyloides chromosome position (Mb)') + ylab('Zea mays chromosome position (Mb)')+theme(strip.text.y.left = element_text(angle = 0), axis.text.x=element_text(angle=45, size=8), axis.text.y=element_text(size=8)) + 
-       geom_rect(data=sgb73, inherit.aes=F, aes(xmin=0, xmax=xmax/1e6, ymin=V2/1e6, ymax=V3/1e6, fill=V13), alpha=0.1) + geom_point()+ scale_fill_manual(values=c('red', 'blue'))
+       geom_rect(data=sgb73, inherit.aes=F, xmax=Inf, aes(xmin=0, ymin=V2/1e6, ymax=V3/1e6, fill=V13), alpha=0.1) + geom_point()+ scale_fill_manual(values=c('red', 'blue'))
 
 
 dev.off()
