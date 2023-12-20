@@ -97,7 +97,7 @@ ploidyphyletic=c(ploidycolorsmonophyletic, ploidycolorspolyphyletic)
 taxonnames=c("Zea mays ssp. parviglumis TIL11", "Zea mays ssp. mays B73v5", "Zea mays ssp. parviglumis TIL01", "Zea mays ssp. mexicana TIL25", "Zea mays ssp. mexicana TIL18", "Zea mays ssp. huehuetengensis", 
 "Zea luxurians", "Zea nicaraguensis", "Zea diploperennis Momo", "Zea diploperennis Gigi", "Tripsacum zoloptense", "Tripsacum dactyloides FL", "Tripsacum dactyloides Southern Hap2", 
 "Tripsacum dactyloides Northern Hap2", "Tripsacum dactyloides KS", "Tripsacum dactyloides tetraploid", "Urelytrum digitatum", "Vossia cuspidata", "Rhytachne rottboellioides", "Rottboellia tuberculosa", 
-"Hemarthria compressa", "Elionurus tripsacoides", "Schizachyrium scoparium", "Schizachyrium microstachyum", "Andropogon virginicus", "Andropogon chinensis", "Andropogon gerardi", 
+"Hemarthria compressa", "Elionurus tripsacoides", "Schizachyrium scoparium", "Schizachyrium microstachyum", "Anatherum virginicum", "Andropogon chinensis", "Andropogon gerardi", 
 "Cymbopogon refractus", "Cymbopogon citratus", "Heteropogon contortus", "Themeda triandra", "Bothriochloa laguroides", "Pogonatherum paniceum", "Sorghum bicolor", 
 "Ischaemum rugosum", "Sorghastrum nutans", '"Andropogon" burmanicus', "Thelepogon elegans", "Chrysopogon serrulatus", "Paspalum vaginatum")
 names(taxonnames)=c("zTIL11", "zmB735", "zTIL01", "zTIL25", "zTIL18", "zmhuet", 
@@ -256,8 +256,30 @@ names(subtribenames)=c("zTIL11", "zmB735", "zTIL01", "zTIL25", "zTIL18", "zmhuet
 "hcompr", "etrips", "sscopa", "smicro", "avirgi", "achine", "agerar", 
 "crefra", "ccitra", "hconto", "ttrian", "blagur", "ppanic", "sbicol", 
 "irugos", "snutan", "atenui", "telega", "cserru", "pvagin")
+
+subtribenamesSimple=c("Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", 
+"Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", 
+"Tripsacinae", "Tripsacinae", "Tripsacinae", "Rhytachninae", "Rhytachninae", "Rhytachninae", "Ratzeburgiinae", 
+"Ratzeburgiinae", "Ratzeburgiinae", "Andropogoninae", "Andropogoninae", "Andropogoninae", "Andropogoninae", "Andropogoninae", 
+"Anthistiriinae", "Anthistiriinae", "Anthistiriinae", "Anthistiriinae", "Anthistiriinae", "1", "2", 
+"3", "4", '5', "6", "7")#, "Paspalum vaginatum")
+## 1 Germainiinae
+## 2 Sorghinae
+## 3 Ischaeminae
+## 4 Apludinae
+## 5 incertae sedis
+## 6 incertae sedis
+## 7 Chrysopogoninae
                                 
-subtribedf=data.frame(subtribe=subtribenames, genome=names(subtribenames))
+names(subtribenamesSimple)=c("zTIL11", "zmB735", "zTIL01", "zTIL25", "zTIL18", "zmhuet", 
+"zluxur", "znicar", "zdmomo", "zdgigi", "tzopol", "tdacs1", "tdacs2", 
+"tdacn2", "tdacn1", "tdactm", "udigit", "vcuspi", "rrottb", "rtuber", 
+"hcompr", "etrips", "sscopa", "smicro", "avirgi", "achine", "agerar", 
+"crefra", "ccitra", "hconto", "ttrian", "blagur", "ppanic", "sbicol", 
+"irugos", "snutan", "atenui", "telega", "cserru")#, "pvagin")
+
+                                
+subtribedf=data.frame(subtribe=subtribenamesSimple, genome=names(subtribenamesSimple))
 subtribedf$haploid=(tg$homolog.state=='haploid')[match(subtribedf$genome, tg$V2)]
 subtribedf$species=taxonnames[match(subtribedf$genome, names(taxonnames))]
 subtribedf$species=factor(subtribedf$species, levels=taxonnames)
@@ -298,9 +320,20 @@ ggplot(asize, aes(x=doubledAssembly/1e9/2, y=1, color=ploidy)) + geom_segment(ae
 ggplot(ks, aes(x=V17,  color=ploidy, fill=ploidy)) + geom_density() + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) +  facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', '\\*'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Ks between duplicates') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
 
 ## subtribe labelling
-ggplot(subtribedf, aes(x=haploid, y=1))+ facet_nested_wrap(vars(subtribe, speciesLabel), dir='v', ncol=1,strip.position='left', axes='x', remove_labels='x') + theme(strip.placement='outside') + theme(panel.spacing = unit(3, "pt"))
+ggplot(subtribedf, aes(x=haploid, y=1))+ facet_nested_wrap(vars(subtribe, speciesLabel), dir='v', ncol=1,strip.position='left', axes='x', remove_labels='x', strip = strip_nested(
+      text_x = list(element_text(), element_blank())[c(rep(1, 12), rep(2, 39))],
+      background_x = list(element_rect(), element_blank())[c(rep(1, 12), rep(2, 39))]
+    )) + theme(strip.placement='outside') + theme(panel.spacing = unit(3, "pt")) + 
+                                theme(strip.text.y.left= element_text(face="bold", size=8,lineheight=5.0),strip.background = element_rect(fill="lightblue", colour="black",size=1))
                                 #facet_nested_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', '\\*'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Subtribe') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
-                                
+
+ggplot(subtribedf, aes(x=haploid, y=1))+ facet_nested_wrap(~subtribe+speciesLabel, dir='v', ncol=1,strip.position='left', axes='x', remove_labels='x', strip = strip_nested(
+      text_x = list(element_text(), element_blank())[c(rep(1, 12), rep(2, 39))],
+      background_x = list(element_rect(), element_blank())[c(rep(1, 12), rep(2, 39))]
+    )) + theme(strip.placement='outside') + theme(panel.spacing = unit(3, "pt")) + 
+                                theme(strip.text.y.left= element_text(face="bold", size=8,lineheight=5.0),strip.background = element_rect(fill="lightblue", colour="black",size=1))
+                                #facet_nested_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', '\\*'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Subtribe') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+                                           
 dev.off()
 
 
