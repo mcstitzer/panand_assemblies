@@ -69,8 +69,8 @@ me=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genom
 ## wtf does this store these these stupid way jsut let me plot
 
 invchr <- data.frame(
-  genome = c("avirgi", "avirgi", "avirgi", "avirgi", rep(c('tdacs1', 'tdacn1'),each=6), 'zTIL11', 'zTIL01', 'zTIL18', 'zdmomo', 'zdgigi','znicar', 'zTIL25', 'zB73v5', 'znicar', 'zTIL25', 'zB73v5','zTIL11', 'zTIL01', 'zTIL18', 'zdmomo', 'zdgigi'), 
-  chr = c('chr5','chr1','chr10','chr7', rep(paste0('chr', c(10,3,2,6,9,14)),2), 'chr1', 'chr1', 'chr1', 'chr1', 'chr1', 'chr1', 'chr1', 'chr1', 'chr6', 'chr6', 'chr6', 'chr6', 'chr6', 'chr6', 'chr6', 'chr6'))
+  genome = c("avirgi", "avirgi", "avirgi", "avirgi", rep(c('tdacs1', 'tdacn1'),each=6), 'zTIL11', 'zTIL01', 'zTIL18', 'zdmomo', 'zdgigi','znicar', 'zmhuet', 'zTIL25', 'zB73v5', 'znicar', 'zmhuet', 'zTIL25', 'zB73v5','zTIL11', 'zTIL01', 'zTIL18', 'zdmomo', 'zdgigi'), 
+  chr = c('chr5','chr1','chr10','chr7', rep(paste0('chr', c(10,3,2,6,9,14)),2), 'chr1', 'chr1', 'chr1', 'chr1', 'chr1', 'chr1', 'chr1', 'chr1', 'chr1', 'chr6', 'chr6', 'chr6', 'chr6', 'chr6', 'chr6', 'chr6', 'chr6', 'chr6'))
 excuse=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=otherpoly,
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=10e6, ## since we're using chr size, we're only doing 10 Mb scafs
@@ -80,16 +80,14 @@ excuse=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, g
                     )
 
 
-diploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'cserru', 'irugos', 'sbicol', 'ppanic', 'ttrian', 'crefra', 'avirgi', 'smicro', 'rtuber'),#all$V2
-[all$ploidy=='Diploid']),'telega',
+diploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'cserru', 'irugos', 'sbicol', 'ppanic', 'ttrian', 'crefra', 'avirgi', 'smicro', 'rtuber'),#all$V2[all$ploidy=='Diploid']),'telega',
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr,
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
                     )
-tetraploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'snutan', 'hconto', 'ccitra', 'achine', 'sscopa', 'etrips',  'vcuspi'), #all$V2[all$ploidy=='T
-etraploid']), #'atenui', 'rrottb',
+tetraploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'snutan', 'hconto', 'ccitra', 'achine', 'sscopa', 'etrips',  'vcuspi'), #all$V2[all$ploidy=='Tetraploid']), #'atenui', 'rrottb',
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr,
