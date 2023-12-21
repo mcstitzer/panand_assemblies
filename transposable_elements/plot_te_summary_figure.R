@@ -112,3 +112,19 @@ ggplot(amm[amm$variable!='tebp',], aes(x=doubledValue/(haploidAssemblySize*2), y
 dev.off()
 
 
+
+
+
+
+pdf(paste0('~/transfer/te_panand_fig5.', Sys.Date(), '.pdf'), 15,12)
+
+
+superfams=ggplot(amm[amm$variable!='tebp',], aes(x=doubledValue/(haploidAssemblySize*2), y=1, size=doubledValue/(haploidAssemblySize*2), color=ploidy)) +geom_hline(yintercept=1, linetype='dotted', alpha=0.5) + geom_vline(xintercept=0, linetype='dotted', color='snow3', alpha=0.5) + geom_point() + facet_grid(speciesLabel~factor(sup, levels=c('RLG', 'RLC', 'RLX', 'DHH', 'DTM', 'DTC', 'DTT','DTA', 'DTH', 'TR')), scales='free_x', space='free_x', switch='y', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"')))+ scale_color_manual(values=ploidycolors)+   theme( strip.background = element_blank(),  panel.spacing = unit(3, "pt"), axis.text.y=element_blank(), axis.text.x=element_text(size=9)) + theme(legend.position='none', strip.text.y.left = element_text(angle=0), strip.text.x = element_text(angle=90), axis.ticks.y=element_blank(), axis.text.y=element_blank(), axis.text.x = element_text(angle = 30)) + ylab('') + xlab('Genome Proportion') + scale_x_continuous(n.breaks = 3) 
+
+## these objects are all from plot_te_summaries_along_chr.R AAAHHHHHHH
+plot_grid(plot_grid(bp1 + theme(legend.position='NULL'), pr2+ theme(legend.position='NULL'), fa3+ theme(legend.position='NULL'), fa4+ theme(legend.position='NULL'), ag5+ theme(legend.position='NULL'),
+          legend, align='hv', nrow=1,rel_widths=c(1,1,1,1,1,0.4),labels=c('a', 'b', 'c', 'd', 'e', '')),
+          superfams, nrow=2, align='hv', rel_heights=c(0.5,1), labels=c('', 'f'))
+                                                                                                                                                                                                                                                                                                                              
+dev.off()
+                                            
