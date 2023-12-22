@@ -93,6 +93,8 @@ amm=merge(am,gs, by='V2')
 amm$doubledValue=amm$value
 amm$doubledValue[amm$haploid]=amm$doubledValue[amm$haploid]*2
 
+amm$prop=amm$value/(amm$haploidAssemblySize*2) ## proportion of genome for each, can change below in plotting code
+                                            
 oldnames=c("CACTA_TIR_transposon", "Copia_LTR_retrotransposon", "Gypsy_LTR_retrotransposon", 
 "hAT_TIR_transposon", "helitron", "LTR_retrotransposon", "Mutator_TIR_transposon", 
 "PIF_Harbinger_TIR_transposon", "tandem_repeat", "Tc1_Mariner_TIR_transposon")
@@ -128,3 +130,48 @@ plot_grid(plot_grid(bp1 + theme(legend.position='NULL'), pr2+ theme(legend.posit
                                                                                                                                                                                                                                                                                                                               
 dev.off()
                                             
+amm$ploidy=factor(amm$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+
+## do summaries like fig for each TE superfamily!!!
+pdf(paste0('~/transfer/te_panand_superfambox.', Sys.Date(), '.pdf'), 15,12)
+for(sup in unique(amm$variable)){
+
+bp1=ggplot(amm[amm$variable==sup,], aes(x=ploidy, y=value, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=2e9) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('TE base pairs') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+pr2=ggplot(amm[amm$variable==sup,], aes(x=ploidy, y=prop*100, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=50) + 
+                                      scale_color_manual(values=ploidycolors) + xlab('Ploidy') + ylab('TE proportion')+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+# fa3=ggplot(nfam, aes(x=ploidy, y=totFam, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=210000) + 
+#                                       scale_color_manual(values=ploidycolors) + xlab('Ploidy') + ylab('TE family count')+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+# fa4=ggplot(nfam100, aes(x=ploidy, y=totFam, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=23000) + 
+#                                       scale_color_manual(values=ploidycolors) + xlab('Ploidy') + ylab('TE family count (>100 copies)')+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+#ag5=ggplot(gs, aes(x=ploidy, y=meanage, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid",label.y=0.89) + 
+#                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('LTR sequence identity') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+print(plot_grid(bp1 + theme(legend.position='NULL')  + ggtitle(sup), pr2+ theme(legend.position='NULL') + ggtitle(sup),
+          legend, align='hv', nrow=1))
+  }
+
+## dtt beauty full glory
+ggplot(amm[amm$variable=='Tc1_Mariner_TIR_transposon',], aes(x=ploidy, y=value, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=4e8) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('TE base pairs') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+dev.off()
+
+
+
+pdf(paste0('~/transfer/te_panand_tc1mariner.', Sys.Date(), '.pdf'), 6,6)
+ggplot(amm[amm$variable=='Tc1_Mariner_TIR_transposon',], aes(x=ploidy, y=value, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=4e8) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('TE base pairs') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + ggtitle('DTT')
+ggplot(amm[amm$variable=='PIF_Harbinger_TIR_transposon',], aes(x=ploidy, y=value, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=2e8) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('TE base pairs') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + ggtitle('DTH')
+ggplot(amm[amm$variable=='hAT_TIR_transposon',], aes(x=ploidy, y=value, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=1e8) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('TE base pairs') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + ggtitle('DTA')
+ggplot(amm[amm$variable=='Mutator_TIR_transposon',], aes(x=ploidy, y=value, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=1e8) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('TE base pairs') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + ggtitle('DTM')
+ggplot(amm[amm$variable=='helitron',], aes(x=ploidy, y=value, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=6e8) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('TE base pairs') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + ggtitle('DHH')
+ggplot(amm[amm$variable=='CACTA_TIR_transposon',], aes(x=ploidy, y=value, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=4e8) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('TE base pairs') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + ggtitle('DTC')
+
+dev.off()
+    
