@@ -253,3 +253,12 @@ geom_histogram(binwidth=1e6, position='stack') + ggtitle(paste0(genome, i)),
 }
 dev.off()
 
+pdf(paste0('~/transfer/chromosomes_panand.DTTmbscaled.genes.', Sys.Date(), '.pdf'), 20, 10)
+for(genome in all$V2){
+for(i in unique(genomecount$seqnames[genomecount$end>50e6 & genomecount$genome==genome])){
+print(plot_grid(ggplot(genomecount[genomecount$seqnames==i & genomecount$genome==genome & genomecount$sup=='DTT',], aes(x=start, weight=width)) + 
+geom_histogram(binwidth=1e6, position='stack') + ggtitle(paste0(genome, i)), 
+               ggplot(genes[genes$seqnames==i & genes$genome==genome,], aes(x=start)) + geom_histogram(binwidth=1e6),
+               align='hv', ncol=1, rel_heights=c(1,0.2)))}
+}
+dev.off()
