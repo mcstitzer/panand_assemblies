@@ -60,7 +60,7 @@ edge.lengths<-setNames(awt$edge.length[sapply(nodes,function(x,y) which(y==x),y=
 ## plot out each species, with barplot of Count,  and barplot of monophyletic count (or split bars of monophyly on first barplot!)
 melt(outdf[,-1])                                              
 ## 80 columns, take and combine
-outdflist=lapply((1:(ncol(outdf)-1))*2, function(x){ 
+outdflist=lapply((1:((ncol(outdf)-1)/2))*2, function(x){ 
   temp=outdf[,c(x, x+1)]
   sp=substr(colnames(temp),1,6)[1]
   colnames(temp)=gsub(sp, '', colnames(temp))
@@ -108,7 +108,8 @@ names(taxonnames)=c("zTIL11", "zmB735", "zTIL01", "zTIL25", "zTIL18", "zmhuet",
 "crefra", "ccitra", "hconto", "ttrian", "blagur", "ppanic", "sbicol", 
 "irugos", "snutan", "atenui", "telega", "cserru", "pvagin")
 
-                                
+gs=read.table('~/transfer/panand_assembly_sizes.txt', header=T, sep='\t')
+                                 
 all=read.table('../panand_sp_ploidy.txt', header=F)
 all=all[!all$V2 %in% c('tdactm', 'agerjg', 'bdista', 'eophiu', 'osativ', 'svirid', 'tdactn', 'tdacts'),]
 ## changed these in file as of Dec 22!
@@ -120,7 +121,7 @@ all$trip=all$V2 %in% c('tdacn1', 'tdacn2', 'tdacs1', 'tdacs2', 'tdactm', 'zdgigi
 
 tppp=reshape2::melt(tpp[!is.na(tpp$Count) & !tpp$genome %in% c('tdactm', 'tzopol', 'osativ', 'pprate', 'tdacs2', 'tdacn2', 'pvagin'),], id.vars=c('genome', 'Count'))
 tppp$genome=factor(tppp$genome, levels=names(taxonnames))
-tppp$ploidy=all$boxplotx[match(tppp$genome, all$V2)]
+tppp$ploidy=gs$ploidy[match(tppp$genome, gs$V2)]
 tppp$phyleticcol=paste0(tppp$ploidy, tppp$variable)
 ## make singletons "monophyletic"
 tppp$phyleticcol[tppp$Count==1]=paste0(tppp$ploidy[tppp$Count==1], 'Monophyletic')
@@ -138,8 +139,7 @@ tppp=tppp[!is.na(tppp$genome),]
 # # tg=tg[tg$genome!='pprate',]
 # # tg$V3[tg$genome=='ccitra']=2
 
-gs=read.table('~/transfer/panand_assembly_sizes.txt', header=T, sep='\t')
-                               
+                             
 tppp$haploid=gs$haploid[match(tppp$genome, gs$V2)]
 tppp$doubledCount=ifelse(tppp$haploid, tppp$Count*2, tppp$Count)
 
@@ -175,7 +175,7 @@ asize$species=factor(asize$species, levels=taxonnames)
 asize$speciesLabel=ifelse(asize$haploid, paste0(asize$species, '*'), as.character(asize$species))
 asize$speciesLabel=asize$species
 levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]]=paste0(levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]], '*')
-asize$ploidy=all$boxplotx[match(asize$V2, all$V2)]
+asize$ploidy=gs$ploidy[match(asize$V2, gs$V2)]
 
 ## add flow, for supp
 flow=read.table('../panand_flow_cyt.txt', header=T, sep='\t') 
@@ -249,7 +249,7 @@ ks$species=factor(ks$species, levels=taxonnames)
 ks$speciesLabel=ifelse(ks$haploid, paste0(ks$species, '*'), as.character(ks$species))
 ks$speciesLabel=ks$species
 levels(ks$speciesLabel)[levels(ks$speciesLabel) %in% ks$species[ks$haploid]]=paste0(levels(ks$speciesLabel)[levels(ks$speciesLabel) %in% ks$species[ks$haploid]], '*')
-ks$ploidy=all$boxplotx[match(ks$genome, all$V2)]
+ks$ploidy=gs$ploidy[match(ks$genome, gs$V2)]
 ks=ks[!ks$genome %in% c('bdista', 'eophiu', 'osativ', 'svirid', 'tdacn2', 'tdacs2', 'tdactm', 'tzopol'),]
 ks=ks[ks$V17<0.3,] ## scary is this a good decision i think it's okay, this is older than maize wgd
 ## don't want to plot those with 0's! 
@@ -355,15 +355,15 @@ dev.off()
          # library(gridGraphics)   
 
 ## since i'm going to use free scales below, get rid of anything i dont' wwnat to plot## stars on tripsacum hap2 are getting messed up here....
-levels(ks$speciesLabel)[levels(ks$speciesLabel) %in% c('Paspalum vaginatum', "Tripsacum dactyloides tetraploid*", "Tripsacum dactyloides Northern Hap2", "Tripsacum dactyloides Southern Hap2", "Tripsacum zoloptense")] <- NA
-levels(tppp$speciesLabel)[levels(tppp$speciesLabel) %in% c('Paspalum vaginatum', "Tripsacum dactyloides tetraploid*", "Tripsacum dactyloides Northern Hap2", "Tripsacum dactyloides Southern Hap2", "Tripsacum zoloptense")] <- NA
+levels(ks$speciesLabel)[levels(ks$speciesLabel) %in% c('Paspalum vaginatum', "Tripsacum dactyloides tetraploid*", "Tripsacum dactyloides Northern Hap2", "Tripsacum dactyloides Southern Hap2", "Tripsacum zoloptense", "Tripsacum dactyloides tetraploid")] <- NA
+levels(tppp$speciesLabel)[levels(tppp$speciesLabel) %in% c('Paspalum vaginatum', "Tripsacum dactyloides tetraploid*", "Tripsacum dactyloides Northern Hap2", "Tripsacum dactyloides Southern Hap2", "Tripsacum zoloptense", "Tripsacum dactyloides tetraploid")] <- NA
 
 ## make a ks vertical line that is maybe fair?
 ks=ks %>% group_by(genome) %>% mutate(median=median(V17))
                                 
 pdf(paste0('~/transfer/genetree_synteny.fig1combo.', Sys.Date(), '.pdf'), 11,10)
 ## "haploid" assembly size
-hgs=ggplot(asize, aes(x=(haploidAssemblySize-haploidNCount)/1e9, y=1, color=ploidy)) + geom_segment(aes(y=1,yend=1, x=0, xend=doubledAssembly/1e9/2)) + geom_vline(xintercept=c(2,4), color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow3', linetype='dotted') + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) + geom_point(aes(x=haploidAssemblySize/1e9), color='snow3', size=2)+ geom_point(size=4)+ geom_point(aes(x=haploidRepeatSize/1e9, bg=ploidy, y=1.6), shape=25, size=3)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Haploid Size (Gb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + ylim(0,2)
+hgs=ggplot(asize, aes(x=(haploidAssemblySize-haploidNCount)/1e9, y=1, color=ploidy)) + geom_segment(aes(y=1,yend=1, x=0, xend=doubledAssembly/1e9/2)) + geom_vline(xintercept=c(2,4), color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow3', linetype='dotted') + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) + geom_point(aes(x=haploidAssemblySize/1e9), color='snow3', size=2)+ geom_point(size=4)+ geom_point(aes(x=haploidRepeatSize/1e9, bg=ploidy, y=1.6), shape=25, size=3)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Haploid Size (Gb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + ylim(0,2)
 ## copy bar plots, no label
 cpb=ggplot(tppp[tppp$doubledCount%in% 1:6 & !is.na(tppp$species),], aes(x=doubledCount, y=value, group=ploidy, fill=ploidy)) + geom_hline(yintercept=0, color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow2', linetype='dotted') + geom_vline(xintercept=c(2,4,6), color='snow3', linetype='dotted') + geom_histogram(stat='identity', position='stack') + 
         facet_wrap(~speciesLabel, ncol=1, strip.position='left', drop=F) + scale_fill_manual(values=ploidycolors) +   theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text.y=element_blank(), axis.text.x=element_text(size=9))+ theme(legend.position = "none", plot.margin = margin(l = -15)) + ylab('')+ xlab('Syntenic Gene\nCopy Number')+ scale_y_continuous(n.breaks = 3)
@@ -371,7 +371,7 @@ cpb=ggplot(tppp[tppp$doubledCount%in% 1:6 & !is.na(tppp$species),], aes(x=double
 aap=tppp %>% group_by(speciesLabel, variable) %>% summarize(n=n(), count=sum(value)) %>% filter(variable!='NotApplicable') %>% mutate(pct = count/sum(count)*100, width=sum(count))%>%
                                 ggplot(aes(x=width/2, y=pct, fill=variable, width=width)) + geom_bar(stat='identity', position='fill') + coord_polar(theta='y') + facet_wrap(~speciesLabel, ncol=1, strip.position='left')+   theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + theme(axis.ticks=element_blank(), axis.text=element_blank(), panel.grid=element_blank(), panel.border=element_blank()) + scale_fill_manual(values=c('#5F4B8BFF', '#E69A8DFF')) + ylab('Proportion\nDuplicates\nMonophyletic') + xlab('')
 ## ks distributions, no label
-ksp=ggplot(ks[!is.na(ks$speciesLabel) ,], aes(x=V17,  color=ploidy, fill=ploidy))  + geom_vline(xintercept=c(0.05,0.15,0.25), color='snow2', linetype='dotted') + geom_vline(xintercept=c(0.1,0.2,0.3), color='snow3', linetype='dotted')+ geom_density() + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) +  facet_wrap(~speciesLabel, ncol=1, strip.position='left', scales='free_y', drop=F) + theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Ks Between\nDuplicates') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + geom_vline(aes(xintercept=median), color='snow2')
+ksp=ggplot(ks[!is.na(ks$speciesLabel) ,], aes(x=V17,  color=ploidy, fill=ploidy))  + geom_vline(xintercept=c(0.05,0.15,0.25), color='snow2', linetype='dotted') + geom_vline(xintercept=c(0.1,0.2,0.3), color='snow3', linetype='dotted')+ geom_density() + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) +  facet_wrap(~speciesLabel, ncol=1, strip.position='left', scales='free_y', drop=F) + theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Ks Between\nDuplicates') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + geom_vline(aes(xintercept=median), color='snow2', alpha=0.6)
     
 ## densit isn't in this file - done in sp_tree densitree :( will combine in a true figure code when I'm happy!!
 ### densit=ggdensitree(ancs[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, color="ivory4", alpha=.1,)
@@ -383,7 +383,7 @@ p2 <- tibble(ymin = c(1,which(!duplicated(subtribedf$subtribe[subtribedf$genome 
 
                                 
 #plot_grid( hgs, cpb,ksp, aap,  align='hv',axis='tb', ncol=4, rel_widths=c(0.7,0.3,0.18,0.2), labels=c('b', 'c', 'd', 'e'))
-plot_grid(densit, p2, NULL, hgs, cpb,ksp, aap, align='hv',axis='tb', ncol=7, rel_widths=c(0.2,0.05,-0.03,0.7,0.3,0.18,0.2), labels=c('a','b', '','', 'c', 'd', 'e'))
+plot_grid(densit, p2, NULL, hgs, cpb,ksp,NULL, aap, align='hv',axis='tb', ncol=8, rel_widths=c(0.2,0.05,-0.04,0.7,0.2,0.3,-0.03,0.2), labels=c('a','b', '','', 'c', 'd', 'e'))
 
                                 
 dev.off()
