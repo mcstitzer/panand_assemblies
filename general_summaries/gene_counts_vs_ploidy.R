@@ -8,7 +8,7 @@ library(RColorBrewer)
 library(tidypaleo) ## facet species names in italics!!!!!
 
 
-
+gs=read.table('~/transfer/panand_assembly_sizes.txt', header=T, sep='\t')
 ## this drops sorghum, since it's not our annotation
 g=read.csv('../supplement_table_annotations.csv')
 g$six=c('atenui', 'achine', 'agerar', 'avirgi', 'blagur', 'ccitra', 'crefra', 'cserru', 'etrips', 'hcompr', 'hconto', 'irugos', 'ppanic', 'rrottb', 'rtuber', 'smicro', 'snutan', 'sscopa', 'tdacs1','tdacs2', 'tdacn1', 'tdacn2', 'telega', 'ttrian', 'udigit', 'vcuspi', 'zdgigi', 'zdmomo', 'zmhuet', 'znicar', 'zTIL01', 'zTIL11', 'zTIL18', 'zTIL25', 'zluxur')
@@ -17,6 +17,7 @@ gg$genecount=as.numeric(gsub(',','',gg$Genes))
 gg$meangenelength=as.numeric(gsub(',','',gg$Avg.Gene.length..bp.))
 gg$totalcds=as.numeric(gsub(',','',gg$Total.CDS.region..bp.))
 gg$meancdslength=as.numeric(gsub(',','',gg$Avg.CDS.length..bp.))
+gg$meanintronlength=gg$meangenelength-gg$meancdslength
 
 
 ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
@@ -31,6 +32,12 @@ gg$doubledgenecount[gg$haploid]=gg$doubledgenecount[gg$haploid]*2
 gg$doubledtotalcds=gg$totalcds
 gg$doubledtotalcds[gg$haploid]=gg$doubledtotalcds[gg$haploid]*2
 #### then reduce them back down in plot, because people are used to seeing haploid values
+
+## genome size not correlated to cds length!!
+cor.test(gg$haploidAssemblySize-gg$haploidNCount, gg$meancdslength)
+## but yes to intron size!!
+cor.test(gg$haploidAssemblySize-gg$haploidNCount, gg$meanintronlength)
+
 
 pdf(paste0('~/transfer/gene_ploidy.', Sys.Date(), '.pdf'), 6,6)
 ggplot(gg, aes(x=ploidy, y=doubledgenecount/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=120000) + 
