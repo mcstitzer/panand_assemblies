@@ -25,16 +25,23 @@ names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleot
 
 gg$ploidy=factor(gg$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 
+## come on you have to adjust for haploid assemblies!@!
+gg$doubledgenecount=gg$genecount
+gg$doubledgenecount[gg$haploid]=gg$doubledgenecount[gg$haploid]*2
+gg$doubledtotalcds=gg$totalcds
+gg$doubledtotalcds[gg$haploid]=gg$doubledtotalcds[gg$haploid]*2
+#### then reduce them back down in plot, because people are used to seeing haploid values
+
 pdf(paste0('~/transfer/gene_ploidy.', Sys.Date(), '.pdf'), 6,6)
-ggplot(gg, aes(x=ploidy, y=genecount, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=200000) + 
+ggplot(gg, aes(x=ploidy, y=doubledgenecount/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=120000) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Annotated Genes') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 ggplot(gg, aes(x=ploidy, y=meangenelength, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=5000) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Average Gene Length (bp)') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
-ggplot(gg, aes(x=ploidy, y=totalcds/1e6, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=250000000/1e6) + 
+ggplot(gg, aes(x=ploidy, y=doubledtotalcds/1e6/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=210000000/1e6) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Total CDS Length (Mbp)') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 ggplot(gg, aes(x=ploidy, y=meancdslength, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=1300) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Average CDS Length (bp)') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
-ggplot(gg, aes(x=ploidy, y=meangenelength-meancdslength, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=1300) + 
+ggplot(gg, aes(x=ploidy, y=meangenelength-meancdslength, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=3700) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Average Intron Length (bp)') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 ggplot(gg, aes(x=meangenelength, y=meangenelength-meancdslength, color=ploidy))  + geom_point()     +      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Average Gene length (bp)') + ylab('Average Intron Length (bp)') 
 
