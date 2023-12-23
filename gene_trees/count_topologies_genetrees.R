@@ -226,24 +226,25 @@ write.table(asize[,c('V2', 'haploid', 'species', 'speciesLabel', 'ploidy', 'flow
 # ks=ks[!ks$V3 %in% paspdups,]
 #ks=fread('cat ../orthoFinderOG_omega_skh/*.omega')
 ks=fread('cat ../anchorAln_omega_v2/Pavag*.fasta')
-
-ks=ks[substr(ks$V3,1,8)==substr(ks$V4,1,8),] ## witin species
-## this is temp for now!!
-taxon=c("_Ab00001", "_Ac00001", "_Ag00001", "_Av00001", "_Bl00001", 
-"_Cc00001", "_Cr00001", "_Cs00001", "_Et00001", "_Hc00001", "_Hp00001", 
-"_Ir00001", "_Pi00001", "_Rr00001", "_Rt00001", 
- "_Sm00001", "_Sn00001", 
-"_Sobic.0", "_Sobic.K", "_Ss00002", "_Td00001", "_Td00002", 
-"_Te00001", "_Tt00001", "_Ud00001", "_Vc00001", "_Zd00001", 
-"_Zd00003", "_Zh00001", "_Zm00001", "_Zn00001", "_Zv00001", "_Zv00002", 
-"_Zx00002", "_Zx00003")
-names(taxon)=c("atenui", "achine", "agerar",  "avirgi", "blagur",  
-"ccitra", "crefra", "cserru","etrips", "hconto","hcompr",  "irugos",
-"ppanic", "rrottb", "rtuber", "smicro",  "snutan",'sbicol', 'sbicol', "sscopa", 
- "tdacs1", "tdacn1", "telega","ttrian", "udigit", 
-"vcuspi", "zdgigi", "zdmomo","zmhuet","zmB735","znicar", "zTIL01", "zTIL11", "zTIL18", "zTIL25")
-ks$genome=names(taxon)[match(substr(ks$V4,1,8), taxon)]   
-ks$genome[ks$genome=='zmB735']='zluxur' ##for now, to make the plot look okay
+ks=ks[substr(ks$V3,1,6)==substr(ks$V4,1,6),] ## witin species
+ks$genome=substr(ks$V3,1,6)                       
+# ks=ks[substr(ks$V3,1,8)==substr(ks$V4,1,8),] ## witin species
+# ## this is temp for now!!
+# taxon=c("_Ab00001", "_Ac00001", "_Ag00001", "_Av00001", "_Bl00001", 
+# "_Cc00001", "_Cr00001", "_Cs00001", "_Et00001", "_Hc00001", "_Hp00001", 
+# "_Ir00001", "_Pi00001", "_Rr00001", "_Rt00001", 
+#  "_Sm00001", "_Sn00001", 
+# "_Sobic.0", "_Sobic.K", "_Ss00002", "_Td00001", "_Td00002", 
+# "_Te00001", "_Tt00001", "_Ud00001", "_Vc00001", "_Zd00001", 
+# "_Zd00003", "_Zh00001", "_Zm00001", "_Zn00001", "_Zv00001", "_Zv00002", 
+# "_Zx00002", "_Zx00003")
+# names(taxon)=c("atenui", "achine", "agerar",  "avirgi", "blagur",  
+# "ccitra", "crefra", "cserru","etrips", "hconto","hcompr",  "irugos",
+# "ppanic", "rrottb", "rtuber", "smicro",  "snutan",'sbicol', 'sbicol', "sscopa", 
+#  "tdacs1", "tdacn1", "telega","ttrian", "udigit", 
+# "vcuspi", "zdgigi", "zdmomo","zmhuet","zmB735","znicar", "zTIL01", "zTIL11", "zTIL18", "zTIL25")
+# ks$genome=names(taxon)[match(substr(ks$V4,1,8), taxon)]   
+# ks$genome[ks$genome=='zmB735']='zluxur' ##for now, to make the plot look okay
                                 
 ks$haploid=(tg$homolog.state=='haploid')[match(ks$genome, tg$V2)]
 
@@ -254,10 +255,11 @@ ks$speciesLabel=ifelse(ks$haploid, paste0(ks$species, '*'), as.character(ks$spec
 ks$speciesLabel=ks$species
 levels(ks$speciesLabel)[levels(ks$speciesLabel) %in% ks$species[ks$haploid]]=paste0(levels(ks$speciesLabel)[levels(ks$speciesLabel) %in% ks$species[ks$haploid]], '*')
 ks$ploidy=all$boxplotx[match(ks$genome, all$V2)]
-ks=ks[ks$V17<0.3,]
+ks=ks[!ks$genome %in% c('bdista', 'eophiu', 'osativ', 'svirid', 'tdacn2', 'tdacs2', 'tdactm', 'tzopol'),]
+ks=ks[ks$V17<0.3,] ## scary is this a good decision i think it's okay, this is older than maize wgd
 ## don't want to plot those with 0's! 
 dupnums=ks %>% group_by(genome) %>% summarize(n=n())
-ks$V17[ks$genome %in% dupnums$genome[dupnums$n<5000]]=NA      
+ks$V17[ks$genome %in% dupnums$genome[dupnums$n<1000]]=NA      ## thisis arbitrary but whateer
 
 
 ## subtribes
