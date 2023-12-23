@@ -35,7 +35,7 @@ ts2=drop.tip(as.phylo(ts1), ts1@phylo$tip.label[duplicated(str_split_fixed(ts1@p
 #awt=root(ts2, as.phylo(ts2)$tip.label[substr(as.phylo(ts2)$tip.label,1,6) %in% c('osativ', 'bdista')])
 awt=ts2
 awt$tip.label=substr(awt$tip.label,1,6)
-awt=drop.tip(awt, c('zmB735', 'Pavag0', 'Pavag1', 'agerjg', 'eophiu', 'svirid', 'bdista', 'osativ', 'tdacn2', 'tdacs2', 'tzopol', 'tdactm'))
+awt=drop.tip(awt, c('Pavag0', 'Pavag1', 'agerjg', 'eophiu', 'svirid', 'bdista', 'osativ', 'tdacn2', 'tdacs2', 'tzopol', 'tdactm'))
 outdf$ntipssingle[x]=length(awt$tip.label)
 outdf$ntaxa[x]=length(unique(awt$tip.label))
 outtrees[[x]]=awt
@@ -61,7 +61,7 @@ a=do.call('c', lapply(a, function(x){ root(x, 'pvagin', resolve.root = TRUE)}))
 a=do.call('c', lapply(a, function(x){ drop.tip(x, 'pvagin')}))
 
                     
-t2=drop.tip(rsp, c('svirid', 'bdista', 'osativ', 'tdacs2', 'tdacn2', 'tdactm', 'tzopol', 'zmB735', 'pvagin'))
+t2=drop.tip(rsp, c('svirid', 'bdista', 'osativ', 'tdacs2', 'tdacn2', 'tdactm', 'tzopol', 'pvagin'))
 ## rotate nodes to put zea-(dactyloides/zapolotense) closer
 #t2=rotateNodes(t2, MRCA(t2, c('tdacs1', 'tzopol')))
 t2=rotateConstr(t2, rev(t2$tip.label)) ## plots bottom to top
