@@ -110,6 +110,7 @@ names(taxonnames)=c("zTIL11", "zmB735", "zTIL01", "zTIL25", "zTIL18", "zmhuet",
                                 
 all=read.table('../panand_sp_ploidy.txt', header=F)
 all=all[!all$V2 %in% c('tdactm', 'agerjg', 'bdista', 'eophiu', 'osativ', 'svirid', 'tdactn', 'tdacts'),]
+## changed these in file as of Dec 22!
 all$V3[all$V2=='ccitra']=2
 all$V3[all$V2 %in%c('telega', 'rtuber')]=1 ## flow shows this shouldn't be doubled - it's a diploid!!!
 all$boxplotx=all$V3*2
