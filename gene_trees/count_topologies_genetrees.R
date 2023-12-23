@@ -59,7 +59,7 @@ edge.lengths<-setNames(awt$edge.length[sapply(nodes,function(x,y) which(y==x),y=
 ## plot out each species, with barplot of Count,  and barplot of monophyletic count (or split bars of monophyly on first barplot!)
 melt(outdf[,-1])                                              
 ## 80 columns, take and combine
-outdflist=lapply(1:40*2, function(x){ 
+outdflist=lapply(1:44*2, function(x){ 
   temp=outdf[,c(x, x+1)]
   sp=substr(colnames(temp),1,6)[1]
   colnames(temp)=gsub(sp, '', colnames(temp))
@@ -126,7 +126,7 @@ all$boxplotx[all$boxplotx==6]='Hexaploid'
 all$boxplotx[all$boxplotx==8]='Octaploid'
 all$boxplotx=factor(all$boxplotx, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid', 'Octaploid'))                                                   
 
-tppp=melt(tpp[!is.na(tpp$Count) & !tpp$genome %in% c('tdactm', 'tzopol', 'osativ', 'pprate', 'tdacs2', 'tdacn2'),], id.vars=c('genome', 'Count'))
+tppp=melt(tpp[!is.na(tpp$Count) & !tpp$genome %in% c('tdactm', 'tzopol', 'osativ', 'pprate', 'tdacs2', 'tdacn2', 'pvagin'),], id.vars=c('genome', 'Count'))
 tppp$genome=factor(tppp$genome, levels=names(taxonnames))
 tppp$ploidy=all$boxplotx[match(tppp$genome, all$V2)]
 tppp$phyleticcol=paste0(tppp$ploidy, tppp$variable)
@@ -134,7 +134,7 @@ tppp$phyleticcol=paste0(tppp$ploidy, tppp$variable)
 tppp$phyleticcol[tppp$Count==1]=paste0(tppp$ploidy[tppp$Count==1], 'Monophyletic')
 tppp$species=taxonnames[match(tppp$genome, names(taxonnames))]
 tppp$species=factor(tppp$species, levels=taxonnames)
-
+tppp=tppp[!is.na(tppp$genome),]
                                 
 ## double up those haploids
 gc=read.table('../panand_sp_genecopyguess.txt', header=T, sep='\t')
@@ -159,11 +159,21 @@ tppp$linetype[tppp$doubledCount%in%1:6]=rep(c('dotted', 'dashed'),3)[tppp$double
 tppp$variable[tppp$Count==1]='NotApplicable'                                
 
 ## assembly size, since we don't have flow for everybody
-asize=read.table('../panand_assembly_sizes.txt', header=F)
+asize=read.table('../general_summaries/panand_assembly_sizes.txt', header=F)
 asize=asize[asize$V2 %in% tppp$genome,]
 asize$haploid=(tg$homolog.state=='haploid')[match(asize$V2, tg$V2)]
-
+asize$haploid[asize$V2=='zmB735']=T
+                                
 asize$doubledAssembly=ifelse(asize$haploid, asize$V3*2, asize$V3)
+
+## there are 1.5 Gb of Ns in one of these assemblies screamemoji
+asize$nCountDoubled=ifelse(asize$haploid, asize$V8*2, asize$V8)
+asize$nCount=asize$V8
+
+## also check GC content because it's cool - these genomes are so big i get integer overflows adding?????
+asize$gc=(asize$V5/1e6+asize$V6/1e6)/(asize$V4/1e6+asize$V5/1e6+asize$V6/1e6+asize$V7/1e6)
+## nm it's kinda boring 43-47% 
+                 
 asize$species=taxonnames[match(asize$V2, names(taxonnames))]
 asize$species=factor(asize$species, levels=taxonnames)
 
@@ -175,7 +185,8 @@ asize$ploidy=all$boxplotx[match(asize$V2, all$V2)]
 ## add flow, for supp
 flow=read.table('../panand_flow_cyt.txt', header=T, sep='\t') 
 asize$flow=flow[,2][match(asize$V2, flow[,1])]
-cor.test(asize$doubledAssembly/2, asize$flow, use='complete.obs')
+cor.test((asize$doubledAssembly)/2, asize$flow, use='complete.obs')
+cor.test((asize$doubledAssembly-asize$nCountDoubled)/2, asize$flow, use='complete.obs')
 
 ## add TE/tandemrepeat content (reduce on gff, so each bp only counted ONCE)
 te=read.table('../transposable_elements/total_repeat_bp.txt', header=T, sep='\t') 
@@ -189,7 +200,8 @@ asize$haploidRepeatSize=asize$doubledRepeat/2
 pdf(paste0('~/transfer/supp_flow_assembly.', Sys.Date(), '.pdf'), 4,4)
 ## "haploid" assembly size
 ggplot(asize, aes(x=doubledAssembly/1e9/2, y=flow/1000, color=ploidy)) +  scale_color_manual(values=ploidycolors)  + geom_point() + ylab('Genome Size, Flow Cytometry (Gb)')+ xlab('Haploid Assembly\nSize (Gb)') 
-                                
+ggplot(asize, aes(x=(doubledAssembly-nCountDoubled)/1e9/2, y=flow/1000, color=ploidy)) +  scale_color_manual(values=ploidycolors)  + geom_point() + ylab('Genome Size, Flow Cytometry (Gb)')+ xlab('Haploid Assembly\n Not N Size (Gb)') 
+                                 
 dev.off()
 
 ## also write means in text
@@ -200,9 +212,11 @@ summary(asize$haploidRepeatSize/asize$haploidAssemblySize)
 ## MAKE SURE I HAVE THIS
 asize$haploidAssemblySize=asize$doubledAssembly/2
 
+asize$haploidNCount=asize$nCountDoubled/2
 asize$rawAssemblySize=asize$V3
 asize$rawRepeatSize=asize$repeatbp
-write.table(asize[,c('V2', 'haploid', 'species', 'speciesLabel', 'ploidy', 'flow', 'rawAssemblySize', 'haploidAssemblySize', 'rawRepeatSize', 'haploidRepeatSize')], '~/transfer/panand_assembly_sizes.txt', sep='\t', quote=F, row.names=F, col.names=T)
+asize$rawNCount=asize$nCount
+write.table(asize[,c('V2', 'haploid', 'species', 'speciesLabel', 'ploidy', 'flow', 'rawAssemblySize', 'haploidAssemblySize', 'rawRepeatSize', 'haploidRepeatSize', 'rawNCount', 'haploidNCount', 'gc')], '~/transfer/panand_assembly_sizes.txt', sep='\t', quote=F, row.names=F, col.names=T)
 
 
 ## okay now try ks!
@@ -210,7 +224,9 @@ write.table(asize[,c('V2', 'haploid', 'species', 'speciesLabel', 'ploidy', 'flow
 #ks=ks[substr(ks$V3,1,3)=='_Pa',]
 # paspdups=unique(ks$V3[substr(ks$V3,1,3)=='_Pa' & substr(ks$V4,1,3)=='_Pa'])
 # ks=ks[!ks$V3 %in% paspdups,]
-ks=fread('../orthoFinderOG_omega_skh/*.omega')
+#ks=fread('cat ../orthoFinderOG_omega_skh/*.omega')
+ks=fread('cat ../anchorAln_omega_v2/Pavag*.fasta')
+
 ks=ks[substr(ks$V3,1,8)==substr(ks$V4,1,8),] ## witin species
 ## this is temp for now!!
 taxon=c("_Ab00001", "_Ac00001", "_Ag00001", "_Av00001", "_Bl00001", 
