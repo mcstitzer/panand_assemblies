@@ -125,8 +125,37 @@ scoparium=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F
                     )   
 ##for real, add scalePlotWidth, to make so diploids, tetraploids, paleotetraploids all same x scale even when chr are bigger!
 
+
+
 dev.off()
 
+
+
+## subgenomes
+sg=read.table('~/transfer/panand_all_subgenomes_10052023.txt', header=F)
+sgb73=sg[grepl('zB73v5', sg$V1),]
+sgb73$queryChr=gsub('zB73v5\\.','', sgb73$V1)
+sgb73=sgb73[!is.na(sgb73$V2) & !is.na(sgb73$V3) & !is.na(sgb73$queryChr),]
+## this was a bad idea: sgb73$referenceChr=gsub('zB73v5\\.','', sgb73$V1) ## jsut do both so i can use it for both :)
+library(rtracklayer)
+sgr1=reduce(GRanges(seqnames=sgb73$queryChr[sgb73$V13=='maize1' & !is.na(sgb73$V13)], IRanges(start=sgb73$V2[sgb73$V13=='maize1' & !is.na(sgb73$V13)], end=sgb73$V3[sgb73$V13=='maize1' & !is.na(sgb73$V13)])), min.gapwidth=2e5)
+sgr2=reduce(GRanges(seqnames=sgb73$queryChr[sgb73$V13=='maize2' & !is.na(sgb73$V13)], IRanges(start=sgb73$V2[sgb73$V13=='maize2' & !is.na(sgb73$V13)], end=sgb73$V3[sgb73$V13=='maize2' & !is.na(sgb73$V13)])), min.gapwidth=2e5)
+sgr1$subgenome='maize1'
+sgr2$subgenome='maize2'
+sgrs=c(sgr1,sgr2)            ## hahah it's fine they don't have overlapping chromosomes :)                          
+subgenome=data.frame(genome='zB73v5', chr=seqnames(sgrs), start=start(sgrs), end=end(sgrs), color=ifelse(sgrs$subgenome=='maize1','red','blue'))
+
+maizesubgenomes=plot_riparian(gsParam=gsParam, refGenome='tdacs1', forceRecalcBlocks=F, genomeIDs=c('tdacs1', 'zB73v5'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
+                     useOrder=F, ## keep chr position info there!!!
+                     minChrLen2plot=15e6, ## since we're using chr size, we're only doing 10 Mb scafs
+                     invertTheseChrs = invchr,
+                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zmhuet', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes,
+                     highlightBed=subgenome, backgroundColor='snow2'#,
+                  #   customRefChrOrder=c(1:18) ## can set up to make maize go  1:10 for all our friends...
+                    )
+
+                                     
 ## to switch out my own taxon names, use this!! in glab
 #scale_y_continuous(breaks = (glab$y1+glab$y2)/2, labels = glab$genome, expand = c(0.01, 0.01), name = NULL)
 # maybe this wil update?!?!?!
