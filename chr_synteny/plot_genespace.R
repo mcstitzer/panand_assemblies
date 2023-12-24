@@ -83,21 +83,21 @@ excuse=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, g
 diploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'cserru', 'irugos', 'sbicol', 'ppanic', 'ttrian', 'crefra', 'avirgi', 'smicro', 'rtuber'),#all$V2[all$ploidy=='Diploid']),'telega',
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
-                     invertTheseChrs = invchr,
+                     invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
                     )
 tetraploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'snutan', 'hconto', 'ccitra', 'achine', 'sscopa', 'etrips',  'vcuspi'), #all$V2[all$ploidy=='Tetraploid']), #'atenui', 'rrottb',
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
-                     invertTheseChrs = invchr,
+                     invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar','zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi', 'tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
                     )
 hexaploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'blagur', 'agerar', 'hcompr', 'udigit'), #all$V2[all$ploidy=='Hexaploid']),
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
-                     invertTheseChrs = invchr,
+                     invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
                     )
@@ -105,21 +105,21 @@ paleotetraploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBl
  'zB73v5'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=15e6, ## since we're using chr size, we're only doing 10 Mb scafs
-                     invertTheseChrs = invchr,
+                     invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zmhuet', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
                     )
 gerardi=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'avirgi', 'achine', 'agerar', 'sscopa', 'smicro'),
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
-                     invertTheseChrs = invchr,
+                     invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
                     )     
 scoparium=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'avirgi', 'sscopa', 'smicro'),
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
-                     invertTheseChrs = invchr,
+                     invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
                     )   
@@ -138,23 +138,25 @@ sgb73$queryChr=gsub('zB73v5\\.','', sgb73$V1)
 sgb73=sgb73[!is.na(sgb73$V2) & !is.na(sgb73$V3) & !is.na(sgb73$queryChr),]
 ## this was a bad idea: sgb73$referenceChr=gsub('zB73v5\\.','', sgb73$V1) ## jsut do both so i can use it for both :)
 library(rtracklayer)
-sgr1=reduce(GRanges(seqnames=sgb73$queryChr[sgb73$V13=='maize1' & !is.na(sgb73$V13)], IRanges(start=sgb73$V2[sgb73$V13=='maize1' & !is.na(sgb73$V13)], end=sgb73$V3[sgb73$V13=='maize1' & !is.na(sgb73$V13)])))
-sgr2=reduce(GRanges(seqnames=sgb73$queryChr[sgb73$V13=='maize2' & !is.na(sgb73$V13)], IRanges(start=sgb73$V2[sgb73$V13=='maize2' & !is.na(sgb73$V13)], end=sgb73$V3[sgb73$V13=='maize2' & !is.na(sgb73$V13)])))
+sgr1=reduce(GRanges(seqnames=sgb73$queryChr[sgb73$V13=='maize1' & !is.na(sgb73$V13)], IRanges(start=sgb73$V2[sgb73$V13=='maize1' & !is.na(sgb73$V13)], end=sgb73$V3[sgb73$V13=='maize1' & !is.na(sgb73$V13)])), min.gapwidth=3e6)
+sgr2=reduce(GRanges(seqnames=sgb73$queryChr[sgb73$V13=='maize2' & !is.na(sgb73$V13)], IRanges(start=sgb73$V2[sgb73$V13=='maize2' & !is.na(sgb73$V13)], end=sgb73$V3[sgb73$V13=='maize2' & !is.na(sgb73$V13)])), min.gapwidth=3e6)
 sgr1$subgenome='maize1' 
 sgr2$subgenome='maize2'
-sgrs=c(sgr1,sgr2)            ## hahah it's fine they don't have overlapping chromosomes :)                          
-subgenome=data.frame(genome='zB73v5', chr=seqnames(sgrs), start=start(sgrs), end=end(sgrs), color=ifelse(sgrs$subgenome=='maize1','red','blue'))
+sgrs=c(sgr1,sgr2)            ## hahah it's fine they don't have overlapping chromosomes :)       
+sgrs=sgrs[width(sgrs)>10e6,]
+subgenome=data.frame(genome='zB73v5', chr=seqnames(sgrs), start=start(sgrs), end=end(sgrs), color=ifelse(sgrs$subgenome=='maize1','blue','red')) ## how embarassing i forgot james's colors
 
 maizesubgenomes=plot_riparian(gsParam=gsParam, refGenome='tdacs1', forceRecalcBlocks=F, genomeIDs=c('tdacs1', 'zB73v5'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=15e6, ## since we're using chr size, we're only doing 10 Mb scafs
-                     invertTheseChrs = invchr,
+                     invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zmhuet', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
-                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes,
-                     highlightBed=subgenome, backgroundColor='snow2'#,
-                  #   customRefChrOrder=c(1:18) ## can set up to make maize go  1:10 for all our friends...
+                     braidAlpha = .5, chrFill = "lightgrey", addThemes = ggthemes,
+                     highlightBed=subgenome, backgroundColor='snow2',
+#                     customRefChrOrder=paste0('chr', c(1,17,8,5,2,14,9,10,7,12,13,3,6,16,4,18,11,15)) ## can set up to make maize go  1:10 for all our friends...
+                     customRefChrOrder=paste0('chr', c(1,10,4,3,5,2,6,7,9,14,8,15,11,17,18,12,16,13)) ## can set up to make maize go  1:10 for all our friends...
                     )
-
+### it does not like generating this plot :D lots of invalid pointers - could get somebody who understands r to help me?
                                      
 ## to switch out my own taxon names, use this!! in glab
 #scale_y_continuous(breaks = (glab$y1+glab$y2)/2, labels = glab$genome, expand = c(0.01, 0.01), name = NULL)
@@ -169,6 +171,8 @@ hex=hexaploid$plotData$ggplotObj + scale_y_continuous(labels = c('P. vaginatum',
 tet=tetraploid$plotData$ggplotObj + scale_y_continuous(labels = c('P. vaginatum', 'S. nutans', 'H. contortus', 'C. citratus', 'A. chinensis', 'S. scoparium', 'E. tripsacoides', 'V. cuspidata')) + ylab('')
 dip=diploid$plotData$ggplotObj + scale_y_continuous(labels = c('P. vaginatum', 'C. serrulatus', 'I. rugosum', 'S. bicolor', 'P. paniceum', 'T. triandra', 'C. refracta', 'A. virginicus', 'S. microstachyum', 'R. tuberosum')) + ylab('')
 ptet=paleotetraploid$plotData$ggplotObj + scale_y_continuous(labels = c('P. vaginatum', 'T. dactyloides KS', 'T. dactyloides FL', 'Z. diploperennis Gigi', 'Z. diploperennis Momo', 'Z. nicaraguensis', 'Z. mays ssp. huehuetengensis', 'Z. mays ssp. mexicana TIL25', 'Z. mays ssp. mexicana TIL18', 'Z. mays ssp. parviglumis TIL01', 'Z. mays ssp. parviglumis TIL11', 'Z. mays ssp. mays B73v5')) + ylab('')
+msubg=maizesubgenomes$plotData$ggplotObj + scale_y_continuous(labels = c('T. dactyloides FL', 'Z. mays ssp. mays B73v5')) + ylab('')
+                                     
 #plot_grid(dip, tet, ptet, hex, align='hv', labels=c('a Diploid', 'b Tetraploid', 'c Paleotetraploid', 'd Hexaploid'), ncol=2)
 plot_grid(plot_grid(diploid$plotData$ggplotObj, tetraploid$plotData$ggplotObj,  hex, align='hv', labels=c('a Diploid', 'b Tetraploid', 'c  Hexaploid'), 
 ncol=3, rel_widths=c(0.5,1,1)),
@@ -178,4 +182,19 @@ plot_grid(plot_grid(diploid$plotData$ggplotObj, tetraploid$plotData$ggplotObj,  
 ncol=3, rel_widths=c(1,1,1)),
 paleotetraploid$plotData$ggplotObj, ncol=1, rel_heights=c(1,1.5), labels=c('', 'd Paleotetraploid'))
 
+plot_grid(plot_grid(diploid$plotData$ggplotObj, tetraploid$plotData$ggplotObj,  hex, align='hv', labels=c('a Diploid', 'b Tetraploid', 'c  Hexaploid'), 
+ncol=3, rel_widths=c(1,1,1)),
+paleotetraploid$plotData$ggplotObj, maizesubgenomes$plotData$ggplotObj, ncol=1, rel_heights=c(1,1.5,0.5), labels=c('', 'd Paleotetraploid', 'e Maize Subgenomes'))
+
+                                     
+dev.off()
+
+
+pdf(paste0('~/transfer/riparian_fig2.', Sys.Date(), '.pdf'), 10,10)
+
+plot_grid(plot_grid(diploid$plotData$ggplotObj+ xlab(''), tetraploid$plotData$ggplotObj+ xlab(''),  hex+ xlab(''), align='hv', labels=c('a Diploid', 'b Tetraploid', 'c  Hexaploid'), 
+ncol=3, rel_widths=c(1,1,1)),
+paleotetraploid$plotData$ggplotObj + xlab(''), maizesubgenomes$plotData$ggplotObj + xlab(''), ncol=1, rel_heights=c(1,1.5,0.7), labels=c('', 'd Paleotetraploid', 'e Maize Subgenomes'))
+
+                                     
 dev.off()
