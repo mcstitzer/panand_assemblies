@@ -138,9 +138,9 @@ sgb73$queryChr=gsub('zB73v5\\.','', sgb73$V1)
 sgb73=sgb73[!is.na(sgb73$V2) & !is.na(sgb73$V3) & !is.na(sgb73$queryChr),]
 ## this was a bad idea: sgb73$referenceChr=gsub('zB73v5\\.','', sgb73$V1) ## jsut do both so i can use it for both :)
 library(rtracklayer)
-sgr1=reduce(GRanges(seqnames=sgb73$queryChr[sgb73$V13=='maize1' & !is.na(sgb73$V13)], IRanges(start=sgb73$V2[sgb73$V13=='maize1' & !is.na(sgb73$V13)], end=sgb73$V3[sgb73$V13=='maize1' & !is.na(sgb73$V13)])), min.gapwidth=2e5)
-sgr2=reduce(GRanges(seqnames=sgb73$queryChr[sgb73$V13=='maize2' & !is.na(sgb73$V13)], IRanges(start=sgb73$V2[sgb73$V13=='maize2' & !is.na(sgb73$V13)], end=sgb73$V3[sgb73$V13=='maize2' & !is.na(sgb73$V13)])), min.gapwidth=2e5)
-sgr1$subgenome='maize1'
+sgr1=reduce(GRanges(seqnames=sgb73$queryChr[sgb73$V13=='maize1' & !is.na(sgb73$V13)], IRanges(start=sgb73$V2[sgb73$V13=='maize1' & !is.na(sgb73$V13)], end=sgb73$V3[sgb73$V13=='maize1' & !is.na(sgb73$V13)])))
+sgr2=reduce(GRanges(seqnames=sgb73$queryChr[sgb73$V13=='maize2' & !is.na(sgb73$V13)], IRanges(start=sgb73$V2[sgb73$V13=='maize2' & !is.na(sgb73$V13)], end=sgb73$V3[sgb73$V13=='maize2' & !is.na(sgb73$V13)])))
+sgr1$subgenome='maize1' 
 sgr2$subgenome='maize2'
 sgrs=c(sgr1,sgr2)            ## hahah it's fine they don't have overlapping chromosomes :)                          
 subgenome=data.frame(genome='zB73v5', chr=seqnames(sgrs), start=start(sgrs), end=end(sgrs), color=ifelse(sgrs$subgenome=='maize1','red','blue'))
