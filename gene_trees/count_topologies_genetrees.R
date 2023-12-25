@@ -256,7 +256,45 @@ ks=ks[ks$V17<0.3,] ## scary is this a good decision i think it's okay, this is o
 dupnums=ks %>% group_by(genome) %>% summarize(n=n())
 ks$V17[ks$genome %in% dupnums$genome[dupnums$n<1000]]=NA      ## thisis arbitrary but whateer
 
-                             
+
+trips=ks[ks$genome %in% c('tdacs1', 'tdacn1'),]
+trips$chr1=str_split_fixed(trips$V3,'_', 4)[,3]
+trips$chr2=str_split_fixed(trips$V4,'_', 4)[,3]
+                                
+## get divergecne to paspalum for all
+ksp=fread('cat ../anchorAln_omega_v2/Pavag*.fasta')
+ksp=ksp[substr(ksp$V3,1,6)=='pvagin' | substr(ksp$V4,1,6)=='pvagin',] ## to paspalum
+ksp$genome=substr(ksp$V3,1,6)                       
+
+ksp$haploid=gs$haploid[match(ksp$genome, gs$V2)]
+ksp$species=taxonnames[match(ksp$genome, names(taxonnames))]
+ksp$species=factor(ksp$species, levels=taxonnames)
+ksp$speciesLabel=ifelse(ksp$haploid, paste0(ksp$species, '*'), as.character(ksp$species))
+ksp$speciesLabel=ksp$species
+levels(ksp$speciesLabel)[levels(ksp$speciesLabel) %in% ksp$species[ksp$haploid]]=paste0(levels(ksp$speciesLabel)[levels(ksp$speciesLabel) %in% ksp$species[ksp$haploid]], '*')
+ksp$ploidy=gs$ploidy[match(ksp$genome, gs$V2)]
+ksp=ksp[!ksp$genome %in% c('bdista', 'eophiu', 'osativ', 'svirid', 'tdacn2', 'tdacs2', 'tdactm', 'tzopol'),]
+ksp=ksp[ksp$V17<0.3,] ## scary is this a good decision i think it's okay, this is older than maize wgd
+## don't want to plot those with 0's! 
+## use dups from ks plots to keep same taxa
+dupnums=ks %>% group_by(genome) %>% summarize(n=n())
+ksp$V17[ksp$genome %in% dupnums$genome[dupnums$n<1000]]=NA      ## thisis arbitrary but whateer
+ksp$chr=str_split_fixed(ksp$V3,'_', 4)[,3] ## don't need second because it's all paspalum
+m1m2=data.frame(tchrom=c(1,2,18,3,4,7,8,11,12,14,5,6,9,10,13,15,16,17), subgenome=c(rep('M1', 10), rep('M2',8)))
+ksp$tripsg=m1m2$subgenome[match(ksp$chr, paste0('chr', m1m2$tchrom))]
+ksp %>% filter(genome %in% c('tdacs1', 'tdacn1')) %>% group_by(tripsg) %>% summarize(mean(V17, na.rm=T), mean(V19, na.rm=T), n())
+ksp$tripdup=ksp$V3 %in% c(trips$V3,trips$V4)
+ksp %>% filter(genome %in% c('tdacs1', 'tdacn1')) %>% group_by(tripsg, tripdup) %>% summarize(mean(V17, na.rm=T), mean(V19, na.rm=T), n())
+ksp %>% filter(genome %in% c('tdacs1', 'tdacn1')) %>% group_by(tripsg, tripdup, genome) %>% arrange(-V19) %>% head(20) %>% data.frame()
+
+
+## add pasp dnds to trips
+trips$pdnds1=ksp$V19[match(trips$V3, ksp$V3)]
+trips$pdnds2=ksp$V19[match(trips$V4, ksp$V3)]                              
+trips$dndsdiff=trips$pdnds1-trips$pdnds2
+## I think I can expand this to make all polyploid comparisons, and ask about genes regularly kept in dup/relaxed across taxa!!!!!!!
+trips[!is.na(trips$pdnds1),] %>% arrange(-abs(dndsdiff)) %>% filter(pdnds1<1 | pdnds2<1)%>%head(20) %>% data.frame()
+                                
 ## subtribes
 subtribenames=c("Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", 
 "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", 
