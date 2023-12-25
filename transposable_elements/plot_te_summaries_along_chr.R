@@ -99,18 +99,28 @@ nbp[nbp$genome %in% gs$V2[gs$haploid],-1]=nbp[nbp$genome %in% gs$V2[gs$haploid],
 
 ## get statistics for the paper!
 gs=read.table('~/transfer/panand_assembly_sizes.txt', header=T, sep='\t')
-cor.test(gs$haploidAssemblySize, gs$haploidRepeatSize)
+cor.test(gs$haploidAssemblySize-gs$haploidNCount, gs$haploidRepeatSize)
+cor.test(amm$haploidAssemblySize[amm$variable=='tebp']-amm$haploidNCount[amm$variable=='tebp'], amm$doubledValue[amm$variable=='tebp']/2)
 gs$polyploid=gs$ploidy!='Diploid'
-t.test(gs$haploidAssemblySize[gs$polyploid], gs$haploidAssemblySize[!gs$polyploid])
-t.test(gs$haploidRepeatSize[gs$polyploid]/gs$haploidAssemblySize[gs$polyploid], gs$haploidRepeatSize[!gs$polyploid]/gs$haploidAssemblySize[!gs$polyploid])
-t.test(gs$haploidRepeatSize[gs$polyploid & gs$ploidy!='Paleotetraploid']/gs$haploidAssemblySize[gs$polyploid & gs$ploidy!='Paleotetraploid'], gs$haploidRepeatSize[!gs$polyploid & gs$ploidy!='Paleotetraploid']/gs$haploidAssemblySize[!gs$polyploid & gs$ploidy!='Paleotetraploid'])
+## this is TE only
+t.test(amm$doubledValue[amm$variable=='tebp' & amm$polyploid]/2, amm$doubledValue[amm$variable=='tebp' & !amm$polyploid]/2)
+## this contains TR and TE
+t.test((gs$haploidAssemblySize-gs$haploidNCount)[gs$polyploid], (gs$haploidAssemblySize-gs$haploidNCount)[!gs$polyploid])
 
-t.test(rowSums(nfam[,-1])[nfam$genome%in%gs$V2[gs$polyploid]], rowSums(nfam[,-1])[nfam$genome%in%gs$V2[!gs$polyploid]])
-t.test(rowSums(ncopy[,-1])[nfam$genome%in%gs$V2[gs$polyploid]], rowSums(ncopy[,-1])[ncopy$genome%in%gs$V2[!gs$polyploid]])
-t.test(rowSums(nbp[,-1])[nfam$genome%in%gs$V2[gs$polyploid]], rowSums(nbp[,-1])[nbp$genome%in%gs$V2[!gs$polyploid]])
-t.test(rowSums(nfam[,-1])[nfam$genome%in%gs$V2[gs$polyploid& gs$ploidy!='Paleotetraploid']], rowSums(nfam[,-1])[nfam$genome%in%gs$V2[!gs$polyploid& gs$ploidy!='Paleotetraploid']])
-t.test(rowSums(ncopy[,-1])[nfam$genome%in%gs$V2[gs$polyploid& gs$ploidy!='Paleotetraploid']], rowSums(ncopy[,-1])[ncopy$genome%in%gs$V2[!gs$polyploid& gs$ploidy!='Paleotetraploid']])
-t.test(rowSums(nbp[,-1])[nfam$genome%in%gs$V2[gs$polyploid& gs$ploidy!='Paleotetraploid']], rowSums(nbp[,-1])[nbp$genome%in%gs$V2[!gs$polyploid& gs$ploidy!='Paleotetraploid']])
+t.test(gs$haploidRepeatSize[gs$polyploid]/(gs$haploidAssemblySize-gs$haploidNCount)[gs$polyploid], gs$haploidRepeatSize[!gs$polyploid]/(gs$haploidAssemblySize--gs$haploidNCount)[!gs$polyploid])
+t.test(gs$haploidRepeatSize[gs$polyploid & gs$ploidy!='Paleotetraploid']/(gs$haploidAssemblySize-gs$haploidNCount)[gs$polyploid & gs$ploidy!='Paleotetraploid'], gs$haploidRepeatSize[!gs$polyploid & gs$ploidy!='Paleotetraploid']/(gs$haploidAssemblySize-gs$haploidNCount)[!gs$polyploid & gs$ploidy!='Paleotetraploid'])
+
+t.test(rowSums(nfam[,2:10])[nfam$genome%in%gs$V2[gs$polyploid]], rowSums(nfam[,2:10])[nfam$genome%in%gs$V2[!gs$polyploid]])
+t.test(rowSums(ncopy[,2:10])[nfam$genome%in%gs$V2[gs$polyploid]], rowSums(ncopy[,2:10])[ncopy$genome%in%gs$V2[!gs$polyploid]])
+t.test(rowSums(nbp[,2:10])[nfam$genome%in%gs$V2[gs$polyploid]], rowSums(nbp[,2:10])[nbp$genome%in%gs$V2[!gs$polyploid]])
+t.test(rowSums(nfam[,2:10])[nfam$genome%in%gs$V2[gs$polyploid& gs$ploidy!='Paleotetraploid']], rowSums(nfam[,2:10])[nfam$genome%in%gs$V2[!gs$polyploid& gs$ploidy!='Paleotetraploid']])
+t.test(rowSums(ncopy[,2:10])[nfam$genome%in%gs$V2[gs$polyploid& gs$ploidy!='Paleotetraploid']], rowSums(ncopy[,2:10])[ncopy$genome%in%gs$V2[!gs$polyploid& gs$ploidy!='Paleotetraploid']])
+t.test(rowSums(nbp[,2:10])[nfam$genome%in%gs$V2[gs$polyploid& gs$ploidy!='Paleotetraploid']], rowSums(nbp[,2:10])[nbp$genome%in%gs$V2[!gs$polyploid& gs$ploidy!='Paleotetraploid']])
+
+t.test(rowSums(nfam100[,2:10])[nfam100$genome%in%gs$V2[gs$polyploid]], rowSums(nfam100[,2:10])[nfam100$genome%in%gs$V2[!gs$polyploid]])
+t.test(rowSums(nfam100[,2:10])[nfam100$genome%in%gs$V2[gs$polyploid& gs$ploidy!='Paleotetraploid']], rowSums(nfam100[,2:10])[nfam100$genome%in%gs$V2[!gs$polyploid& gs$ploidy!='Paleotetraploid']])
+
+t.test(rowSums(nfam100[,2:10])[nfam100$genome%in%gs$V2[ gs$ploidy=='Tetraploid']], rowSums(nfam100[,2:10])[nfam100$genome%in%gs$V2[gs$ploidy=='Paleotetraploid']])
 
 ## make summaries of age
 ages=genomecount %>% dplyr::group_by(genome, Method) %>% dplyr::filter(grepl('LTR', type)) %>% dplyr::summarize(copies=dplyr::n(), meanage=mean(as.numeric(Identity), na.rm=T), meanage90=mean(as.numeric(Identity)[as.numeric(Identity)>0.9], na.rm=T), nIdentical=sum(as.numeric(Identity)==1, na.rm=T), nYoung=sum(as.numeric(Identity)>0.99, na.rm=T)) %>% data.frame()                                  
@@ -147,13 +157,14 @@ gs$ploidy=factor(gs$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid',
 nfam$ploidy=factor(nfam$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 nfam100$ploidy=factor(nfam100$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 
+amm$ploidy=factor(amm$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 
 
 pdf(paste0('~/transfer/te_panand_fig.', Sys.Date(), '.pdf'), 15,4)
                                       
-bp1=ggplot(gs, aes(x=ploidy, y=haploidRepeatSize, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=4e9) + 
+bp1=ggplot(amm[amm$variable=='tebp',], aes(x=ploidy, y=doubledValue/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=4e9) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('TE base pairs') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
-pr2=ggplot(gs, aes(x=ploidy, y=haploidRepeatSize/haploidAssemblySize*100, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=100) + 
+pr2=ggplot(amm[amm$variable=='tebp',], aes(x=ploidy, y=prop*100, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=100) + 
                                       scale_color_manual(values=ploidycolors) + xlab('Ploidy') + ylab('TE proportion')+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 fa3=ggplot(nfam, aes(x=ploidy, y=totFam, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=210000) + 
                                       scale_color_manual(values=ploidycolors) + xlab('Ploidy') + ylab('TE family count')+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
