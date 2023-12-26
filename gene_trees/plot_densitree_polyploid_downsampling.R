@@ -65,6 +65,8 @@ t2=drop.tip(rsp, c('svirid', 'bdista', 'osativ', 'tdacs2', 'tdacn2', 'tdactm', '
 ## rotate nodes to put zea-(dactyloides/zapolotense) closer
 #t2=rotateNodes(t2, MRCA(t2, c('tdacs1', 'tzopol')))
 t2=rotateConstr(t2, rev(t2$tip.label)) ## plots bottom to top
+rsp=drop.tip(rsp, c('svirid', 'bdista', 'osativ', 'tdacs2', 'tdacn2', 'tdactm', 'tzopol', 'pvagin'))
+rsp=rotateConstr(rsp, rev(rsp$tip.label))
 b=do.call('c', c(t2, a)) ## to put the tip order i want up first!!
 
 taxonnames=c("Zea mays subsp. parviglumis TIL11", "Zea mays subsp. mays B73v5", "Zea mays subsp. parviglumis TIL01", "Zea mays subsp. mexicana TIL25", "Zea mays subsp. mexicana TIL18", "Zea mays subsp. huehuetengensis", 
