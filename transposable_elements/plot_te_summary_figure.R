@@ -210,7 +210,10 @@ summary(lm(gg$doubledgenecount[gg$sup=='DHH' & gg$ploidy!='Paleotetraploid']~gg$
 summary(lm(gg$doubledsyntenic[gg$sup=='DHH']~gg$doubledValue[gg$sup=='DHH']))
 summary(lm(gg$doubledsyntenic[gg$sup=='DHH' & gg$ploidy!='Paleotetraploid']~gg$doubledValue[gg$sup=='DHH' & gg$ploidy!='Paleotetraploid']))
 summary(lm(gg$doubledgenecount[gg$sup=='DHH']~gg$doubledValue[gg$sup=='DHH'] + gg$doubledsyntenic[gg$sup=='DHH']))
-
+                                            
+summary(lm(gg$doubledgenecount[gg$sup=='DHH']-gg$doubledsyntenic[gg$sup=='DHH']~gg$doubledValue[gg$sup=='DHH']))
+summary(lm(gg$doubledgenecount[gg$sup=='DHH' & gg$ploidy!='Paleotetraploid']-gg$doubledsyntenic[gg$sup=='DHH' & gg$ploidy!='Paleotetraploid']~gg$doubledValue[gg$sup=='DHH' & gg$ploidy!='Paleotetraploid']))
+## so 1.019e-4 means for a 5kb helitron 0.5 new genes!!!!!
 
 syntannot=ggplot(gg[gg$sup=='DHH',], aes(x=doubledgenecount/2, y=doubledsyntenic/2, color=ploidy)) +  geom_point() + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Total Haploid Gene Count') + ylab('Total Haploid\nSyntenic Gene Count') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
