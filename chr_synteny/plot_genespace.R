@@ -146,13 +146,13 @@ sgrs=c(sgr1,sgr2)            ## hahah it's fine they don't have overlapping chro
 sgrs=sgrs[width(sgrs)>5e5,]
 subgenome=data.frame(genome='zB73v5', chr=seqnames(sgrs), start=start(sgrs), end=end(sgrs), color=ifelse(sgrs$subgenome=='maize1','blue','red')) ## how embarassing i forgot james's colors
 
-maizesubgenomes=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('tdacs1', 'zB73v5', 'pvagin'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
+maizesubgenomes=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'tdacs1', 'zB73v5'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=15e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zmhuet', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .5, chrFill = "lightgrey", addThemes = ggthemes,
-                     highlightBed=subgenome, backgroundColor='snow2',
+                     highlightBed=subgenome, backgroundColor='snow2'#,
 #                     customRefChrOrder=paste0('chr', c(1,17,8,5,2,14,9,10,7,12,13,3,6,16,4,18,11,15)) ## can set up to make maize go  1:10 for all our friends...
 #                     customRefChrOrder=paste0('chr', c(1,10,4,3,5,2,6,7,9,14,8,15,11,17,18,12,16,13)) ## can set up to make maize go  1:10 for all our friends...
                     )
@@ -232,6 +232,6 @@ ncol=3, rel_widths=c(1,1,1)),
           maizesubgenomes$plotData$ggplotObj + xlab(''), ncol=1, rel_heights=c(1,1.5,0.7), labels=c('', 'd Paleotetraploid', 'e Maize Subgenomes'))
 
 #paleotetraploid$plotData$ggplotObj + xlab('') + geom_point(data=ptand, aes(x=xadj,y=yadj,color=class), pch='|') + scale_color_manual(values=knobcolors)                                  
-paleotetraploid$plotData$ggplotObj + xlab('') + geom_rect(data=ptand[ptand$class!='knobTr1',], aes(xmin=xadjstart,xmax=xadjend,ymin=yadj-0.05,ymax=yadj+0.05, color=class), alpha=0.7) + scale_color_manual(values=knobcolors)                           
+#paleotetraploid$plotData$ggplotObj + xlab('') + geom_rect(data=ptand[ptand$class!='knobTr1',], aes(xmin=xadjstart,xmax=xadjend,ymin=yadj-0.05,ymax=yadj+0.05, color=class), alpha=0.7) + scale_color_manual(values=knobcolors)                           
 
 dev.off()
