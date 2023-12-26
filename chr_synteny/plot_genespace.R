@@ -143,10 +143,10 @@ sgr2=reduce(GRanges(seqnames=sgb73$queryChr[sgb73$V13=='maize2' & !is.na(sgb73$V
 sgr1$subgenome='maize1' 
 sgr2$subgenome='maize2'
 sgrs=c(sgr1,sgr2)            ## hahah it's fine they don't have overlapping chromosomes :)       
-sgrs=sgrs[width(sgrs)>10e6,]
+sgrs=sgrs[width(sgrs)>5e5,]
 subgenome=data.frame(genome='zB73v5', chr=seqnames(sgrs), start=start(sgrs), end=end(sgrs), color=ifelse(sgrs$subgenome=='maize1','blue','red')) ## how embarassing i forgot james's colors
 
-maizesubgenomes=plot_riparian(gsParam=gsParam, refGenome='tdacs1', forceRecalcBlocks=F, genomeIDs=c('tdacs1', 'zB73v5'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
+maizesubgenomes=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('tdacs1', 'zB73v5', 'pvagin'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=15e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr, xlabel='',
@@ -154,7 +154,7 @@ maizesubgenomes=plot_riparian(gsParam=gsParam, refGenome='tdacs1', forceRecalcBl
                      braidAlpha = .5, chrFill = "lightgrey", addThemes = ggthemes,
                      highlightBed=subgenome, backgroundColor='snow2',
 #                     customRefChrOrder=paste0('chr', c(1,17,8,5,2,14,9,10,7,12,13,3,6,16,4,18,11,15)) ## can set up to make maize go  1:10 for all our friends...
-                     customRefChrOrder=paste0('chr', c(1,10,4,3,5,2,6,7,9,14,8,15,11,17,18,12,16,13)) ## can set up to make maize go  1:10 for all our friends...
+#                     customRefChrOrder=paste0('chr', c(1,10,4,3,5,2,6,7,9,14,8,15,11,17,18,12,16,13)) ## can set up to make maize go  1:10 for all our friends...
                     )
 ### it does not like generating this plot :D lots of invalid pointers - could get somebody who understands r to help me?
                                      
@@ -190,11 +190,48 @@ paleotetraploid$plotData$ggplotObj, maizesubgenomes$plotData$ggplotObj, ncol=1, 
 dev.off()
 
 
+## put knobs on chromsomes
+ptk=paleotetraploid$plotData$sourceData$chromosomes
+
+## get from te plotting
+# tand=genomecount[genomecount$sup=='TandemRepeat' & genomecount$genome %in% c('pvagin', 'tdacn1', 'tdacs1', 'zdgigi', 'zdmomo', 'znicar', 'zmhuet', 'zTIL25', 'zTIL18', 'zTIL01', 'zTIL11',
+ 'zB73v5'),c(1,2,3,10,11,22,23)]
+# write.table(tand, '~/transfer/tandem_repeats_panand_rm_from_genomecount.txt', row.names=F, col.names=T, sep='\t', quote=F)
+tand=read.table('~/transfer/tandem_repeats_panand_rm_from_genomecount.txt', header=T)    
+tand$rl=str_split_fixed(tand$Name,'_',4)[,3]
+tand$class=NA
+tand$class[tand$rl%in%c('180bp', '179bp')]='knob180'
+tand$class[tand$rl%in%c('359.5bp', '359bp')]='knobTr1'
+tand$class[tand$rl%in%c('156bp','155bp')]='centromere'       
+tand=tand[!is.na(tand$class),]
+gr180=unlist(reduce(split(GRanges(seqnames=tand$chr[tand$class=='knob180'], IRanges(start=tand$start[tand$class=='knob180'], end=tand$end[tand$class=='knob180'])), ~genome=tand$genome[tand$class=='knob180'])))                                    
+grtr1=unlist(reduce(split(GRanges(seqnames=tand$chr[tand$class=='knobTr1'], IRanges(start=tand$start[tand$class=='knobTr1'], end=tand$end[tand$class=='knobTr1'])), ~tand$genome[tand$class=='knobTr1'])))                                    
+grcent=unlist(reduce(split(GRanges(seqnames=tand$chr[tand$class=='centromere'], IRanges(start=tand$start[tand$class=='centromere'], end=tand$end[tand$class=='centromere'])), ~tand$genome[tand$class=='centromere'])))                                    
+ptand=c(gr180[width(gr180)>1e4],grtr1[width(grtr1)>1e4],grcent[width(grcent)>1e4])
+ptand$class=c(rep('knob180', sum(width(gr180)>1e4)), rep('knobTr1', sum(width(grtr1)>1e4)),rep('centromere', sum(width(grcent)>1e4)))
+ptand$genome=names(ptand)
+ptand=data.frame(ptand)
+## put knobs in middle of y's for this genome
+ptand$x1=ptk$x1[match(paste(ptand$seqnames, ptand$genome),paste(ptk$chr,ptk$genome))]
+ptand$x2=ptk$x2[match(paste(ptand$seqnames, ptand$genome),paste(ptk$chr,ptk$genome))]
+ptand$y1=ptk$y1[match(paste(ptand$seqnames, ptand$genome),paste(ptk$chr,ptk$genome))]
+ptand$y2=ptk$y2[match(paste(ptand$seqnames, ptand$genome),paste(ptk$chr,ptk$genome))]
+colnames(ptand)[1]='chr'                                      
+ptand$xadjstart=ptand$x1+ptand$start
+ptand$xadjend=ptand$x1+ptand$end
+ptand$yadj=(ptand$y1+ptand$y2)/2
+knobcolors=c('#86B049', '#9FE7F5', '#525B88')
+names(knobcolors)=c('knob180', 'knobTr1', 'centromere')
+                                      
+
 pdf(paste0('~/transfer/riparian_fig2.', Sys.Date(), '.pdf'), 10,10)
 
 plot_grid(plot_grid(diploid$plotData$ggplotObj+ xlab(''), tetraploid$plotData$ggplotObj+ xlab(''),  hex+ xlab(''), align='hv', labels=c('a Diploid', 'b Tetraploid', 'c  Hexaploid'), 
 ncol=3, rel_widths=c(1,1,1)),
-paleotetraploid$plotData$ggplotObj + xlab(''), maizesubgenomes$plotData$ggplotObj + xlab(''), ncol=1, rel_heights=c(1,1.5,0.7), labels=c('', 'd Paleotetraploid', 'e Maize Subgenomes'))
+          paleotetraploid$plotData$ggplotObj + xlab('') + geom_rect(data=ptand[ptand$class!='knobTr1',], aes(xmin=xadjstart,xmax=xadjend,ymin=yadj-0.05,ymax=yadj+0.05, color=class), alpha=0.5) + scale_color_manual(values=knobcolors)+ theme(legend.position='none'),
+          maizesubgenomes$plotData$ggplotObj + xlab(''), ncol=1, rel_heights=c(1,1.5,0.7), labels=c('', 'd Paleotetraploid', 'e Maize Subgenomes'))
 
-                                     
+#paleotetraploid$plotData$ggplotObj + xlab('') + geom_point(data=ptand, aes(x=xadj,y=yadj,color=class), pch='|') + scale_color_manual(values=knobcolors)                                  
+paleotetraploid$plotData$ggplotObj + xlab('') + geom_rect(data=ptand[ptand$class!='knobTr1',], aes(xmin=xadjstart,xmax=xadjend,ymin=yadj-0.05,ymax=yadj+0.05, color=class), alpha=0.7) + scale_color_manual(values=knobcolors)                           
+
 dev.off()
