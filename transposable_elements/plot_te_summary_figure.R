@@ -187,16 +187,19 @@ gg$synteniccount=syntcount[match(gg$V2, names(syntcount))]
 gg$doubledsyntenic=gg$synteniccount
 gg$doubledsyntenic[gg$haploid]=gg$doubledsyntenic[gg$haploid]*2
                                             
-dtt=ggplot(amm[amm$sup=='DTT',], aes(x=ploidy, y=doubledValue/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=3e8) + 
+dtt=ggplot(amm[amm$sup=='DTT' & !is.na(amm$sup),], aes(x=ploidy, y=doubledValue/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=3e8) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('DTT base pairs') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 dttfam=ggplot(nfam, aes(x=ploidy, y=DTT, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=24000) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('DTT Family Count') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
-helitron=ggplot(amm[amm$sup=='DHH',], aes(x=ploidy, y=doubledValue/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=6e8) + 
+helitron=ggplot(amm[amm$sup=='DHH' & !is.na(amm$sup),], aes(x=ploidy, y=doubledValue/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=6e8) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('DHH base pairs') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 helgene=ggplot(gg[gg$sup=='DHH',], aes(x=doubledValue/2, y=doubledgenecount/2, color=ploidy)) +  geom_point() + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('DHH base pairs') + ylab('Total Haploid Gene Count') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 helsynt=ggplot(gg[gg$sup=='DHH',], aes(x=doubledValue/2, y=doubledsyntenic/2, color=ploidy)) +  geom_point() + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('DHH base pairs') + ylab('Total Haploid\nSyntenic Gene Count') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+helnonsynt=ggplot(gg[gg$sup=='DHH',], aes(x=doubledValue/2, y=(doubledgenecount-doubledsyntenic)/2, color=ploidy)) +  geom_point() + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('DHH base pairs') + ylab('Total Haploid\nNonsyntenic Gene Count') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
 helgeneprop=ggplot(gg[gg$sup=='DHH',], aes(x=prop, y=doubledgenecount/2, color=ploidy)) +  geom_point() + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('DHH base pairs') + ylab('Total Haploid Gene Count') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 helsyntprop=ggplot(gg[gg$sup=='DHH',], aes(x=prop, y=doubledsyntenic/2, color=ploidy)) +  geom_point() + 
@@ -217,13 +220,13 @@ pdf(paste0('~/transfer/te_panand_fig5.', Sys.Date(), '.pdf'), 15,15)
 
 superfams=ggplot(amm[amm$variable!='tebp',], aes(x=prop, y=1, size=prop, color=ploidy)) +geom_hline(yintercept=1, linetype='dotted', alpha=0.5) + geom_vline(xintercept=0, linetype='dotted', color='snow3', alpha=0.5) + geom_point() + facet_grid(speciesLabel~factor(sup, levels=c('RLG', 'RLC', 'RLX', 'DHH', 'DTM', 'DTC', 'DTT','DTA', 'DTH', 'TR')), scales='free_x', space='free_x', switch='y', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"')))+ scale_color_manual(values=ploidycolors)+   theme( strip.background = element_blank(),  panel.spacing = unit(3, "pt"), axis.text.y=element_blank(), axis.text.x=element_text(size=9)) + theme(legend.position='none', strip.text.y.left = element_text(angle=0), strip.text.x = element_text(angle=90), axis.ticks.y=element_blank(), axis.text.y=element_blank(), axis.text.x = element_text(angle = 30)) + ylab('') + xlab('Genome Proportion') + scale_x_continuous(n.breaks = 3) 
 
-bottomlayer=plot_grid(dtt + theme(legend.position='NULL'), dttfam + theme(legend.position='NULL'), helitron + theme(legend.position='NULL'), helgeneprop + theme(legend.position='NULL') + geom_smooth(method = "lm", se = FALSE), helsyntprop + theme(legend.position='NULL')+ geom_smooth(method = "lm", se = FALSE), syntannot+theme(legend.position='NULL'),
-                      legend, align='hv', nrow=1,rel_widths=c(1,1,1,1,1,1,0.4),labels=c('g', 'h', 'i', 'j', 'k', 'l', ''))
+bottomlayer=plot_grid(dtt + theme(legend.position='NULL'), dttfam + theme(legend.position='NULL'), helitron + theme(legend.position='NULL'), helnonsynt + theme(legend.position='NULL') + geom_smooth(method = "lm", se = FALSE, alpha=0.3),
+                      align='hv', nrow=1,rel_widths=c(1,1,1,1),labels=c('f', 'g', 'h', 'i'))
                                             
 ## these objects are all from plot_te_summaries_along_chr.R AAAHHHHHHH
-plot_grid(plot_grid(bp1 + theme(legend.position='NULL'), pr2+ theme(legend.position='NULL'), fa3+ theme(legend.position='NULL'), fa4+ theme(legend.position='NULL'), ag5+ theme(legend.position='NULL'),
-          legend, align='hv', nrow=1,rel_widths=c(1,1,1,1,1,0.4),labels=c('a', 'b', 'c', 'd', 'e', '')),
-          superfams, bottomlayer, nrow=3, align='hv', rel_heights=c(0.5,1,0.5), labels=c('', 'f', ''))
+plot_grid(plot_grid(bp1 + theme(legend.position='NULL'), pr2+ theme(legend.position='NULL'), fa3+ theme(legend.position='NULL'), fa4+ theme(legend.position='NULL'),
+          legend, align='hv', nrow=1,rel_widths=c(1,1,1,1,0.4),labels=c('a', 'b', 'c', 'd', '')),
+          superfams, bottomlayer, nrow=3, align='hv', rel_heights=c(0.5,1,0.5), labels=c('', 'e', ''))
                                                                                                                                                                                                                                                                                                                               
 dev.off()
                                             
