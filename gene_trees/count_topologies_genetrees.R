@@ -280,6 +280,7 @@ ksp=ksp[ksp$V17<0.3,] ## scary is this a good decision i think it's okay, this i
 dupnums=ks %>% group_by(genome) %>% summarize(n=n())
 ksp$V17[ksp$genome %in% dupnums$genome[dupnums$n<1000]]=NA      ## thisis arbitrary but whateer
 ksp$chr=str_split_fixed(ksp$V3,'_', 4)[,3] ## don't need second because it's all paspalum
+ksp$chr=ifelse(substr(ksp$chr,1,3)=='chr' | ksp$genome=='pvagin', ksp$chr, sapply(1:nrow(ksp), function(x) paste(str_split_fixed(ksp$V3[x],'_', 5)[,3], str_split_fixed(ksp$V3[x],'_', 5)[,4], sep='_', collapse='_')))
 m1m2=data.frame(tchrom=c(1,2,18,3,4,7,8,11,12,14,5,6,9,10,13,15,16,17), subgenome=c(rep('M1', 10), rep('M2',8)))
 ksp$tripsg=m1m2$subgenome[match(ksp$chr, paste0('chr', m1m2$tchrom))]
 ksp %>% filter(genome %in% c('tdacs1', 'tdacn1')) %>% group_by(tripsg) %>% summarize(mean(V17, na.rm=T), mean(V19, na.rm=T), n())
@@ -294,7 +295,57 @@ trips$pdnds2=ksp$V19[match(trips$V4, ksp$V3)]
 trips$dndsdiff=trips$pdnds1-trips$pdnds2
 ## I think I can expand this to make all polyploid comparisons, and ask about genes regularly kept in dup/relaxed across taxa!!!!!!!
 trips[!is.na(trips$pdnds1),] %>% arrange(-abs(dndsdiff)) %>% filter(pdnds1<1 | pdnds2<1)%>%head(20) %>% data.frame()
-                                
+trips$pgene=paste0(str_split_fixed(trips$V3,'_', 3)[,2], '.1')
+## THE setof genes where one is constrained other released
+tgene=trips[!is.na(trips$pdnds1),] %>% arrange(-abs(dndsdiff)) %>% filter((pdnds1<1 | pdnds2<1) & (pdnds1>1 | pdnds2>1))
+
+
+## do for all gene dups
+ks$pdnds1=ksp$V19[match(ks$V3, ksp$V3)]
+ks$pdnds2=ksp$V19[match(ks$V4, ksp$V3)]                              
+ks$dndsdiff=ks$pdnds1-ks$pdnds2
+## I think I can expand this to make all polyploid comparisons, and ask about genes regularly kept in dup/relaxed across taxa!!!!!!!
+ks[!is.na(ks$pdnds1),] %>% arrange(-abs(dndsdiff)) %>% filter(pdnds1<1 | pdnds2<1)%>%head(20) %>% data.frame()
+ks$pgene=paste0(str_split_fixed(ks$V3,'_', 3)[,2], '.1')
+## THE setof genes where one is constrained other released
+ksgene=ks[!is.na(ks$pdnds1),] %>% arrange(-abs(dndsdiff)) %>% filter((pdnds1<1 | pdnds2<1) & (pdnds1>1 | pdnds2>1))
+ks %>% %>% group_by(tripsg, tripdup) %>% summarize(mean(V17, na.rm=T), mean(V19, na.rm=T), n())
+
+gwdnds=ks %>% group_by(genome,ploidy) %>% summarize(mdnds=mean(V19, na.rm=T), n=n())
+ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
+names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
+gwdnds$ploidy=factor(gwdnds$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+
+gbdnds=ksp %>% group_by(genome,ploidy) %>% filter(!genome %in% c('agerjg', 'pvagin')) %>% summarize(mdnds=mean(V19, na.rm=T), mks=median(V17, na.rm=T), n=n())
+gbdnds$ploidy=factor(gbdnds$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+
+ gbdnds$medianage=ks$median[match(gbdnds$genome,ks$genome)]
+## annuals faster rates?
+gbdnds$annual=gbdnds$genome %in% c('telega', 'sbicol', 'zTIL01', 'zTIL11', 'zTIL18', 'zTIL25', 'zmB735', 'zmhuet')
+gbdnds$sortaannual=gbdnds$genome %in% c('telega', 'sbicol', 'zTIL01', 'zTIL11', 'zTIL18', 'zTIL25', 'zmB735', 'zmhuet', 'zluxur', 'znicar')
+gbdnds$annualgroup=ifelse(gbdnds$annual, 'annual', ifelse(gbdnds$sortaannual, 'intermediate', 'perennial'))                                                                                                                                                                   
+annualcolors=c('goldenrod2', 'darkseagreen', 'darkseagreen2')
+names(annualcolors)=c('annual', 'perennial', 'intermediate')
+                                                                                  
+ pdf('~/transfer/dnds_fun.pdf', 10,16)
+ggplot(ksp %>% group_by(genome, chr) %>% summarize(mdnds=mean(V19, na.rm=T), n=n()) , aes(x=mdnds, weight=n)) + geom_histogram(binwidth=0.001) + facet_wrap(~genome, ncol=2, scales='free_y') + xlim(0.2,0.5)
+ggplot(ksp %>% group_by(genome, chr) %>% summarize(mdnds=mean(V19, na.rm=T), n=n()) , aes(x=mdnds)) + geom_histogram(binwidth=0.001) + facet_wrap(~genome, ncol=2, scales='free_y') + xlim(0.2,0.5)
+ggplot(gwdnds[!is.na(gwdnds$ploidy) &( gwdnds$n>7500 | gwdnds$ploidy!='Diploid'),], aes(x=ploidy, y=mdnds, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=0.4) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Mean dN/dS to Intraspecific Duplicate') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplot(gbdnds, aes(x=ploidy, y=mdnds, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=0.35) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Mean dN/dS to Paspalum') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+ggplot(gbdnds, aes(x=medianage, y=mdnds, color=ploidy)) + geom_point()  + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Median Age (ks)') + ylab('Mean dN/dS to Paspalum') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+ggplot(gbdnds, aes(x=annualgroup, y=mks, color=annualgroup)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "perennial", label.y=0.25) + 
+                                      scale_color_manual(values=annualcolors, name='Annual') + xlab('Annual') + ylab('Mean Ks to Paspalum') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+
+dev.off()
+
+
+                                                                                  
 ## subtribes
 subtribenames=c("Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", 
 "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", "Tripsacinae", 
@@ -397,8 +448,12 @@ levels(ks$speciesLabel)[levels(ks$speciesLabel) %in% c('Paspalum vaginatum', "Tr
 levels(tppp$speciesLabel)[levels(tppp$speciesLabel) %in% c('Paspalum vaginatum', "Tripsacum dactyloides tetraploid*", "Tripsacum dactyloides Northern Hap2", "Tripsacum dactyloides Southern Hap2", "Tripsacum zoloptense", "Tripsacum dactyloides tetraploid")] <- NA
 
 ## make a ks vertical line that is maybe fair?
-ks=ks %>% group_by(genome) %>% mutate(median=median(V17))
-                                
+ks=ks %>% group_by(genome) %>% filter(V17>=0.001) %>% mutate(median=median(V17))
+mixtoolsmeans=read.table('~/transfer/ks_to_look_for_mixtures_mixtools_mus.txt', header=T)
+mixtoolsmeans$diff=abs(mixtoolsmeans$mu_1-mixtoolsmeans$mu_2)
+ks$mtm1=mixtoolsmeans$mu_1[match(ks$genome, mixtoolsmeans$genome)]
+ks$mtm2=mixtoolsmeans$mu_2[match(ks$genome, mixtoolsmeans$genome)]
+                                                                                  
 pdf(paste0('~/transfer/genetree_synteny.fig1combo.', Sys.Date(), '.pdf'), 11,10)
 ## "haploid" assembly size
 hgs=ggplot(asize, aes(x=(haploidAssemblySize-haploidNCount)/1e9, y=1, color=ploidy)) + geom_segment(aes(y=1,yend=1, x=0, xend=doubledAssembly/1e9/2)) + geom_vline(xintercept=c(2,4), color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow3', linetype='dotted') + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) + geom_point(aes(x=haploidAssemblySize/1e9), color='snow3', size=2)+ geom_point(size=4)+ geom_point(aes(x=haploidRepeatSize/1e9, bg=ploidy, y=1.6), shape=25, size=3)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Haploid Size (Gb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + ylim(0,2)
@@ -409,7 +464,9 @@ cpb=ggplot(tppp[tppp$doubledCount%in% 1:6 & !is.na(tppp$species),], aes(x=double
 aap=tppp %>% group_by(speciesLabel, variable) %>% summarize(n=n(), count=sum(value)) %>% filter(variable!='NotApplicable') %>% mutate(pct = count/sum(count)*100, width=sum(count))%>%
                                 ggplot(aes(x=width/2, y=pct, fill=variable, width=width)) + geom_bar(stat='identity', position='fill') + coord_polar(theta='y') + facet_wrap(~speciesLabel, ncol=1, strip.position='left')+   theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + theme(axis.ticks=element_blank(), axis.text=element_blank(), panel.grid=element_blank(), panel.border=element_blank()) + scale_fill_manual(values=c('#5F4B8BFF', '#E69A8DFF')) + ylab('Proportion\nDuplicates\nMonophyletic') + xlab('')
 ## ks distributions, no label
-ksp=ggplot(ks[!is.na(ks$speciesLabel) ,], aes(x=V17,  color=ploidy, fill=ploidy))  + geom_vline(xintercept=c(0.05,0.15,0.25), color='snow2', linetype='dotted') + geom_vline(xintercept=c(0.1,0.2,0.3), color='snow3', linetype='dotted')+ geom_density() + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) +  facet_wrap(~speciesLabel, ncol=1, strip.position='left', scales='free_y', drop=F) + theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Ks Between\nDuplicates') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + geom_vline(aes(xintercept=median), color='snow2', alpha=0.6)
+#ksp=ggplot(ks[!is.na(ks$speciesLabel) ,], aes(x=V17,  color=ploidy, fill=ploidy))  + geom_vline(xintercept=c(0.05,0.15,0.25), color='snow2', linetype='dotted') + geom_vline(xintercept=c(0.1,0.2,0.3), color='snow3', linetype='dotted')+ geom_density() + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) +  facet_wrap(~speciesLabel, ncol=1, strip.position='left', scales='free_y', drop=F) + theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Ks Between\nDuplicates') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + geom_vline(aes(xintercept=median), color='snow2', alpha=0.6)
+## wait add mohamed's idea of histograms!
+ksp=ggplot(ks[!is.na(ks$speciesLabel) & ks$V17>=0.001 & !is.na(ks$V17),], aes(x=V17,  color=ploidy, fill=ploidy))  + geom_vline(xintercept=c(0.05,0.15,0.25), color='snow2', linetype='dotted') + geom_vline(xintercept=c(0.1,0.2,0.3), color='snow3', linetype='dotted')+ geom_histogram(aes(y = after_stat(density)), binwidth=0.005, alpha=0.7, color=NA) + geom_density(alpha=1, fill=NA) + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) +  facet_wrap(~speciesLabel, ncol=1, strip.position='left', scales='free_y', drop=F) + theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Ks Between\nDuplicates') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + geom_vline(aes(xintercept=median), color='dimgray', alpha=0.5) # + geom_vline(aes(xintercept=mtm1), color='dimgray', alpha=0.5)
     
 ## densit isn't in this file - done in sp_tree densitree :( will combine in a true figure code when I'm happy!!
 ### densit=ggdensitree(ancs[1:200], layout="rectangular",tip.order=names(rev(taxonnames)), align.tips=T, color="ivory4", alpha=.1,)
