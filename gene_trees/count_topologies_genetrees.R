@@ -453,8 +453,45 @@ mixtoolsmeans=read.table('~/transfer/ks_to_look_for_mixtures_mixtools_mus.txt', 
 mixtoolsmeans$diff=abs(mixtoolsmeans$mu_1-mixtoolsmeans$mu_2)
 ks$mtm1=mixtoolsmeans$mu_1[match(ks$genome, mixtoolsmeans$genome)]
 ks$mtm2=mixtoolsmeans$mu_2[match(ks$genome, mixtoolsmeans$genome)]
+
+
+## ed's vision
+asize$ploidy=factor(asize$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+tppp$ploidy=factor(tppp$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+ks$ploidy=factor(ks$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+hgsbox=ggplot(asize, aes(x=ploidy, y=(haploidAssemblySize-haploidNCount)/1e9, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=5) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Haploid Genome (Gb)') + theme(axis.text.x=element_blank()) #+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+tebox=ggplot(asize, aes(x=ploidy, y=haploidAssemblySize/1e9, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge(), shape=25) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=5) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Haploid Repeat (Gb)') + theme(axis.text.x=element_blank())#+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+cpbbox=ggplot(tppp[tppp$doubledCount%in% 1:6 & !is.na(tppp$species),] %>% group_by(species, ploidy) %>% summarize(meancount=mean(doubledCount)), aes(x=ploidy, y=meancount, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=7) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Average Diploid\nSyntenic Copy Number') + theme(axis.text.x=element_blank())#+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+aapbox=ggplot(tppp %>% group_by(speciesLabel, variable) %>% mutate(n=n(), count=sum(value)) %>% filter(variable!='NotApplicable') %>% mutate(pct = count/sum(count)*100*2, width=sum(count)) %>% filter(variable=='Polyphyletic'), # i think i have mono and poly mixed up in the labelling! zeas are for sure polyphyletic 
+              aes(x=ploidy, y=pct, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=105) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Proportion Gene Trees\nMonophyletic') + theme(axis.text.x=element_blank())#+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+kspbox=ggplot(ks[!is.na(ks$speciesLabel) & ks$V17>=0.001 & !is.na(ks$V17),] %>% group_by(genome, ploidy) %>% summarize(medianks=median(V17, na.rm=T)), aes(x=ploidy, y=medianks, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=0.2) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Median Ks\nBetween Duplicates') + theme(axis.text.x=element_blank())#+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+##eds next vision
+asize$medianks=ks$median[match(asize$V2, ks$genome)]
+tppp$medianks=ks$median[match(tppp$genome, ks$genome)]
+
+hgsscatter=ggplot(asize, aes(x=medianks, y=(haploidAssemblySize-haploidNCount)/1e9, color=ploidy)) + geom_point()+ 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Median Ks') + ylab('Haploid Genome (Gb)') + theme(axis.text.x=element_blank()) #+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+tescatter=ggplot(asize, aes(x=medianks, y=haploidAssemblySize/1e9, color=ploidy)) + geom_point(shape=25) + #ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=5) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Median Ks') + ylab('Haploid Repeat (Gb)') + theme(axis.text.x=element_blank())#+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+cpbscatter=ggplot(tppp[tppp$doubledCount%in% 1:6 & !is.na(tppp$species),] %>% group_by(species, ploidy, medianks) %>% summarize(meancount=mean(doubledCount)), aes(x=medianks, y=meancount, color=ploidy)) + geom_point() + #ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=7) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Median Ks') + ylab('Average Diploid\nSyntenic Copy Number') + theme(axis.text.x=element_blank())#+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+aapscatter=ggplot(tppp %>% group_by(speciesLabel, variable) %>% mutate(n=n(), count=sum(value)) %>% filter(variable!='NotApplicable') %>% mutate(pct = (1-count/sum(count))*100*2, width=sum(count)) %>% filter(variable=='Polyphyletic'), # i think i have mono and poly mixed up in the labelling! zeas are for sure polyphyletic 
+              aes(x=ploidy, y=pct, color=ploidy)) + geom_point() + #ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=105) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Median Ks') + ylab('Proportion Gene Trees\nMonophyletic') + theme(axis.text.x=element_blank())#+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+c("achine", "agerar", "atenui", "avirgi", "blagur", "cserru", 
+"ccitra", "crefra", "etrips", "hcompr", "hconto", "irugos", "ppanic", 
+"rrottb", "rtuber", "smicro", "sscopa", "snutan", "telega", "ttrian", 
+"tdacn1", "tdacs1", "udigit", "vcuspi", "zdgigi", "zdmomo", "zluxur", 
+"zmhuet", "zTIL18", "zTIL25", "zTIL01", "zTIL11", "znicar", "sbicol", 
+"zmB735")
                                                                                   
-pdf(paste0('~/transfer/genetree_synteny.fig1combo.', Sys.Date(), '.pdf'), 11,10)
+pdf(paste0('~/transfer/genetree_synteny.fig1combo.', Sys.Date(), '.pdf'), 11,14)
 ## "haploid" assembly size
 hgs=ggplot(asize, aes(x=(haploidAssemblySize-haploidNCount)/1e9, y=1, color=ploidy)) + geom_segment(aes(y=1,yend=1, x=0, xend=doubledAssembly/1e9/2)) + geom_vline(xintercept=c(2,4), color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow3', linetype='dotted') + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) + geom_point(aes(x=haploidAssemblySize/1e9), color='snow3', size=2)+ geom_point(size=4)+ geom_point(aes(x=haploidRepeatSize/1e9, bg=ploidy, y=1.6), shape=25, size=3)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Haploid Size (Gb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + ylim(0,2)
 ## copy bar plots, no label
@@ -480,12 +517,20 @@ p2 <- tibble(ymin = c(1,which(!duplicated(subtribedf$subtribe[subtribedf$genome 
   geom_rect(aes(xmin = 0.1, xmax = 0.9, ymin = ymin+0.1, ymax = ymax), color='black', fill='snow2') +
   geom_text(aes(x = .5, y = (ymin  + ymax) / 2, label = fill), angle = 90, size=2, fontface = "bold") +scale_y_reverse(breaks = seq(1, 10), expand = expansion(mult = c(0, 0))) +scale_x_continuous(breaks = c(0), expand = expansion(mult = c(0, 0))) +guides(fill = FALSE) +theme_void()
 
-                                
+#bottomlayer=plot_grid(NULL, NULL, NULL, hgsbox+ theme(legend.position='NULL'), tebox+ theme(legend.position='NULL'), cpbbox+ theme(legend.position='NULL'), NULL, aapbox+ theme(legend.position='NULL'), kspbox+ theme(legend.position='NULL'), align='hv', axis='tb', nrow=1, rel_widths=c(0.2,0.05,-0.05,0.35,0.35,0.2,-0.3,0.2,0.3), labels=c('', '', '', 'f', 'g','h', '', 'i', 'j'))
+bottomlayer=plot_grid(hgsbox+ theme(legend.position='NULL'), tebox+ theme(legend.position='NULL'), cpbbox+ theme(legend.position='NULL'),  aapbox+ theme(legend.position='NULL'), kspbox+ theme(legend.position='NULL'), align='hv', axis='tb', nrow=1, rel_widths=c(0.2,0.2,0.2,0.2,0.2), labels=c('f', 'g','h','i', 'j'))
+newbottom=plot_grid(hgsscatter+ theme(legend.position='NULL'), tescatter+ theme(legend.position='NULL'), cpbscatter+ theme(legend.position='NULL'),  aapscatter+ theme(legend.position='NULL'), align='hv', axis='tb', nrow=1, rel_widths=c(0.2,0.2,0.2,0.2), labels=c('k', 'l','m','n'))
+
+                                                                                  
 #plot_grid( hgs, cpb,ksp, aap,  align='hv',axis='tb', ncol=4, rel_widths=c(0.7,0.3,0.18,0.2), labels=c('b', 'c', 'd', 'e'))
 #plot_grid(densit, p2, NULL, hgs, cpb,ksp,NULL, aap, align='hv',axis='tb', ncol=8, rel_widths=c(0.2,0.05,-0.04,0.7,0.2,0.3,-0.03,0.2), labels=c('a','b', '','', 'c', 'd', 'e'))
-plot_grid(densit, p2, NULL, hgs, cpb,NULL,aap, ksp, align='hv',axis='tb', ncol=8, rel_widths=c(0.2,0.05,-0.05,0.7,0.2,-0.03,0.2,0.3), labels=c('a', '','b','', 'c', 'd','', 'e'))
+#plot_grid(densit, p2, NULL, hgs, cpb,NULL,aap, ksp, align='hv',axis='tb', ncol=8, rel_widths=c(0.2,0.05,-0.05,0.7,0.2,-0.03,0.2,0.3), labels=c('a', '','b','', 'c', 'd','', 'e'))
 
-                                
+plot_grid(
+plot_grid(densit, p2, NULL, hgs, cpb,NULL,aap, ksp, align='hv',axis='tb', ncol=8, rel_widths=c(0.2,0.05,-0.05,0.7,0.2,-0.03,0.2,0.3), labels=c('a', '','b','', 'c', 'd','', 'e')),
+  bottomlayer,newbottom, ncol=1, align='hv', rel_heights=c(0.7,0.2,0.2))
+
+# plot_grid( bottomlayer, newbottom, ncol=1, align='hv', rel_heights=c(0.5,0.5))                                
 dev.off()
 
 
