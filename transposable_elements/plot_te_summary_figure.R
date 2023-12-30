@@ -215,6 +215,24 @@ summary(lm(gg$doubledgenecount[gg$sup=='DHH']-gg$doubledsyntenic[gg$sup=='DHH']~
 summary(lm(gg$doubledgenecount[gg$sup=='DHH' & gg$ploidy!='Paleotetraploid']-gg$doubledsyntenic[gg$sup=='DHH' & gg$ploidy!='Paleotetraploid']~gg$doubledValue[gg$sup=='DHH' & gg$ploidy!='Paleotetraploid']))
 ## so 1.019e-4 means for a 5kb helitron 0.5 new genes!!!!!
 
+##fine do for all sups
+for(sup in unique(gg$sup)[!is.na(gg$sup)]){
+  print(sup)
+print(summary(lm(gg$doubledgenecount[gg$sup==sup]-gg$doubledsyntenic[gg$sup==sup]~gg$doubledValue[gg$sup==sup])))
+print(summary(lm(gg$doubledgenecount[gg$sup==sup & gg$ploidy!='Paleotetraploid']-gg$doubledsyntenic[gg$sup==sup & gg$ploidy!='Paleotetraploid']~gg$doubledValue[gg$sup==sup & gg$ploidy!='Paleotetraploid'])))
+}
+
+## do i have nough dof to do for all??? or at least DNA vs Helitron vs Retro?? 
+## gene count is just one superfam, since it's exploded in long fomr
+library(tidyr)
+ggg=pivot_wider(gg[!is.na(gg$sup),], id_cols=c('V2', 'doubledgenecount','doubledsyntenic', 'ploidy'), names_from='sup', values_from=c('doubledValue'))summary(lm(gg$doubledgenecount[gg$sup=='DHH']-gg$doubledsyntenic[gg$sup=='DHH']~gg$doubledValue[gg$sup=='DHH'] + rowSums(gg$doubledValue[gg$sup%in% c('RLC', 'RLG', 'RLX')] + gg$doubledValue[gg$sup%in%c('DTA', 'DTC', 'DTH', 'DTM', 'DTT')]))
+summary(lm(gg$doubledgenecount[gg$sup=='DHH' & gg$ploidy!='Paleotetraploid']-gg$doubledsyntenic[gg$sup=='DHH' & gg$ploidy!='Paleotetraploid']~gg$doubledValue[gg$sup=='DHH' & gg$ploidy!='Paleotetraploid']))
+summary(lm((ggg$doubledgenecount-ggg$doubledsyntenic)  ~ ggg$DHH + ggg$DTA+ggg$DTC+ggg$DTH+ggg$DTM+ggg$DTT + ggg$RLC+ggg$RLG+ggg$RLX + ggg$ploidy))                                   
+ggg$retro=ggg$RLC+ggg$RLG+ggg$RLX
+ggg$dna=ggg$DTA+ggg$DTC+ggg$DTH+ggg$DTM+ggg$DTT
+summary(lm((ggg$doubledgenecount-ggg$doubledsyntenic)  ~ ggg$DHH + ggg$dna + ggg$retro))                                   
+                                                                                                                                                              
+                                                                                                                                                              
 syntannot=ggplot(gg[gg$sup=='DHH',], aes(x=doubledgenecount/2, y=doubledsyntenic/2, color=ploidy)) +  geom_point() + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Total Haploid Gene Count') + ylab('Total Haploid\nSyntenic Gene Count') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
