@@ -133,8 +133,39 @@ plot_grid(plot_grid(numbergenes + theme(legend.position='NULL'), numbersyngenes+
                                                                                                                                                                                                                                                                                                                               
 dev.off()
 
+## get dnds to paspalum for each gene duplicate
+ksd$dndsp1=ksp$V19[match(ksd$V3, ksp$V3)]
+ksd$dndsp2=ksp$V19[match(ksd$V4, ksp$V3)]
+ksd$deltadnds=abs(ksd$dndsp1-ksd$dndsp2)
+
+cor.test(ksd$deltadnds, ksd$V17, use='complete')
+
+ksd$genome=substr(ksd$V3,1,6)                       
+
+ksd$haploid=gs$haploid[match(ksd$genome, gs$V2)]
+ksd$species=taxonnames[match(ksd$genome, names(taxonnames))]
+ksd$species=factor(ksd$species, levels=taxonnames)
+ksd$speciesLabel=ifelse(ksd$haploid, paste0(ksd$species, '*'), as.character(ksd$species))
+ksd$speciesLabel=ksd$species
+levels(ksd$speciesLabel)[levels(ksd$speciesLabel) %in% ksd$species[ksd$haploid]]=paste0(levels(ksd$speciesLabel)[levels(ksd$speciesLabel) %in% ksd$species[ksd$haploid]], '*')
+ksd$ploidy=gs$ploidy[match(ksd$genome, gs$V2)]
+ksd=ksd[!ksd$genome %in% c('bdista', 'eophiu', 'osativ', 'svirid', 'tdacn2', 'tdacs2', 'tdactm', 'tzopol', 'pvagin'),]
+ksd=ksd[ksd$V17<0.3,] ## scary is this a good decision i think it's okay, it gets rid of grass wgd
 
 
 
+png(paste0('~/transfer/dnds_vs_ks.', Sys.Date(), '.png'), 15,15, unit='in', res=300)
+
+                                        
+ggplot(ksd[ksd$V17>0.001 & (ksd$dndsp1<1|ksd$dndsp2<1),], aes(x=V17, y=deltadnds, color=ploidy)) +geom_point(alpha=0.2)+ scale_color_manual(values=ploidycolors)+   theme( axis.text.x=element_text(size=9)) + theme(legend.position='none',axis.text.x = element_text(angle = 30, hjust = 1, vjust = 0.5)) + ylab('Delta dN/dS to Paspalum') + xlab('Ks to Intraspecific Duplicate') + ylim(0,1)  #+ geom_sina(alpha=0.1)
+                                                                                                                                                                                                                                                                                                                        
+dev.off()
+png(paste0('~/transfer/dnds_vs_ks.facet.', Sys.Date(), '.png'), 15,15, unit='in', res=300)
+
+ggplot(ksd[ksd$V17>0.001 & (ksd$dndsp1<1|ksd$dndsp2<1),], aes(x=V17, y=deltadnds, color=ploidy)) +geom_point(alpha=0.2)+ scale_color_manual(values=ploidycolors)+  facet_wrap(~genome) + theme( axis.text.x=element_text(size=9)) + theme(legend.position='none',axis.text.x = element_text(angle = 30, hjust = 1, vjust = 0.5)) + ylab('Delta dN/dS to Paspalum') + xlab('Ks to Intraspecific Duplicate') + ylim(0,1) + stat_smooth(method='lm', se=F) #+ geom_sina(alpha=0.1)
+dev.off()
 
 
+pdf(paste0('~/transfer/dnds_vs_ks.', Sys.Date(), '.pdf'), 15,15)
+ggplot(ksd[ksd$V17>0.001 & (ksd$dndsp1<1|ksd$dndsp2<1) & !is.na(ksd$V17) & !is.na(ksd$deltadnds) & !is.na(ksd$ploidy),] %>% group_by(genome, ploidy) %>% summarize(V17=median(V17), upperks=quantile(V17,0.75), lowerks=quantile(V17,0.25), deltadnds=median(deltadnds), upperdnds=quantile(deltadnds,0.75), lowerdnds=quantile(deltadnds,0.25)), aes(x=V17, y=deltadnds, color=ploidy, ymin=deltadnds-lowerdnds, ymax=deltadnds+upperdnds, xmin=V17-lowerks, xmax=V17+upperks )) +geom_point(alpha=0.2)+ geom_pointrange() + geom_errorbarh(height=0) + scale_color_manual(values=ploidycolors) + geom_errorbarh()
+dev.off()
