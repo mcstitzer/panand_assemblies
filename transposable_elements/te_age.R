@@ -70,16 +70,18 @@ ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
 names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
 genomecount$ploidy=factor(genomecount$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 
-genomecount$rank=bigfam$rank[match(genomecount$genome, bigfam$genome)]
+genomecount$rank=bigfam$rank[match(paste(genomecount$genome, genomecount$collapsedfam), paste(bigfam$genome, bigfam$collapsedfam))]
 
 
 pdf('~/transfer/te_age_try2.pdf', 10,14)
 tea=ggplot(genomecount[genomecount$Method=='structural' & genomecount$type=='LTR_retrotransposon' & paste(genomecount$genome, genomecount$collapsedfam)%in% paste(bigfam$genome, bigfam$collapsedfam)[bigfam$rank %in% 1:10],], 
-           aes(x=as.numeric(ltr_identity), alpha=rank, group=rank, color=ploidy))  + geom_vline(xintercept=c(0.75,0.85,0.95), color='snow2', linetype='dotted') + geom_vline(xintercept=c(0.7,0.8,0.9), color='snow3', linetype='dotted') + geom_density() + scale_color_manual(values=ploidycolors) +  facet_wrap(~speciesLabel, ncol=1, strip.position='left', scales='free_y', drop=F) + theme( strip.background = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('LTR Divergence') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) +xlim(0.85,1) # + geom_vline(aes(xintercept=mtm1), color='dimgray', alpha=0.5)
+           aes(x=as.numeric(ltr_identity), group=rank, alpha=rank,color=ploidy))  + geom_vline(xintercept=c(0.75,0.85,0.95), color='snow2', linetype='dotted') + geom_vline(xintercept=c(0.7,0.8,0.9), color='snow3', linetype='dotted') + geom_density() + scale_color_manual(values=ploidycolors) +  facet_wrap(~speciesLabel, ncol=1, strip.position='left', scales='free_y', drop=F) + theme( strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('LTR Divergence') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) +xlim(0.9,1) # + geom_vline(aes(xintercept=mtm1), color='dimgray', alpha=0.5)
+tea
+tea=ggplot(genomecount[genomecount$Method=='structural' & genomecount$type=='LTR_retrotransposon' & paste(genomecount$genome, genomecount$collapsedfam)%in% paste(bigfam$genome, bigfam$collapsedfam)[bigfam$rank %in% 1:10],], 
+           aes(x=as.numeric(ltr_identity), group=rank, color=ploidy))  + geom_vline(xintercept=c(0.75,0.85,0.95), color='snow2', linetype='dotted') + geom_vline(xintercept=c(0.7,0.8,0.9), color='snow3', linetype='dotted') + geom_density() + scale_color_manual(values=ploidycolors) +  facet_wrap(~speciesLabel, ncol=1, strip.position='left', scales='free_y', drop=F) + theme( strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('LTR Divergence') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) +xlim(0.9,1) # + geom_vline(aes(xintercept=mtm1), color='dimgray', alpha=0.5)
 tea
 
-
-
+dev.off()
 
 
 
