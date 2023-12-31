@@ -123,7 +123,7 @@ t.test(rowSums(nfam100[,2:10])[nfam100$genome%in%gs$V2[gs$polyploid& gs$ploidy!=
 t.test(rowSums(nfam100[,2:10])[nfam100$genome%in%gs$V2[ gs$ploidy=='Tetraploid']], rowSums(nfam100[,2:10])[nfam100$genome%in%gs$V2[gs$ploidy=='Paleotetraploid']])
 
 ## make summaries of age
-ages=genomecount %>% dplyr::group_by(genome, Method) %>% dplyr::filter(grepl('LTR', type)) %>% dplyr::summarize(copies=dplyr::n(), meanage=mean(as.numeric(Identity), na.rm=T), meanage90=mean(as.numeric(Identity)[as.numeric(Identity)>0.9], na.rm=T), nIdentical=sum(as.numeric(Identity)==1, na.rm=T), nYoung=sum(as.numeric(Identity)>0.99, na.rm=T)) %>% data.frame()                                  
+ages=genomecount %>% filter(Method=='structural') %>% dplyr::group_by(genome, Method) %>% dplyr::filter(grepl('LTR', type)) %>% dplyr::summarize(copies=dplyr::n(), meanage=mean(as.numeric(ltr_identity), na.rm=T), meanage90=mean(as.numeric(ltr_identity)[as.numeric(ltr_identity)>0.9], na.rm=T), nIdentical=sum(as.numeric(ltr_identity)==1, na.rm=T), nYoung=sum(as.numeric(ltr_identity)>0.99, na.rm=T)) %>% data.frame()                                  
 gs$meanage=ages$meanage[match(gs$V2, ages$genome)]
 gs$meanage90=ages$meanage90[match(gs$V2, ages$genome)]
 gs$nIdentical=ages$nIdentical[match(gs$V2, ages$genome)]
@@ -170,11 +170,11 @@ fa3=ggplot(nfam, aes(x=ploidy, y=totFam, color=ploidy)) + geom_boxplot(outlier.s
                                       scale_color_manual(values=ploidycolors) + xlab('Ploidy') + ylab('TE family count')+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 fa4=ggplot(nfam100, aes(x=ploidy, y=totFam, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=23000) + 
                                       scale_color_manual(values=ploidycolors) + xlab('Ploidy') + ylab('TE family count (>100 copies)')+theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
-ag5=ggplot(gs, aes(x=ploidy, y=meanage, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid",label.y=0.89) + 
+ag5=ggplot(gs, aes(x=ploidy, y=meanage, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid",label.y=1) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('LTR sequence identity') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
-ag590=ggplot(gs, aes(x=ploidy, y=meanage90, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid",label.y=0.89) + 
+ag590=ggplot(gs, aes(x=ploidy, y=meanage90, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid",label.y=0.8) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('LTR sequence identity') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
-id6=ggplot(gs, aes(x=ploidy, y=propYoung, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) +ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid",label.y=0.011) +  
+id6=ggplot(gs, aes(x=ploidy, y=propIdentical, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) +ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid",label.y=0.2) +  
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Proportion LTRs Identical') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 tebpident=ggplot(gs, aes(x=propIdentical,y=haploidRepeatSize,  color=ploidy)) + geom_point()  + #theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + #ggpubr::stat_compare_means(comparisons=lapply(1:3, function(x) c(combn(unique(gr$group)[1:3], 2)[1,x], combn(unique(gr$group)[1:3], 2)[2,x])),label = 'p.signif', show.legend = F) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + ylab('TE base pairs') + xlab('Proportion LTRs Identical') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
