@@ -117,7 +117,15 @@ geom_histogram(binwidth=1e6, position='stack') + ggtitle(paste0(genome, i, oldte
                align='hv', ncol=1, rel_heights=c(1,0.2)))}
 }
 dev.off()
-
+pdf(paste0('~/transfer/chromosomes_panand.OLDTESTRUCTmbscaled.genes.', Sys.Date(), '.pdf'), 20, 10)
+for(genome in unique(oldtes$genome)){
+for(i in unique(genomecount$seqnames[genomecount$end>50e6 & genomecount$genome==genome])){
+print(plot_grid(ggplot(genomecount[genomecount$Method=='structural' & genomecount$seqnames==i & genomecount$genome==genome & genomecount$collapsedfam%in%oldtes$collapsedfam[oldtes$genome==genome],], aes(x=start, fill=collapsedfam)) + 
+geom_histogram(binwidth=1e6, position='stack') + ggtitle(paste0(genome, i, oldtes$medianks[oldtes$genome==genome][1])), 
+               ggplot(genes[genes$seqnames==i & genes$genome==genome,], aes(x=start)) + geom_histogram(binwidth=1e6),
+               align='hv', ncol=1, rel_heights=c(1,0.2)))}
+}
+dev.off()
 
 ## okay, let's get bp of the top 100? 20? families in each genome, nomatter what they are!!
 bigfamall=genomecount %>% filter(sup!='TandemRepeat') %>% group_by(genome, collapsedfam, sup) %>% summarize(ncopies=n(), bp=sum(width))
