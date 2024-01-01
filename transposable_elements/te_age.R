@@ -157,10 +157,19 @@ plot_grid(
 
 dev.off()
 
+#genomecount$speciesLabelAGERANK=genomecount$speciesLabel
+genomecount$speciesLabelAGERANK=factor(genomecount$speciesLabel, levels=genomecount %>% filter(!duplicated(genome)) %>% arrange(-medianks) %>% pull(speciesLabel))
+tear=ggplot(genomecount[genomecount$genome%in% keep &genomecount$Method=='structural' & genomecount$type=='LTR_retrotransposon' & paste(genomecount$genome, genomecount$collapsedfam)%in% paste(bigfam$genome, bigfam$collapsedfam)[bigfam$rank %in% 1:10],], 
+           aes(x=1-as.numeric(ltr_identity), group=rank, alpha=rank,color=ploidy))  + geom_vline(xintercept=1-c(0.85,0.95), color='snow2', linetype='dotted') + geom_vline(xintercept=1-c(0.8,0.9), color='snow3', linetype='dotted') + geom_density() + scale_color_manual(values=ploidycolors) +  facet_wrap(~speciesLabelAGERANK, ncol=1, strip.position='left', scales='free_y') + theme( strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('LTR Divergence (Gene Duplicate\nDivergence in Gray Bar)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) +xlim(0,0.2) + geom_vline(aes(xintercept=medianks), color='dimgray', alpha=0.5)
+
+#bigfamsallbpfilt$speciesLabelAGERANK=bigfamsallbpfilt$speciesLabel
+bigfamsallbpfilt$speciesLabelAGERANK=factor(bigfamsallbpfilt$speciesLabel, levels=genomecount %>% filter(!duplicated(genome)) %>% arrange(-medianks) %>% pull(speciesLabel))
+
+  
 pdf('~/transfer/te_age_try3.pdf', 10,14)
 
-famabund=ggplot(bigfamsallbpfilt[bigfamsallbpfilt$genome %in% keep,], aes(x=fct_rev(speciesLabel), y=prop))+ geom_bar(width=0.7,stat='summary', fun='sum',aes(color=ploidy), fill=NA) + geom_col(width=0.7, aes(fill=bprank)) + coord_flip() + scale_color_manual(values=ploidycolors)  + theme( strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + xlab('')+ ylab('Proportion abundance of TE families\nin top 15% of repeat space') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + scale_fill_manual(values= hcl.colors(n=max(as.numeric(bigfamsallbpfilt$n)), palette='Mako')) + geom_text(aes(label=n), colour = "black", y=-0.03)  # + geom_vline(aes(xintercept=mtm1), color='dimgray', alpha=0.5)
-plot_grid(tea, famabund, rel_widths=c(1,0.7), nrow=1, align='hv', axis='tb')
+famabund=ggplot(bigfamsallbpfilt[bigfamsallbpfilt$genome %in% keep,], aes(x=fct_rev(speciesLabelAGERANK), y=prop))+ geom_bar(width=0.7,stat='summary', fun='sum',aes(color=ploidy), fill=NA) + geom_col(width=0.7, aes(fill=bprank)) + coord_flip() + scale_color_manual(values=ploidycolors)  + theme( strip.background = element_blank(), strip.text.y.left = element_text(angle=0), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + xlab('')+ ylab('Proportion abundance of TE families\nin top 15% of repeat space') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + scale_fill_manual(values= hcl.colors(n=max(as.numeric(bigfamsallbpfilt$n)), palette='Mako')) + geom_text(aes(label=n), colour = "black", y=-0.03)  # + geom_vline(aes(xintercept=mtm1), color='dimgray', alpha=0.5)
+plot_grid(tear, famabund, rel_widths=c(1,0.7), nrow=1, align='hv', axis='tb')
 
   dev.off()
 
