@@ -101,6 +101,22 @@ bigfams$rank=factor(bigfams$rank,levels=rev(1:10))
 
 mks=read.table('~/transfer/median_ks.txt', header=T)
 genomecount$medianks=mks$median[match(genomecount$genome, mks$genome)]
+bigfams$medianks=mks$median[match(bigfams$genome, mks$genome)]
+
+## get tes older than polyploidy
+bigfams$meanTE=1-bigfams$meanID
+oldtes=bigfams[bigfams$medianks<bigfams$meanTE & !is.na(bigfams$medianks) & !is.na(bigfams$meanTE),] %>% data.frame
+
+## plot these on "chr" longer than 10Mb?
+pdf(paste0('~/transfer/chromosomes_panand.OLDTEsmbscaled.genes.', Sys.Date(), '.pdf'), 20, 10)
+for(genome in unique(oldtes$genome)){
+for(i in unique(genomecount$seqnames[genomecount$end>50e6 & genomecount$genome==genome])){
+print(plot_grid(ggplot(genomecount[genomecount$seqnames==i & genomecount$genome==genome & genomecount$collapsedfam%in%oldtes$collapsedfam[oldtes$genome==genome],], aes(x=start, fill=collapsedfam)) + 
+geom_histogram(binwidth=1e6, position='stack') + ggtitle(paste0(genome, i, oldtes$medianks[oldtes$genome==genome][1])), 
+               ggplot(genes[genes$seqnames==i & genes$genome==genome,], aes(x=start)) + geom_histogram(binwidth=1e6),
+               align='hv', ncol=1, rel_heights=c(1,0.2)))}
+}
+dev.off()
 
 
 ## okay, let's get bp of the top 100? 20? families in each genome, nomatter what they are!!
