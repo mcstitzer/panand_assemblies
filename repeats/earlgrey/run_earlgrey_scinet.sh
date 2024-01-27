@@ -17,7 +17,7 @@ do
 if [ ! -f earlGreyOutputs/${name}_EarlGrey/${name}_summaryFiles/${name}.highLevelCount.txt ]
 then
 
-earlGrey -g ../genomes/${altfa}.fasta -s ${name} -o ./earlGreyOutputs -t 128
+earlGrey -g ../genomes/${altfa}.fasta -s ${name} -o ./earlGreyOutputs -t 94
 
 fi
 done < <( set -n "${SLURM_ARRAY_TASK_ID}p" ../panand_sp_ploidy.txt )
