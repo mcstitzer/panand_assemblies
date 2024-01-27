@@ -8,7 +8,7 @@ library(reshape2)
 library(RColorBrewer)
 library(tidypaleo) ## facet species names in italics!!!!!
 library(data.table)
-
+library(dplyr)
 
 
 all=read.table('panand_sp_ploidy.txt')
@@ -83,5 +83,32 @@ mks=ks %>% group_by(genome) %>% dplyr::summarize(median(ks))
 gg$mks=mks$`median(ks)`[match(gg$V2, mks$genome)]
 cor(gg$doublednonoverlapgenecount, gg$mks, use='complete')
 
-gg %>% group_by(ploidy) %>% summarize(mean(doublednonoverlapgenecount, na.rm=T), mean(mks, na.rm=T), cor(doublednonoverlapgenecount, mks, use='complete')
+gg %>% group_by(ploidy) %>% summarize(mean(doublednonoverlapgenecount, na.rm=T), mean(mks, na.rm=T), cor(doublednonoverlapgenecount, mks, use='complete'),
                                       cor(doubledgenecount, mks, use='complete'))
+
+
+
+
+
+
+
+pdf(paste0('~/transfer/gene_ploidy.', Sys.Date(), '.pdf'), 6,6)
+ggplot(gg, aes(x=ploidy, y=doubledgenecount/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=120000) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Annotated Genes') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplot(gg, aes(x=ploidy, y=meangenelength, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=5000) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Average Gene Length (bp)') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplot(gg, aes(x=ploidy, y=doubledtotalcds/1e6/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=210000000/1e6) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Total CDS Length (Mbp)') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplot(gg, aes(x=ploidy, y=meancdslength, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=1300) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Average CDS Length (bp)') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplot(gg, aes(x=ploidy, y=meangenelength-meancdslength, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=3700) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Average Intron Length (bp)') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplot(gg, aes(x=meangenelength, y=meangenelength-meancdslength, color=ploidy))  + geom_point()     +      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Average Gene length (bp)') + ylab('Average Intron Length (bp)') 
+ggplot(gg, aes(x=ploidy, y=doublednonoverlapgenecount/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=120000) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Annotated Genes') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+ggplot(gg, aes(x=mks, y=doublednonoverlapgenecount/2, color=ploidy))  + geom_point()     +      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Median Ks') + ylab('Nonoverlapping Gene Count (haploid)') 
+ggplot(gg, aes(x=mks, y=doubledsyntenic/2, color=ploidy))  + geom_point()     +      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Median Ks') + ylab('Syntenic Gene Count (haploid)') 
+ggplot(gg, aes(x=mks, y=doublednonoverlapgenecount/2-doubledsyntenic/2, color=ploidy))  + geom_point()     +      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Median Ks') + ylab('Nonsyntenic Gene Count (haploid)') 
+
+dev.off()
