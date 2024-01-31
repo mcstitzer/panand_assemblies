@@ -26,8 +26,19 @@ b=findOverlaps(unstrand(a[a$type=='gene',]))
   all$nonoverlapcount[x]=all$genecount[x]-all$overlapcount[x]
   
   }
+## relax to overlapping, same strand
+for(x in 1:nrow(all)){
+  a=import.gff(Sys.glob(paste0('genes/',all$V1[x], '*.gff3')))
+b=findOverlaps(a[a$type=='gene',])
+  all$anyoverlapss[x]=length(unique(c(queryHits(b[queryHits(b)!=subjectHits(b),]), subjectHits(b[queryHits(b)!=subjectHits(b),]))))
+  all$overlapcountss[x]=length(unique(c(subjectHits(b[queryHits(b)!=subjectHits(b),]))))
 
-
+#  all$genecount[x]=length(unique(queryHits(b)))
+  all$nonoverlapcountss[x]=all$genecount[x]-all$overlapcountss[x]
+  
+  }
+## sloppy and counting here because they're not in the supplemental table :(
+all$rnaseqlibs=c(4,7,5,8,9,5,7,6,7,7,6,7,7,5,8,7,6,7,9,8,8,8,7,7,7,5,5,7,2,2,2,6,0,1,NA)
 
 gs=read.table('~/transfer/panand_assembly_sizes.txt', header=T, sep='\t')
 ## this drops sorghum, since it's not our annotation
@@ -53,9 +64,15 @@ gg$doubledgenecount=gg$genecount
 gg$doubledgenecount[gg$haploid]=gg$doubledgenecount[gg$haploid]*2
 gg$doubledtotalcds=gg$totalcds
 gg$doubledtotalcds[gg$haploid]=gg$doubledtotalcds[gg$haploid]*2
+gg$nonoverlapgenecountss=all$nonoverlapcountss[match(gg$V2, all$V2)]
+gg$doublednonoverlapgenecountss=gg$nonoverlapgenecountss
+gg$doublednonoverlapgenecountss[gg$haploid]=gg$doublednonoverlapgenecountss[gg$haploid]*2
 
+# gg$propov=(gg$doubledgenecount-gg$doublednonoverlapgenecount)/gg$doubledgenecount
+# gg$propovss=(gg$doubledgenecount-gg$doublednonoverlapgenecountss)/gg$doubledgenecount
 
-
+gg$propov=all$propov[match(gg$V2,all$V2)]
+gg$rnaseqlibs=all$rnaseqlibs[match(gg$V2,all$V2)]
 
 
 ## gettin real sloppy here - this is from aum, which is from counting genes from gene table for fractionated/resistant genes
@@ -95,6 +112,8 @@ gg %>% group_by(ploidy) %>% summarize(mean(doublednonoverlapgenecount, na.rm=T),
 pdf(paste0('~/transfer/gene_ploidy.', Sys.Date(), '.pdf'), 6,6)
 ggplot(gg, aes(x=ploidy, y=doubledgenecount/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=120000) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Annotated Genes') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplot(gg, aes(x=ploidy, y=doubledgenecount/2-doubledsyntenic/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=75000) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Nonsyntenic Annotated Genes') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 ggplot(gg, aes(x=ploidy, y=meangenelength, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=5000) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Average Gene Length (bp)') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 ggplot(gg, aes(x=ploidy, y=doubledtotalcds/1e6/2, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=210000000/1e6) + 
@@ -114,5 +133,11 @@ meddipgc=median(gg$doublednonoverlapgenecount[gg$ploidy=='Diploid'])/2
 ggplot(gg, aes(x=mks, y=doublednonoverlapgenecount/2, color=ploidy)) +geom_hline(yintercept=c(meddipgc, 2*meddipgc, 3*meddipgc)) + geom_point()     +      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Median Ks') + ylab('Nonoverlapping Gene Count (haploid)') 
 ggplot(gg, aes(x=mks, y=doubledsyntenic/2, color=ploidy))  + geom_point()     +      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Median Ks') + ylab('Syntenic Gene Count (haploid)') 
 ggplot(gg, aes(x=mks, y=doublednonoverlapgenecount/2-doubledsyntenic/2, color=ploidy))  + geom_point()     +      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Median Ks') + ylab('Nonsyntenic Gene Count (haploid)') 
+
+
+ggplot(gg, aes(x=mks, y=propov, color=ploidy))  + geom_point()     +      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Median Ks') + ylab('Proportion overlapping genes') 
+ggplot(gg, aes(x=rnaseqlibs, y=propov, color=ploidy))  + geom_jitter(width=0.1)     +      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Number RNAseq libraries (jittered)') + ylab('Proportion overlapping genes') 
+ggplot(gg, aes(x=ploidy, y=propov, color=ploidy, shape=haploid)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=0.25) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Proportion Genes Overlapping') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
 dev.off()
