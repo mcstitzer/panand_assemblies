@@ -106,6 +106,6 @@ ggplot(at[!at$genome %in% c('tdacn2', 'tdacs2'),], aes(x=V2, y=speciesLabel, col
 dev.off()
 
 pdf('~/transfer/supplemental_assembly_contiguity.pdf', 16,10)
-ggplot(at[!at$genome %in% c('tdacn2', 'tdacs2'),], aes(x=V2, y=speciesLabel, color=ploidy)) + geom_point() + geom_vline(xintercept=c(0, 416000000))+ scale_color_manual(values=ploidycolors) + geom_point(data=gs, aes(x=ifelse(haploid, haploidAssemblySize/(10*all$V3[i]), rawAssemblySize/(20*all$V3[i]))), pch='|', color='black', size=3)
+ggplot(at[!at$genome %in% c('tdacn2', 'tdacs2'),], aes(x=V2, y=speciesLabel, color=ploidy)) + geom_point() + geom_vline(xintercept=c(0, 416000000))+ scale_color_manual(values=ploidycolors) + geom_point(data=gs, aes(x=ifelse(haploid, haploidAssemblySize/(10*all$V3[i]), rawAssemblySize/(20*all$V3[i]))), pch='|', color='black', size=3) + xlab('Contig Length (bp)')
 dev.off()
 
