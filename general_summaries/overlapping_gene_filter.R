@@ -35,8 +35,32 @@ b=findOverlaps(a[a$type=='gene',])
 
 #  all$genecount[x]=length(unique(queryHits(b)))
   all$nonoverlapcountss[x]=all$genecount[x]-all$overlapcountss[x]
-  
+
+
+  ## only canonical transcript??!?!??!?
+for(x in 1:nrow(all)){
+  a=import.gff(Sys.glob(paste0('genes/',all$V1[x], '*.gff3')))
+b=findOverlaps(unstrand(a[!is.na(a$canonical_transcript),]))
+  all$anyoverlapsc[x]=length(unique(c(queryHits(b[queryHits(b)!=subjectHits(b),]), subjectHits(b[queryHits(b)!=subjectHits(b),]))))
+  all$overlapcountsc[x]=length(unique(c(subjectHits(b[queryHits(b)!=subjectHits(b),]))))
+
+#  all$genecount[x]=length(unique(queryHits(b)))
+  all$nonoverlapcountsc[x]=all$genecount[x]-all$overlapcountsc[x]
+
   }
+  ## only canonical transcript??!?!??!? same strand
+for(x in 1:nrow(all)){
+  a=import.gff(Sys.glob(paste0('genes/',all$V1[x], '*.gff3')))
+b=findOverlaps(a[!is.na(a$canonical_transcript),])
+  all$anyoverlapscs[x]=length(unique(c(queryHits(b[queryHits(b)!=subjectHits(b),]), subjectHits(b[queryHits(b)!=subjectHits(b),]))))
+  all$overlapcountscs[x]=length(unique(c(subjectHits(b[queryHits(b)!=subjectHits(b),]))))
+
+#  all$genecount[x]=length(unique(queryHits(b)))
+  all$nonoverlapcountscs[x]=all$genecount[x]-all$overlapcountscs[x]
+
+  }
+
+  
 ## sloppy and counting here because they're not in the supplemental table :(
 all$rnaseqlibs=c(4,7,5,8,9,5,7,6,7,7,6,7,7,5,8,7,6,7,9,8,8,8,7,7,7,5,5,7,2,2,2,6,0,1,NA)
 
