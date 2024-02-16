@@ -70,6 +70,7 @@ teg$ploidy=factor(teg$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid
 ## compare to earl grey
 fil=Sys.glob('../earlgrey/earlGreyOutputs/*/*/*.high*.txt')
 teg$eg=NA
+teg$egtot=NA
 teg$ltr=NA
 teg$dna=NA
 teg$line=NA
@@ -80,6 +81,7 @@ teg$sine=NA
 for(i in 1:length(fil)){
  b=read.table(fil[i], sep='\t', header=T)
 teg$eg[teg$V2==substr(fil[i],29,34)]=sum(b$proportion)
+teg$egtot[teg$V2==substr(fil[i],29,34)]=sum(b$cov)
 teg$ltr[teg$V2==substr(fil[i],29,34)]=b$cov[b$tclassif=='LTR']
 teg$dna[teg$V2==substr(fil[i],29,34)]=b$cov[b$tclassif=='DNA']
 teg$line[teg$V2==substr(fil[i],29,34)]=b$cov[b$tclassif=='LINE']
@@ -89,6 +91,8 @@ teg$unclass[teg$V2==substr(fil[i],29,34)]=b$cov[b$tclassif=='Unclassified']
 teg$sine[teg$V2==substr(fil[i],29,34)]=ifelse('SINE' %in% b$tclassif, b$cov[b$tclassif=='SINE'],0)
 }
 
+teg$doubledegtot=teg$egtot
+teg$doubledegtot[teg$haploid]=teg$doubledegtot[teg$haploid]*2
 
 teg$doubledltr=teg$ltr
 teg$doubledltr[teg$haploid]=teg$doubledltr[teg$haploid]*2
@@ -155,11 +159,16 @@ ggplot(teg, aes(x=(haploidAssemblySize-haploidNCount)/1e6, y=doubledTc1Mariner/2
 ggplot(teg, aes(x=(haploidAssemblySize-haploidNCount)/1e6, y=doubledHat/2, color=ploidy)) + geom_point() + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Haploid Assembly Size (Gbp)') + ylab('hAT Protein Copies') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 ## earlgrey vs edta
-ggplot(teg, aes(x=haploidRepeatSize/(haploidAssemblySize-haploidNCount), y=eg, color=ploidy)) + geom_point() + 
+## this isn't right, but to be fair put N's into edta denominator
+# ggplot(teg, aes(x=haploidRepeatSize/(haploidAssemblySize-haploidNCount), y=eg, color=ploidy)) + geom_point() + 
+#                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('EDTA Repeat Proportion') + ylab('EarlGrey/RepeatModeler2 Repeat Proportion') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+## this is right, recalculated it
+ggplot(teg, aes(x=haploidRepeatSize/(haploidAssemblySize-haploidNCount), y=(doubledegtot/2)/(haploidAssemblySize-haploidNCount), color=ploidy)) + geom_point() + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('EDTA Repeat Proportion') + ylab('EarlGrey/RepeatModeler2 Repeat Proportion') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
-ggplot(teg, aes(x=ploidy, y=eg, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=1) + 
+
+ggplot(teg, aes(x=ploidy, y=(doubledegtot/2)/(haploidAssemblySize-haploidNCount), color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=1) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('EarlGrey/RepeatModeler2 Repeat Proportion') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
-ggplot(teg, aes(x=ploidy, y=eg, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=1) + 
+ggplot(teg, aes(x=ploidy, y=(doubledegtot/2)/(haploidAssemblySize-haploidNCount), color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=1) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('EarlGrey/RepeatModeler2 Repeat Proportion') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + geom_text(aes(label=V2))
 
  dev.off()
