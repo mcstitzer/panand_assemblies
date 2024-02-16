@@ -67,6 +67,47 @@ teg$doubledHat[teg$haploid]=teg$doubledHat[teg$haploid]*2
 teg %>% group_by(ploidy) %>% summarize_at(vars(doubledsyntenic:doubledHat), median) %>% data.frame
 teg$ploidy=factor(teg$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 
+## compare to earl grey
+fil=Sys.glob('../earlgrey/earlGreyOutputs/*/*/*.high*.txt')
+teg$eg=NA
+teg$ltr=NA
+teg$dna=NA
+teg$line=NA
+teg$satellite=NA
+teg$rc=NA
+teg$unclass=NA
+teg$sine=NA
+for(i in 1:length(fil)){
+ b=read.table(fil[i], sep='\t', header=T)
+teg$eg[teg$V2==substr(fil[i],29,34)]=sum(b$proportion)
+teg$ltr[teg$V2==substr(fil[i],29,34)]=b$cov[b$tclassif=='LTR']
+teg$dna[teg$V2==substr(fil[i],29,34)]=b$cov[b$tclassif=='DNA']
+teg$line[teg$V2==substr(fil[i],29,34)]=b$cov[b$tclassif=='LINE']
+teg$satellite[teg$V2==substr(fil[i],29,34)]=b$cov[b$tclassif=='Other (Simple Repeat, Microsatellite, RNA)']
+teg$rc[teg$V2==substr(fil[i],29,34)]=b$cov[b$tclassif=='Rolling Circle']
+teg$unclass[teg$V2==substr(fil[i],29,34)]=b$cov[b$tclassif=='Unclassified']
+teg$sine[teg$V2==substr(fil[i],29,34)]=ifelse('SINE' %in% b$tclassif, b$cov[b$tclassif=='SINE'],0)
+}
+
+
+teg$doubledltr=teg$ltr
+teg$doubledltr[teg$haploid]=teg$doubledltr[teg$haploid]*2
+teg$doubleddna=teg$dna
+teg$doubleddna[teg$haploid]=teg$doubleddna[teg$haploid]*2
+teg$doubledline=teg$line
+teg$doubledline[teg$haploid]=teg$doubledline[teg$haploid]*2
+teg$doubledsatellite=teg$satellite
+teg$doubledsatellite[teg$haploid]=teg$doubledsatellite[teg$haploid]*2
+teg$doubledrc=teg$rc
+teg$doubledrc[teg$haploid]=teg$doubledrc[teg$haploid]*2
+teg$doubledunclass=teg$unclass
+teg$doubledunclass[teg$haploid]=teg$doubledunclass[teg$haploid]*2
+teg$doubledsine=teg$sine
+teg$doubledsine[teg$haploid]=teg$doubledsine[teg$haploid]*2
+
+
+
+
 pdf('te_autonomous_counts.pdf',8,8)
 #for(i in c('doubledsyntenic', 'doubledCacta', 'doubledMutator', 'doubledPifHarbinger', 'doubledTc1Mariner', 'doubledHat')){
 
@@ -113,6 +154,8 @@ ggplot(teg, aes(x=(haploidAssemblySize-haploidNCount)/1e6, y=doubledTc1Mariner/2
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Haploid Assembly Size (Gbp)') + ylab('Tc1/Mariner Protein Copies') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 ggplot(teg, aes(x=(haploidAssemblySize-haploidNCount)/1e6, y=doubledHat/2, color=ploidy)) + geom_point() + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Haploid Assembly Size (Gbp)') + ylab('hAT Protein Copies') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
-
+## earlgrey vs edta
+ggplot(teg, aes(x=haploidRepeatSize/(haploidAssemblySize-haploidNCount), y=eg, color=ploidy)) + geom_point() + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('EDTA Repeat Proportion') + ylab('EarlGrey/RepeatModeler2 Repeat Proportion') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
  dev.off()
