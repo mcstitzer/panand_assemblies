@@ -170,5 +170,16 @@ ggplot(teg, aes(x=ploidy, y=(doubledegtot/2)/(haploidAssemblySize-haploidNCount)
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('EarlGrey/RepeatModeler2 Repeat Proportion') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 ggplot(teg, aes(x=ploidy, y=(doubledegtot/2)/(haploidAssemblySize-haploidNCount), color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=1) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('EarlGrey/RepeatModeler2 Repeat Proportion') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + geom_text(aes(label=V2))
+## look at helitron
+ggplot(teg, aes(x=ploidy, y=(doubledrc/2)/(haploidAssemblySize-haploidNCount), color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=.03) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('EarlGrey/RepeatModeler2 Helitron Proportion') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + geom_text(aes(label=V2))
+ggplot(teg, aes(x=ploidy, y=(doubledrc/2)/1e6, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=40) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('EarlGrey/RepeatModeler2 Helitron Mb') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + geom_text(aes(label=V2))
+
+ggplot(teg, aes(x=ploidy, y=(doubledsatellite/2)/(haploidAssemblySize-haploidNCount), color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=.15) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('EarlGrey/RepeatModeler2 Satellite Proportion') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + geom_text(aes(label=V2))
+ggplot(teg, aes(x=ploidy, y=(doubledsatellite/2)/1e6, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=140) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('EarlGrey/RepeatModeler2 Satellite Mb') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + geom_text(aes(label=V2))
+
 
  dev.off()
