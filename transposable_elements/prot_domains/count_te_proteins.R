@@ -157,5 +157,9 @@ ggplot(teg, aes(x=(haploidAssemblySize-haploidNCount)/1e6, y=doubledHat/2, color
 ## earlgrey vs edta
 ggplot(teg, aes(x=haploidRepeatSize/(haploidAssemblySize-haploidNCount), y=eg, color=ploidy)) + geom_point() + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('EDTA Repeat Proportion') + ylab('EarlGrey/RepeatModeler2 Repeat Proportion') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplot(teg, aes(x=ploidy, y=eg, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=1) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('EarlGrey/RepeatModeler2 Repeat Proportion') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplot(teg, aes(x=ploidy, y=eg, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=1) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('EarlGrey/RepeatModeler2 Repeat Proportion') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + geom_text(aes(label=V2))
 
  dev.off()
