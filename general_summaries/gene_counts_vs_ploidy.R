@@ -148,6 +148,11 @@ dndsIntra=ggplot(ksp[!is.na(ksp$speciesLabel) & ksp$intraspecificdup,], aes(x=sp
 
 legend <- get_legend(numbergenes) 
 
+
+## do some dumb ks stuff
+ks=fread('~/transfer/ks_to_look_for_mixtures.txt', header=T)
+gg$ks=ks$ks[match(gg$V2, ks$genome)]
+                              
 pdf(paste0('~/transfer/gene_panand_fig3.', Sys.Date(), '.pdf'), 15,15)
 
                                         
@@ -160,6 +165,11 @@ numbersyngenes + geom_text(aes(label=V2))
                               numbersynunique20+ geom_text(aes(label=V2)) 
                               numbersynunique29+ geom_text(aes(label=V2)) 
                               numbersynuniqueALL+ geom_text(aes(label=V2)) 
+
+ggplot(gg, aes(x=ks, y=syntenicunique, color=ploidy)) + geom_point() + geom_text(aes(label=V2)) + scale_color_manual(values=ploidycolors, name='Ploidy') 
+ggplot(gg, aes(x=ks, y=syntenicunique20, color=ploidy)) + geom_point() + geom_text(aes(label=V2)) + scale_color_manual(values=ploidycolors, name='Ploidy') 
+ggplot(gg, aes(x=ks, y=syntenicunique29, color=ploidy)) + geom_point() + geom_text(aes(label=V2)) + scale_color_manual(values=ploidycolors, name='Ploidy') 
+
 dev.off()
 
 ## get dnds to paspalum for each gene duplicate
