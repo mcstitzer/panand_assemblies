@@ -55,10 +55,14 @@ syn=syn[!syn$genome %in% c('pprate', 'svirid', 'tdacn2', 'tdacs2', 'tdactm', 'tz
 
 syncn= syn %>% group_by(quickgene) %>% mutate(cn=length(unique(genome)))
 
+syn$ploidy[syn$genome=='sbicol']='Diploid'
+syncnd= syn[syn$ploidy=='Diploid',] %>% group_by(quickgene) %>% mutate(cn=length(unique(genome)))
+
 sync=syn %>% group_by(genome) %>% dplyr::summarize(synteniccount=length(quickgene), syntenicunique=length(unique(quickgene)))
 sync$syntenicunique20=sapply(sync$genome, function(x) length(unique(syncn$quickgene[syncn$genome==x & syncn$cn>20])))
 sync$syntenicunique29=sapply(sync$genome, function(x) length(unique(syncn$quickgene[syncn$genome==x & syncn$cn>29])))
 sync$syntenicuniqueALL=sapply(sync$genome, function(x) length(unique(syncn$quickgene[syncn$genome==x & syncn$cn==35])))
+sync$syntenicuniqueDIPLOID=sapply(sync$genome, function(x) length(unique(syncn$quickgene[syncn$genome==x & syncn$quickgene %in% syncnd$quickgene[syncnd$cn==10]])))
 
 gg$synteniccount=sync$synteniccount[match(gg$V2,sync$genome)]
 gg$doubledsyntenic=gg$synteniccount
@@ -68,6 +72,7 @@ gg$syntenicunique=sync$syntenicunique[match(gg$V2,sync$genome)]
 gg$syntenicunique20=sync$syntenicunique20[match(gg$V2,sync$genome)]
 gg$syntenicunique29=sync$syntenicunique29[match(gg$V2,sync$genome)]
 gg$syntenicuniqueALL=sync$syntenicuniqueALL[match(gg$V2,sync$genome)]
+gg$syntenicuniqueDIPLOID=sync$syntenicuniqueDIPLOID[match(gg$V2,sync$genome)]
 
 
 pdf(paste0('~/transfer/gene_ploidy.', Sys.Date(), '.pdf'), 6,6)
@@ -141,6 +146,8 @@ numbersynunique29=ggplot(gg, aes(x=ploidy, y=syntenicunique29, color=ploidy)) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Syntenic Gene Regions') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 numbersynuniqueALL=ggplot(gg, aes(x=ploidy, y=syntenicuniqueALL, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=2000) + 
                                       scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Syntenic Gene Regions') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+numbersynuniqueDIPLOID=ggplot(gg, aes(x=ploidy, y=syntenicuniqueDIPLOID, color=ploidy)) + geom_boxplot(outlier.shape=NA) + geom_point(position=position_jitterdodge()) + ggpubr::stat_compare_means(label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=8000) + 
+                                      scale_color_manual(values=ploidycolors, name='Ploidy') + xlab('Ploidy') + ylab('Syntenic Gene Regions') +theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 
 
 dnds=ggplot(ksp[!is.na(ksp$speciesLabel),], aes(x=speciesLabel, y=V19, color=ploidy, group=speciesLabel)) + geom_hline(yintercept=c(0,0.2,0.4,0.6,0.8,1), linetype='dotted', color='snow3', alpha=0.5)+ geom_hline(yintercept=c(0.1,0.3,0.5,0.7,0.9), linetype='dotted', color='snow2', alpha=0.5) + geom_violin(trim=F, adjust=0.4) + stat_summary(fun.data="mean_sdl", geom="pointrange") + scale_color_manual(values=ploidycolors)+   theme( axis.text.x=element_text(size=9)) + theme(legend.position='none',axis.text.x = element_text(angle = 30, hjust = 1, vjust = 0.5)) + ylab('dN/dS to Paspalum') + xlab('Species') + ylim(0,1) #+ geom_sina(alpha=0.1)
@@ -165,10 +172,13 @@ numbersyngenes + geom_text(aes(label=V2))
                               numbersynunique20+ geom_text(aes(label=V2)) 
                               numbersynunique29+ geom_text(aes(label=V2)) 
                               numbersynuniqueALL+ geom_text(aes(label=V2)) 
+                                   numbersynuniqueDIPLOID+ geom_text(aes(label=V2)) 
+
 
 ggplot(gg, aes(x=ks, y=syntenicunique, color=ploidy)) + geom_point() + geom_text(aes(label=V2)) + scale_color_manual(values=ploidycolors, name='Ploidy') 
 ggplot(gg, aes(x=ks, y=syntenicunique20, color=ploidy)) + geom_point() + geom_text(aes(label=V2)) + scale_color_manual(values=ploidycolors, name='Ploidy') 
 ggplot(gg, aes(x=ks, y=syntenicunique29, color=ploidy)) + geom_point() + geom_text(aes(label=V2)) + scale_color_manual(values=ploidycolors, name='Ploidy') 
+ggplot(gg, aes(x=ks, y=syntenicuniqueDIPLOID, color=ploidy)) + geom_point() + geom_text(aes(label=V2)) + scale_color_manual(values=ploidycolors, name='Ploidy') 
 
 dev.off()
 
