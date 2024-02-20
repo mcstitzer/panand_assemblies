@@ -147,4 +147,11 @@ ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=teprop)) + geo
 ## younger polyploids might not have had TE invasions yet
 ## if i get subgenomes, same question!!!!!
 
+ks=fread('~/transfer/ks_to_look_for_mixtures.txt', sep='\t', quote='')
+ks=ks %>% group_by(genome) %>% filter(ks>0.0001) %>% summarize(ks=median(ks))
+metaplotmelt$ks=ks$ks[match(metaplotmelt$variable, ks$genome)]
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ks)) + geom_line() + scale_color_viridis_c(option='viridis')  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ks)) + geom_line() + scale_color_viridis_c(limits = c(0, 0.06), oob = scales::squish, option='viridis')  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
+
+
 dev.off()
