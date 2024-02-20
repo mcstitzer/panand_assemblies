@@ -65,14 +65,20 @@ mcols(syngr)$genome=syn$genome
 mcols(syngr)$quickgene=syn$quickgene
 
 ## get upstream
-geneflanks=promoters(syngr, upstream=2000, downstream=0)
+flankspace=5000
+geneflanks=promoters(syngr, upstream=flankspace, downstream=0)
 
 
-geneflanksranges=slide_ranges(geneflanks, width=100, step=10)
+#geneflanksranges=slide_ranges(geneflanks, width=100, step=10)
+## easier to not overlap tiles...
+geneflanksranges=tile_ranges(geneflanks, width=flankspace/100)
+
 geneflanksranges$genome=geneflanks$genome[geneflanksranges$partition]
 geneflanksranges$ogstrand=strand(geneflanks)[geneflanksranges$partition]
-geneflanksranges$window=rep(1:191,length(geneflanks))
-
+# geneflanksranges$window=rep(1:191,length(geneflanks))
+# metaplot=data.frame(window=1:191)
+geneflanksranges$window=rep(1:(flankspace/100),length(geneflanks))
+metaplot=data.frame(window=1:(flankspace/100))
 
 pdf('~/transfer/try_te_metaplot.pdf',12,8)
 
@@ -86,9 +92,24 @@ posplot=data.frame(tewindow[tewindow$ogstrand=='+',])[,c('window', 'width', 'par
   posplot=posplot %>% complete(partition, window, fill=list(width=0))
 
 print(  ggplot(posplot, aes(x=window, y=width, group=window)) + geom_boxplot(outlier.shape=NA) + ggtitle(genome) )
-print( ggplot(posplot, aes(x=window, y=width, group=partition)) + geom_line(alpha=0.01) + ggtitle(genome) )
+# print( ggplot(posplot, aes(x=window, y=width, group=partition)) + geom_line(alpha=0.01) + ggtitle(genome) )
 
+  metaplot[,genome]=(posplot %>% group_by(window) %>% summarize(medianTE=median(width)))$medianTE
+
+  
 }
 
+metaplotmelt=melt(metaplot, id.vars='window')
+
+gs=read.table('~/transfer/panand_assembly_sizes.txt', header=T, sep='\t')
+
+metaplotmelt$ploidy=gs$ploidy[match(metaplotmelt$variable, gs$V2)]
+metaplotmelt$ploidy=factor(metaplotmelt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+
+ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
+names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
+
+
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('window index upstream of TranslSS') + ylab('TEs in 100bp window')
 
 dev.off()
