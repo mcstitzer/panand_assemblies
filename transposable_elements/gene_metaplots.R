@@ -66,19 +66,22 @@ mcols(syngr)$quickgene=syn$quickgene
 
 ## get upstream
 flankspace=5000
-geneflanks=promoters(syngr, upstream=flankspace, downstream=0)
+geneflanks=promoters(syngr, upstream=flankspace, downstream=1000)
 
 
 #geneflanksranges=slide_ranges(geneflanks, width=100, step=10)
 ## easier to not overlap tiles...
-geneflanksranges=tile_ranges(geneflanks, width=flankspace/100)
+geneflanksranges=tile_ranges(geneflanks, width=100)
+#geneflanksranges=slide_ranges(geneflanks, width=100, step=10)
+
 
 geneflanksranges$genome=geneflanks$genome[geneflanksranges$partition]
 geneflanksranges$ogstrand=strand(geneflanks)[geneflanksranges$partition]
 # geneflanksranges$window=rep(1:191,length(geneflanks))
 # metaplot=data.frame(window=1:191)
-geneflanksranges$window=rep(1:(flankspace/100),length(geneflanks))
-metaplot=data.frame(window=1:(flankspace/100))
+nwindows=names(table(table(geneflanksranges$partition)))
+geneflanksranges$window=rep(1:nwindows,length(geneflanks))
+metaplot=data.frame(window=1:nwindows)
 
 pdf('~/transfer/try_te_metaplot.pdf',12,8)
 
@@ -86,6 +89,8 @@ for(genome in all$V2){
   tesg=genomecountlist[[genome]]
  tes=unstrand(tesg) ### why is this so stupid
  gf=geneflanksranges[geneflanksranges$genome==genome,]
+  if(genome=='znicar'){seqnames(tes)[seqnames(tes) %in% 1:10]=paste0('chr', seqnames(tes)[seqnames(tes) %in% 1:10])}
+
  tewindow=join_overlap_intersect(unstrand(gf), tes)      ## cut tes at boundaries of ranges
 
 posplot=data.frame(tewindow[tewindow$ogstrand=='+',])[,c('window', 'width', 'partition')]
@@ -110,6 +115,6 @@ ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
 names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
 
 
-ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('window index upstream of TranslSS') + ylab('TEs in 100bp window')
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('window index relative to TranslationSS (dashed)') + ylab('TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
 
 dev.off()
