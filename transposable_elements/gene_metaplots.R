@@ -7,6 +7,7 @@ library(reshape2)
 library(RColorBrewer)
 library(tidypaleo) ## facet species names in italics!!!!!
 library(tidyverse)
+library(viridisLite)
 
 all=read.table('../panand_sp_ploidy.txt')
 all=all[!all$V2 %in% c('pprate', 'tdactm', 'tzopol', 'osativ', 'bdista', 'agerjg', 'svirid', 'eophiu', 'tdacs2', 'tdacn2'),]
@@ -65,7 +66,7 @@ mcols(syngr)$genome=syn$genome
 mcols(syngr)$quickgene=syn$quickgene
 
 ## get upstream
-flankspace=5000
+flankspace=10000
 geneflanks=promoters(syngr, upstream=flankspace, downstream=1000)
 
 
@@ -82,6 +83,11 @@ geneflanksranges$ogstrand=strand(geneflanks)[geneflanksranges$partition]
 nwindows=names(table(table(geneflanksranges$partition)))
 geneflanksranges$window=rep(1:nwindows,length(geneflanks))
 metaplot=data.frame(window=1:nwindows)
+metaplot75=data.frame(window=1:nwindows)
+metaplot25=data.frame(window=1:nwindows)
+metaplotmean=data.frame(window=1:nwindows)
+## to color by te prooportion
+gs$teprop=gs$haploidRepeatSize/(gs$haploidAssemblySize-gs$haploidNCount)
 
 pdf('~/transfer/try_te_metaplot.pdf',12,8)
 
@@ -90,6 +96,8 @@ for(genome in all$V2){
  tes=unstrand(tesg) ### why is this so stupid
  gf=geneflanksranges[geneflanksranges$genome==genome,]
   if(genome=='znicar'){seqnames(tes)[seqnames(tes) %in% 1:10]=paste0('chr', seqnames(tes)[seqnames(tes) %in% 1:10])}
+  if(genome=='sbicol'){seqlevels(gf)[seqlevels(gf) %in% 1:9]=paste0('Chr0', seqlevels(gf)[seqlevels(gf) %in% 1:9])
+                      seqlevels(gf)[seqlevels(gf)=='10']='Chr10'}
 
  tewindow=join_overlap_intersect(unstrand(gf), tes)      ## cut tes at boundaries of ranges
 
@@ -100,21 +108,43 @@ print(  ggplot(posplot, aes(x=window, y=width, group=window)) + geom_boxplot(out
 # print( ggplot(posplot, aes(x=window, y=width, group=partition)) + geom_line(alpha=0.01) + ggtitle(genome) )
 
   metaplot[,genome]=(posplot %>% group_by(window) %>% summarize(medianTE=median(width)))$medianTE
+  metaplot75[,genome]=(posplot %>% group_by(window) %>% summarize(percTE=quantile(width, 0.75)))$percTE
+  metaplot25[,genome]=(posplot %>% group_by(window) %>% summarize(percTE=quantile(width, 0.25)))$percTE
+  metaplotmean[,genome]=(posplot %>% group_by(window) %>% summarize(meanTE=median(width)))$meanTE
 
   
 }
 
 metaplotmelt=melt(metaplot, id.vars='window')
+metaplotmeanmelt=melt(metaplotmean, id.vars='window')
+metaplot75melt=melt(metaplot75, id.vars='window')
+metaplot25melt=melt(metaplot25, id.vars='window')
 
 gs=read.table('~/transfer/panand_assembly_sizes.txt', header=T, sep='\t')
 
 metaplotmelt$ploidy=gs$ploidy[match(metaplotmelt$variable, gs$V2)]
 metaplotmelt$ploidy=factor(metaplotmelt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+metaplot25melt$ploidy=gs$ploidy[match(metaplot25melt$variable, gs$V2)]
+metaplot25melt$ploidy=factor(metaplot25melt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+metaplot75melt$ploidy=gs$ploidy[match(metaplot75melt$variable, gs$V2)]
+metaplot75melt$ploidy=factor(metaplot75melt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+metaplotmeanmelt$ploidy=gs$ploidy[match(metaplotmeanmelt$variable, gs$V2)]
+metaplotmeanmelt$ploidy=factor(metaplotmeanmelt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 
 ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
 names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
 
 
-ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('window index relative to TranslationSS (dashed)') + ylab('TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
+ggplot(metaplot75melt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('window index relative to TranslationSS (dashed)') + ylab('75th percentile TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
+ggplot(metaplot25melt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('window index relative to TranslationSS (dashed)') + ylab('25th percentile TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
+ggplot(metaplotmeanmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('window index relative to TranslationSS (dashed)') + ylab('Mean TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
+
+metaplotmelt$teprop=gs$teprop[match(metaplotmelt$variable, gs$V2)]
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=teprop)) + geom_line() + scale_color_viridis_c(option='inferno')  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
+
+## also want to do this with ks - time since polyploidy!!@! 
+## younger polyploids might not have had TE invasions yet
+## if i get subgenomes, same question!!!!!
 
 dev.off()
