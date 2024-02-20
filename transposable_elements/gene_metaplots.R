@@ -86,8 +86,6 @@ metaplot=data.frame(window=1:nwindows)
 metaplot75=data.frame(window=1:nwindows)
 metaplot25=data.frame(window=1:nwindows)
 metaplotmean=data.frame(window=1:nwindows)
-## to color by te prooportion
-gs$teprop=gs$haploidRepeatSize/(gs$haploidAssemblySize-gs$haploidNCount)
 
 pdf('~/transfer/try_te_metaplot.pdf',12,8)
 
@@ -121,6 +119,8 @@ metaplot75melt=melt(metaplot75, id.vars='window')
 metaplot25melt=melt(metaplot25, id.vars='window')
 
 gs=read.table('~/transfer/panand_assembly_sizes.txt', header=T, sep='\t')
+## to color by te prooportion
+gs$teprop=gs$haploidRepeatSize/(gs$haploidAssemblySize-gs$haploidNCount)
 
 metaplotmelt$ploidy=gs$ploidy[match(metaplotmelt$variable, gs$V2)]
 metaplotmelt$ploidy=factor(metaplotmelt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
