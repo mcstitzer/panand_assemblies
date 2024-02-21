@@ -81,6 +81,8 @@ geneflanksranges3=tile_ranges(geneflanks3, width=100)
 
 ## NOW NEED TO PUT IN 3' END - could concatenate the granges together? need to set up naming of windows carefully then
 ## or keep as separate side-by-side plots?
+geneflanksranges3$genome=geneflanks3$genome[geneflanksranges3$partition]
+geneflanksranges3$ogstrand=strand(geneflanks3)[geneflanksranges3$partition]
 
 geneflanksranges$genome=geneflanks$genome[geneflanksranges$partition]
 geneflanksranges$ogstrand=strand(geneflanks)[geneflanksranges$partition]
@@ -88,10 +90,15 @@ geneflanksranges$ogstrand=strand(geneflanks)[geneflanksranges$partition]
 # metaplot=data.frame(window=1:191)
 nwindows=names(table(table(geneflanksranges$partition)))
 geneflanksranges$window=rep(1:nwindows,length(geneflanks))
-metaplot=data.frame(window=1:nwindows)
-metaplot75=data.frame(window=1:nwindows)
-metaplot25=data.frame(window=1:nwindows)
-metaplotmean=data.frame(window=1:nwindows)
+geneflanksranges3$window=rep((as.numeric(nwindows)+1):(as.numeric(nwindows)*2),length(geneflanks))
+
+metaplot=data.frame(window=1:(as.numeric(nwindows)*2))
+metaplot75=data.frame(window=1:(as.numeric(nwindows)*2))
+metaplot25=data.frame(window=1:(as.numeric(nwindows)*2))
+metaplotmean=data.frame(window=1:(as.numeric(nwindows)*2))
+
+### combine them here!!!
+geneflanksranges=c(geneflanksranges, geneflanksranges3)
 
 pdf('~/transfer/try_te_metaplot.pdf',12,8)
 
@@ -144,13 +151,13 @@ ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
 names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
 
 
-ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
-ggplot(metaplot75melt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('window index relative to TranslationSS (dashed)') + ylab('75th percentile TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
-ggplot(metaplot25melt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('window index relative to TranslationSS (dashed)') + ylab('25th percentile TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
-ggplot(metaplotmeanmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('window index relative to TranslationSS (dashed)') + ylab('Mean TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=(1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed')) + scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslationTermS', paste0('+', flankspace))) 
+ggplot(metaplot75melt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=(1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('75th percentile TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslationTermS', paste0('+', flankspace)))
+ggplot(metaplot25melt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=(1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('25th percentile TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslationTermS', paste0('+', flankspace)))
+ggplot(metaplotmeanmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_vline(xintercept=(1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke')+ geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Mean TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslationTermS', paste0('+', flankspace)))
 
 metaplotmelt$teprop=gs$teprop[match(metaplotmelt$variable, gs$V2)]
-ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=teprop)) + geom_line() + scale_color_viridis_c(option='inferno')  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=teprop)) + geom_vline(xintercept=(1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_viridis_c(option='inferno')  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslationTermS', paste0('+', flankspace)))
 
 ## also want to do this with ks - time since polyploidy!!@! 
 ## younger polyploids might not have had TE invasions yet
@@ -159,11 +166,11 @@ ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=teprop)) + geo
 ks=fread('~/transfer/ks_to_look_for_mixtures.txt', sep='\t', quote='')
 ks=ks %>% group_by(genome) %>% filter(ks>0.0001) %>% summarize(ks=median(ks))
 metaplotmelt$ks=ks$ks[match(metaplotmelt$variable, ks$genome)]
-ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ks)) + geom_line() + scale_color_viridis_c(option='viridis')  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
-ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ks)) + geom_line() + scale_color_viridis_c(limits = c(0, 0.06), oob = scales::squish, option='viridis')  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ks))+ geom_vline(xintercept=(1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_viridis_c(option='viridis')  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslationTermS', paste0('+', flankspace)))
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ks)) + geom_vline(xintercept=(1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke')+ geom_line() + scale_color_viridis_c(limits = c(0, 0.06), oob = scales::squish, option='viridis')  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslationTermS', paste0('+', flankspace)))
 
 metaplotmelt$genomesize=(gs$haploidAssemblySize-gs$haploidNCount)[match(metaplotmelt$variable, gs$V2)]/1e6
 
-ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=genomesize)) + geom_line() + scale_color_viridis_c( option='magma')  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=genomesize)) + geom_vline(xintercept=(1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke')+ geom_line() + scale_color_viridis_c( option='magma')  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslationTermS', paste0('+', flankspace)))
 
 dev.off()
