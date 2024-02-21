@@ -65,16 +65,22 @@ syngr=GRanges(seqnames=syn$queryChr, IRanges(start=syn$queryStart, end=syn$query
 mcols(syngr)$genome=syn$genome
 mcols(syngr)$quickgene=syn$quickgene
 
+syngr3=syngr
+start(syngr3)=end(syngr)
 ## get upstream
 flankspace=10000
 geneflanks=promoters(syngr, upstream=flankspace, downstream=1000)
+geneflanks3=promoters(syngr3, upstream=1000, downstream=flankspace)
 
 
 #geneflanksranges=slide_ranges(geneflanks, width=100, step=10)
 ## easier to not overlap tiles...
 geneflanksranges=tile_ranges(geneflanks, width=100)
 #geneflanksranges=slide_ranges(geneflanks, width=100, step=10)
+geneflanksranges3=tile_ranges(geneflanks3, width=100)
 
+## NOW NEED TO PUT IN 3' END - could concatenate the granges together? need to set up naming of windows carefully then
+## or keep as separate side-by-side plots?
 
 geneflanksranges$genome=geneflanks$genome[geneflanksranges$partition]
 geneflanksranges$ogstrand=strand(geneflanks)[geneflanksranges$partition]
@@ -102,6 +108,9 @@ for(genome in all$V2){
 posplot=data.frame(tewindow[tewindow$ogstrand=='+',])[,c('window', 'width', 'partition')]
   posplot=posplot %>% complete(partition, window, fill=list(width=0))
 
+  ## now ask which is the closest/furthest TE for each subgenome (gene copy)
+  posplot$quickgene=geneflanks$quickgene[posplot$partition]
+  posplothigh=posplot %>% group_by(quickgene,window) %>% summarize(partition[which.max(width)])
 print(  ggplot(posplot, aes(x=window, y=width, group=window)) + geom_boxplot(outlier.shape=NA) + ggtitle(genome) )
 # print( ggplot(posplot, aes(x=window, y=width, group=partition)) + geom_line(alpha=0.01) + ggtitle(genome) )
 
