@@ -153,5 +153,8 @@ metaplotmelt$ks=ks$ks[match(metaplotmelt$variable, ks$genome)]
 ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ks)) + geom_line() + scale_color_viridis_c(option='viridis')  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
 ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ks)) + geom_line() + scale_color_viridis_c(limits = c(0, 0.06), oob = scales::squish, option='viridis')  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
 
+metaplotmelt$genomesize=(gs$haploidAssemblySize-gs$haploidNCount)[match(metaplotmelt$variable, gs$V2)]/1e6
+
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=genomesize)) + geom_line() + scale_color_viridis_c( option='magma')  + xlab('window index relative to TranslationSS (dashed)') + ylab('Median TEs in 100bp window') + geom_vline(xintercept=flankspace/100, lty='dashed')
 
 dev.off()
