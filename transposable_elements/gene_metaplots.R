@@ -68,7 +68,7 @@ mcols(syngr)$quickgene=syn$quickgene
 syngr3=syngr
 start(syngr3)=end(syngr)
 ## get upstream
-flankspace=10000
+flankspace=20000
 geneflanks=promoters(syngr, upstream=flankspace, downstream=1000)
 geneflanks3=promoters(syngr3, upstream=1000, downstream=flankspace)
 
@@ -177,4 +177,10 @@ ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=genomesize)) +
 ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed')) + scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace)))  + theme(axis.text.x=element_text(angle=20,hjust=1)) + 
   geom_text_repel(aes(label = variable), data = metaplotmelt[metaplotmelt$window==((flankspace*2)+2000)/100,], size = 3, max.overlaps=Inf) +
   geom_text_repel(aes(label = variable), data = metaplotmelt[metaplotmelt$window==1,], size = 3, max.overlaps=Inf)
+
+
+## scale to genome-wide proportion
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value/(teprop*100), color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Scaled median TE base pairs in 100bp window, to genome-wide proportion') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed')) + scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace)))  + theme(axis.text.x=element_text(angle=20,hjust=1))
+
+
 dev.off()
