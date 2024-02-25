@@ -83,9 +83,14 @@ geneflanksranges3=tile_ranges(geneflanks3, width=100)
 ## or keep as separate side-by-side plots?
 geneflanksranges3$genome=geneflanks3$genome[geneflanksranges3$partition]
 geneflanksranges3$ogstrand=strand(geneflanks3)[geneflanksranges3$partition]
+geneflanksranges3$quickgene=geneflanks3$quickgene[geneflanksranges3$partition]
+geneflanksranges3$synindex=(1:length(geneflanksranges3))[geneflanksranges3$partition]
 
 geneflanksranges$genome=geneflanks$genome[geneflanksranges$partition]
 geneflanksranges$ogstrand=strand(geneflanks)[geneflanksranges$partition]
+geneflanksranges$quickgene=geneflanks$quickgene[geneflanksranges$partition]
+geneflanksranges$synindex=(1:length(geneflanksranges))[geneflanksranges$partition]
+
 # geneflanksranges$window=rep(1:191,length(geneflanks))
 # metaplot=data.frame(window=1:191)
 nwindows=names(table(table(geneflanksranges$partition)))
@@ -97,8 +102,45 @@ metaplot75=data.frame(window=1:(as.numeric(nwindows)*2))
 metaplot25=data.frame(window=1:(as.numeric(nwindows)*2))
 metaplotmean=data.frame(window=1:(as.numeric(nwindows)*2))
 
+## set up min/max
+metaplotmindnds=data.frame(window=1:(as.numeric(nwindows)*2))
+metaplotmindnds75=data.frame(window=1:(as.numeric(nwindows)*2))
+metaplotmindnds25=data.frame(window=1:(as.numeric(nwindows)*2))
+metaplotmindndsmean=data.frame(window=1:(as.numeric(nwindows)*2))
+metaplotmaxdnds=data.frame(window=1:(as.numeric(nwindows)*2))
+metaplotmaxdnds75=data.frame(window=1:(as.numeric(nwindows)*2))
+metaplotmaxdnds25=data.frame(window=1:(as.numeric(nwindows)*2))
+metaplotmaxdndsmean=data.frame(window=1:(as.numeric(nwindows)*2))
+
+
 ### combine them here!!!
 geneflanksranges=c(geneflanksranges, geneflanksranges3)
+
+
+## not sure if ksp is just in the environment - will need to recheck this codefrom gene summaries
+## got weird results so rerunnign
+ksp=fread('cat ../anchorAln_omega_v2/Pavag*.fasta')
+ksp=ksp[substr(ksp$V3,1,6)=='pvagin' | substr(ksp$V4,1,6)=='pvagin',] ## to paspalum
+ksp$genome=substr(ksp$V3,1,6)                       
+
+ksp$haploid=gs$haploid[match(ksp$genome, gs$V2)]
+ksp$species=taxonnames[match(ksp$genome, names(taxonnames))]
+ksp$species=factor(ksp$species, levels=taxonnames)
+ksp$speciesLabel=ifelse(ksp$haploid, paste0(ksp$species, '*'), as.character(ksp$species))
+ksp$speciesLabel=ksp$species
+levels(ksp$speciesLabel)[levels(ksp$speciesLabel) %in% ksp$species[ksp$haploid]]=paste0(levels(ksp$speciesLabel)[levels(ksp$speciesLabel) %in% ksp$species[ksp$haploid]], '*')
+ksp$ploidy=gs$ploidy[match(ksp$genome, gs$V2)]
+ksp=ksp[!ksp$genome %in% c('bdista', 'eophiu', 'osativ', 'svirid', 'tdacn2', 'tdacs2', 'tdactm', 'tzopol', 'pvagin'),]
+ksp=ksp[ksp$V17<0.4,] ## scary is this a good decision i think it's okay, this is 30mya
+
+
+syn$kspname=paste0(syn$genome, '_', syn$quickgene, '_', syn$queryChr, '_', syn$queryStart, '-', syn$queryEnd)
+syn$dndsPasp=ksp$V19[match(syn$kspname, ksp$V3)]
+syn$rownumb=1:nrow(syn)
+## for duplicates, get max or min
+maxdnds=syn %>% group_by(quickgene, genome) %>% dplyr::filter(dplyr::n()>1) %>% dplyr::filter(dndsPasp==max(dndsPasp))
+mindnds=syn %>% group_by(quickgene, genome) %>% dplyr::filter(dplyr::n()>1) %>% dplyr::filter(dndsPasp==min(dndsPasp))
+
 
 pdf('~/transfer/try_te_metaplot.pdf',12,6)
 
@@ -109,8 +151,11 @@ for(genome in all$V2){
   if(genome=='znicar'){seqnames(tes)[seqnames(tes) %in% 1:10]=paste0('chr', seqnames(tes)[seqnames(tes) %in% 1:10])}
   if(genome=='sbicol'){seqlevels(gf)[seqlevels(gf) %in% 1:9]=paste0('Chr0', seqlevels(gf)[seqlevels(gf) %in% 1:9])
                       seqlevels(gf)[seqlevels(gf)=='10']='Chr10'}
-
+gfmin=gf[gf$synindex %in% mindnds$rownumb[mindnds$genome==genome],] ## aaaaaahhhhhh i was not filtering by genome!!! that was why everything was 0
+  gfmax=gf[gf$synindex %in% maxdnds$rownumb[maxdnds$genome==genome],]
  tewindow=join_overlap_intersect(unstrand(gf), tes)      ## cut tes at boundaries of ranges
+ tewindowmindnds=join_overlap_intersect(unstrand(gfmin), tes)      ## cut tes at boundaries of ranges
+ tewindowmaxdnds=join_overlap_intersect(unstrand(gfmax), tes)      ## cut tes at boundaries of ranges
 
 posplot=data.frame(tewindow[tewindow$ogstrand=='+',])[,c('window', 'width', 'partition')]
   posplot=posplot %>% complete(partition, window, fill=list(width=0))
@@ -126,13 +171,65 @@ print(  ggplot(posplot, aes(x=window, y=width, group=window)) + geom_boxplot(out
   metaplot25[,genome]=(posplot %>% group_by(window) %>% summarize(percTE=quantile(width, 0.25)))$percTE
   metaplotmean[,genome]=(posplot %>% group_by(window) %>% summarize(meanTE=median(width)))$meanTE
 
+  ### minmax dnds
+  posplotmindnds=data.frame(tewindowmindnds[tewindowmindnds$ogstrand=='+',])[,c('window', 'width', 'partition')]
+  posplotmindnds=posplotmindnds %>% complete(partition, window, fill=list(width=0))
+
+  ## now ask which is the closest/furthest TE for each subgenome (gene copy)
+  posplotmindnds$quickgene=geneflanks$quickgene[mindnds$rownumb][posplotmindnds$partition]
+### hmm, this seems like it's picking the most tes in a given distance from a gene?? was this my attempt priorm or a mistake??
+## lol duh because above I'm calling it posplothigh!!! i'm commenting these out because they're not sued here
+  #  posplotmindndshigh=posplotmindnds %>% group_by(quickgene,window) %>% summarize(partition[which.max(width)])
+if(length(table(posplotmindnds$window))==nrow(metaplotmindnds)){
+  metaplotmindnds[,genome]=(posplotmindnds %>% group_by(window) %>% summarize(medianTE=median(width)))$medianTE
+  metaplotmindnds75[,genome]=(posplotmindnds %>% group_by(window) %>% summarize(percTE=quantile(width, 0.75)))$percTE
+  metaplotmindnds25[,genome]=(posplotmindnds %>% group_by(window) %>% summarize(percTE=quantile(width, 0.25)))$percTE
+  metaplotmindndsmean[,genome]=(posplotmindnds %>% group_by(window) %>% summarize(meanTE=median(width)))$meanTE
+} else{
+metaplotmindnds[,genome]=NA
+  metaplotmindnds75[,genome]=NA
+  metaplotmindnds25[,genome]=NA
+  metaplotmindndsmean[,genome]=NA
   
+}
+  
+  ##max
+  posplotmaxdnds=data.frame(tewindowmaxdnds[tewindowmaxdnds$ogstrand=='+',])[,c('window', 'width', 'partition')]
+  posplotmaxdnds=posplotmaxdnds %>% complete(partition, window, fill=list(width=0))
+
+  ## now ask which is the closest/furthest TE for each subgenome (gene copy)
+  posplotmaxdnds$quickgene=geneflanks$quickgene[maxdnds$rownumb][posplotmaxdnds$partition]
+#  posplotmaxdndshigh=posplotmaxdnds %>% group_by(quickgene,window) %>% summarize(partition[which.max(width)])
+if(length(table(posplotmaxdnds$window))==nrow(metaplotmaxdnds)){
+
+  metaplotmaxdnds[,genome]=(posplotmaxdnds %>% group_by(window) %>% summarize(medianTE=median(width)))$medianTE
+  metaplotmaxdnds75[,genome]=(posplotmaxdnds %>% group_by(window) %>% summarize(percTE=quantile(width, 0.75)))$percTE
+  metaplotmaxdnds25[,genome]=(posplotmaxdnds %>% group_by(window) %>% summarize(percTE=quantile(width, 0.25)))$percTE
+  metaplotmaxdndsmean[,genome]=(posplotmaxdnds %>% group_by(window) %>% summarize(meanTE=median(width)))$meanTE
+} else{
+metaplotmaxdnds[,genome]=NA
+  metaplotmaxdnds75[,genome]=NA
+  metaplotmaxdnds25[,genome]=NA
+  metaplotmaxdndsmean[,genome]=NA
+
+  }
+   
 }
 
 metaplotmelt=melt(metaplot, id.vars='window')
 metaplotmeanmelt=melt(metaplotmean, id.vars='window')
 metaplot75melt=melt(metaplot75, id.vars='window')
 metaplot25melt=melt(metaplot25, id.vars='window')
+
+metaplotmindndsmelt=melt(metaplotmindnds, id.vars='window')
+metaplotmindndsmeanmelt=melt(metaplotmindndsmean, id.vars='window')
+metaplotmindnds75melt=melt(metaplotmindnds75, id.vars='window')
+metaplotmindnds25melt=melt(metaplotmindnds25, id.vars='window')
+metaplotmaxdndsmelt=melt(metaplotmaxdnds, id.vars='window')
+metaplotmaxdndsmeanmelt=melt(metaplotmaxdndsmean, id.vars='window')
+metaplotmaxdnds75melt=melt(metaplotmaxdnds75, id.vars='window')
+metaplotmaxdnds25melt=melt(metaplotmaxdnds25, id.vars='window')
+
 
 gs=read.table('~/transfer/panand_assembly_sizes.txt', header=T, sep='\t')
 ## to color by te prooportion
@@ -147,6 +244,26 @@ metaplot75melt$ploidy=factor(metaplot75melt$ploidy, levels=c('Diploid', 'Tetrapl
 metaplotmeanmelt$ploidy=gs$ploidy[match(metaplotmeanmelt$variable, gs$V2)]
 metaplotmeanmelt$ploidy=factor(metaplotmeanmelt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 
+## minmax
+metaplotmindndsmelt$ploidy=gs$ploidy[match(metaplotmindndsmelt$variable, gs$V2)]
+metaplotmindndsmelt$ploidy=factor(metaplotmindndsmelt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+metaplotmindnds25melt$ploidy=gs$ploidy[match(metaplotmindnds25melt$variable, gs$V2)]
+metaplotmindnds25melt$ploidy=factor(metaplotmindnds25melt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+metaplotmindnds75melt$ploidy=gs$ploidy[match(metaplotmindnds75melt$variable, gs$V2)]
+metaplotmindnds75melt$ploidy=factor(metaplotmindnds75melt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+metaplotmindndsmeanmelt$ploidy=gs$ploidy[match(metaplotmindndsmeanmelt$variable, gs$V2)]
+metaplotmindndsmeanmelt$ploidy=factor(metaplotmindndsmeanmelt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+metaplotmaxdndsmelt$ploidy=gs$ploidy[match(metaplotmaxdndsmelt$variable, gs$V2)]
+metaplotmaxdndsmelt$ploidy=factor(metaplotmaxdndsmelt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+metaplotmaxdnds25melt$ploidy=gs$ploidy[match(metaplotmaxdnds25melt$variable, gs$V2)]
+metaplotmaxdnds25melt$ploidy=factor(metaplotmaxdnds25melt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+metaplotmaxdnds75melt$ploidy=gs$ploidy[match(metaplotmaxdnds75melt$variable, gs$V2)]
+metaplotmaxdnds75melt$ploidy=factor(metaplotmaxdnds75melt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+metaplotmaxdndsmeanmelt$ploidy=gs$ploidy[match(metaplotmaxdndsmeanmelt$variable, gs$V2)]
+metaplotmaxdndsmeanmelt$ploidy=factor(metaplotmaxdndsmeanmelt$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+
+
+
 ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
 names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
 
@@ -156,8 +273,26 @@ ggplot(metaplot75melt, aes(group=variable, x=window, y=value, color=ploidy))+ ge
 ggplot(metaplot25melt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('25th percentile TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1))
 ggplot(metaplotmeanmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke')+ geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Mean TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1))
 
+##maxmin
+ggplot(metaplotmindndsmelt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed')) + scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace)))  + theme(axis.text.x=element_text(angle=20,hjust=1)) + ggtitle('Just gene with min dnds per anchor')
+ggplot(metaplotmindnds75melt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('75th percentile TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1)) + ggtitle('Just gene with min dnds per anchor')
+ggplot(metaplotmindnds25melt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('25th percentile TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1)) + ggtitle('Just gene with min dnds per anchor')
+ggplot(metaplotmindndsmeanmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke')+ geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Mean TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1)) + ggtitle('Just gene with min dnds per anchor')
+ggplot(metaplotmaxdndsmelt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed')) + scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace)))  + theme(axis.text.x=element_text(angle=20,hjust=1)) + ggtitle('Just gene with max dnds per anchor')
+ggplot(metaplotmaxdnds75melt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('75th percentile TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1)) + ggtitle('Just gene with max dnds per anchor')
+ggplot(metaplotmaxdnds25melt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('25th percentile TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1)) + ggtitle('Just gene with max dnds per anchor')
+ggplot(metaplotmaxdndsmeanmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke')+ geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Mean TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1)) + ggtitle('Just gene with max dnds per anchor')
+
+
+
+
 metaplotmelt$teprop=gs$teprop[match(metaplotmelt$variable, gs$V2)]
 ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=teprop)) + geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_viridis_c(option='inferno')  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1))
+
+metaplotmindndsmelt$teprop=gs$teprop[match(metaplotmindndsmelt$variable, gs$V2)]
+ggplot(metaplotmindndsmelt, aes(group=variable, x=window, y=value, color=teprop)) + geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_viridis_c(option='inferno')  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1))+ ggtitle('Just gene with min dnds per anchor')
+metaplotmaxdndsmelt$teprop=gs$teprop[match(metaplotmaxdndsmelt$variable, gs$V2)]
+ggplot(metaplotmaxdndsmelt, aes(group=variable, x=window, y=value, color=teprop)) + geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_viridis_c(option='inferno')  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1))+ ggtitle('Just gene with max dnds per anchor')
 
 ## also want to do this with ks - time since polyploidy!!@! 
 ## younger polyploids might not have had TE invasions yet
@@ -177,6 +312,13 @@ ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=genomesize)) +
 ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed')) + scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace)))  + theme(axis.text.x=element_text(angle=20,hjust=1)) + 
   geom_text_repel(aes(label = variable), data = metaplotmelt[metaplotmelt$window==((flankspace*2)+2000)/100,], size = 3, max.overlaps=Inf) +
   geom_text_repel(aes(label = variable), data = metaplotmelt[metaplotmelt$window==1,], size = 3, max.overlaps=Inf)
+##maxmmin
+ggplot(metaplotmindndsmelt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed')) + scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace)))  + theme(axis.text.x=element_text(angle=20,hjust=1)) + 
+  geom_text_repel(aes(label = variable), data = metaplotmelt[metaplotmelt$window==((flankspace*2)+2000)/100,], size = 3, max.overlaps=Inf) +
+  geom_text_repel(aes(label = variable), data = metaplotmelt[metaplotmelt$window==1,], size = 3, max.overlaps=Inf)+ ggtitle('Just gene with min dnds per anchor')
+ggplot(metaplotmaxdndsmelt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed')) + scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace)))  + theme(axis.text.x=element_text(angle=20,hjust=1)) + 
+  geom_text_repel(aes(label = variable), data = metaplotmelt[metaplotmelt$window==((flankspace*2)+2000)/100,], size = 3, max.overlaps=Inf) +
+  geom_text_repel(aes(label = variable), data = metaplotmelt[metaplotmelt$window==1,], size = 3, max.overlaps=Inf)+ ggtitle('Just gene with max dnds per anchor')
 
 
 ## scale to genome-wide proportion
