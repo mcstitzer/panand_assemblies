@@ -164,3 +164,20 @@ dput(blkpp[blkpp$genome2=='sscopa',])
 dput(blkpp[blkpp$genome2=='agerar',])
 
                                      
+
+
+#### actually do it right! output each as they need to
+## to do better, use fai file and add extra scaffolds as singletons to get assigned (maybe with a length cutoff)
+## but not waiting for this now!!!!
+for( i in unique(blkpp$genome2)){
+  
+write.table(file=paste0('~/transfer/', i, '_subphaserinput.txt'), gsub(',', '\t', t(blkpp[blkpp$genome2==i,-1])), quote=F, row.names=F, col.names=F)
+
+}
+
+
+
+
+
+
+                                     
