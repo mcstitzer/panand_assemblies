@@ -30,6 +30,23 @@ gsParam$synteny$blast$targetBlast=sapply(gsParam$synteny$blast$targetBlast, func
 gsParam$synteny$blast$allBlast=sapply(gsParam$synteny$blast$allBlast, function(x) gsub('/work/mash-covid/genespace/', '/local/workdir/mcs368/panand_htt/genespace/', x))
 gsParam$synteny$blast$synHits=sapply(gsParam$synteny$blast$synHits, function(x) gsub('/work/mash-covid/genespace/', '/local/workdir/mcs368/panand_htt/genespace/', x))
 
+## for local!
+gpar <- init_genespace(
+  wd = "/home/mcs368/GeneSpace_run6")
+## this will load in gsParam object
+load('/home/mcs368/GeneSpace_run6/results/gsParams.rda')
+
+## omfg i have to change all these paths because they're fucking hard coded. oh and these are all considered haploid wtf i hate this
+gsParam$paths=lapply(gsParam$paths, function(x) gsub('/work/mash-covid/genespace/', '/home/mcs368/', x))
+gsParam$synteny$combBed=gsub('/work/mash-covid/genespace/', '/home/mcs368/', gsParam$synteny$combBed)
+gsParam$synteny$SpeciesIDs=gsub('/work/mash-covid/genespace/', '/home/mcs368/', gsParam$synteny$SpeciesIDs)
+gsParam$synteny$SequenceIDs=gsub('/work/mash-covid/genespace/', '/home/mcs368/', gsParam$synteny$SequenceIDs)
+gsParam$synteny$ogs=gsub('/work/mash-covid/genespace/', '/home/mcs368/', gsParam$synteny$ogs)
+gsParam$synteny$blast$queryBlast=sapply(gsParam$synteny$blast$queryBlast, function(x) gsub('/work/mash-covid/genespace/', '/home/mcs368/', x))
+gsParam$synteny$blast$targetBlast=sapply(gsParam$synteny$blast$targetBlast, function(x) gsub('/work/mash-covid/genespace/', '/home/mcs368/', x))
+gsParam$synteny$blast$allBlast=sapply(gsParam$synteny$blast$allBlast, function(x) gsub('/work/mash-covid/genespace/', '/home/mcs368/', x))
+gsParam$synteny$blast$synHits=sapply(gsParam$synteny$blast$synHits, function(x) gsub('/work/mash-covid/genespace/', '/home/mcs368/', x))
+                       
 
 ## select a few for riparian
 
@@ -41,12 +58,24 @@ otherpoly=c('pvagin', 'sbicol',  'hconto', 'hcompr','udigit')
                                       
 ggthemes <- ggplot2::theme(
   panel.background = ggplot2::element_rect(fill = "white"))
+
+
+muted_colors <- c("#b34064", "#459abf", "#68b488", "#b3ac40", "#8d4cba", 
+                  "#bf9140", "#ae459a", "#99aabf", "#409f90", "#405973")
+cust_colors <- function(n = 10){
+  cols <- muted_colors
+  pal <- colorRampPalette(cols)
+  return(pal(n))
+}
+
+
+                                     
 pdf('~/transfer/rip_plot.pdf',10,6)
 um=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=rip,
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=10e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
-                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 
 ##if need to invert specific chr
@@ -58,13 +87,13 @@ excuse=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, g
                      minChrLen2plot=10e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr,
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
-                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 me=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=rip,
                      useOrder=T, ## keep chr position info there!!!
                      minChrLen2plot=100, ## since we're using chr size, we're only doing 10 Mb scafs
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
-                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 ## wtf does this store these these stupid way jsut let me plot
 
@@ -76,7 +105,7 @@ excuse=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, g
                      minChrLen2plot=10e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr,
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi', 'tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
-                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 
 
@@ -85,21 +114,21 @@ diploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, 
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
-                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 tetraploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'snutan', 'hconto', 'ccitra', 'achine', 'sscopa', 'etrips',  'vcuspi'), #all$V2[all$ploidy=='Tetraploid']), #'atenui', 'rrottb',
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar','zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi', 'tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
-                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 hexaploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'blagur', 'agerar', 'hcompr', 'udigit'), #all$V2[all$ploidy=='Hexaploid']),
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
-                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 paleotetraploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'tdacn1', 'tdacs1', 'zdgigi', 'zdmomo', 'znicar', 'zmhuet', 'zTIL25', 'zTIL18', 'zTIL01', 'zTIL11',
  'zB73v5'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
@@ -107,21 +136,21 @@ paleotetraploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBl
                      minChrLen2plot=15e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zmhuet', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
-                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 gerardi=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'avirgi', 'achine', 'agerar', 'sscopa', 'smicro'),
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
-                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )     
 scoparium=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'avirgi', 'sscopa', 'smicro'),
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr, xlabel='',
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
-                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )   
 ##for real, add scalePlotWidth, to make so diploids, tetraploids, paleotetraploids all same x scale even when chr are bigger!
 
@@ -130,6 +159,35 @@ scoparium=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F
 dev.off()
 
 
+roi_sg1=data.frame(genome=c(rep('tdacn1',10), rep('tdacs1',10), rep('zB73v5', 10), rep('pvagin',10)),
+                   chr=c(paste0('chr',c(1,3,2,7,14,8,11,18,12,4)),paste0('chr',c(1,3,2,7,14,8,11,18,12,4)),
+                         paste0('chr',1:10), paste0('Chr0',1:9),'Chr10'))
+
+sg1=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'tdacn1', 'tdacs1', 
+ 'zB73v5'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
+                     useOrder=F, ## keep chr position info there!!!
+                     highlightBed = roi_sg1, ## only plot chr in roi!! 
+                    backgroundColor = NULL, 
+                     minChrLen2plot=15e6, ## since we're using chr size, we're only doing 10 Mb scafs
+                     invertTheseChrs = invchr, xlabel='',
+                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zmhuet', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
+                    )
+roi_sg2=data.frame(genome=c(rep('tdacn1',10), rep('tdacs1',10), rep('zB73v5', 10), rep('pvagin',10)),
+                   chr=c(paste0('chr',c(10,5,6,9,5,15,17,2,16,13)),paste0('chr',c(10,5,6,9,5,15,17,2,16,13)),
+                         paste0('chr',1:10), paste0('Chr0',1:9),'Chr10'))
+
+sg2=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'tdacn1', 'tdacs1', 
+ 'zB73v5'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
+                     useOrder=F, ## keep chr position info there!!!
+                     highlightBed = roi_sg2, 
+                    backgroundColor = NULL, 
+                     minChrLen2plot=15e6, ## since we're using chr size, we're only doing 10 Mb scafs
+                     invertTheseChrs = invchr, xlabel='',
+                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zmhuet', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
+                    )
+                                     
 
 ## subgenomes
 sg=read.table('~/transfer/panand_all_subgenomes_10052023.txt', header=F)
