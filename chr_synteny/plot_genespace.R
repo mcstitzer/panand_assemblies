@@ -187,6 +187,11 @@ sg2=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, geno
                      chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zmhuet', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
+
+## way to add labels?? this might get me species names
+p2 <- p1 + 
+  scale_y_discrete(limits = c("chicky", "people", "mice", "duckBilled", "dangerNoodle"))+ ## bottom to top!
+  theme(axis.text.y = element_text(size = 16))
                                      
 
 ## subgenomes
