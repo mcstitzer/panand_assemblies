@@ -188,6 +188,39 @@ sg2=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, geno
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 
+
+## above is not working :( i think b/c maize has homology to the absent trip crh
+
+roi_sg1simple=data.frame(genome=c(rep('tdacs1',10)),
+                   chr=c(paste0('chr',c(1,3,2,7,14,8,11,18,12,4))))
+
+sg1simple=plot_riparian(gsParam=gsParam, refGenome='tdacs1', forceRecalcBlocks=F, genomeIDs=c('tdacs1', 
+ 'zB73v5'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
+                     useOrder=F, ## keep chr position info there!!!
+                     highlightBed = roi_sg1, ## only plot chr in roi!! 
+                    backgroundColor = NULL, 
+                        customRefChrOrder=paste0('chr',c(1,3,2,7,14,8,11,18,12,4)),
+                     minChrLen2plot=15e6, ## since we're using chr size, we're only doing 10 Mb scafs
+                     invertTheseChrs = invchr, xlabel='',
+                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zmhuet', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
+                    )
+roi_sg2simple=data.frame(genome=c(rep('tdacs1',10)),
+                   chr=c(paste0('chr',c(10,5,6,9,5,15,17,2,16,13))))
+
+sg2simple=plot_riparian(gsParam=gsParam, refGenome='tdacs1', forceRecalcBlocks=F, genomeIDs=c('tdacs1', 
+ 'zB73v5'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
+                     useOrder=F, ## keep chr position info there!!!
+                     highlightBed = roi_sg1, ## only plot chr in roi!! 
+                    backgroundColor = NULL, 
+                        customRefChrOrder=paste0('chr',c(10,5,6,9,5,15,17,2,16,13)),
+                     minChrLen2plot=15e6, ## since we're using chr size, we're only doing 10 Mb scafs
+                     invertTheseChrs = invchr, xlabel='',
+                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zmhuet', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
+                    )
+
+                                     
 ## way to add labels?? this might get me species names
 p2 <- p1 + 
   scale_y_discrete(limits = c("chicky", "people", "mice", "duckBilled", "dangerNoodle"))+ ## bottom to top!
