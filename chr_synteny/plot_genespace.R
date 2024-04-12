@@ -158,10 +158,10 @@ scoparium=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F
 
 dev.off()
 
-
-roi_sg1=data.frame(genome=c(rep('tdacn1',10), rep('tdacs1',10), rep('zB73v5', 10), rep('pvagin',10)),
+### ugh this didn't work - maybe i have to remove maize??
+roi_sg1=data.frame(genome=c(rep('tdacn1',10), rep('tdacs1',10),  rep('pvagin',10)),
                    chr=c(paste0('chr',c(1,3,2,7,14,8,11,18,12,4)),paste0('chr',c(1,3,2,7,14,8,11,18,12,4)),
-                         paste0('chr',1:10), paste0('Chr0',1:9),'Chr10'))
+                         paste0('Chr0',1:9),'Chr10'))
 
 sg1=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'tdacn1', 'tdacs1', 
  'zB73v5'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
