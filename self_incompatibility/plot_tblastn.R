@@ -22,7 +22,7 @@ abb=ab[ab$V11<1e-100,]
 pdf('duf_tblastn_plot.pdf',14,10)
 for(genome in unique(abb$genome)){
 print(
-  ggplot(abb[abb$genome==genome,], aes(x=V9, xend=V10, y=factor(V1), yend=factor(V1), color=factor(V1))) + geom_segment() + facet_wrap(~V2, ncol=1, scales='free') + ggtitle(genome)
+  ggplot(abb[abb$genome==genome,], aes(x=V9, xend=V10, y=factor(V1), yend=factor(V1), color=factor(V1), linewidth=as.numeric(V3))) + geom_segment() + facet_wrap(~V2, ncol=1, scales='free') + ggtitle(genome)
   )
   }
  dev.off()
