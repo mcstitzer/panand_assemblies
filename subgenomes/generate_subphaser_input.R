@@ -8,7 +8,7 @@ library(tidyr)
 all=read.table('../panand_sp_ploidy.txt', header=F)
 
 for( i in 1:nrow(all)){
-
+if(file.exists(paste0('../',all$V2[i],'-Pv-', all$V3[i]*2))){
 a=read.table(paste0('../',all$V2[i],'-Pv-', all$V3[i]*2), header=T)
 
 b=a[a$gene!='interanchor',]
@@ -41,4 +41,5 @@ output=c(paste(out$first, out$second, out$third, sep='\t'), singletons)
     }
   
 
+}
 }
