@@ -63,7 +63,7 @@ b=a[a$gene!='interanchor',]
 ploidy=all$V3[i]
 if(ploidy==2){
   
-grouped=b %>% group_by(refChr, queryChr) %>% summarize(n=n()) %>% top_n(n=ploidy) %>% data.frame() %>% filter(grepl('Chr', refChr))
+grouped=b %>% group_by(refChr, queryChr) %>% summarize(n=n()) %>% top_n(n=ploidy*2) %>% data.frame() %>% filter(grepl('Chr', refChr))
 out=grouped %>% group_by(refChr) %>% summarize(first=first(queryChr), second=nth(queryChr, 2), third=nth(queryChr,3), fourth=nth(queryChr,4))
 ## get all contigs with synteny! 
 singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
@@ -71,7 +71,7 @@ output=c(paste(out$first, out$second, out$third, out$fourth, sep='\t'), singleto
   write.table(output, paste0(all$V2[i],'_subphaserinput.awd.txt'), col.names=F, row.names=F, quote=F)
 }
   if(ploidy==3){
-    grouped=b %>% group_by(refChr, queryChr) %>% summarize(n=n()) %>% top_n(n=ploidy) %>% data.frame() %>% filter(grepl('Chr', refChr))
+    grouped=b %>% group_by(refChr, queryChr) %>% summarize(n=n()) %>% top_n(n=ploidy*2) %>% data.frame() %>% filter(grepl('Chr', refChr))
 out=grouped %>% group_by(refChr) %>% summarize(first=first(queryChr), second=nth(queryChr, 2), third=nth(queryChr,3), fourth=nth(queryChr,4), fifth=nth(queryChr,5), sixth=nth(queryChr,6))
 ## get all contigs with synteny! 
 singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
