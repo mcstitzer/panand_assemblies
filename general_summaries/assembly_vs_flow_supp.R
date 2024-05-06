@@ -57,13 +57,13 @@ asize$doubledAssemblyNoN=(asize$haploidAssemblySize-asize$haploidNCount) *2
 #asize$gc=(asize$V5/1e6+asize$V6/1e6)/(asize$V4/1e6+asize$V5/1e6+asize$V6/1e6+asize$V7/1e6)
 ## nm it's kinda boring 43-47% 
 
-asize$species=taxonnames[match(asize$V2, names(taxonnames))]
-asize$species=factor(asize$species, levels=taxonnames)
-
-asize$speciesLabel=ifelse(asize$haploid, paste0(asize$species, '*'), as.character(asize$species))
-asize$speciesLabel=asize$species
-levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]]=paste0(levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]], '*')
-asize$ploidy=gs$ploidy[match(asize$V2, gs$V2)]
+# asize$species=taxonnames[match(asize$V2, names(taxonnames))]
+# asize$species=factor(asize$species, levels=taxonnames)
+# 
+# asize$speciesLabel=ifelse(asize$haploid, paste0(asize$species, '*'), as.character(asize$species))
+# asize$speciesLabel=asize$species
+# levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]]=paste0(levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]], '*')
+# asize$ploidy=gs$ploidy[match(asize$V2, gs$V2)]
 
 ## add flow, for supp
 flow=read.table('panand_flow_cyt.txt', header=T, sep='\t') 
@@ -80,6 +80,11 @@ ggplot(asize, aes(x=doubledAssembly/1e9/2, y=flow/1000, color=ploidy)) +  scale_
 
 ## for talks, plot in gray first
 ggplot(asize, aes(x=doubledAssembly/1e9/2, y=flow/1000)) +  scale_color_manual(values=ploidycolors)  + geom_point(size=3) + ylab('Genome Size, Flow Cytometry (Gb)')+ xlab('Haploid Assembly\nSize (Gb)') 
+
+ggplot(asize, aes(x=doubledAssembly/1e9/2, y=flow/1000, color=V2%in%c('ttrian', 'etrips'))) +  scale_color_manual(values=c('black', '#73BFF9'))  + geom_point(size=3) + ylab('Genome Size, Flow Cytometry (Gb)')+ xlab('Haploid Assembly\nSize (Gb)')  + theme(legend.position='none')
+ggplot(asize, aes(x=doubledAssembly/1e9/2, y=flow/1000, color=V2%in%c('ttrian', 'etrips', 'agerar'))) +  scale_color_manual(values=c('black', '#73BFF9'))  + geom_point(size=3) + ylab('Genome Size, Flow Cytometry (Gb)')+ xlab('Haploid Assembly\nSize (Gb)')  + theme(legend.position='none')
+
+
 ggplot(asize, aes(x=doubledAssembly/1e9/2, y=flow/1000, color=ploidy)) +  scale_color_manual(values=ploidycolors)  + geom_point(size=3) + ylab('Genome Size, Flow Cytometry (Gb)')+ xlab('Haploid Assembly\nSize (Gb)')  + theme(legend.position='none')
 
 
