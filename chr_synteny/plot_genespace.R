@@ -344,6 +344,26 @@ avirgi=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, g
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 avirgi
+udigit=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin',  'udigit'),#all$V2[all$ploidy=='Diploid']),'telega',
+                     useOrder=F, ## keep chr position info there!!!
+                     minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
+                     invertTheseChrs = invchr, xlabel='',
+                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
+                    )
+udigit
+
+
+blagur=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin',  'blagur'),#all$V2[all$ploidy=='Diploid']),'telega',
+                     useOrder=F, ## keep chr position info there!!!
+                     minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
+                     invertTheseChrs = invchr, xlabel='',
+                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
+                    )
+blagur
+
+                                      
 ## compare to dotplot
 av=read.table('~/Downloads/avirgi-Pv-2', header=T)
 av=av[av$gene!='interanchor',]
@@ -399,18 +419,117 @@ ggplot(ud[ud$refChr%in%names(muted_colors),], aes(x=referenceStart/1e6, y=revQue
 ## add lines
 ggplot(av[av$queryChr%in%paste0('chr', 1:10) & av$refChr%in%names(muted_colors),], aes(x=referenceStart/1e6, y=revQueryStart/1e6, color=refChr)) + geom_point() + facet_grid(queryChr~refChr, scales='free', space='free')  + scale_color_manual(values=muted_colors)+theme(legend.position='none')+ theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray')
 ggplot(ud[ud$refChr%in%names(muted_colors),], aes(x=referenceStart/1e6, y=revQueryStart/1e6, color=refChr)) + geom_point() + facet_grid(queryChr~refChr, scales='free', space='free')  + scale_color_manual(values=muted_colors)+theme(legend.position='none')+ theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray')
-dev.off()                                  
-
-
-
-
-
-
-
-
-
-
-
-
 
                                       
+## tetra
+process_anchors_to_dotplot('~/Downloads/vcuspi-Pv-4', minBlock=10)
+process_anchors_to_dotplot('~/Downloads/blagur-Pv-4', minBlock=10)
+process_anchors_to_dotplot('~/Downloads/hcompr-Pv-4', minBlock=10)
+process_anchors_to_dotplot('~/Downloads/agerar-Pv-4', minBlock=10)
+
+##hex                                      
+process_anchors_to_dotplot('~/Downloads/udigit-Pv-6', minBlock=50)
+process_anchors_to_dotplot('~/Downloads/blagur-Pv-6', minBlock=50)
+process_anchors_to_dotplot('~/Downloads/hcompr-Pv-6', minBlock=50)
+process_anchors_to_dotplot('~/Downloads/agerar-Pv-6', minBlock=50)                                      
+dev.off()            
+
+                                      
+pdf('evoday_alluvial.pdf',14,4)
+avirgi
+udigit
+dev.off()
+
+pdf('evoday_alluvial_groups.pdf',8,8)
+diploid
+tetraploid
+hexaploid
+paleotetraploid
+dev.off()
+
+
+## generalize!
+  # Set the theme and color palette
+  theme_set(theme_cowplot())
+ # Define color palette
+  muted_colors <- c('#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf')
+  names(muted_colors) <- c(paste0('Chr0', 1:9), 'Chr10')
+  
+process_anchors_to_dotplot <- function(filepath, color_palette=muted_colors, minBlock=10) {
+  # Load data
+  data <- read.table(filepath, header = TRUE)
+  data <- data[data$gene != 'interanchor', ]
+
+  # Reduce to blocks and calculate stats
+  data <- data %>%
+    group_by(blockIndex) %>%
+    mutate(blockLength = n()) %>%
+    group_by(queryChr) %>%
+    mutate(freqStrand = names(which.max(table(strand))),
+           maxChr = max(queryStart),
+           freqRef = names(which.max(table(refChr))))
+  
+  # Filter data based on block length
+  data <- data[data$blockLength > minBlock, ]
+  data$refChr <- factor(data$refChr, levels = c(paste0('Chr0', 1:9), 'Chr10'))
+
+  # Reverse strand calculations
+  data <- data %>%
+    arrange(freqRef, referenceStart, queryStart)
+  data$queryChr <- factor(data$queryChr, levels = rev(data$queryChr[!duplicated(data$queryChr)]))
+  data$revQueryStart <- data$queryStart
+  data$revQueryStart[data$freqStrand == '-'] <- abs(data$queryStart - data$maxChr)[data$freqStrand == '-']
+
+
+  # Create the plot
+  ggplot(data[ data$refChr %in% names(color_palette), ],
+         aes(x = referenceStart / 1e6, y = revQueryStart / 1e6, color = refChr)) +
+    geom_point() +
+    facet_grid(queryChr ~ refChr, scales = 'free', space = 'free') +
+    scale_color_manual(values = color_palette) +
+    theme(legend.position = 'none') +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray')
+}
+
+
+# Example of usage
+process_anchors_to_dotplot('~/Downloads/agerar-Pv-6', minBlock=100)
+
+## count rearrangments
+ diploids=c('cserru', 'irugos', 'sbicol', 'ppanic', 'ttrian', 'crefra', 'avirgi', 'smicro', 'rtuber')
+ tetraploids=c('snutan', 'hconto', 'ccitra', 'achine', 'sscopa', 'etrips',  'vcuspi')
+hexaploids=c('udigit', 'agerar', 'hcompr', 'blagur')
+
+countRearrangements <- function(filepath, color_palette=muted_colors, minBlock=10) {
+  # Load data
+  data <- read.table(filepath, header = TRUE)
+  data <- data[data$gene != 'interanchor', ]
+
+  # Reduce to blocks and calculate stats
+  data <- data %>%
+    group_by(blockIndex) %>%
+    mutate(blockLength = n()) %>%
+    group_by(queryChr) %>%
+    mutate(freqStrand = names(which.max(table(strand))),
+           maxChr = max(queryStart),
+           freqRef = names(which.max(table(refChr))))
+  
+  # Filter data based on block length
+  data <- data[data$blockLength > minBlock, ]
+  data$refChr <- factor(data$refChr, levels = c(paste0('Chr0', 1:9), 'Chr10'))
+
+ temp=data %>% filter(blockLength>minBlock) %>% group_by(queryChr)%>% summarize(n=length(unique(refChr)))
+ sum(temp$n>1)
+  }
+
+for(i in diploids){
+  print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*'))))
+  }
+
+ for(i in tetraploids){
+  print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*'))))
+  }
+        for(i in hexaploids){
+  print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*')), minBlock=50))
+  }                              
