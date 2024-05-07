@@ -332,3 +332,85 @@ ncol=3, rel_widths=c(1,1,1)),
 #paleotetraploid$plotData$ggplotObj + xlab('') + geom_rect(data=ptand[ptand$class!='knobTr1',], aes(xmin=xadjstart,xmax=xadjend,ymin=yadj-0.05,ymax=yadj+0.05, color=class), alpha=0.7) + scale_color_manual(values=knobcolors)                           
 
 dev.off()
+
+
+
+## just avirgi to show paspalum identity
+avirgi=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin',  'avirgi'),#all$V2[all$ploidy=='Diploid']),'telega',
+                     useOrder=F, ## keep chr position info there!!!
+                     minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
+                     invertTheseChrs = invchr, xlabel='',
+                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
+                    )
+avirgi
+## compare to dotplot
+av=read.table('~/Downloads/avirgi-Pv-2', header=T)
+av=av[av$gene!='interanchor',]
+## reduce to 10 block lengths
+av=av %>% group_by(blockIndex) %>% mutate(blockLength=n())    
+av=av%>% group_by(queryChr)%>% mutate(freqStrand=names(which.max(table(strand))), maxChr=max(queryStart), freqRef=names(which.max(table(refChr))))
+
+
+av=av[av$blockLength>10,]
+av$refChr=factor(av$refChr, levels=c(paste0('Chr0', 1:9), 'Chr10'))
+names(muted_colors)=c(paste0('Chr0', 1:9), 'Chr10')
+
+## reverse strand if there is a 
+                                      
+library(dplyr)
+av=av %>% arrange(freqRef, referenceStart, queryStart)
+av$queryChr=factor(av$queryChr, levels=rev(av$queryChr[!duplicated(av$queryChr)]))
+av$revQueryStart=av$queryStart
+av$revQueryStart[av$freqStrand=='-']=abs(av$queryStart-av$maxChr)[av$freqStrand=='-']
+theme_set(theme_cowplot())
+ggplot(av[av$queryChr%in%paste0('chr', 1:10) & av$refChr%in%names(muted_colors),], aes(x=referenceStart/1e6, y=revQueryStart/1e6, color=refChr)) + geom_point() + facet_grid(queryChr~refChr, scales='free', space='free')  + scale_color_manual(values=muted_colors)+theme(legend.position='none')+ theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+
+## compare to dotplot
+ud=read.table('~/Downloads/udigit-Pv-6', header=T)
+ud=ud[ud$gene!='interanchor',]
+## reduce to 10 block lengths
+ud=ud %>% group_by(blockIndex) %>% mutate(blockLength=n())    
+ud=ud%>% group_by(queryChr)%>% mutate(freqStrand=names(which.max(table(strand))), maxChr=max(queryStart), freqRef=names(which.max(table(refChr))))
+
+
+ud=ud[ud$blockLength>10,]
+ud$refChr=factor(ud$refChr, levels=c(paste0('Chr0', 1:9), 'Chr10'))
+names(muted_colors)=c(paste0('Chr0', 1:9), 'Chr10')
+
+## reverse strand if there is a 
+                                      
+library(dplyr)
+ud=ud %>% arrange(freqRef, referenceStart, queryStart)
+ud$queryChr=factor(ud$queryChr, levels=rev(ud$queryChr[!duplicated(ud$queryChr)]))
+ud$revQueryStart=ud$queryStart
+ud$revQueryStart[ud$freqStrand=='-']=abs(ud$queryStart-ud$maxChr)[ud$freqStrand=='-']
+theme_set(theme_cowplot())
+ggplot(ud[ud$refChr%in%names(muted_colors),], aes(x=referenceStart/1e6, y=revQueryStart/1e6, color=refChr)) + geom_point() + facet_grid(queryChr~refChr, scales='free', space='free')  + scale_color_manual(values=muted_colors)+theme(legend.position='none')+ theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+
+                                      
+pdf('evoday_dotplots.pdf',14,12)
+ggplot(av[av$queryChr%in%paste0('chr', 1:10) & av$refChr%in%names(muted_colors),], aes(x=referenceStart/1e6, y=revQueryStart/1e6, color=refChr)) + geom_point() + facet_grid(queryChr~refChr, scales='free', space='free')  + scale_color_manual(values=muted_colors)+theme(legend.position='none')+ theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplot(ud[ud$refChr%in%names(muted_colors),], aes(x=referenceStart/1e6, y=revQueryStart/1e6, color=refChr)) + geom_point() + facet_grid(queryChr~refChr, scales='free', space='free')  + scale_color_manual(values=muted_colors)+theme(legend.position='none')+ theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+                                  
+
+## add lines
+ggplot(av[av$queryChr%in%paste0('chr', 1:10) & av$refChr%in%names(muted_colors),], aes(x=referenceStart/1e6, y=revQueryStart/1e6, color=refChr)) + geom_point() + facet_grid(queryChr~refChr, scales='free', space='free')  + scale_color_manual(values=muted_colors)+theme(legend.position='none')+ theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray')
+ggplot(ud[ud$refChr%in%names(muted_colors),], aes(x=referenceStart/1e6, y=revQueryStart/1e6, color=refChr)) + geom_point() + facet_grid(queryChr~refChr, scales='free', space='free')  + scale_color_manual(values=muted_colors)+theme(legend.position='none')+ theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray')
+dev.off()                                  
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      
