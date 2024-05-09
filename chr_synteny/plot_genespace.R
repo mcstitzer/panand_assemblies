@@ -362,7 +362,14 @@ blagur=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, g
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 blagur
-
+agerar=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin',  'agerar'),#all$V2[all$ploidy=='Diploid']),'telega',
+                     useOrder=F, ## keep chr position info there!!!
+                     minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
+                     invertTheseChrs = invchr, xlabel='',
+                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
+                    )
+agerar
                                       
 ## compare to dotplot
 av=read.table('~/Downloads/avirgi-Pv-2', header=T)
@@ -422,10 +429,10 @@ ggplot(ud[ud$refChr%in%names(muted_colors),], aes(x=referenceStart/1e6, y=revQue
 
                                       
 ## tetra
-process_anchors_to_dotplot('~/Downloads/vcuspi-Pv-4', minBlock=10)
-process_anchors_to_dotplot('~/Downloads/blagur-Pv-4', minBlock=10)
-process_anchors_to_dotplot('~/Downloads/hcompr-Pv-4', minBlock=10)
-process_anchors_to_dotplot('~/Downloads/agerar-Pv-4', minBlock=10)
+process_anchors_to_dotplot('~/Downloads/vcuspi-Pv-4', minBlock=20)
+process_anchors_to_dotplot('~/Downloads/etrips-Pv-4', minBlock=20)
+process_anchors_to_dotplot('~/Downloads/hconto-Pv-4', minBlock=20)
+process_anchors_to_dotplot('~/Downloads/sscopa-Pv-4', minBlock=20)
 
 ##hex                                      
 process_anchors_to_dotplot('~/Downloads/udigit-Pv-6', minBlock=50)
@@ -438,6 +445,8 @@ dev.off()
 pdf('evoday_alluvial.pdf',14,4)
 avirgi
 udigit
+blagur
+agerar
 dev.off()
 
 pdf('evoday_alluvial_groups.pdf',8,8)
@@ -446,8 +455,10 @@ tetraploid
 hexaploid
 paleotetraploid
 dev.off()
-
-
+pdf('evoday_alluvial_groups.zt.pdf',16,8)
+paleotetraploid
+dev.off()
+                                      
 ## generalize!
   # Set the theme and color palette
   theme_set(theme_cowplot())
@@ -533,3 +544,6 @@ for(i in diploids){
         for(i in hexaploids){
   print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*')), minBlock=50))
   }                              
+        for(i in c('zmB735')){
+  print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*')), minBlock=50))
+  }  
