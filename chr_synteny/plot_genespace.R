@@ -429,16 +429,19 @@ ggplot(ud[ud$refChr%in%names(muted_colors),], aes(x=referenceStart/1e6, y=revQue
 
                                       
 ## tetra
-process_anchors_to_dotplot('~/Downloads/vcuspi-Pv-4', minBlock=20)
-process_anchors_to_dotplot('~/Downloads/etrips-Pv-4', minBlock=20)
-process_anchors_to_dotplot('~/Downloads/hconto-Pv-4', minBlock=20)
-process_anchors_to_dotplot('~/Downloads/sscopa-Pv-4', minBlock=20)
+process_anchors_to_dotplot('~/Downloads/vcuspi-Pv-4', minBlock=20, title='vcuspi')
+process_anchors_to_dotplot('~/Downloads/etrips-Pv-4', minBlock=20, title='etrips')
+process_anchors_to_dotplot('~/Downloads/hconto-Pv-4', minBlock=20, title='hconto')
+process_anchors_to_dotplot('~/Downloads/sscopa-Pv-4', minBlock=20, title='sscopa')
+process_anchors_to_dotplot('~/Downloads/achine-Pv-4', minBlock=20, title='achine')
+process_anchors_to_dotplot('~/Downloads/ccitra-Pv-4', minBlock=20, title='ccitra')
+process_anchors_to_dotplot('~/Downloads/snutan-Pv-4', minBlock=20, title='snutan')
 
 ##hex                                      
-process_anchors_to_dotplot('~/Downloads/udigit-Pv-6', minBlock=50)
-process_anchors_to_dotplot('~/Downloads/blagur-Pv-6', minBlock=50)
-process_anchors_to_dotplot('~/Downloads/hcompr-Pv-6', minBlock=50)
-process_anchors_to_dotplot('~/Downloads/agerar-Pv-6', minBlock=50)                                      
+process_anchors_to_dotplot('~/Downloads/udigit-Pv-6', minBlock=50, title='udigit')
+process_anchors_to_dotplot('~/Downloads/blagur-Pv-6', minBlock=50, title='blagur')
+process_anchors_to_dotplot('~/Downloads/hcompr-Pv-6', minBlock=50, title='hcompr')
+process_anchors_to_dotplot('~/Downloads/agerar-Pv-6', minBlock=50, title='agerar')                                      
 dev.off()            
 
                                       
@@ -466,7 +469,7 @@ dev.off()
   muted_colors <- c('#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf')
   names(muted_colors) <- c(paste0('Chr0', 1:9), 'Chr10')
   
-process_anchors_to_dotplot <- function(filepath, color_palette=muted_colors, minBlock=10) {
+process_anchors_to_dotplot <- function(filepath, color_palette=muted_colors, minBlock=10, title='') {
   # Load data
   data <- read.table(filepath, header = TRUE)
   data <- data[data$gene != 'interanchor', ]
@@ -500,7 +503,8 @@ process_anchors_to_dotplot <- function(filepath, color_palette=muted_colors, min
     scale_color_manual(values = color_palette) +
     theme(legend.position = 'none') +
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
-    geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray')
+    geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray') +
+    ggtitle(title)
 }
 
 
