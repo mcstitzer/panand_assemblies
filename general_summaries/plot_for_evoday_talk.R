@@ -41,6 +41,7 @@ ggplot(asize[asize$V2!='zdgigi',], aes(x=ploidy, y=diploidEquivalent, group=ploi
 
 dev.off()
 
+ggplot(asize[asize$V2!='zdgigi',], aes(x=ploidy, y=diploidEquivalent, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape = NA) + geom_text(aes(label=V2)) + geom_point(position = position_jitter(seed = 1), size=3)+ scale_color_manual(values=ploidycolors) + ylim(0,10000) + ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=10000) + geom_hline(yintercept=c(median(asize$syntAnchors[asize$ploidy=='Diploid'], na.rm=T)*c(1,2,2,3)), lty='dotted', color='darkgray')
 
 
 ## now add ks to these values
