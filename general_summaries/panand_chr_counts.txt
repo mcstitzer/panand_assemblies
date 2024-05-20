@@ -1,37 +1,37 @@
-sixlettercode	haploidchr
-agerar	30
-avirgi	10
-blagur	30
-cserru	10
-crefra	10
-etrips	10
-hconto	20
-sscopa	20
-snutan	20
-ttrian	10
-achine	20
-ccitra	20
-smicro	10
-hcompr	27
-udigit	30
-vcuspi	20
-rrottb	16
-rtuber	9
-ppanic	10
-telega	10
-atenui	20
-tdacs1	18
-tdacs2	18
-tdacn1	18
-tdacn2	18
-irugos	10
-zdmomo	10
-zdgigi	10
-zmhuet	10
-znicar	10
-zluxur	10
-zTIL18	10
-zTIL25	10
-zTIL01	10
-zTIL11	10
-zmB735	10
+sixlettercode	haploidchr	wecounted	literature
+agerar	30	T	F
+avirgi	10	T	F
+blagur	30	T	F
+cserru	10	F	T
+crefra	10	T	F
+etrips	10	T	F
+hconto	20	T	F
+sscopa	20	T	F
+snutan	20	T	F
+ttrian	10	T	F
+achine	20	F	T
+ccitra	20	F	F
+smicro	10	F	T
+hcompr	27	F	T
+udigit	30	F	F
+vcuspi	20	F	T
+rrottb	16	F	T
+rtuber	9	F	T
+ppanic	10	F	T
+telega	10	F	T
+atenui	20	F	F
+tdacs1	18	F	T
+tdacs2	18	F	T
+tdacn1	18	F	T
+tdacn2	18	F	T
+irugos	10	F	T
+zdmomo	10	F	T
+zdgigi	10	F	T
+zmhuet	10	F	T
+znicar	10	F	T
+zluxur	10	F	T
+zTIL18	10	F	T
+zTIL25	10	F	T
+zTIL01	10	F	T
+zTIL11	10	F	T
+zmB735	10	F	T
