@@ -52,9 +52,9 @@ process_anchors_to_dotplot <- function(filepath, color_palette=muted_colors, min
   
   
   # Create the plot
+  if(subgenomepath==''){print(
   ggplot(data[ data$refChr %in% names(color_palette) & data$refChr%in%refChrs & data$queryChr%in%queryChrs, ],
-         aes(x = referenceStart / 1e6, y = revQueryStart / 1e6, color = refChr, 
-             shape=subgenome)) +
+         aes(x = referenceStart / 1e6, y = revQueryStart / 1e6, color = refChr)) +
     geom_point(alpha=0.3, size=3) +
     facet_grid(queryChr ~ refChr, scales = 'free', space = 'free') +
     scale_color_manual(values = color_palette) +
@@ -62,8 +62,28 @@ process_anchors_to_dotplot <- function(filepath, color_palette=muted_colors, min
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
     geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray') +
     theme(strip.text.y = element_text(angle = 0)) + 
-    ggtitle(title) + scale_shape_manual(values=c(SG1='1', SG2='2', SG3='3', none='o'))
-}
+    ggtitle(title) 
+)}
+  
+  
+  if(subgenomepath!=''){
+    print(
+    ggplot(data[ data$refChr %in% names(color_palette) & data$refChr%in%refChrs & data$queryChr%in%queryChrs, ],
+           aes(x = referenceStart / 1e6, y = revQueryStart / 1e6, color = refChr, 
+               shape=subgenome)) +
+      geom_point(alpha=0.3, size=3) +
+      facet_grid(queryChr ~ refChr, scales = 'free', space = 'free') +
+      scale_color_manual(values = color_palette) +
+      theme(legend.position = 'none') +
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+      geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray') +
+      theme(strip.text.y = element_text(angle = 0)) + 
+      ggtitle(title) + scale_shape_manual(values=c(SG1='1', SG2='2', SG3='3', none='o'))
+    )
+  }
+  
+  
+  }
 
 
 # Example of usage
@@ -83,7 +103,7 @@ diploids=c('cserru', 'irugos', 'sbicol', 'ppanic', 'ttrian', 'crefra', 'avirgi',
 tetraploids=c('snutan', 'hconto', 'ccitra', 'achine', 'sscopa', 'etrips',  'vcuspi')
 hexaploids=c('udigit', 'agerar', 'hcompr', 'blagur')
 
-countRearrangements <- function(filepath, color_palette=muted_colors, minBlock=10) {
+countRearrangements <- function(filepath, color_palette=muted_colors, minBlock=20) {
   # Load data
   data <- read.table(filepath, header = TRUE)
   data <- data[data$gene != 'interanchor', ]
@@ -106,15 +126,33 @@ countRearrangements <- function(filepath, color_palette=muted_colors, minBlock=1
 }
 
 for(i in diploids){
-  print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*'))))
+  print(countRearrangements(Sys.glob(paste0('../syntenic_anchors/anchors/', i, '-Pv-*'))))
 }
 
 for(i in tetraploids){
-  print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*'))))
+  print(countRearrangements(Sys.glob(paste0('../syntenic_anchors/anchors//', i, '-Pv-*'))))
 }
 for(i in hexaploids){
-  print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*')), minBlock=50))
+  print(countRearrangements(Sys.glob(paste0('../syntenic_anchors/anchors/', i, '-Pv-*')), minBlock=50))
 }                              
 for(i in c('zmB735')){
-  print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*')), minBlock=50))
+  print(countRearrangements(Sys.glob(paste0('../syntenic_anchors/anchors/', i, '-Pv-*')), minBlock=50))
 }  
+
+lowQualAssemblies=c('telega', 'atenui', 'rrottb')
+
+asize$transloc=sapply(asize$V2, function(x) countRearrangements(Sys.glob(paste0('../syntenic_anchors/anchors/', x, '-Pv-*')), minBlock=30))
+asize$transloc=ifelse(asize$haploid, asize$transloc, asize$transloc/2) ## if haploid, this is true number, if allelic, don't count each allele
+asize %>% group_by(ploidy) %>% summarize(mean(transloc, na.rm=T))
+
+
+ggplot(asize[!asize$V2%in%lowQualAssemblies], aes(x=ploidy, y=transloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=2, aes(shape=haploid))+ scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=10)
+
+asize$scaledTransloc=ifelse(asize$ploidy%in%c('Paleotetraploid', 'Tetraploid'), asize$transloc/2, ifelse(asize$ploidy=='Hexaploid', asize$transloc/3, asize$transloc))
+ggplot(asize[!asize$V2%in%lowQualAssemblies,], aes(x=ploidy, y=scaledTransloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=2, aes(shape=haploid))+ scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=6) + ylab('Translocations per haploid equivalent') + xlab('Ploidy')
+
+ggplot(asize[!asize$V2%in%lowQualAssemblies,], aes(x=ploidy, y=scaledTransloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=2, aes(shape=haploid))+ geom_text(aes(label=V2), position = position_jitter(seed = 1)) + scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=6) + ylab('Translocations per haploid equivalent') + xlab('Ploidy')
+
+
+
+
