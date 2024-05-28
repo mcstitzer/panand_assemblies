@@ -35,3 +35,4 @@ zTIL25	10	F	T
 zTIL01	10	F	T
 zTIL11	10	F	T
 zmB735	10	F	T
+sbicol	10	F	T

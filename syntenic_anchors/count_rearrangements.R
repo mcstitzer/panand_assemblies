@@ -48,7 +48,10 @@ lowQualAssemblies=c('telega', 'atenui', 'rrottb')
 
 asize$transloc=sapply(asize$V2, function(x) countRearrangements(Sys.glob(paste0('../syntenic_anchors/anchors/', x, '-Pv-*')), minBlock=30))
 asize$transloc=ifelse(asize$haploid, asize$transloc, asize$transloc/2) ## if haploid, this is true number, if allelic, don't count each allele
-asize %>% group_by(ploidy) %>% summarize(mean(transloc, na.rm=T))
+asize %>% group_by(ploidy) %>% summarize(translocMean=mean(transloc, na.rm=T), scaledTranslocMean=mean(scaledTransloc, na.rm=T))
+kruskal.test(transloc~ploidy, data=asize) ## pvalue=0.0001115 --> sig diff between group
+pairwise.wilcox.test(asize$transloc, asize$ploidy,
+                     p.adjust.method = "BH")
 
 
 ggplot(asize[!asize$V2%in%lowQualAssemblies], aes(x=ploidy, y=transloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=2, aes(shape=haploid))+ scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=10)
@@ -59,9 +62,20 @@ ggplot(asize[!asize$V2%in%lowQualAssemblies,], aes(x=ploidy, y=scaledTransloc, g
 
 
 ## final set
-ggplot(asize[!asize$V2%in%lowQualAssemblies,], aes(x=ploidy, y=scaledTransloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=3)+ scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=6) + ylab('Translocations per haploid equivalent') + xlab('Ploidy')
+ggplot(asize[!asize$V2%in%lowQualAssemblies,], aes(x=ploidy, y=scaledTransloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=3)+ scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=6) + ylab('Rearrangements per haploid equivalent') + xlab('Ploidy')
 ## with bad assemblies
-ggplot(asize, aes(x=ploidy, y=scaledTransloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=3)+ scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=6) + ylab('Translocations per haploid equivalent') + xlab('Ploidy')
+ggplot(asize, aes(x=ploidy, y=scaledTransloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=3)+ scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=6) + ylab('Rearrangments per haploid equivalent') + xlab('Ploidy')
+
+## and unscaled
+## final set
+ggplot(asize[!asize$V2%in%lowQualAssemblies,], aes(x=ploidy, y=transloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=3)+ scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=9.5) + ylab('Rearrangements') + xlab('Ploidy')
+## with bad assemblies
+ggplot(asize, aes(x=ploidy, y=transloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=3)+ scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=9.5) + ylab('Rearrangements') + xlab('Ploidy')
+
+
+## numbers for paper
+asize %>% filter(!V2 %in% lowQualAssemblies) %>% group_by(ploidy) %>% summarize(meanrearr=mean(transloc, na.rm=T), meanscaled=mean(scaledTransloc, na.rm=T))
+
 
 
 ggplot(asize[!asize$V2%in%lowQualAssemblies,], aes(x=ploidy, y=scaledTransloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=2, aes(shape=haploid))+ geom_text(aes(label=V2), position = position_jitter(seed = 1)) + scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=6) + ylab('Translocations per haploid equivalent') + xlab('Ploidy')
@@ -79,7 +93,19 @@ ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_jitter() +
 ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_jitter() + geom_text(aes(label=V2)) + scale_color_manual(values=ploidycolors)+ xlab('Haploid Chromosome Number') + ylab('Translocations per haploid equivalent')
 
 
-ggplot(asize, aes(x=chrCount, y=transloc, color=ploidy)) + geom_jitter() + scale_color_manual(values=ploidycolors)+ xlab('Haploid Chromosome Number') + ylab('Translocations')
+ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(9,11:19,21:29), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(10,20,30), color='gray80', lty='dashed', alpha=0.3)+ geom_jitter(size=4, width = 0.1, alpha=1) + scale_color_manual(values=ploidycolors)+ xlab('Haploid Chromosome Number') + ylab('Rearrangements per Diploid Equivalent') 
+
+summary(lm(data=asize, scaledTransloc~chrCount))
+
+## with regression line
+ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(9,11:19,21:29), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(10,20,30), color='gray80', lty='dashed', alpha=0.3)+ geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + scale_color_manual(values=ploidycolors)+ xlab('Haploid Chromosome Number') + ylab('Rearrangements per Diploid Equivalent') + stat_smooth(method='lm', aes(group=NA), se=F, color='gray80')
+
+## add text label for toby
+ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(9,11:19,21:29), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(10,20,30), color='gray80', lty='dashed', alpha=0.3)+ geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + scale_color_manual(values=ploidycolors)+ xlab('Haploid Chromosome Number') + ylab('Rearrangements per Diploid Equivalent') + stat_smooth(method='lm', aes(group=NA), se=F, color='gray80') + geom_text_repel(aes(label=V2))
+
+
+## not scaled to diploid
+ggplot(asize, aes(x=chrCount, y=transloc, color=ploidy)) + geom_vline(xintercept=c(9,11:19,21:29), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(10,20,30), color='gray80', lty='dashed', alpha=0.3)+ geom_jitter(size=4, width = 0.1, alpha=1) + scale_color_manual(values=ploidycolors)+ xlab('Haploid Chromosome Number') + ylab('Rearrangements per Diploid Equivalent') 
 
 
 ### are rearrangements happening at the same position relative to paspalum?
@@ -114,4 +140,60 @@ for(i in c('zmB735')){
 paspBreaks=do.call(rbind, lapply(asize$V2, function(x) countRearrangementsPasp(Sys.glob(paste0('../syntenic_anchors/anchors/', x, '-Pv-*')), minBlock=30, query=x)))
 paspBreaks$ploidy=asize$ploidy[match(paspBreaks$query, asize$V2)]
 ggplot(paspBreaks, aes(x=blockEndWindow, group=ploidy, fill=ploidy, color=ploidy)) + geom_histogram(binwidth=1e6) + facet_wrap(~refChr, nrow=1) + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors)
+
+
+
+
+
+
+## toby's suggestion - count proportion of assembly covered by syntenic blocks
+syntenicCoverage <- function(filepath, color_palette=muted_colors, minBlock=20) {
+  # Load data
+  data <- read.table(filepath, header = TRUE)
+  data <- data[data$gene != 'interanchor', ]
+  
+  # Reduce to blocks and calculate stats
+  data <- data %>%
+    group_by(blockIndex) %>%
+    dplyr::summarize(blockLength =max(queryEnd)-min(queryStart), nAnchors=n()) 
+  
+  # Filter data based on block length
+  data <- data[data$nAnchors > minBlock, ]
+#  data$refChr <- factor(data$refChr, levels = c(paste0('Chr0', 1:9), 'Chr10'))
+  
+  return(sum(data$blockLength))
+  
+}
+
+refCoverage <- function(filepath, color_palette=muted_colors, minBlock=20) {
+  # Load data
+  data <- read.table(filepath, header = TRUE)
+  data <- data[data$gene != 'interanchor', ]
+  
+  # Reduce to blocks and calculate stats
+  data <- data %>%
+    group_by(blockIndex, refChr) %>%
+    dplyr::summarize(referenceEnd=max(referenceEnd), referenceStart=min(referenceStart), nAnchors=n()) 
+  
+  # Filter data based on block length
+  data <- data[data$nAnchors > minBlock, ]
+  #  data$refChr <- factor(data$refChr, levels = c(paste0('Chr0', 1:9), 'Chr10'))
+#  data=data[data$refChr%in%c(paste0('Chr0', 1:9), 'Chr10'),]
+  gr=reduce(GRanges(seqnames=data$refChr, IRanges(start=data$referenceStart, end=data$referenceEnd)))
+  
+  return(sum(width(gr)))
+  
+}
+
+
+asize$bpCovered30=sapply(asize$V2, function(x) syntenicCoverage(Sys.glob(paste0('../syntenic_anchors/anchors/', x, '-Pv-*')), minBlock=30))
+asize$bpCovered=sapply(asize$V2, function(x) syntenicCoverage(Sys.glob(paste0('../syntenic_anchors/anchors/', x, '-Pv-*')), minBlock=2))
+
+asize$refCovered=sapply(asize$V2, function(x) refCoverage(Sys.glob(paste0('../syntenic_anchors/anchors/', x, '-Pv-*')), minBlock=2))
+
+paspsize=651047655
+
+for(i in diploids){
+  print(syntenicCoverage(Sys.glob(paste0('../syntenic_anchors/anchors/', i, '-Pv-*')), minBlock = 3))
+}
 
