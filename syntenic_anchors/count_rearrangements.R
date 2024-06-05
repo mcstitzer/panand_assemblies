@@ -186,12 +186,44 @@ refCoverage <- function(filepath, color_palette=muted_colors, minBlock=20) {
 }
 
 
+refCoverageGenes <- function(filepath, color_palette=muted_colors, minBlock=20) {
+  # Load data
+  data <- read.table(filepath, header = TRUE)
+  data <- data[data$gene != 'interanchor', ]
+  
+  # Reduce to blocks and calculate stats
+  data <- data %>%
+    group_by(gene, refChr) %>%
+    dplyr::summarize(geneCount=n()) 
+  
+  # Filter data based on block length
+#  data <- data[data$nAnchors > minBlock, ]
+  #  data$refChr <- factor(data$refChr, levels = c(paste0('Chr0', 1:9), 'Chr10'))
+  #  data=data[data$refChr%in%c(paste0('Chr0', 1:9), 'Chr10'),]
+
+  return(nrow(data))
+  
+}
+
+
+
 asize$bpCovered30=sapply(asize$V2, function(x) syntenicCoverage(Sys.glob(paste0('../syntenic_anchors/anchors/', x, '-Pv-*')), minBlock=30))
 asize$bpCovered=sapply(asize$V2, function(x) syntenicCoverage(Sys.glob(paste0('../syntenic_anchors/anchors/', x, '-Pv-*')), minBlock=2))
 
 asize$refCovered=sapply(asize$V2, function(x) refCoverage(Sys.glob(paste0('../syntenic_anchors/anchors/', x, '-Pv-*')), minBlock=2))
 
+asize$refGenes=sapply(asize$V2, function(x) refCoverageGenes(Sys.glob(paste0('../syntenic_anchors/anchors/', x, '-Pv-*'))))
+
+
 paspsize=651047655
+summary(asize$refCovered/paspsize)
+
+pa=read.table('../syntenic_anchors/anchors/pvagin-Pv-2', header=T)
+pa=pa[pa$gene!='interanchor',]
+paspanchors=nrow(pa)
+
+summary(asize$refGenes/paspanchors)
+
 
 for(i in diploids){
   print(syntenicCoverage(Sys.glob(paste0('../syntenic_anchors/anchors/', i, '-Pv-*')), minBlock = 3))
