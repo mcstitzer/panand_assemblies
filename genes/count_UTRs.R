@@ -32,28 +32,29 @@ countUTRs <- function(filepath, id='') {
 
 ## file from google sheets that has gff3 name
 genepath=read.table('panand_gene_annotations.txt', header=F, sep='\t')
+genepath=read.table('gene_paths.txt', header=T, sep='\t')
 
 asize=asize[asize$V2!='zluxur',]
 asize$propFiveUTR=sapply(asize$V2, function(x) {
                           print(x)
-                          blah=countUTRs(paste0('~/Downloads/Annotations_v4.1/', genepath$V4[genepath$V2==x]))
+                          blah=countUTRs(paste0('~/Downloads/Annotations_v4.1/', genepath$annotation_v4.1[genepath$genome==x]))
                          return(sum(blah$fiveutr==0)/nrow(blah))})
 
 asize$propThreeUTR=sapply(asize$V2, function(x) {
   print(x)
-  blah=countUTRs(paste0('~/Downloads/Annotations_v4.1/', genepath$V4[genepath$V2==x]))
+  blah=countUTRs(paste0('~/Downloads/Annotations_v4.1/', genepath$annotation_v4.1[genepath$genome==x]))
   sum(blah$threeutr==0)/nrow(blah)})
 
 
 asize$propAnyUTR=sapply(asize$V2, function(x) {
   print(x)
-  blah=countUTRs(paste0('~/Downloads/Annotations_v4.1/', genepath$V4[genepath$V2==x]))
+  blah=countUTRs(paste0('~/Downloads/Annotations_v4.1/', genepath$annotation_v4.1[genepath$genome==x]))
   sum(blah$fiveutr==0 | blah$threeutr==0)/nrow(blah)})
 
 
 asize$nGenes=sapply(asize$V2, function(x) {
   print(x)
-  blah=countUTRs(paste0('~/Downloads/Annotations_v4.1/', genepath$V4[genepath$V2==x]))
+  blah=countUTRs(paste0('~/Downloads/Annotations_v4.1/', genepath$annotation_v4.1[genepath$genome==x]))
   nrow(blah)})
 
 ## remove maize and sorghum
@@ -146,12 +147,49 @@ summary(lm(asize$propAnyUTR~asize$rnaseqlibs+asize$haploid*asize$nGenes))
 
 
 ### zong yan generated 
-utrlen=read.csv('~/Downloads/Annotations_v4.1_UTR_medians.csv', header=T)
-utrlen$V2=genepath$V2[match(utrlen$Filename, genepath$V4)]
-asize$fiveUTRMedianLen=utrlen$Five_Prime_UTR_Median[match(asize$V2, utrlen$V2)]
-asize$threeUTRMedianLen=utrlen$Three_Prime_UTR_Median[match(asize$V2, utrlen$V2)]
+utrlen3=read.csv('~/Downloads/Annotations_v4.1_utr3_lengths.csv', header=T)
+utrlen5=read.csv('~/Downloads/Annotations_v4.1_utr5_lengths.csv', header=T)
+#utrlen3$V2=genepath$V2[match(colnames(utrlen3), genepath$V4)]
+#utrlen5$V2=genepath$V2[match(utrlen5$Filename, genepath$V4)]
+
+asize=asize[!asize$V2%in%c('zluxur', 'sbicol', 'zmB735'),]
+asize$fiveUTRMedianLen=sapply(asize$V2, function(x) median(utrlen5[,colnames(utrlen5)==gsub('-', '.', genepath$annotation_v4.1[genepath$genome==x])]))
+#utrlen$Five_Prime_UTR_Median[match(asize$V2, utrlen$V2)]
+asize$threeUTRMedianLen=sapply(asize$V2, function(x) median(utrlen3[,colnames(utrlen3)==gsub('-', '.', genepath$annotation_v4.1[genepath$genome==x])]))
 
 ggplot(asize, aes(x=fiveUTRMedianLen, y=threeUTRMedianLen, color=ploidy, shape=haploid, size=rnaseqlibs))+ geom_point() + scale_color_manual(values=ploidycolors) + ylab('median threeUTRLen') + xlab('median fiveUTRLen')
 ggplot(asize, aes(x=fiveUTRMedianLen, y=threeUTRMedianLen, color=ploidy, shape=haploid, size=rnaseqlibs))+ geom_point() + scale_color_manual(values=ploidycolors) + geom_text(aes(label=V2)) + ylab('median threeUTRLen')+ xlab('median fiveUTRLen')
 
+
+
+
+## vs helixer
+
+### zong yan generated 
+utrlen3h=read.csv('~/Downloads/Helixer_Annotations_utr3_lengths.csv', header=T)
+utrlen5h=read.csv('~/Downloads/Helixer_Annotations_utr5_lengths.csv', header=T)
+#utrlen3$V2=genepath$V2[match(colnames(utrlen3), genepath$V4)]
+#utrlen5$V2=genepath$V2[match(utrlen5$Filename, genepath$V4)]
+
+asize=asize[!asize$V2%in%c('zluxur', 'sbicol', 'zmB735'),]
+asize$fiveUTRHMedianLen=sapply(asize$V2, function(x) median(utrlen5h[,colnames(utrlen5h)==gsub('-', '.', genepath$annotation_helixer[genepath$genome==x])]))
+#utrlen$Five_Prime_UTR_Median[match(asize$V2, utrlen$V2)]
+asize$threeUTRHMedianLen=sapply(asize$V2, function(x) median(utrlen3h[,colnames(utrlen3h)==gsub('-', '.', genepath$annotation_helixer[genepath$genome==x])]))
+
+ggplot(asize, aes(x=fiveUTRHMedianLen, y=threeUTRHMedianLen, color=ploidy, shape=haploid))+ geom_point(size=3) + scale_color_manual(values=ploidycolors) + ylab('median threeUTRLen') + xlab('median fiveUTRLen')
+ggplot(asize, aes(x=fiveUTRHMedianLen, y=threeUTRHMedianLen, color=ploidy, shape=haploid))+ geom_point(size=3) + scale_color_manual(values=ploidycolors) + geom_text(aes(label=V2)) + ylab('median threeUTRLen')+ xlab('median fiveUTRLen')
+
+
+
+ggplot(asize, aes(x=fiveUTRHMedianLen, y=mya, color=ploidy, shape=haploid))+ geom_point(size=3) + scale_color_manual(values=ploidycolors) + geom_text(aes(label=V2)) + ylab('mya')+ xlab('median fiveUTRLen (Helixer)')
+ggplot(asize, aes(x=fiveUTRHMedianLen, y=haploidAssemblySize, color=ploidy, shape=haploid))+ geom_point(size=3) + scale_color_manual(values=ploidycolors) + geom_text(aes(label=V2)) + ylab('Haploid assembly size (bp)')+ xlab('median fiveUTRLen (Helixer)')
+
+
+
+ggplot(asize, aes(x=fiveUTRMedianLen, y=mya, color=ploidy, shape=haploid))+ geom_point(size=3) + scale_color_manual(values=ploidycolors) + geom_text(aes(label=V2)) + ylab('mya')+ xlab('median fiveUTRLen (v4.1)')
+ggplot(asize, aes(x=fiveUTRMedianLen, y=haploidAssemblySize, color=ploidy, shape=haploid))+ geom_point(size=3) + scale_color_manual(values=ploidycolors) + geom_text(aes(label=V2)) + ylab('Haploid assembly size (bp)')+ xlab('median fiveUTRLen (v4.1)')
+
+## helixer vs v4.1
+ggplot(asize, aes(x=fiveUTRHMedianLen, y=fiveUTRMedianLen, color=ploidy, shape=haploid))+ geom_point(size=3) + scale_color_manual(values=ploidycolors) + geom_text(aes(label=V2)) + ylab('median fiveUTRLen (v4.1)')+ xlab('median fiveUTRLen (Helixer)')
+ggplot(asize, aes(x=threeUTRHMedianLen, y=threeUTRMedianLen, color=ploidy, shape=haploid))+ geom_point(size=3) + scale_color_manual(values=ploidycolors) + geom_text(aes(label=V2)) + ylab('median threeUTRLen (v4.1)')+ xlab('median threeUTRLen (Helixer)')
 

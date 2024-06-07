@@ -106,3 +106,19 @@ ggplot(asize, aes(x=ploidy, y=diploidEquivalentGeneCount, group=ploidy, color=pl
   xlab('Ploidy') + ylab('Diploid Equivalent Genes') + theme(legend.position='NULL')
 
 
+
+
+
+##
+ggplot(asize, aes(x=mya, y=syntAnchors, group=ploidy, color=ploidy)) + 
+#  geom_boxplot(outlier.shape = NA) + 
+  geom_point(position = position_jitter(seed = 1), size=3)+ 
+  scale_color_manual(values=ploidycolors) + #ylim(0,110000) + 
+ # ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=110000) + 
+  geom_hline(yintercept=c(median(asize$syntAnchors[asize$ploidy=='Diploid'], na.rm=T)*c(1,2,2,3)), lty='dotted', color='darkgray')+
+#  annotate("text", x = 4.45, y = median(asize$haploidGeneCount[asize$ploidy=='Diploid'], na.rm=T), label = "\u00D71", vjust = -0.5) + 
+ # annotate("text", x = 4.45, y = median(asize$haploidGeneCount[asize$ploidy=='Diploid'], na.rm=T)*2, label = "\u00D72", vjust = -0.5)+ 
+ # annotate("text", x = 4.45, y = median(asize$haploidGeneCount[asize$ploidy=='Diploid'], na.rm=T)*3, label = "\u00D73", vjust = -0.5) + 
+  xlab('mya') + ylab('anchors') + theme(legend.position='NULL') + geom_text(aes(label=V2))
+
+
