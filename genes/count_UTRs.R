@@ -153,9 +153,9 @@ utrlen5=read.csv('~/Downloads/Annotations_v4.1_utr5_lengths.csv', header=T)
 #utrlen5$V2=genepath$V2[match(utrlen5$Filename, genepath$V4)]
 
 asize=asize[!asize$V2%in%c('zluxur', 'sbicol', 'zmB735'),]
-asize$fiveUTRMedianLen=sapply(asize$V2, function(x) median(utrlen5[,colnames(utrlen5)==gsub('-', '.', genepath$annotation_v4.1[genepath$genome==x])]))
+asize$fiveUTRMedianLen=sapply(asize$V2, function(x) median(utrlen5[,colnames(utrlen5)==gsub('-', '.', genepath$annotation_v4.1[genepath$genome==x])], na.rm=T))
 #utrlen$Five_Prime_UTR_Median[match(asize$V2, utrlen$V2)]
-asize$threeUTRMedianLen=sapply(asize$V2, function(x) median(utrlen3[,colnames(utrlen3)==gsub('-', '.', genepath$annotation_v4.1[genepath$genome==x])]))
+asize$threeUTRMedianLen=sapply(asize$V2, function(x) median(utrlen3[,colnames(utrlen3)==gsub('-', '.', genepath$annotation_v4.1[genepath$genome==x])], na.rm=T))
 
 ggplot(asize, aes(x=fiveUTRMedianLen, y=threeUTRMedianLen, color=ploidy, shape=haploid, size=rnaseqlibs))+ geom_point() + scale_color_manual(values=ploidycolors) + ylab('median threeUTRLen') + xlab('median fiveUTRLen')
 ggplot(asize, aes(x=fiveUTRMedianLen, y=threeUTRMedianLen, color=ploidy, shape=haploid, size=rnaseqlibs))+ geom_point() + scale_color_manual(values=ploidycolors) + geom_text(aes(label=V2)) + ylab('median threeUTRLen')+ xlab('median fiveUTRLen')
@@ -172,9 +172,9 @@ utrlen5h=read.csv('~/Downloads/Helixer_Annotations_utr5_lengths.csv', header=T)
 #utrlen5$V2=genepath$V2[match(utrlen5$Filename, genepath$V4)]
 
 asize=asize[!asize$V2%in%c('zluxur', 'sbicol', 'zmB735'),]
-asize$fiveUTRHMedianLen=sapply(asize$V2, function(x) median(utrlen5h[,colnames(utrlen5h)==gsub('-', '.', genepath$annotation_helixer[genepath$genome==x])]))
+asize$fiveUTRHMedianLen=sapply(asize$V2, function(x) median(utrlen5h[,colnames(utrlen5h)==gsub('-', '.', genepath$annotation_helixer[genepath$genome==x])], na.rm=T))
 #utrlen$Five_Prime_UTR_Median[match(asize$V2, utrlen$V2)]
-asize$threeUTRHMedianLen=sapply(asize$V2, function(x) median(utrlen3h[,colnames(utrlen3h)==gsub('-', '.', genepath$annotation_helixer[genepath$genome==x])]))
+asize$threeUTRHMedianLen=sapply(asize$V2, function(x) median(utrlen3h[,colnames(utrlen3h)==gsub('-', '.', genepath$annotation_helixer[genepath$genome==x])], na.rm=T))
 
 ggplot(asize, aes(x=fiveUTRHMedianLen, y=threeUTRHMedianLen, color=ploidy, shape=haploid))+ geom_point(size=3) + scale_color_manual(values=ploidycolors) + ylab('median threeUTRLen') + xlab('median fiveUTRLen')
 ggplot(asize, aes(x=fiveUTRHMedianLen, y=threeUTRHMedianLen, color=ploidy, shape=haploid))+ geom_point(size=3) + scale_color_manual(values=ploidycolors) + geom_text(aes(label=V2)) + ylab('median threeUTRLen')+ xlab('median fiveUTRLen')
