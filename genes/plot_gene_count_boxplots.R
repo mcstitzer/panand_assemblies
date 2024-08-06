@@ -20,6 +20,11 @@ b=b[,-which(colnames(b)%in%c('tdacs2', 'tdacn2'))]
 table(rowSums(b[,-1]>0))
 bb=b[rowSums(b[,-1]>0)>=32,]
 
+## output these fun genes for hybpiper in the short reads
+write.table(gsub('.1.v3.1', '', bb$gene), '~/Downloads/sharedSyntenicAnchors.txt', quote=F, row.names=F, col.names=F)
+table(substr(gsub('.1.v3.1', '', bb$gene),1,7))
+
+
 asize=fread('../general_summaries/panand_assembly_sizes.txt', header=T, quote="", fill=T)
 
 asize$syntAnchors=colSums(bb[,-1])[match(asize$V2, names(colSums(bb[,-1])))]
