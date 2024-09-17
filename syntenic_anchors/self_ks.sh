@@ -6,15 +6,23 @@ taxonnames=("zTIL11" "zmB735" "zTIL01" "zTIL25" "zTIL18" "zmhuet" "zluxur" "znic
             "hcompr" "etrips" "sscopa" "smicro" "avirgi" "achine" "agerar" "crefra" "ccitra" "hconto" 
             "ttrian" "blagur" "ppanic" "sbicol" "irugos" "snutan" "atenui" "telega" "cserru" "pvagin")
 
-# Specify the input file
-input_file="/data1/users/shengkaihsu/p_panAndOGASR/output/anchorAln_omega_v2/*"
+# Specify the directory containing the input files
+input_dir="/data1/users/shengkaihsu/p_panAndOGASR/output/anchorAln_omega_v2/"
 
-# Loop over each taxon name and use grep to find lines with the pattern "taxon.*taxon"
-for taxon in "${taxonnames[@]}"
+# Loop over each file in the directory
+for file in "$input_dir"/*
 do
-  # Use grep to search for lines where the taxon appears twice with any characters between
-  grep -E "${taxon}.*${taxon}" $input_file > "${taxon}_matches.txt"
+  echo "Processing file: $file"
   
-  # Optionally, print a message
-  echo "Searching for ${taxon} and saving results to ${taxon}_matches.txt"
+  # Read the file once and use a loop to grep for each taxon
+  while IFS= read -r line; do
+    for taxon in "${taxonnames[@]}"; do
+      # Check if the line contains the taxon twice
+      if [[ $line =~ $taxon.*$taxon ]]; then
+        echo "$line" >> "${taxon}_matches.txt"
+      fi
+    done
+  done < "$file"
 done
+
+echo "Processing of all files in $input_dir completed."
