@@ -10,7 +10,6 @@ Et-Layton_Zhong168-DRAFT-PanAnd-1.0	etrips	2
 Hp-KelloggPI404118-DRAFT-PanAnd-1.0	hcompr	3
 Hc-AUB53_1-DRAFT-PanAnd-1.0	hconto	2
 Ir-Pasquet1136-DRAFT-PanAnd-1.0	irugos	1
-Pp-Kellogg1297-DRAFT-PanAnd-1.0	pprate	4
 Pi-Clark-DRAFT-PanAnd-1.0	ppanic	1
 Rr-Malcomber3106-DRAFT-PanAnd-1.0	rrottb	2
 Rt-Layton_Zhong169-DRAFT-PanAnd-1.0	rtuber	1

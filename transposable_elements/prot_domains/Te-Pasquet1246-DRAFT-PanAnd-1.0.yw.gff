@@ -1,0 +1,870 @@
+##gff-version 3
+##PAF	Academ-3_HM	483	200	217	+	ctg_6147	7591564	2473069	2473120	24	51	0	AS:i:39	ms:i:53	np:i:15	da:i:-1	do:i:30	cg:Z:17M	cs:Z::1*gagQ:2*gtaI*gttI*tctT:1*aatD*gaaQ:1*acgV*tccY*agcA:3
+ctg_6147	miniprot	mRNA	2473070	2473120	53	+	.	ID=MP000001;Rank=1;Identity=0.4706;Positive=0.8824;Target=Academ-3_HM 201 217
+ctg_6147	miniprot	CDS	2473070	2473120	53	+	0	Parent=MP000001;Rank=1;Identity=0.4706;Target=Academ-3_HM 201 217
+##PAF	Academ-2_BF	483	265	281	+	ctg_79850	3190761	2652707	2652755	33	48	0	AS:i:51	ms:i:51	np:i:14	da:i:30	do:i:615	cg:Z:16M	cs:Z::1*cgcV*cgcA*accS:5*acgS:5*gccS
+ctg_79850	miniprot	mRNA	2652708	2652755	51	+	.	ID=MP000002;Rank=1;Identity=0.6875;Positive=0.8750;Target=Academ-2_BF 266 281
+ctg_79850	miniprot	CDS	2652708	2652755	51	+	0	Parent=MP000002;Rank=1;Identity=0.6875;Target=Academ-2_BF 266 281
+##PAF	Academ-4_SP	483	0	0	*	*	0	0	0	0	0	0
+##PAF	Academ-2_HM	483	0	0	*	*	0	0	0	0	0	0
+##PAF	Academ-1_AP	483	0	0	*	*	0	0	0	0	0	0
+##PAF	Academ-1_CapTel	483	0	0	*	*	0	0	0	0	0	0
+##PAF	Academ-1_CSa	483	171	182	-	ctg_124536	903179	299335	299368	21	33	0	AS:i:39	ms:i:46	np:i:11	da:i:36	do:i:216	cg:Z:11M	cs:Z::1*gtgI:1*aggK*accS:3*gacN:2
+ctg_124536	miniprot	mRNA	299336	299368	46	-	.	ID=MP000003;Rank=1;Identity=0.6364;Positive=1.0000;Target=Academ-1_CSa 172 182
+ctg_124536	miniprot	CDS	299336	299368	46	-	0	Parent=MP000003;Rank=1;Identity=0.6364;Target=Academ-1_CSa 172 182
+##PAF	Academ-1_CSa	483	171	182	-	ctg_229750	3068432	136966	136999	21	33	0	AS:i:39	ms:i:46	np:i:11	da:i:36	do:i:327	cg:Z:11M	cs:Z::1*gtgI:1*aggK*accS:3*gacN:2
+ctg_229750	miniprot	mRNA	136967	136999	46	-	.	ID=MP000004;Rank=2;Identity=0.6364;Positive=1.0000;Target=Academ-1_CSa 172 182
+ctg_229750	miniprot	CDS	136967	136999	46	-	0	Parent=MP000004;Rank=2;Identity=0.6364;Target=Academ-1_CSa 172 182
+##PAF	Academ-1_Dpulex	483	0	0	*	*	0	0	0	0	0	0
+##PAF	Academ-1_Lgigantea	483	0	0	*	*	0	0	0	0	0	0
+##PAF	Academ-3_CS	483	11	23	-	ctg_300795	3797045	2507323	2507359	33	36	0	AS:i:61	ms:i:61	np:i:12	da:i:-1	do:i:54	cg:Z:12M	cs:Z::3*aggK:8
+ctg_300795	miniprot	mRNA	2507324	2507359	61	-	.	ID=MP000005;Rank=1;Identity=0.9167;Positive=1.0000;Target=Academ-3_CS 12 23
+ctg_300795	miniprot	CDS	2507324	2507359	61	-	0	Parent=MP000005;Rank=1;Identity=0.9167;Target=Academ-3_CS 12 23
+##PAF	Academ-3_CS	483	11	23	+	ctg_389036	2528053	2261549	2261585	33	36	0	AS:i:61	ms:i:61	np:i:12	da:i:-1	do:i:51	cg:Z:12M	cs:Z::3*aggK:8
+ctg_389036	miniprot	mRNA	2261550	2261585	61	+	.	ID=MP000006;Rank=2;Identity=0.9167;Positive=1.0000;Target=Academ-3_CS 12 23
+ctg_389036	miniprot	CDS	2261550	2261585	61	+	0	Parent=MP000006;Rank=2;Identity=0.9167;Target=Academ-3_CS 12 23
+##PAF	Academ-1_Aplcal	483	0	0	*	*	0	0	0	0	0	0
+##PAF	Academ-1_NV	483	0	0	*	*	0	0	0	0	0	0
+##PAF	Academ-4_BF	483	47	58	+	ctg_357104	1965983	793625	793658	18	33	0	AS:i:25	ms:i:40	np:i:11	da:i:-1	do:i:15	cg:Z:11M	cs:Z::1*actS:4*cggK*acaS*cgcK*aagR:1
+ctg_357104	miniprot	mRNA	793626	793658	40	+	.	ID=MP000007;Rank=1;Identity=0.5455;Positive=1.0000;Target=Academ-4_BF 48 58
+ctg_357104	miniprot	CDS	793626	793658	40	+	0	Parent=MP000007;Rank=1;Identity=0.5455;Target=Academ-4_BF 48 58
+##PAF	Academ-1_BF	483	179	190	+	ctg_125949	495901	375533	375566	24	33	0	AS:i:29	ms:i:45	np:i:11	da:i:-1	do:i:60	cg:Z:11M	cs:Z:*ctcM:5*gtaI:2*gaaQ:1
+ctg_125949	miniprot	mRNA	375534	375566	45	+	.	ID=MP000008;Rank=1;Identity=0.7273;Positive=1.0000;Target=Academ-1_BF 180 190
+ctg_125949	miniprot	CDS	375534	375566	45	+	0	Parent=MP000008;Rank=1;Identity=0.7273;Target=Academ-1_BF 180 190
+##PAF	Academ-2_CS	483	0	0	*	*	0	0	0	0	0	0
+##PAF	Academ-1_SP	563	248	259	-	ctg_78401	897912	619870	619903	27	33	0	AS:i:36	ms:i:49	np:i:11	da:i:-1	do:i:75	cg:Z:11M	cs:Z::4*tacF:1*cagE:4
+ctg_78401	miniprot	mRNA	619871	619903	49	-	.	ID=MP000009;Rank=1;Identity=0.8182;Positive=1.0000;Target=Academ-1_SP 249 259
+ctg_78401	miniprot	CDS	619871	619903	49	-	0	Parent=MP000009;Rank=1;Identity=0.8182;Target=Academ-1_SP 249 259
+##PAF	CACTA-1_PB	582	0	0	*	*	0	0	0	0	0	0
+##PAF	SmTRC1	582	0	0	*	*	0	0	0	0	0	0
+##PAF	ENSPM-6_DR	582	0	0	*	*	0	0	0	0	0	0
+##PAF	EnSpm-7_HM	582	0	0	*	*	0	0	0	0	0	0
+##PAF	EnSpm-2_NVi	582	0	0	*	*	0	0	0	0	0	0
+##PAF	EnSpm-3_DR	582	0	0	*	*	0	0	0	0	0	0
+##PAF	EnSpm-16_HM	582	0	0	*	*	0	0	0	0	0	0
+##PAF	CACTA-3_AA	582	62	77	-	ctg_271499	3604047	2177215	2177260	21	45	0	AS:i:47	ms:i:47	np:i:13	da:i:-1	do:i:285	cg:Z:15M	cs:Z::1*cagN*gaaK*tgcI:1*cgtK:1*atgL*gttI:3*aggK*aggK:1
+ctg_271499	miniprot	mRNA	2177216	2177260	47	-	.	ID=MP000010;Rank=1;Identity=0.4667;Positive=0.8667;Target=CACTA-3_AA 63 77
+ctg_271499	miniprot	CDS	2177216	2177260	47	-	0	Parent=MP000010;Rank=1;Identity=0.4667;Target=CACTA-3_AA 63 77
+##PAF	CACTA-2_AA	582	0	0	*	*	0	0	0	0	0	0
+##PAF	EnSpm-5_DR	582	0	0	*	*	0	0	0	0	0	0
+##PAF	CACTA-1_Dpulex	582	502	519	-	ctg_57781	4951031	2642493	2642544	27	51	0	AS:i:43	ms:i:43	np:i:13	da:i:12	do:i:171	cg:Z:17M	cs:Z::2*cacS*gatV*gct-*att-*accS:1*caaE*gaaQ*agcT:6
+ctg_57781	miniprot	mRNA	2642494	2642544	43	-	.	ID=MP000011;Rank=1;Identity=0.5294;Positive=0.7647;Target=CACTA-1_Dpulex 503 519
+ctg_57781	miniprot	CDS	2642494	2642544	43	-	0	Parent=MP000011;Rank=1;Identity=0.5294;Target=CACTA-1_Dpulex 503 519
+##PAF	CACTA-1_Ccinerea	582	0	0	*	*	0	0	0	0	0	0
+##PAF	EnSpm-1_BF	582	27	134	-	ctg_269425	1016342	49714	50002	102	321	0	AS:i:104	ms:i:82	np:i:53	da:i:30	do:i:168	cg:Z:31M3I20M1I5M2I21M1I1M2I1M2I17M	cs:Z::1*accV*atgV*tacL:3*acaR*tggE*ttgE*tgtR*cagF:1*aggE*aagE*tacN*cttM*ctcI*ctcV*accV*attG:2*tctP:3*caaE:1*ggcK:1+---:2*gacN*gtgS:5*ataV*caaE:1*atgL*gagQ*aatD:2*agg-*tac-*aggK+G:1*atgL*atgL*tatS:1+NS*gcaI*ttcL*tgt-*caa-:1*tacA*ttcQ*acaL*tgcY*aaaR:1*ataA*ataL*tttI*gttC*actL*accS*aatS:1*tacI:1+A:1+RK*ctaC+GG:1*gctV*ctaG*tctH:1*gaaA*ttcL*aaa-*ggc-*aag-*actR*agaG:1*ttaS*gtcK:2
+ctg_269425	miniprot	mRNA	49715	50002	82	-	.	ID=MP000012;Rank=1;Identity=0.3178;Positive=0.4953;Target=EnSpm-1_BF 28 134
+ctg_269425	miniprot	CDS	49715	50002	82	-	0	Parent=MP000012;Rank=1;Identity=0.3178;Target=EnSpm-1_BF 28 134
+##PAF	CACTA-1_Roryzae	582	0	0	*	*	0	0	0	0	0	0
+##PAF	CACTA-1_Mlaricis	582	0	0	*	*	0	0	0	0	0	0
+##PAF	CACTA-2_Mlaricis	582	0	16	+	ctg_55917	1189173	963191	963239	18	48	0	AS:i:41	ms:i:41	np:i:13	da:i:177	do:i:273	cg:Z:16M	cs:Z:*agtF*ggtA*gtgL*cgcF*ataV:3*gacN:1*tatF:2*aggK*gagQ*acaS
+ctg_55917	miniprot	mRNA	963192	963239	41	+	.	ID=MP000013;Rank=1;Identity=0.3750;Positive=0.8125;Target=CACTA-2_Mlaricis 1 16
+ctg_55917	miniprot	CDS	963192	963239	41	+	0	Parent=MP000013;Rank=1;Identity=0.3750;Target=CACTA-2_Mlaricis 1 16
+##PAF	ATENSPM10	582	0	582	-	ctg_30930	2342406	1788468	1789773	558	1785	0	AS:i:596	ms:i:625	np:i:258	da:i:84	do:i:291	cg:Z:15M3I39M3I20M1I10M2I31M4I5M14I18M4I21M6D2M141N2M6D68M117I14M2I26M13I5M10I5M11I8M10I21M1D7M3I14M8I15M1I11M1I18M	cs:Z::3*gcaS*gctT:2*tttM:3*gggS*atgI*ttgQ:1+---*gttT*gcaK:1*actS:4*atcL:1*atcV*cccN:2*ttgM*cctA:1*tggT*ttgM:1*ttgM:1*caaA*cccE*tatN*tggI:1*atgL*tctT*atgL:5*aaaT*tcaA:1*ggaS+N--*atg-:6*caaA:4*gagD:1*ataK*gagD:2*gtg-*acaS+D:1*gttI*gaaQ*acaV*tggY:1*gagS*gatF*acaL:1+--*aagE*aatS:5*cttM:3*accS:1*aatS:1*ttcY:2*tatL*gccG*atgT:1*tctA:1*tggC*agtK*actV:3*ttt-+---Q:2*ccaN*tacV:1+G-------------*cac-:3*gagP*tacF*ttaR:4*gggS*tcgR:2*tgtV:1*atgL+----*ggtS*agtN:1*cgaK*tttR:1*cctR*cagP*agcG:1*cagP*tggY:1*aagR*aacR*aaaR*actG*agcW:1*aacD:1-aatacagaaatgagggag*gcaT*cctD~gt141ag:2-tactgggaaaaattgctt:4*ttgI:4*atcV:3*atcV*tgtS*gaaD*agcA:1*attV*gggS:2*cttM*cacQ*ata-*gatS*ggtA:1*tgcS:2*agtG*gaaL*aagN:2*cttK:1*atgL*caaE*catD*cttM:3*caaS*gatN*cagL:1*ccaT*gtgQ*gtgL*gcgR*aatG*gggK*aagR*tatT*tttY:3*tcaA*ttgA*tacF*tccW:1*gacS:1+---------------------------------------------------------------------------------------------------------------------:1*cagE:2*atgR*ctaF:1*acaK*ttcR:1*caaA*ggaR*gtgF:1+G-*atg-:4*gcgC*tctA:2*aagS*agaN:2*gatS:1*aatD*ggaP*tgtP*aagV*gttI*tctG:5+-------------:1*tatH:2*attL+----------:2*aaaN:2+-----------:1*ttaV*gttA*gcaL:1*catG*atcL:1+----------:1*gaaK*gctG*gttP*ggtR*acaV*ccaA*ttgI*attS*gagR:1*agcC*aggH*tttY:2*gcgR:2*tcaQ*aagR-gag*ctgV*gtgI*caa-*att-:1*ctaP:1+KLI*acaS:1*agcE:1*acaE*attL*gcaV:2*ttaM:1*aagQ:2+R--YF---*atg-*ata-*ttc-:2*gcaS*ttcL:4*atgF:3+-:4*aagR:2*gaaR:3+-:2*tgcH*tatF:5*attF:3*ctaM*cgtK:3
+ctg_30930	miniprot	mRNA	1788469	1789773	625	-	.	ID=MP000014;Rank=1;Identity=0.3126;Positive=0.4336;Target=ATENSPM10 1 582
+ctg_30930	miniprot	CDS	1789273	1789773	338	-	0	Parent=MP000014;Rank=1;Identity=0.3990;Target=ATENSPM10 1 192
+ctg_30930	miniprot	CDS	1788469	1789131	287	-	0	Parent=MP000014;Rank=1;Identity=0.2695;Target=ATENSPM10 193 582
+##PAF	ATENSPM10	582	0	582	-	ctg_260656	1172526	743314	744619	552	1785	0	AS:i:591	ms:i:620	np:i:257	da:i:84	do:i:291	cg:Z:15M3I39M3I20M1I10M2I31M4I5M14I18M4I21M6D2M141N2M6D68M117I14M2I26M13I5M10I5M11I8M10I21M1D7M3I14M8I15M1I11M1I18M	cs:Z::3*gcaS*gctT:2*tttM:3*gggS*atgI*ttgQ:1+---*gttT*gcaK:1*actS:4*atcL:1*atcV*cccN:2*ttgM*cctA:1*tggT*ttgM:1*ttgM:1*caaA*cccE*tatN*tggI:1*atgL*tctT*atgL:5*aaaT*tcaA:1*ggaS+N--*atg-:6*caaA:4*gagD:1*ataK*gagD:2*gtg-*acaS+D:1*gttI*gaaQ*acaV*tggY:1*gagS*gatF*acaL:1+--*aagE*aatS:5*cttM:3*accS:1*aatS:1*ttcY:2*tatL*gctG*atgT:1*tctA:1*tggC*agtK*gctV:3*ttt-+---Q:2*ccaN*tacV:1+G-------------*cac-:3*gagP*tacF*ttaR:4*gggS*tcgR:2*tgtV:1*atgL+----*ggtS*agtN:1*cgaK*tttR:1*cctR*cagP*agcG:1*cagP*tggY:1*aagR*aacR*aaaR*actG*agcW:1*aacD:1-aatacagaaatgagggag*gcaT*cctD~gt141ag:2-tactgggaaaaattgctt:4*ttgI:4*atcV:3*atcV*tgtS*gaaD*agcA:1*attV*gggS:2*cttM*cacQ*ata-*gatS*ggtA:1*tgcS:2*agtG*gaaL*aagN:2*cttK:1*atgL*caaE*catD*cttM:3*caaS*gatN*cagL:1*ccaT*gtgQ*gtgL*gcgR*aatG*gggK*aagR*tatT*tttY:3*tcaA*ttgA*tacF*tccW:1*gacS:1+---------------------------------------------------------------------------------------------------------------------:1*cagE:2*atgR*ctaF:1*acaK*ttcR:1*caaA*ggaR*gtgF:1+G-*atg-:4*gcgC*tctA:2*aagS*agaN:2*gatS:1*aatD*ggaP*tgtP*aagV*gttI*tctG:5+-------------:1*tatH:2*attL+----------:2*aaaN:2+-----------:1*ttaV*gttA*gcaL:1*catG*atcL:1+----------:1*gaaK*gctG*gttP*gctR*acaV*ccaA*ttgI*attS*gagR:1*agcC*aggH*tttY:2*gcgR:2*tcaQ*aagR-gag*ctgV*gtgI*caa-*att-:1*ctaP:1+KLI*acaS:1*agcE:1*acaE*attL*gcaV:2*ttaM:1*aagQ*attL:1+R--YF---*atg-*ata-*ttc-:2*gcaS*ttcL:4*atgF:3+-*gttI:3*aagR:2*gaaR:3+-:2*tgcH*tatF:5*attF:3*ctaM*catK:3
+ctg_260656	miniprot	mRNA	743315	744619	620	-	.	ID=MP000015;Rank=2;Identity=0.3092;Positive=0.4319;Target=ATENSPM10 1 582
+ctg_260656	miniprot	CDS	744119	744619	338	-	0	Parent=MP000015;Rank=2;Identity=0.3990;Target=ATENSPM10 1 192
+ctg_260656	miniprot	CDS	743315	743977	282	-	0	Parent=MP000015;Rank=2;Identity=0.2645;Target=ATENSPM10 193 582
+##PAF	MIRAGE1_CB	582	0	0	*	*	0	0	0	0	0	0
+##PAF	MIRAGE1	582	0	0	*	*	0	0	0	0	0	0
+##PAF	Chapaev-1_CE	582	0	0	*	*	0	0	0	0	0	0
+##PAF	Chapaev3-5_PM	582	0	0	*	*	0	0	0	0	0	0
+##PAF	Chapaev-1_AA	582	539	564	+	ctg_151282	3281391	3089715	3089796	42	81	0	AS:i:57	ms:i:57	np:i:17	da:i:-1	do:i:135	cg:Z:8M2D17M	cs:Z::1*tctE*catL:3*ggaS*gagK-cgtttt:1*tctH*caaI*aaaL*gtgR*cacF:3*caaE:3*acgS:3
+ctg_151282	miniprot	mRNA	3089716	3089796	57	+	.	ID=MP000016;Rank=1;Identity=0.5185;Positive=0.6296;Target=Chapaev-1_AA 540 564
+ctg_151282	miniprot	CDS	3089716	3089796	57	+	0	Parent=MP000016;Rank=1;Identity=0.5185;Target=Chapaev-1_AA 540 564
+##PAF	Chapaev-1_ACa	582	25	36	-	ctg_369171	1328231	961894	961927	24	33	0	AS:i:41	ms:i:48	np:i:11	da:i:3	do:i:141	cg:Z:11M	cs:Z:*ttgM:2*gagQ*agcT:6
+ctg_369171	miniprot	mRNA	961895	961927	48	-	.	ID=MP000017;Rank=1;Identity=0.7273;Positive=1.0000;Target=Chapaev-1_ACa 26 36
+ctg_369171	miniprot	CDS	961895	961927	48	-	0	Parent=MP000017;Rank=1;Identity=0.7273;Target=Chapaev-1_ACa 26 36
+##PAF	Chapaev-2_BF	582	295	311	-	ctg_284030	2357042	2306550	2306598	30	48	0	AS:i:55	ms:i:55	np:i:14	da:i:-1	do:i:0	cg:Z:16M	cs:Z:*atcV:1*agtL:1*ctaD:4*agaK*tacF:3*ataV:1
+ctg_284030	miniprot	mRNA	2306551	2306598	55	-	.	ID=MP000018;Rank=1;Identity=0.6250;Positive=0.8750;Target=Chapaev-2_BF 296 311
+ctg_284030	miniprot	CDS	2306551	2306598	55	-	0	Parent=MP000018;Rank=1;Identity=0.6250;Target=Chapaev-2_BF 296 311
+##PAF	Chapaev-6_HM	582	0	0	*	*	0	0	0	0	0	0
+##PAF	Chapaev-9_HM	582	99	110	-	ctg_141884	1170382	950870	950903	30	33	0	AS:i:35	ms:i:51	np:i:11	da:i:15	do:i:27	cg:Z:11M	cs:Z:*cagE:10
+ctg_141884	miniprot	mRNA	950871	950903	51	-	.	ID=MP000019;Rank=1;Identity=0.9091;Positive=1.0000;Target=Chapaev-9_HM 100 110
+ctg_141884	miniprot	CDS	950871	950903	51	-	0	Parent=MP000019;Rank=1;Identity=0.9091;Target=Chapaev-9_HM 100 110
+##PAF	Chapaev-1_HM	662	0	0	*	*	0	0	0	0	0	0
+##PAF	Ginger1-12_HM	162	4	162	+	ctg_16631	12666242	5210776	5211226	120	477	0	AS:i:98	ms:i:87	np:i:67	da:i:-1	do:i:573	cg:Z:13M1I36M3I1M2I24M1D25M1I20M2I30M	cs:Z::1*cagK:1*ttgF:1*tgtR*tcgK:2*acgA:2*cgcA+V:1*aagP*acgV*aagN*acaK*cta-*cagP*ccgG*gctP*gggS*ctgS:1*cagH:1*ctcV*gacK:1*ccc-*accM*caaH*gtaM*tggF*gcgH*gacR*atcW*tcaG*atgI:1*tttL:1*gagG*gggP:1*cccK*aagE*gtgT+---*acg-+KK:2*tcgK*gtcS:1*cttC*actV*gtgA*gttT*gatE*cgcY*ttcL*tccT:1*tacW:1*cacE*ttcV*atcK:1*ctcI*ggcR*cacE*cccK-taa*accN:1*tcaI:2*gcaH*cgcA*gccF*ttcL*ttcM*gac-*ggcK*atcL:1*cgcF*ctcR*cacF:1*ttcA*ccgS*ctg-*tccN*atcV*gtcI*tgtL+H:1*cggQ:1*cccK*gtgE:1*actN*ggcN*catQ*gtgL*tggV*cgaD:2*tttC*cggE*atgQ*gcgM*ggtK*gtcI+T-*aag-*ctgV*cgcA:1*agtT*accS:1*ttcY:4*gacN:1*cagL*tccT:1*gtgQ*gtcF:1*aagQ*gtgT*attL*gccV*atgR*tatH:1*cgtL*tgtK*gtgL
+ctg_16631	miniprot	mRNA	5210777	5211226	87	+	.	ID=MP000020;Rank=1;Identity=0.2516;Positive=0.4214;Target=Ginger1-12_HM 5 162
+ctg_16631	miniprot	CDS	5210777	5211226	87	+	0	Parent=MP000020;Rank=1;Identity=0.2516;Target=Ginger1-12_HM 5 162
+##PAF	Ginger1-1_AC	162	0	159	+	ctg_25375	3767570	1925181	1934983	144	477	0	AS:i:129	ms:i:166	np:i:78	da:i:0	do:i:81	cg:Z:19M1I13M1I21M3I34M9349N15M1I25M1I4M1I20M	cs:Z:*atgV*ctgR*gagK:1*tgcV*tttR*gaaN:1*tatI*aaaQ*gggH:1*caaD*gacR:2*aaaR*tttR:1+P*tatS*attL*cagD*aag-*gttK*gtaG*gcaQ*tca-*gcaQ*atgL*aacH:1*ataV+K:1*aagP:1*tggK:1*ttcW*agaS*gaaQ*tggI*agcG*attV:1*ttgT*attC*ggg-*cagS*attL*aacP*cctK*ccaS*tct-+---*agcK*aaaD:1*catF*aagT*tttC*gtgM*cttV*ttgV:1*ataV:6*cttM:2*attE:2*aaaV*ataA*gtaK:1*tcaA:1*aacG*atgV*attA:2~gt9349ag*tacL*atcY*gta-*gagQ*ataC*gttM:1*cttR:2*gttC*cctA*cgc-*aagG:1+Q*gtgI*tctN:3*ccaR*cagE:1*actV*gctN*catS*tttV*tgtS*gagR*catA:1*cagH:1*ggtL*ttaS:1*accV*aagE*ttg-*gtc-+Q:1*agtV:1*acaS+A:4*atgA*ttgN*ggtD*cagL*agtV:2*cttE:1*caaR*attT*ctaI*gaaQ*gatG:1*cttM
+ctg_25375	miniprot	mRNA	1925182	1934983	166	+	.	ID=MP000021;Rank=1;Identity=0.3019;Positive=0.4906;Target=Ginger1-1_AC 1 159
+ctg_25375	miniprot	CDS	1925182	1925442	105	+	0	Parent=MP000021;Rank=1;Identity=0.2935;Target=Ginger1-1_AC 1 92
+ctg_25375	miniprot	CDS	1934792	1934983	61	+	0	Parent=MP000021;Rank=1;Identity=0.3134;Target=Ginger1-1_AC 93 159
+##PAF	Ginger1-1_AP	162	83	94	-	ctg_208076	1916599	799191	799224	18	33	0	AS:i:28	ms:i:38	np:i:11	da:i:-1	do:i:366	cg:Z:11M	cs:Z:*cgcK*agcT:2*acgS*attV:4*ttcY
+ctg_208076	miniprot	mRNA	799192	799224	38	-	.	ID=MP000022;Rank=1;Identity=0.5455;Positive=1.0000;Target=Ginger1-1_AP 84 94
+ctg_208076	miniprot	CDS	799192	799224	38	-	0	Parent=MP000022;Rank=1;Identity=0.5455;Target=Ginger1-1_AP 84 94
+##PAF	Ginger1-1_HM	162	0	162	-	ctg_309052	849808	518696	567026	132	504	0	AS:i:62	ms:i:80	np:i:70	da:i:-1	do:i:255	cg:Z:21M2I30M3I2M1I23M1D25M1I25M2I9M5D47853N18M	cs:Z:*ctgM*agaI*agaK:1*gtcI*atcT*agaA*tttY:1*gagS*cgaE:1*accD*actN*tatC*cacQ:3*tcaN:1+KL*ctg-*aacQ*cctV*catK*ggcP:1*tacL*actQ*cctS*ttaI*cctS*actI:1*aatK*attG*cctN*tggM*gaaK*gacQ*attV*agcG*atgI:1*tttL*gttT*tta-*ggaQ*tttL:1*agaE+---*act-*cag-+V*aaaN:1*aaaY*gatK*tctY*attL*tttI:1*gtgL:2*agaY:3*atgW*actV*catE*tttA*atcE:1*tgcL*cacF-aag*accD*aacK*gatT:1*tcaK*catS*attV:1*aatI*ttgF*tttL*tttY*aga-*gaaK*attQ*gtgI*tggC*ctaR:2*atgC*cccF*agg-*accE:1+Q*gtgI*tctN:1*tgaQ:1*gtcR*aagE:2*agtN*tatE*tttL*tggS*aagN*acaE:1*ttgH*gccR:1*cttT:2*aagR*ctt-*ttg-+QR*ttcM*tccT*accS*acaA*tgtY:3*accA-gatggacaaactgaa~gt47853ag:2*atgL:6*acgS*gtgI*gtcK*accR:1*accL*catV*gctK*ctgV
+ctg_309052	miniprot	mRNA	518697	567026	80	-	.	ID=MP000023;Rank=1;Identity=0.2619;Positive=0.4167;StopCodon=1;Target=Ginger1-1_HM 1 162
+ctg_309052	miniprot	CDS	566604	567026	34	-	0	Parent=MP000023;Rank=1;Identity=0.2333;StopCodon=1;Target=Ginger1-1_HM 1 144
+ctg_309052	miniprot	CDS	518697	518750	46	-	0	Parent=MP000023;Rank=1;Identity=0.5000;Target=Ginger1-1_HM 145 162
+##PAF	Ginger1-8_HM	162	0	152	-	ctg_135773	3688439	2986135	2986570	132	465	0	AS:i:129	ms:i:129	np:i:71	da:i:-1	do:i:0	cg:Z:21M2D5M3I26M5I2M1D71M2I17M	cs:Z:*ctcM*aagV*aggN:1*gtaI*gccT:1*tatW:1*gccK*attE:2*acaK:3*gtgM*aaaE*gcaK*gaaI-cactag:1*ccaT*gct-*aga-*ttgV+APE:1*caaK:1*atgI:1*ataV*cct-*gagN*tggG*aagL:1*aaaD*gaaF*gttL:1*atgI:1*ttcL:1*gttG*ggaP:2*cgcI:1*caa-+---KL:1*ggtN-tag*gatK*tctY:1*tgtL*gtaT:1*gttT:1*catL*ttgW*actS:1*gttY*gcaI*cacE*ttcA*ataF:1*gtcI*aagP*acgE*cgaK*tatS*tctA*ggtF*catY*agaV*ttgS*gctK*cagC*ataL*tacT*atg-*gaaT*aagL*atcF*gtaY*tgtR*ttaF*catG*ggtP*gtaP*gct-:3*gtaL:2*catQ:1*atcR*cagE:1*accV*tctN*cacS*tttL*tggN*caaE*tcaQ*gtgL*catF*gaaS*gctL*ttgF*ggtQ*acaI*agaK*ttg-*aac-+HL:1*agtT*accS:6*gatN:2*aatD:2*gtcT:1
+ctg_135773	miniprot	mRNA	2986136	2986570	129	-	.	ID=MP000024;Rank=1;Identity=0.2839;Positive=0.4581;Target=Ginger1-8_HM 1 152
+ctg_135773	miniprot	CDS	2986136	2986570	129	-	0	Parent=MP000024;Rank=1;Identity=0.2839;Target=Ginger1-8_HM 1 152
+##PAF	Ginger1-1_BF	162	0	0	*	*	0	0	0	0	0	0
+##PAF	TDD-4	162	0	0	*	*	0	0	0	0	0	0
+##PAF	Ginger2-1_NV	162	0	0	*	*	0	0	0	0	0	0
+##PAF	Ginger2-2_NV	162	0	0	*	*	0	0	0	0	0	0
+##PAF	Ginger2-1_MG	162	0	0	*	*	0	0	0	0	0	0
+##PAF	Ginger2-1_HM	162	67	121	-	ctg_45755	2428827	1129020	1129187	63	168	0	AS:i:75	ms:i:75	np:i:36	da:i:45	do:i:33	cg:Z:20M2G3M2D30M	cs:Z:*atcV*ctcV:1*gacH:1*accS*cacK:1*tgtH*tggI*accL:2*ctaM*gtcR*cacN:1*tcaT*gagA*gtaL*gcE:1*actA*cacN-atcact:1*ttcL*tgcK*atcR:2*cacL*acaS*cagY:1*aacG:2*gtc-*aagA*gttI*gttL*ttgH*gctS:3*actS:2*attV:1*aatD:2
+ctg_45755	miniprot	mRNA	1129021	1129187	75	-	.	ID=MP000025;Rank=1;Identity=0.3750;Positive=0.6429;Frameshift=1;Target=Ginger2-1_HM 68 121
+ctg_45755	miniprot	CDS	1129021	1129187	75	-	0	Parent=MP000025;Rank=1;Identity=0.3750;Frameshift=1;Target=Ginger2-1_HM 68 121
+##PAF	Ginger2-1_LS	162	0	0	*	*	0	0	0	0	0	0
+##PAF	Ginger2-1_BF	162	0	0	*	*	0	0	0	0	0	0
+##PAF	Ginger2-1_TS	242	101	155	+	ctg_206442	1169311	799238	799394	54	162	0	AS:i:73	ms:i:64	np:i:26	da:i:-1	do:i:165	cg:Z:26M1I7M1I19M	cs:Z::1*aagA*aaaP*ctc-*aagS*gtcI:2*actS:6*accS*tctN*gtcA*gagI*tttI:1*tctE*tacL*tgtK*gcaT:1+W*gaaP*ggaE*gtgL*cagK*cga-*cacL*ttcV+T*tctG*gctR:1*tacR*tcgH:2*cagS*aacQ:1*gtcA:2*catR*cgcL:1*cagG*atgV*attV
+ctg_206442	miniprot	mRNA	799239	799394	64	+	.	ID=MP000026;Rank=1;Identity=0.3333;Positive=0.4815;Target=Ginger2-1_TS 102 155
+ctg_206442	miniprot	CDS	799239	799394	64	+	0	Parent=MP000026;Rank=1;Identity=0.3333;Target=Ginger2-1_TS 102 155
+##PAF	hATw-1_CCo	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATw-1_LB	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATw-1_HM	895	57	158	-	ctg_232922	1579731	237544	311796	105	354	0	AS:i:57	ms:i:86	np:i:58	da:i:81	do:i:6	cg:Z:47M4D5M73904N10M13D5M1I24M1I8M	cs:Z::1*ggaT:1*gtaG:1*gttE:1*gacM:1*aatS*agaG*tacE*acaA*tggQ*gtaS*ttcY:1*ttgG:1*gatL:1*agtN*gagL*gtgL*ttcT*aacD*acaM*ttcS:3*gtcS*aagP*aga-*agcD*caaK*aatE*gagN*tttY:1*acaN*acaD*atcL*aagR:1*gtaL*agaI-agtgacaatgga*agtF*gagS:2*aatS~gt73904ag:1*ttgM*agtT:2*tctT:1*attV:1*acaS-acgctccttatgttggaacagaatccagatggaaatttc:4*cacQ+F*acaK:1*cgcW*ctcR*cttE*ctcA:2*ggtP*cagF:1*ataV:1*agcN:1*cggD*gagQ*gtgL*gtaP:1*ctcN*aatE*ttcK:1+K*atgI*aacS*cggQ:1*aagH*tttH:2
+ctg_232922	miniprot	mRNA	237545	311796	86	-	.	ID=MP000027;Rank=1;Identity=0.2966;Positive=0.4915;Target=hATw-1_HM 58 158
+ctg_232922	miniprot	CDS	311629	311796	39	-	0	Parent=MP000027;Rank=1;Identity=0.2679;Target=hATw-1_HM 58 109
+ctg_232922	miniprot	CDS	237545	237724	47	-	0	Parent=MP000027;Rank=1;Identity=0.3226;Target=hATw-1_HM 110 158
+##PAF	hATw-4_BF	895	171	182	-	ctg_443664	2345473	61541	61574	18	33	0	AS:i:29	ms:i:42	np:i:11	da:i:-1	do:i:171	cg:Z:11M	cs:Z::1*attV:1*gtcI:1*cttM:1*actS*ataV:2
+ctg_443664	miniprot	mRNA	61542	61574	42	-	.	ID=MP000028;Rank=1;Identity=0.5455;Positive=1.0000;Target=hATw-4_BF 172 182
+ctg_443664	miniprot	CDS	61542	61574	42	-	0	Parent=MP000028;Rank=1;Identity=0.5455;Target=hATw-4_BF 172 182
+##PAF	hATw-2_SP	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATw-5_BF	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATw-1_BF	895	862	873	+	ctg_528582	439617	272367	272400	24	33	0	AS:i:30	ms:i:42	np:i:11	da:i:12	do:i:33	cg:Z:11M	cs:Z::5*cagE:1*aatD*tatF:2
+ctg_528582	miniprot	mRNA	272368	272400	42	+	.	ID=MP000029;Rank=1;Identity=0.7273;Positive=1.0000;Target=hATw-1_BF 863 873
+ctg_528582	miniprot	CDS	272368	272400	42	+	0	Parent=MP000029;Rank=1;Identity=0.7273;Target=hATw-1_BF 863 873
+##PAF	hATw-1_BF	895	862	873	-	ctg_477828	1782772	834322	834355	24	33	0	AS:i:30	ms:i:42	np:i:11	da:i:-1	do:i:33	cg:Z:11M	cs:Z::5*cagE:1*aatD*tatF:2
+ctg_477828	miniprot	mRNA	834323	834355	42	-	.	ID=MP000030;Rank=2;Identity=0.7273;Positive=1.0000;Target=hATw-1_BF 863 873
+ctg_477828	miniprot	CDS	834323	834355	42	-	0	Parent=MP000030;Rank=2;Identity=0.7273;Target=hATw-1_BF 863 873
+##PAF	hATw-1_BF	895	862	873	+	ctg_173810	1468877	1153809	1153842	24	33	0	AS:i:30	ms:i:42	np:i:11	da:i:-1	do:i:33	cg:Z:11M	cs:Z::5*cagE:1*aatD*tatF:2
+ctg_173810	miniprot	mRNA	1153810	1153842	42	+	.	ID=MP000031;Rank=3;Identity=0.7273;Positive=1.0000;Target=hATw-1_BF 863 873
+ctg_173810	miniprot	CDS	1153810	1153842	42	+	0	Parent=MP000031;Rank=3;Identity=0.7273;Target=hATw-1_BF 863 873
+##PAF	hATw-1_BF	895	862	873	-	ctg_556879	132733	54681	54714	24	33	0	AS:i:30	ms:i:42	np:i:11	da:i:12	do:i:33	cg:Z:11M	cs:Z::5*cagE:1*aatD*tatF:2
+ctg_556879	miniprot	mRNA	54682	54714	42	-	.	ID=MP000032;Rank=4;Identity=0.7273;Positive=1.0000;Target=hATw-1_BF 863 873
+ctg_556879	miniprot	CDS	54682	54714	42	-	0	Parent=MP000032;Rank=4;Identity=0.7273;Target=hATw-1_BF 863 873
+##PAF	hATw-1_BF	895	862	873	-	ctg_148479	10401305	7776464	7776497	24	33	0	AS:i:30	ms:i:42	np:i:11	da:i:-1	do:i:33	cg:Z:11M	cs:Z::5*cagE:1*aatD*tatF:2
+ctg_148479	miniprot	mRNA	7776465	7776497	42	-	.	ID=MP000033;Rank=5;Identity=0.7273;Positive=1.0000;Target=hATw-1_BF 863 873
+ctg_148479	miniprot	CDS	7776465	7776497	42	-	0	Parent=MP000033;Rank=5;Identity=0.7273;Target=hATw-1_BF 863 873
+##PAF	hATw-3_BF	895	467	478	-	ctg_360346	1574138	719313	719346	21	33	0	AS:i:44	ms:i:57	np:i:11	da:i:0	do:i:30	cg:Z:11M	cs:Z:*atgL:1*ctgM:1*gaaQ:1*tatF:4
+ctg_360346	miniprot	mRNA	719314	719346	57	-	.	ID=MP000034;Rank=1;Identity=0.6364;Positive=1.0000;Target=hATw-3_BF 468 478
+ctg_360346	miniprot	CDS	719314	719346	57	-	0	Parent=MP000034;Rank=1;Identity=0.6364;Target=hATw-3_BF 468 478
+##PAF	hAT-1_TV	895	661	677	-	ctg_347969	1243463	259988	260036	27	48	0	AS:i:44	ms:i:54	np:i:14	da:i:-1	do:i:267	cg:Z:16M	cs:Z::3*gtgI*gagQ*gagQ:4*gagQ*gagM:1*gagN*gagD:1
+ctg_347969	miniprot	mRNA	259989	260036	54	-	.	ID=MP000035;Rank=1;Identity=0.5625;Positive=0.8750;Target=hAT-1_TV 662 677
+ctg_347969	miniprot	CDS	259989	260036	54	-	0	Parent=MP000035;Rank=1;Identity=0.5625;Target=hAT-1_TV 662 677
+##PAF	hAT-2_TV	895	0	0	*	*	0	0	0	0	0	0
+##PAF	Hopers3	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATx-4_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATx-1_SM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	*hATx-5_SM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-1_AA	895	877	895	+	ctg_368305	1853159	112322	112376	30	54	0	AS:i:49	ms:i:49	np:i:13	da:i:-1	do:i:0	cg:Z:18M	cs:Z::1*cggS*tgcK*ttgK:1*tctT:6*ataV:1*gatN:1*aatC*atgF
+ctg_368305	miniprot	mRNA	112323	112379	49	+	.	ID=MP000036;Rank=1;Identity=0.5556;Positive=0.7222;Target=hAT-1_AA 878 895
+ctg_368305	miniprot	CDS	112323	112376	49	+	0	Parent=MP000036;Rank=1;Identity=0.5556;Target=hAT-1_AA 878 895
+ctg_368305	miniprot	stop_codon	112377	112379	0	+	0	Parent=MP000036;Rank=1
+##PAF	hATx-3_SM	895	447	459	+	ctg_3594	3288440	2788858	2788894	18	36	0	AS:i:37	ms:i:37	np:i:12	da:i:-1	do:i:15	cg:Z:12M	cs:Z:*gtgL:1*agaK:1*aatD:1*tcaT:2*cggK:1*ttgM
+ctg_3594	miniprot	mRNA	2788859	2788894	37	+	.	ID=MP000037;Rank=1;Identity=0.5000;Positive=1.0000;Target=hATx-3_SM 448 459
+ctg_3594	miniprot	CDS	2788859	2788894	37	+	0	Parent=MP000037;Rank=1;Identity=0.5000;Target=hATx-3_SM 448 459
+##PAF	hATx-5_HM	895	667	683	-	ctg_329095	1321535	980460	980508	27	48	0	AS:i:44	ms:i:44	np:i:13	da:i:366	do:i:3	cg:Z:16M	cs:Z:*ctcI*cgtE*gagD*tgtA*cttS*tccT:3*gacN:6
+ctg_329095	miniprot	mRNA	980461	980508	44	-	.	ID=MP000038;Rank=1;Identity=0.5625;Positive=0.8125;Target=hATx-5_HM 668 683
+ctg_329095	miniprot	CDS	980461	980508	44	-	0	Parent=MP000038;Rank=1;Identity=0.5625;Target=hATx-5_HM 668 683
+##PAF	hAT-9_SBi	895	0	895	+	ctg_182615	2646020	1875747	1877152	1209	2685	0	AS:i:1276	ms:i:1310	np:i:418	da:i:120	do:i:228	cg:Z:9M1I13M20I5M4I5M2I2M4I4M3I9M3I3M4I5M6I14M2I4M9I4M17I9M3I3M1I26M29I14M2I6M52I13M1I20M3I28M13I17M16I6M8I12M5I5M3I13M2I2M12I10M31I9M1I27M58I9M97V1M10I17M2I5M2I23M53I22M23I5M10I7M34I4M5I6M4I40M	cs:Z::9+-:13+--------------------:5+----:5+--:2+----*caaE:3+---:1*aacS*atgK:6+---:2*ggtA+----:2*gatE:2+-G----*ggt-:12*ccaA+--:4+---------:4+-----------------:5*aaaN:3+---:3+-:9*atcL:9*ggcN:5*gagD+K----------------------------*tta-:1*gctV:1*cagE:9+--:6+----------------------------------------------------:13+-:20+---:28+V------------*gcc-:16+----------------:1*agtN:4+--------:3*gggN:8+-----:5+---:13+--:2+------------:7*caaK:2+-------------------------------:1*gtcE:7+-:4*gagD:12*ggtA:9+----------------------------------------------------------:9*agR~gt94ag-a:1+----------:3*aatK:5*gctV:3*gcaP:3+--:5+--:18*acaK:4+-----------------------------------------------------:2*aggK:3*tttC:10*agtH:4+-----------------------:5+----------:7+----------------A-----------------*tct-:2*ttgM+-----:2*aatS:3+----:21*gtcI:2*cttV*cagK:14
+ctg_182615	miniprot	mRNA	1875748	1877152	1310	+	.	ID=MP000039;Rank=1;Identity=0.4503;Positive=0.4670;Target=hAT-9_SBi 1 895
+ctg_182615	miniprot	CDS	1875748	1876667	902	+	0	Parent=MP000039;Rank=1;Identity=0.4598;Target=hAT-9_SBi 1 621
+ctg_182615	miniprot	CDS	1876762	1877152	408	+	1	Parent=MP000039;Rank=1;Identity=0.4286;Target=hAT-9_SBi 622 895
+##PAF	hAT-9_SBi	895	0	895	-	ctg_97781	1984341	1160386	1161791	1209	2685	0	AS:i:1276	ms:i:1310	np:i:418	da:i:120	do:i:228	cg:Z:9M1I13M20I5M4I5M2I2M4I4M3I9M3I3M4I5M6I14M2I4M9I4M17I9M3I3M1I26M29I14M2I6M52I13M1I20M3I28M13I17M16I6M8I12M5I5M3I13M2I2M12I10M31I9M1I27M58I9M97V1M10I17M2I5M2I23M53I22M23I5M10I7M34I4M5I6M4I40M	cs:Z::9+-:13+--------------------:5+----:5+--:2+----*caaE:3+---:1*aacS*atgK:6+---:2*ggtA+----:2*gatE:2+-G----*ggt-:12*ccaA+--:4+---------:4+-----------------:5*aaaN:3+---:3+-:9*atcL:9*ggcN:5*gagD+K----------------------------*tta-:1*gctV:1*cagE:9+--:6+----------------------------------------------------:13+-:20+---:28+V------------*gcc-:16+----------------:1*agtN:4+--------:3*gggN:8+-----:5+---:13+--:2+------------:7*caaK:2+-------------------------------:1*gtcE:7+-:4*gagD:12*ggtA:9+----------------------------------------------------------:9*agR~gt94ag-a:1+----------:3*aatK:5*gctV:3*gcaP:3+--:5+--:18*acaK:4+-----------------------------------------------------:2*aggK:3*tttC:10*agtH:4+-----------------------:5+----------:7+----------------A-----------------*tct-:2*ttgM+-----:2*aatS:3+----:21*gtcI:2*cttV*cagK:14
+ctg_97781	miniprot	mRNA	1160387	1161791	1310	-	.	ID=MP000040;Rank=2;Identity=0.4503;Positive=0.4670;Target=hAT-9_SBi 1 895
+ctg_97781	miniprot	CDS	1160872	1161791	902	-	0	Parent=MP000040;Rank=2;Identity=0.4598;Target=hAT-9_SBi 1 621
+ctg_97781	miniprot	CDS	1160387	1160777	408	-	1	Parent=MP000040;Rank=2;Identity=0.4286;Target=hAT-9_SBi 622 895
+##PAF	hAT-9_SBi	895	0	895	+	ctg_59585	2062150	465675	467080	1209	2685	0	AS:i:1276	ms:i:1310	np:i:418	da:i:120	do:i:228	cg:Z:9M1I13M20I5M4I5M2I2M4I4M3I9M3I3M4I5M6I14M2I4M9I4M17I9M3I3M1I26M29I14M2I6M52I13M1I20M3I28M13I17M16I6M8I12M5I5M3I13M2I2M12I10M31I9M1I27M58I9M97V1M10I17M2I5M2I23M53I22M23I5M10I7M34I4M5I6M4I40M	cs:Z::9+-:13+--------------------:5+----:5+--:2+----*caaE:3+---:1*aacS*atgK:6+---:2*ggtA+----:2*gatE:2+-G----*ggt-:12*ccaA+--:4+---------:4+-----------------:5*aaaN:3+---:3+-:9*atcL:9*ggcN:5*gagD+K----------------------------*tta-:1*gctV:1*cagE:9+--:6+----------------------------------------------------:13+-:20+---:28+V------------*gcc-:16+----------------:1*agtN:4+--------:3*gggN:8+-----:5+---:13+--:2+------------:7*caaK:2+-------------------------------:1*gtcE:7+-:4*gagD:12*ggtA:9+----------------------------------------------------------:9*agR~gt94ag-a:1+----------:3*aatK:5*gctV:3*gcaP:3+--:5+--:18*acaK:4+-----------------------------------------------------:2*aggK:3*tttC:10*agtH:4+-----------------------:5+----------:7+----------------A-----------------*tct-:2*ttgM+-----:2*aatS:3+----:21*gtcI:2*cttV*cagK:14
+ctg_59585	miniprot	mRNA	465676	467080	1310	+	.	ID=MP000041;Rank=3;Identity=0.4503;Positive=0.4670;Target=hAT-9_SBi 1 895
+ctg_59585	miniprot	CDS	465676	466595	902	+	0	Parent=MP000041;Rank=3;Identity=0.4598;Target=hAT-9_SBi 1 621
+ctg_59585	miniprot	CDS	466690	467080	408	+	1	Parent=MP000041;Rank=3;Identity=0.4286;Target=hAT-9_SBi 622 895
+##PAF	Tag1	895	845	895	+	ctg_80669	4776052	4046251	4046389	105	150	0	AS:i:186	ms:i:186	np:i:43	da:i:-1	do:i:99	cg:Z:6M4I40M	cs:Z::3*cttM:2+----:1*gtcI:4*tgcA:1*gcaS:7*agtC*ttaV:2*cacR:2*tccT:10*atgL:2*attL:1*tatF
+ctg_80669	miniprot	mRNA	4046252	4046389	186	+	.	ID=MP000042;Rank=1;Identity=0.7000;Positive=0.8600;Target=Tag1 846 895
+ctg_80669	miniprot	CDS	4046252	4046389	186	+	0	Parent=MP000042;Rank=1;Identity=0.7000;Target=Tag1 846 895
+##PAF	Tag1	895	845	895	-	ctg_450630	2189894	1860288	1860426	105	150	0	AS:i:186	ms:i:186	np:i:43	da:i:-1	do:i:99	cg:Z:6M4I40M	cs:Z::3*cttM:2+----:1*gtcI:4*tgcA:1*gcaS:7*agtC*ttaV:2*cacR:2*tccT:10*atgL:2*attL:1*tatF
+ctg_450630	miniprot	mRNA	1860289	1860426	186	-	.	ID=MP000043;Rank=2;Identity=0.7000;Positive=0.8600;Target=Tag1 846 895
+ctg_450630	miniprot	CDS	1860289	1860426	186	-	0	Parent=MP000043;Rank=2;Identity=0.7000;Target=Tag1 846 895
+##PAF	hAT-2_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-44_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-1_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-2_SD	895	847	895	-	ctg_374758	6330748	5997871	5998015	60	144	0	AS:i:76	ms:i:76	np:i:25	da:i:87	do:i:93	cg:Z:48M	cs:Z::1*attV*ctaA*gctR*gta-*ctt-*gct-*cgt-:8*actS:4*tctG:3*ggtA*gggA*ggaR*cgtF*gtcQ*gttI*gatG*ccaE*ttcH:1*agtY*cgtS:1*gaaA*cctA*gagD*atgS*gttL:1*gcaI*ttaS:1*tgcL
+ctg_374758	miniprot	mRNA	5997872	5998015	76	-	.	ID=MP000044;Rank=1;Identity=0.4167;Positive=0.5208;Target=hAT-2_SD 848 895
+ctg_374758	miniprot	CDS	5997872	5998015	76	-	0	Parent=MP000044;Rank=1;Identity=0.4167;Target=hAT-2_SD 848 895
+##PAF	hAT-17_ZM	895	0	895	+	ctg_307118	3005924	2792549	2793911	666	2685	0	AS:i:244	ms:i:237	np:i:286	da:i:15	do:i:78	cg:Z:10M1I12M5I3M4I3M5I11M11I6M7I9M4I5M5I15M13I18M4I10M3I3M1I13M6I8M28I14M2I7M52I11M6I7M2I8M3I24M45I10M8I12M5I8M3I3M3I4M2I10M4I9M29I11M7I9M4I2M2I6M57I11M7I13M2I12M2I21M1I21M22I7M2I16M1I6M20I9M10I6M34I5M5I6M4I40M	cs:Z::9*tgt-+N:6*tgtS*gttI:4+-----:3+----*aatK:1*cgtQ+-----*ataM:3*att-*att-*ggt-*ttt-*ttc-*aatI*gtaI+CLP--HV----:2*aggH:1*act-*ggt-+--NGELL:1*aagS*ttgE*tct-*cac-*aca-:1*actV*gaaK+--G-:2*gtt-*aaaS:1+-N-LE*tac-*att-*gaa-*aatK*aaaR:9*agtA+--ANDK-----CV*tca-*aat-*gaaR*gtgL*gctV:1*aac-*gat-*ata-*att-*tcaK*gatE:1*aaaN*gacK*aatL*ggtA*aatR+IQKY*ggtP*tccP:3*gatG:1*ataV:2+---:3+-:1*gccL:8*agaQ:2+-L----*ttg-*aaaS:2*tcaA*ggaS*acaP:1+-----------------------K----*agc-*aaaN:1*aaaR*tcaA*cttI*gtaI*ttaV*gctI:2*aagN:1*ccaT+--:4*gcgE*cttF*atg-+---------------------------------------------------E:3*aaaQ*gaaF*gctF*gggD:1*gatN*acaN:1+S-----*agg-:1*attL*cagP:3+P-*tca-:6*tac-+-YD*cta-:2*cgaS*gatH:1*ttgM:2*aagR*gatS:2*gttE:2*aag-*tct-*tca-*gat-*tgtV*cgtY*aagL*tatH+KDK---------------YWHCT----------------------*gcc-*aag-*att-*ttt-:3*gctD:2+--------:1*aatM:1*ttgE*acaS*attF*tatC*ggtK:3*aaaQ+-----*tttL*tatN:1*ctcA:1*gaa-*ctt-*ctcV+LF-:2*act-+--C*tcaQ:3+--*gcaT:3*tatW*agaW*ggtK:1*tgtY*gatE+----:2*gtcL*ttgA:1*gatR:3+E-----------SA---------------*tat-*gat-*gga-:4*aaaA*gaaS:2+E-AMQK-*att-*tct-*atg-:1*tca-*aaa-*tttY:2+----:2+K-*gat-*cagK:4+---------------------------------------------------------:11+----K--*aag-:1*aggK:1*ataV:2*tacF:1*aagL:1*ttcI:1+KD*ggtS:1*tgtV*tatA*caaE*gct-*gaa-:1*gatT*gagR:1*gttM+--*agtD:2*aaaN*aaaQ:1*tacF*aatQ*tttS:1*gctL*aatS*gctS*gctT*gcaR*tcaD*tcaV*aagS*ggaI:1*agaQ+T*caaD*ggg-*gct-*gca-*cct-*agaL*cctA*agtA*aacS*aaaT*gctS*gatN*ataS*ttaI*ctgC*ggcI:1*gtaT:1*catI:1+----------------------*cta-*gaa-:2*ttaI:2+DN*gca-*tgt-*gaaD*ccgA*aatA*atgK*gttG:1*tcaI:4*aagV:1*attM+K*ggaD*gaaK:1*ctaI*ctaR*aaaW+V---------------DPTG*cttK:1*gatL*gagQ:4*gcaS+----------:3*aacA*aagN*agaQ+V----------------T----------------*gaa-*cag-:2*atcV+-----:2*caaR*attL*gttA:1+----:2*atgL:1*ataV:8*tctC:3*gctS*gctS:4*gatS*cccK:1*tgcR:3*gatE*cctH:1*atgT:1*cagE:2*attV:1
+ctg_307118	miniprot	mRNA	2792550	2793911	237	+	.	ID=MP000045;Rank=1;Identity=0.2480;Positive=0.3196;Target=hAT-17_ZM 1 895
+ctg_307118	miniprot	CDS	2792550	2793911	237	+	0	Parent=MP000045;Rank=1;Identity=0.2480;Target=hAT-17_ZM 1 895
+##PAF	hAT-13_SBi	895	0	895	+	ctg_311536	4958863	3937347	3938760	798	2694	0	AS:i:550	ms:i:550	np:i:334	da:i:114	do:i:60	cg:Z:10M1I12M9I6M5I4M5I8M6I3M4I14M7I2M5I15M9I8M14I14M4I16M5I9M29I12M2I7M52I12M6I8M2I7M3I7M3I7M4I6M42I10M8I12M5I7M2I38M31I9M1I15M3D9M61I11M6I20M4I42M1I6M23I8M2I22M13I14M10I8M34I4M5I6M4I40M	cs:Z::5*ataL:3*tcg-+V:2*ataL*gaaG:1*ataM*gctV:5+-----INA-*att-*gat-*gca-*gaaD:2+-----*atcL:3+-----:2*tggS:2*aaa-*tta-:1+V----K:3+----*tctT*agcG*cttI:4*gaaA*ata-*gtg-*agg-*tgtL*ttgV*acaS+--C-LT-:2+-G-IR*gat-*ata-*aga-*gatE:1*ttgV:4*ataV*ggtD:2*aacS+--NNNR---*act-*ttg-:2*gag-*gag-*ttgE*ataV+FV------------*acaE*aatY*catQ:1*catR:2*ttgM*tttL*gatE:1*gaaA:1*ctaF+---H*cttV*gttR*aga-:13+-----:1*acaN*gtgI:2*acaG*acaG:1*caaR+-----------------------------:9*gatV:2+P-*atc-:2*cttI:1*gtgA:1+----------------------------------------------------:1*tcgQ*cttI:1*aatI:1*atgV:2*gccP*tcaT:1+H-----*tct-*gctG:1*tatA:4+--:6*ttc-+-YK*aaa-:1*cttV:3*ttaI+---:3*gctV:2*att-+---N:3*cctH*agaQ:1+A-------------ESS-------------------------*ctt-*gaa-*gtt-*tta-:1*actN:1*gaaQ:2+--------*gcaS*aagQ:1*gcaD:7*gtaA+-----:3*ctcA:1*ctc-*gat-+NL:2*actA*catD:1*aagT:2*tcaA*catQ*aagM:8*ctcR*tatH*gccC:1*aagN:5*agtT*actS*gatV*ctgV:1*aagN*aagD*ttgV:1+-------------------------------:1*tccA:1*catK*tccI:4+-:2*aatG*cttA:1*gaaV:1*aacE*ctgS*caaN*catP*gtaF*gctS*aagL*aaaR-aagggaaat:2*gagD*attY*gcaD:3*gtcA+-------------------------------------------------------------*ttaI:4*ataL:5+----K-*aag-*gctG*gacE:1*ttaV*gatE:2*tttY*cagR:3*agtR:1*acaV*aatD:1*atcA*gatN+T--C*atgL*catT*gtgT*aagA*cat-*gcc-:8*acaS*ttgV:2*caaR*caaR*tgtV*gcaM*aggQ*aaaD*agtC:1*gtgY*gtcY*tgtM*gtg-*gat-*atg-*att-*gaaT:1*gctS*aatP*gaaV:1*tttS*gctS*aatS+L:3*ttgP*attV:1+-----------------------:3*aacQ*cttI:1*gcaE:1+--:1*gctE*caaN*tacF*aaaR:1*cgaS:2*gttR:1*cggS:3*tttS:3*gcgT:1*ttaF+-------------:2*acgE*atcY*gagV*gagA:1*aatS*gagN*gatS:4+V---------*gct-:3*ggaT*aaaH*tcaA*gacE+----------------K-----------------*aag-*tttY:2+-----*gtgL:3*gttA:1+----:3*tctA:12*catS:7*gacE*catT:14
+ctg_311536	miniprot	mRNA	3937348	3938760	550	+	.	ID=MP000046;Rank=1;Identity=0.2962;Positive=0.3719;Target=hAT-13_SBi 1 895
+ctg_311536	miniprot	CDS	3937348	3938760	550	+	0	Parent=MP000046;Rank=1;Identity=0.2962;Target=hAT-13_SBi 1 895
+##PAF	TAG2	895	855	895	-	ctg_381132	873846	33761	33881	69	120	0	AS:i:128	ms:i:128	np:i:33	da:i:138	do:i:72	cg:Z:40M	cs:Z::1*gttI:1*gctS:2*gtgI:10*actI*agtG*gggS:1*ataV*atcL*agtN*ccaK:3*aggC:1*gcaL:1*tcaT*atgN*attV*gagQ:2*atgL:1
+ctg_381132	miniprot	mRNA	33762	33881	128	-	.	ID=MP000047;Rank=1;Identity=0.5750;Positive=0.8250;Target=TAG2 856 895
+ctg_381132	miniprot	CDS	33762	33881	128	-	0	Parent=MP000047;Rank=1;Identity=0.5750;Target=TAG2 856 895
+##PAF	TAG2	895	855	895	+	ctg_363401	1745027	1180834	1180954	69	120	0	AS:i:128	ms:i:128	np:i:34	da:i:-1	do:i:48	cg:Z:40M	cs:Z::1*gtcI:1*gctS:2*gtgI:11*agtG*ggaS:1*ataV*attL*agtN*cctK*catY:2*aggC:1*gcaL:1*tcaT*atgN*attV*gagQ:2*atgL:1
+ctg_363401	miniprot	mRNA	1180835	1180954	128	+	.	ID=MP000048;Rank=2;Identity=0.5750;Positive=0.8500;Target=TAG2 856 895
+ctg_363401	miniprot	CDS	1180835	1180954	128	+	0	Parent=MP000048;Rank=2;Identity=0.5750;Target=TAG2 856 895
+##PAF	TAG2	895	855	895	+	ctg_363401	1745027	1139132	1139252	69	120	0	AS:i:128	ms:i:128	np:i:34	da:i:-1	do:i:48	cg:Z:40M	cs:Z::1*gtcI:1*gctS:2*gtgI:11*agtG*ggaS:1*ataV*attL*agtN*cctK*catY:2*aggC:1*gcaL:1*tcaT*atgN*attV*gagQ:2*atgL:1
+ctg_363401	miniprot	mRNA	1139133	1139252	128	+	.	ID=MP000049;Rank=3;Identity=0.5750;Positive=0.8500;Target=TAG2 856 895
+ctg_363401	miniprot	CDS	1139133	1139252	128	+	0	Parent=MP000049;Rank=3;Identity=0.5750;Target=TAG2 856 895
+##PAF	TAG2	895	855	895	-	ctg_105872	2099601	478658	478778	69	120	0	AS:i:128	ms:i:128	np:i:34	da:i:-1	do:i:48	cg:Z:40M	cs:Z::1*gtcI:1*actS:2*gtgI:11*agtG*ggaS:1*ataV*attL*agtN*cctK*catY:2*aggC:1*gcaL:1*tcaT*atgN*attV*gagQ:2*atgL:1
+ctg_105872	miniprot	mRNA	478659	478778	128	-	.	ID=MP000050;Rank=4;Identity=0.5750;Positive=0.8500;Target=TAG2 856 895
+ctg_105872	miniprot	CDS	478659	478778	128	-	0	Parent=MP000050;Rank=4;Identity=0.5750;Target=TAG2 856 895
+##PAF	ATHAT7	895	855	895	-	ctg_436267	1830952	414816	414936	78	120	0	AS:i:139	ms:i:139	np:i:34	da:i:168	do:i:339	cg:Z:40M	cs:Z::1*gtgI*cttF:1*atcM:1*atcV:1*acgS:9*ggtS:5*gatP:2*actS*tcaC:2*ccaH*ttcY:1*gttI:1*gctV:1*gttM:1
+ctg_436267	miniprot	mRNA	414817	414936	139	-	.	ID=MP000051;Rank=1;Identity=0.6500;Positive=0.8500;Target=ATHAT7 856 895
+ctg_436267	miniprot	CDS	414817	414936	139	-	0	Parent=MP000051;Rank=1;Identity=0.6500;Target=ATHAT7 856 895
+##PAF	HAT2_MT	895	845	895	+	ctg_100070	1798149	1222511	1222649	84	150	0	AS:i:138	ms:i:138	np:i:39	da:i:198	do:i:108	cg:Z:6M4I40M	cs:Z::2*attL*cttI:1*aaaR+----:1*gttI:2*gttI:1*gttI:11*tctG:2*atcV*gttI*gagD*gagP*cgaY:1*cgtS*cgaS:1*ggtK*tctA:4*atgA:1*gtcI:1
+ctg_100070	miniprot	mRNA	1222512	1222649	138	+	.	ID=MP000052;Rank=1;Identity=0.5600;Positive=0.7800;Target=HAT2_MT 846 895
+ctg_100070	miniprot	CDS	1222512	1222649	138	+	0	Parent=MP000052;Rank=1;Identity=0.5600;Target=HAT2_MT 846 895
+##PAF	TAM3	895	0	0	*	*	0	0	0	0	0	0
+##PAF	ATHAT10	895	837	895	-	ctg_401906	1601093	218099	218246	72	174	0	AS:i:98	ms:i:98	np:i:37	da:i:-1	do:i:33	cg:Z:3M5I6M4I40M	cs:Z::2*gtgI+-----:1*tctA*atcM*atgI:2+----:1*attV:1*actS*accS:4*ataV:1*tcaV:1*tccR*actA:3*actG:1*aggQ:1*attL*gagD:1*cagT:1*aggS:1*ccaM*aagS*ctgP*gagD*acaS:2*tggA*ctgQ*acaA:1
+ctg_401906	miniprot	mRNA	218100	218246	98	-	.	ID=MP000053;Rank=1;Identity=0.4138;Positive=0.6379;Target=ATHAT10 838 895
+ctg_401906	miniprot	CDS	218100	218246	98	-	0	Parent=MP000053;Rank=1;Identity=0.4138;Target=ATHAT10 838 895
+##PAF	ZhAT3_ZM	895	0	895	+	ctg_259963	1860332	1238061	1239495	885	2739	0	AS:i:652	ms:i:652	np:i:348	da:i:177	do:i:9	cg:Z:8M1I14M5I3M4I2M5I12M11I4M4I16M12I19M9I6M14I7M16D5M3I3M1I15M3I9M31I11M2I6M52I13M6I2M1I4M2I6M2I2M1I15M4I6M40I14M8I11M5I5M2I14M2I10M4I10M31I9M1I9M73I14M5I23M4I31M2I14M20I28M2D7M12I16M10I6M34I5M5I6M4I40M	cs:Z:*tgtA:7+G*aga-:12*tttY+-----:3+----:2+V----*gag-:4*ttg-*cta-*gct-*ctc-*aga-*ttgV:1+GMR--LI----:4+----*actN:2*gccN:2*gagD:1*att-*tcc-*atg-:1*gttK*gatT*gag-*tat-+V-IA-HF-G-LT*ggt-*tta-*act-:2*atcV:1*gctS:7*tct-*aac-*tctA*acaN+TN-----AM*gcc-*atg-*gatN:3+--------------:1*attQ:4*ataV-ctaactgctttacctcctgatgcaactgaagatgaggtaacagaagag*cgtG:3*atgL+---:3+-:12*ggcR*atgL:1+---:5*attV:3+-------------------------------:3*ataV:7+--:4*gcaS*ttcY+----------------------------------------------------:2*tttY:1*gtaI*tgcA*aagM:6+------:2+-:4+--:6+--:2+-:4*gttL*gttI:2*cgcK:4*accV:1+----:4*catY*cctQ+QH-------------MTQPL--------------------*ttt-*gtt-*aat-*ggc-*ttg-*cca-*ctg-:2*gatE*aacT:2*tat-+-------E:1*gctG*aagE:3*gaaT:4+-----:3*tcaC:1+--:11*tgtP*ctaM:1+--:4*cttI:3*ggaE:1+----:2*gaaN*tatF:3*gaaI*ttgM:1+-------------------------------:1*catD*gttT:5*gatS+-:6*agaK*aaaS:1+--PIL--------------------------------------------------------------------*cat-*atg-*cta-:1*gccS:3*attV:5+----K*aag-*atgI*aaaR:2*catS:1*gttA:1*cgaQ*ttgV:2*gacR*catY*actV*ggtT*gcaT:3*agaE*ttc-+-YFN*ccaV*actI*gag-*gtg-:1*ggtS*aagE:2*aagN*gtcM:1*gaaS*aggK:2*actI:3*gatA:1*cgcK:1*catR:2*caa-*cag-*tca-*gca-+TH*agtT*gttT:1*tctT*ggtS*aagR:2*atgT:2*aatG:2+--------------------*ttt-*gct-*tct-*gat-*gttY*ggtA:2*tctE*agtV:1*agt-*cct-*tctE*caaV*ctaS*ggaD*aggA*aggV:1*ggtS*actS*gctS:1*ccaG:1*cctQ:1-gctctt:3*tccA*tccM:2+------------:3*tgtP*gtcI*gtcT*cagV*tatF:1*gagD*gagG:1*aacD*cttI:2+----------:6+S----------------N----------------*cga-*act-:3+-----:5*agaK+----:3*attT:2*gctV:7*actV:6*gtgL:6*aggS:7*gtgI:1*tctT:1
+ctg_259963	miniprot	mRNA	1238062	1239495	652	+	.	ID=MP000054;Rank=1;Identity=0.3231;Positive=0.3812;Target=ZhAT3_ZM 1 895
+ctg_259963	miniprot	CDS	1238062	1239495	652	+	0	Parent=MP000054;Rank=1;Identity=0.3231;Target=ZhAT3_ZM 1 895
+##PAF	ZhAT3_ZM	895	0	895	+	ctg_252772	6166192	5525695	5527138	882	2733	0	AS:i:649	ms:i:649	np:i:346	da:i:177	do:i:135	cg:Z:9M1I13M5I3M4I2M5I12M11I4M4I16M12I19M9I6M14I7M16D5M3I3M1I15M3I9M31I11M2I6M52I13M6I2M1I4M2I6M2I2M1I15M4I6M40I14M8I11M5I5M2I14M2I10M4I10M31I9M1I9M2I3M71I11M5I23M4I31M2I14M20I29M7I27M10I6M34I5M5I6M4I40M	cs:Z:*tgtA:8+-:12*tttY+-----:3+----:2+V----*gag-:4*ttg-*cta-*gct-*ctc-*aga-*ttgV:1+GMR--LI----:4+----*actN:2*gccN:2*gagD:1*att-*tcc-*atg-:1*attK*gatT*gag-*tat-+V-IA-HF-G-LT*ggt-*tta-*act-:2*atcV:1*gctS:7*tct-*aac-*tctA*acaN+TN-----AM*gcc-*atg-*gatN:3+--------------:1*attQ:4*ataV-ctaactgctttacctcctgatgcaactgaagatgaggtaacagaagag*cgtG:3*atgL+---:3+-:12*ggcR*atgL:1+---:5*attV:3+-------------------------------:3*ataV:7+--:4*gcaS*ttcY+----------------------------------------------------:2*tttY:1*gtaI*tgcA*aagM:6+------:2+-:4+--:6+--:2+-:4*gttL*gttI:2*cgcK:4*accV:1+----:4*catY*cctQ+QH-------------MTQPL--------------------*ttt-*gtt-*aat-*ggc-*ttg-*cca-*ctg-:2*gatE*aacT:2*tat-+-------E:1*gctG:4*gaaT:4+-----:3*tcaC:1+--:11*tgtP*ctaM:1+--:4*cttI:3*ggaE:1+----:2*gaaN*tatF:3*gaaI*ttgM:1+-------------------------------:1*catD*gttT:5*gatS+-:6*agaK*aaaS:1+--:1*atgI:1+-----------------------------------------------------------------------:1*gccS:3*attV:5+----K*aag-*atgI*aaaR:2*catS:1*gttA:1*cgaQ*ttgV:2*gacR*catY*actV*ggtT*gcaT:3*agaE*ttc-+-YFN*ccaV*actI*gag-*gtg-:1*ggtS*aagE:2*aagN*gtcM:1*gaaS*aggK:2*actI:3*gatA:1*cgcK:1*catR:2*caa-*cag-*tca-*gca-+TH*agtT*gttT:1*tctT*ggtS*aagR:2*atgT:2*aatG:2+--------------------*ttt-*gct-*tct-*gat-*gttY*ggtA:2*tctE*agtV:1*ggt-*cct-*tctE*caaV*ctgS*ggaD*aggA*aggV:1*ggtS*actS*gctS:1*ccaG:1*cctQ*gcgV*gggS+ELAMYL-*ctc-*ttt-*cag-*agc-*tgt-*cct-*cct-*acc-*tcc-*tac-*ctt-:3*tgtP*gtcI*gtcT*cagV*tatF:1*gagD*gagG:1*aacD*cttI:2+----------:6+S----------------N----------------*cga-*att-:3+-----:5*agaK+----:6*gctV:7*actV:6*gtgL:6*aggS:7*gtgI:1*tctT:1
+ctg_252772	miniprot	mRNA	5525696	5527138	649	+	.	ID=MP000055;Rank=2;Identity=0.3227;Positive=0.3798;Target=ZhAT3_ZM 1 895
+ctg_252772	miniprot	CDS	5525696	5527138	649	+	0	Parent=MP000055;Rank=2;Identity=0.3227;Target=ZhAT3_ZM 1 895
+##PAF	*CHAPKA1_EM	895	740	754	-	ctg_554098	273861	266079	266121	12	42	0	AS:i:28	ms:i:36	np:i:13	da:i:0	do:i:537	cg:Z:14M	cs:Z:*atgL:1*aagR:1*aaaR*aaaR:1*accS*acgS*gttI:1*gacE*cttF*aacD
+ctg_554098	miniprot	mRNA	266080	266121	36	-	.	ID=MP000056;Rank=1;Identity=0.2857;Positive=0.9286;Target=*CHAPKA1_EM 741 754
+ctg_554098	miniprot	CDS	266080	266121	36	-	0	Parent=MP000056;Rank=1;Identity=0.2857;Target=*CHAPKA1_EM 741 754
+##PAF	hAT-79_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	Hobo	895	0	0	*	*	0	0	0	0	0	0
+##PAF	Hoana3	895	856	895	+	ctg_72669	3738104	1939121	1939238	42	117	0	AS:i:63	ms:i:63	np:i:21	da:i:-1	do:i:93	cg:Z:39M	cs:Z:*gtgI:1*actN*ctaI:3*acaS:2*acaS:5*gcaC*atgS*aaaG*cttQ*gttI*aaaL*accN*agcD*acaR:1*aatT*aagR*atgL*gaaT*gatS*gggS*ttcN:1*agaD*gatK*tgcI:1*ataF
+ctg_72669	miniprot	mRNA	1939122	1939238	63	+	.	ID=MP000057;Rank=1;Identity=0.3590;Positive=0.5385;Target=Hoana3 857 895
+ctg_72669	miniprot	CDS	1939122	1939238	63	+	0	Parent=MP000057;Rank=1;Identity=0.3590;Target=Hoana3 857 895
+##PAF	hAT-26_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-37_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-28_HM	895	737	765	+	ctg_28682	5035988	4221955	4222036	39	84	0	AS:i:55	ms:i:55	np:i:21	da:i:-1	do:i:96	cg:Z:16M1I11M	cs:Z:*agaK*aaaR*aaaR:5*gtaI:3*tttT:1*aggK*catS+C*gtgC:3*cgcE*atgS*agcN*tgcD*cgcK:1*aagE
+ctg_28682	miniprot	mRNA	4221956	4222036	55	+	.	ID=MP000058;Rank=1;Identity=0.4643;Positive=0.7500;Target=hAT-28_HM 738 765
+ctg_28682	miniprot	CDS	4221956	4222036	55	+	0	Parent=MP000058;Rank=1;Identity=0.4643;Target=hAT-28_HM 738 765
+##PAF	hAT-27_HM	895	875	887	-	ctg_147701	3727503	1362627	1362663	21	36	0	AS:i:45	ms:i:45	np:i:12	da:i:-1	do:i:36	cg:Z:12M	cs:Z::1*gtaI:1*acaS*gatN:1*aagR:1*aagR:3
+ctg_147701	miniprot	mRNA	1362628	1362663	45	-	.	ID=MP000059;Rank=1;Identity=0.5833;Positive=1.0000;Target=hAT-27_HM 876 887
+ctg_147701	miniprot	CDS	1362628	1362663	45	-	0	Parent=MP000059;Rank=1;Identity=0.5833;Target=hAT-27_HM 876 887
+##PAF	hAT-30_HM	895	772	784	+	ctg_41524	2157493	860480	860516	24	36	0	AS:i:46	ms:i:46	np:i:12	da:i:-1	do:i:531	cg:Z:12M	cs:Z::5*caaE:2*tcgT:1*gtgI*atgL
+ctg_41524	miniprot	mRNA	860481	860516	46	+	.	ID=MP000060;Rank=1;Identity=0.6667;Positive=1.0000;Target=hAT-30_HM 773 784
+ctg_41524	miniprot	CDS	860481	860516	46	+	0	Parent=MP000060;Rank=1;Identity=0.6667;Target=hAT-30_HM 773 784
+##PAF	hAT-9_XT	895	635	649	-	ctg_346999	2990515	691576	691618	30	42	0	AS:i:55	ms:i:55	np:i:12	da:i:42	do:i:558	cg:Z:14M	cs:Z::1*atgY*ggtW*attV:7*ttcY:2
+ctg_346999	miniprot	mRNA	691577	691618	55	-	.	ID=MP000061;Rank=1;Identity=0.7143;Positive=0.8571;Target=hAT-9_XT 636 649
+ctg_346999	miniprot	CDS	691577	691618	55	-	0	Parent=MP000061;Rank=1;Identity=0.7143;Target=hAT-9_XT 636 649
+##PAF	hAT-9_XT	895	635	649	+	ctg_262586	2263486	1240304	1240346	30	42	0	AS:i:55	ms:i:55	np:i:12	da:i:42	do:i:567	cg:Z:14M	cs:Z::1*atgY*ggcW*attV:7*ttcY:2
+ctg_262586	miniprot	mRNA	1240305	1240346	55	+	.	ID=MP000062;Rank=2;Identity=0.7143;Positive=0.8571;Target=hAT-9_XT 636 649
+ctg_262586	miniprot	CDS	1240305	1240346	55	+	0	Parent=MP000062;Rank=2;Identity=0.7143;Target=hAT-9_XT 636 649
+##PAF	hAT-9_XT	895	635	649	+	ctg_29639	3309855	837801	837843	30	42	0	AS:i:55	ms:i:55	np:i:12	da:i:42	do:i:630	cg:Z:14M	cs:Z::1*atgY*ggcW*attV:7*ttcY:2
+ctg_29639	miniprot	mRNA	837802	837843	55	+	.	ID=MP000063;Rank=3;Identity=0.7143;Positive=0.8571;Target=hAT-9_XT 636 649
+ctg_29639	miniprot	CDS	837802	837843	55	+	0	Parent=MP000063;Rank=3;Identity=0.7143;Target=hAT-9_XT 636 649
+##PAF	hAT-9_XT	895	635	649	-	ctg_84333	2831338	1515739	1515781	30	42	0	AS:i:55	ms:i:55	np:i:12	da:i:42	do:i:465	cg:Z:14M	cs:Z::1*atgY*ggtW*attV:7*ttcY:2
+ctg_84333	miniprot	mRNA	1515740	1515781	55	-	.	ID=MP000064;Rank=4;Identity=0.7143;Positive=0.8571;Target=hAT-9_XT 636 649
+ctg_84333	miniprot	CDS	1515740	1515781	55	-	0	Parent=MP000064;Rank=4;Identity=0.7143;Target=hAT-9_XT 636 649
+##PAF	hAT-9_XT	895	635	649	-	ctg_456050	1967695	1288091	1288133	30	42	0	AS:i:55	ms:i:55	np:i:12	da:i:42	do:i:18	cg:Z:14M	cs:Z::1*atgY*ggtW*attV:7*ttcY:2
+ctg_456050	miniprot	mRNA	1288092	1288133	55	-	.	ID=MP000065;Rank=5;Identity=0.7143;Positive=0.8571;Target=hAT-9_XT 636 649
+ctg_456050	miniprot	CDS	1288092	1288133	55	-	0	Parent=MP000065;Rank=5;Identity=0.7143;Target=hAT-9_XT 636 649
+##PAF	hAT-9_XT	895	635	649	+	ctg_501899	657576	600263	600305	30	42	0	AS:i:55	ms:i:55	np:i:12	da:i:42	do:i:411	cg:Z:14M	cs:Z::1*atgY*ggcW*attV:7*ttcY:2
+ctg_501899	miniprot	mRNA	600264	600305	55	+	.	ID=MP000066;Rank=6;Identity=0.7143;Positive=0.8571;Target=hAT-9_XT 636 649
+ctg_501899	miniprot	CDS	600264	600305	55	+	0	Parent=MP000066;Rank=6;Identity=0.7143;Target=hAT-9_XT 636 649
+##PAF	hAT-66_HM	895	447	466	+	ctg_336200	2201800	792949	793006	21	57	0	AS:i:27	ms:i:39	np:i:14	da:i:60	do:i:3	cg:Z:19M	cs:Z::1*gatN:1*accS:2*caaE:1*ttcY*atgL:1*tttD*gaaV*tta-*ata-*atgI:1*agaS*ctcI
+ctg_336200	miniprot	mRNA	792950	793006	39	+	.	ID=MP000067;Rank=1;Identity=0.3684;Positive=0.7368;Target=hAT-66_HM 448 466
+ctg_336200	miniprot	CDS	792950	793006	39	+	0	Parent=MP000067;Rank=1;Identity=0.3684;Target=hAT-66_HM 448 466
+##PAF	hAT-11_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	Homo7	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-14_HM	895	737	752	-	ctg_177676	5541584	4582090	4582135	21	45	0	AS:i:32	ms:i:40	np:i:12	da:i:33	do:i:183	cg:Z:15M	cs:Z::2*acaS:1*actS*cagE*gaaQ:3*acaS*gagI*gctE*cagN:1
+ctg_177676	miniprot	mRNA	4582091	4582135	40	-	.	ID=MP000068;Rank=1;Identity=0.4667;Positive=0.8000;Target=hAT-14_HM 738 752
+ctg_177676	miniprot	CDS	4582091	4582135	40	-	0	Parent=MP000068;Rank=1;Identity=0.4667;Target=hAT-14_HM 738 752
+##PAF	HAT1_AG	895	0	0	*	*	0	0	0	0	0	0
+##PAF	HAT1_DR	895	666	698	-	ctg_8371	1206280	1011157	1011251	57	96	0	AS:i:64	ms:i:64	np:i:22	da:i:21	do:i:150	cg:Z:9M1G22M	cs:Z::1*aagS:3*cctQ:1*cttS*cctA*cS*ctcM*tccP:4*tcc-*tct-:8*tccT*tctT:1*ctcA*tccE:1
+ctg_8371	miniprot	mRNA	1011158	1011251	64	-	.	ID=MP000069;Rank=1;Identity=0.5938;Positive=0.6875;Frameshift=1;Target=HAT1_DR 667 698
+ctg_8371	miniprot	CDS	1011158	1011251	64	-	0	Parent=MP000069;Rank=1;Identity=0.5938;Frameshift=1;Target=HAT1_DR 667 698
+##PAF	hAT-1_DP	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-52_HM	895	645	688	-	ctg_224026	1589186	762100	762223	39	129	0	AS:i:47	ms:i:47	np:i:24	da:i:-1	do:i:3	cg:Z:26M2I15M	cs:Z::1*cgaK*gaaK*accM*gaaG*tgc-*atc-*agcN*catE*aggK*gatE*gaaG*aac-*cga-*gttI:2*aagR*atcV:6*agcK+EV*atcR*agtP:1*ggcK*ccgK*cgaS*aggK*cacN:1*tcc-*aac-:1*cgaK*acaF:1
+ctg_224026	miniprot	mRNA	762101	762223	47	-	.	ID=MP000070;Rank=1;Identity=0.3023;Positive=0.5581;Target=hAT-52_HM 646 688
+ctg_224026	miniprot	CDS	762101	762223	47	-	0	Parent=MP000070;Rank=1;Identity=0.3023;Target=hAT-52_HM 646 688
+##PAF	hAT-1_SP	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-2_BF	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-4_DR	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-13_HM	895	687	700	+	ctg_39430	2036899	249904	249943	27	39	0	AS:i:52	ms:i:52	np:i:12	da:i:63	do:i:639	cg:Z:13M	cs:Z::1*catE*accS:1*atcV:4*cgtK:3
+ctg_39430	miniprot	mRNA	249905	249943	52	+	.	ID=MP000071;Rank=1;Identity=0.6923;Positive=0.9231;Target=hAT-13_HM 688 700
+ctg_39430	miniprot	CDS	249905	249943	52	+	0	Parent=MP000071;Rank=1;Identity=0.6923;Target=hAT-13_HM 688 700
+##PAF	hAT1-1_NV	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-28_SM	895	740	755	+	ctg_523305	1194214	737524	737569	21	45	0	AS:i:46	ms:i:46	np:i:14	da:i:30	do:i:138	cg:Z:15M	cs:Z:*attV:1*aatD*tttY:3*agaK:2*caaE:1*caaN*aatD*tcaT
+ctg_523305	miniprot	mRNA	737525	737569	46	+	.	ID=MP000072;Rank=1;Identity=0.4667;Positive=0.9333;Target=hAT-28_SM 741 755
+ctg_523305	miniprot	CDS	737525	737569	46	+	0	Parent=MP000072;Rank=1;Identity=0.4667;Target=hAT-28_SM 741 755
+##PAF	hAT-28_SM	895	740	755	+	ctg_523305	1194214	734767	734812	21	45	0	AS:i:46	ms:i:46	np:i:14	da:i:30	do:i:138	cg:Z:15M	cs:Z:*attV:1*aatD*tttY:3*agaK:2*caaE:1*caaN*aatD*tcaT
+ctg_523305	miniprot	mRNA	734768	734812	46	+	.	ID=MP000073;Rank=2;Identity=0.4667;Positive=0.9333;Target=hAT-28_SM 741 755
+ctg_523305	miniprot	CDS	734768	734812	46	+	0	Parent=MP000073;Rank=2;Identity=0.4667;Target=hAT-28_SM 741 755
+##PAF	hAT-76_HM	895	660	674	+	ctg_148479	10401305	4028878	4028920	18	42	0	AS:i:35	ms:i:39	np:i:13	da:i:-1	do:i:33	cg:Z:14M	cs:Z::2*actS*acaS*aagR:1*cgtK*aacD*tttY:2*tctE*ataL:1
+ctg_148479	miniprot	mRNA	4028879	4028920	39	+	.	ID=MP000074;Rank=1;Identity=0.4286;Positive=0.9286;Target=hAT-76_HM 661 674
+ctg_148479	miniprot	CDS	4028879	4028920	39	+	0	Parent=MP000074;Rank=1;Identity=0.4286;Target=hAT-76_HM 661 674
+##PAF	hAT-35_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-45_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-74_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT6-1_SP	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT6-1_NV	895	873	895	+	ctg_439344	257046	221469	221535	27	66	0	AS:i:49	ms:i:49	np:i:17	da:i:-1	do:i:186	cg:Z:22M	cs:Z::1*ctaE*aggK*gacN:2*aggK:4*atgL*actS*tccN:1*aagT*agaT*gtcL*caaP*actS*accI:1
+ctg_439344	miniprot	mRNA	221470	221535	49	+	.	ID=MP000075;Rank=1;Identity=0.4091;Positive=0.7727;Target=hAT6-1_NV 874 895
+ctg_439344	miniprot	CDS	221470	221535	49	+	0	Parent=MP000075;Rank=1;Identity=0.4091;Target=hAT6-1_NV 874 895
+##PAF	hAT-29_HM	895	634	647	+	ctg_338683	153972	34948	34987	21	39	0	AS:i:49	ms:i:49	np:i:12	da:i:-1	do:i:45	cg:Z:13M	cs:Z:*gtgI*ttgA:3*gttI:2*attV:1*agtT*aagR:1
+ctg_338683	miniprot	mRNA	34949	34987	49	+	.	ID=MP000076;Rank=1;Identity=0.5385;Positive=0.9231;Target=hAT-29_HM 635 647
+ctg_338683	miniprot	CDS	34949	34987	49	+	0	Parent=MP000076;Rank=1;Identity=0.5385;Target=hAT-29_HM 635 647
+##PAF	hAT-29_HM	895	634	647	+	ctg_338683	153972	45202	45241	21	39	0	AS:i:49	ms:i:49	np:i:12	da:i:-1	do:i:45	cg:Z:13M	cs:Z:*gtgI*ttgA:3*gttI:2*attV:1*agtT*aagR:1
+ctg_338683	miniprot	mRNA	45203	45241	49	+	.	ID=MP000077;Rank=2;Identity=0.5385;Positive=0.9231;Target=hAT-29_HM 635 647
+ctg_338683	miniprot	CDS	45203	45241	49	+	0	Parent=MP000077;Rank=2;Identity=0.5385;Target=hAT-29_HM 635 647
+##PAF	hAT-29_HM	895	634	647	+	ctg_338683	153972	43878	43917	21	39	0	AS:i:49	ms:i:49	np:i:12	da:i:-1	do:i:45	cg:Z:13M	cs:Z:*gtgI*ttgA:3*gttI:2*attV:1*agtT*aagR:1
+ctg_338683	miniprot	mRNA	43879	43917	49	+	.	ID=MP000078;Rank=3;Identity=0.5385;Positive=0.9231;Target=hAT-29_HM 635 647
+ctg_338683	miniprot	CDS	43879	43917	49	+	0	Parent=MP000078;Rank=3;Identity=0.5385;Target=hAT-29_HM 635 647
+##PAF	hAT-29_HM	895	634	647	+	ctg_338683	153972	41893	41932	21	39	0	AS:i:49	ms:i:49	np:i:12	da:i:-1	do:i:45	cg:Z:13M	cs:Z:*gtgI*ttgA:3*gttI:2*attV:1*agtT*aagR:1
+ctg_338683	miniprot	mRNA	41894	41932	49	+	.	ID=MP000079;Rank=4;Identity=0.5385;Positive=0.9231;Target=hAT-29_HM 635 647
+ctg_338683	miniprot	CDS	41894	41932	49	+	0	Parent=MP000079;Rank=4;Identity=0.5385;Target=hAT-29_HM 635 647
+##PAF	hAT-29_HM	895	634	647	+	ctg_338683	153972	37263	37302	21	39	0	AS:i:49	ms:i:49	np:i:12	da:i:-1	do:i:45	cg:Z:13M	cs:Z:*gtgI*ttgA:3*gttI:2*attV:1*agtT*aagR:1
+ctg_338683	miniprot	mRNA	37264	37302	49	+	.	ID=MP000080;Rank=5;Identity=0.5385;Positive=0.9231;Target=hAT-29_HM 635 647
+ctg_338683	miniprot	CDS	37264	37302	49	+	0	Parent=MP000080;Rank=5;Identity=0.5385;Target=hAT-29_HM 635 647
+##PAF	hAT-25_HM	895	868	880	+	ctg_21829	5143191	1745497	1745533	15	36	0	AS:i:28	ms:i:36	np:i:12	da:i:90	do:i:0	cg:Z:12M	cs:Z::2*gtcI*accS:1*gtgI:1*aagR:1*cgcK*agcT*cacY
+ctg_21829	miniprot	mRNA	1745498	1745533	36	+	.	ID=MP000081;Rank=1;Identity=0.4167;Positive=1.0000;Target=hAT-25_HM 869 880
+ctg_21829	miniprot	CDS	1745498	1745533	36	+	0	Parent=MP000081;Rank=1;Identity=0.4167;Target=hAT-25_HM 869 880
+##PAF	hAT-4_BF	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-3_BF	895	855	895	-	ctg_318167	807194	342592	342712	57	120	0	AS:i:101	ms:i:101	np:i:32	da:i:-1	do:i:93	cg:Z:40M	cs:Z::1*gttY:2*ttgV:1*gttI*tcaT*actS:2*acaS:6*atgL:1*cttR*gttL*aagL:1*aggY:2*aatS*agaT:1*ggtT*gatE*gaaQ*tttR:1*aggN*gatN:1*ttaM*ataL
+ctg_318167	miniprot	mRNA	342593	342712	101	-	.	ID=MP000082;Rank=1;Identity=0.4750;Positive=0.8000;Target=hAT-3_BF 856 895
+ctg_318167	miniprot	CDS	342593	342712	101	-	0	Parent=MP000082;Rank=1;Identity=0.4750;Target=hAT-3_BF 856 895
+##PAF	hAT-82_HMa	895	857	885	+	ctg_474422	1627515	855089	855173	45	84	0	AS:i:76	ms:i:76	np:i:21	da:i:90	do:i:108	cg:Z:28M	cs:Z::1*ttgS:1*ccgS*gttF*gcaT*acaQ*gcaV*agtA*gttC:2*gctS:2*gtgI*atgL:5*aagR:2*aatS:2
+ctg_474422	miniprot	mRNA	855090	855173	76	+	.	ID=MP000083;Rank=1;Identity=0.5357;Positive=0.7500;Target=hAT-82_HMa 858 885
+ctg_474422	miniprot	CDS	855090	855173	76	+	0	Parent=MP000083;Rank=1;Identity=0.5357;Target=hAT-82_HMa 858 885
+##PAF	hAT-40_HM	895	724	735	-	ctg_350410	837854	234027	234060	27	33	0	AS:i:31	ms:i:49	np:i:11	da:i:9	do:i:60	cg:Z:11M	cs:Z::7*aaaR:1*caaE:1
+ctg_350410	miniprot	mRNA	234028	234060	49	-	.	ID=MP000084;Rank=1;Identity=0.8182;Positive=1.0000;Target=hAT-40_HM 725 735
+ctg_350410	miniprot	CDS	234028	234060	49	-	0	Parent=MP000084;Rank=1;Identity=0.8182;Target=hAT-40_HM 725 735
+##PAF	hAT-40_HM	895	724	735	-	ctg_49847	3459272	3447862	3447895	27	33	0	AS:i:31	ms:i:49	np:i:11	da:i:9	do:i:60	cg:Z:11M	cs:Z::7*aaaR:1*caaE:1
+ctg_49847	miniprot	mRNA	3447863	3447895	49	-	.	ID=MP000085;Rank=2;Identity=0.8182;Positive=1.0000;Target=hAT-40_HM 725 735
+ctg_49847	miniprot	CDS	3447863	3447895	49	-	0	Parent=MP000085;Rank=2;Identity=0.8182;Target=hAT-40_HM 725 735
+##PAF	hAT-39_HM	895	299	310	-	ctg_494872	1093277	446880	446913	21	33	0	AS:i:29	ms:i:41	np:i:11	da:i:-1	do:i:0	cg:Z:11M	cs:Z:*cgaK:2*tacF:1*cagE:4*atgL
+ctg_494872	miniprot	mRNA	446881	446913	41	-	.	ID=MP000086;Rank=1;Identity=0.6364;Positive=1.0000;Target=hAT-39_HM 300 310
+ctg_494872	miniprot	CDS	446881	446913	41	-	0	Parent=MP000086;Rank=1;Identity=0.6364;Target=hAT-39_HM 300 310
+##PAF	hAT-39_HM	895	299	310	-	ctg_494872	1093277	456745	456778	21	33	0	AS:i:29	ms:i:41	np:i:11	da:i:-1	do:i:0	cg:Z:11M	cs:Z:*cgaK:2*tacF:1*cagE:4*atgL
+ctg_494872	miniprot	mRNA	456746	456778	41	-	.	ID=MP000087;Rank=2;Identity=0.6364;Positive=1.0000;Target=hAT-39_HM 300 310
+ctg_494872	miniprot	CDS	456746	456778	41	-	0	Parent=MP000087;Rank=2;Identity=0.6364;Target=hAT-39_HM 300 310
+##PAF	*TIP100	895	0	895	-	ctg_478764	1177717	131808	160808	777	2685	0	AS:i:452	ms:i:464	np:i:341	da:i:168	do:i:252	cg:Z:9M1I13M5I3M4I3M5I4M5I8M6I3M5I13M8I3M1I2M2I13M2I4M5I2M2I4M15I11M3I3M1I15M3I9M28I13M2I7M2I11M38I14M6I15M6I16M4I8M19I13M12I1M1I8M3I13M7I18M2I11M2I11M9I6M16I23M2I44M27316U15M11I10M19I5M2I7M2I29M8I7M23I8M2I27M11I29M1G11I25M7I4M4I41M	cs:Z::1*ttgI:4*tcaA:2+-:2*agaK*agaK:3*gcaS*cttI:1*gttL:2+-----:2*aaaR+----:3+-----:1*cgaQ:2+-----:2*gatG*cttV:1*cat-*gtt-:1+V----K:3+-----*tctA*gccS:4*gaaG*ata-*gat-*ttt-*gttI*ttaF:1+--I-LS-R:1*cat-:1+-:2+--:1*catQ:1*atgI:9+--:4+-----:2+--:3*cggK+---------------:1*aagL*ttcI*ataL*gaaD:6+---:1*attV:1+-:4*caaR:7*gcaS:2+---:2*cccI*gagP:2*aatQ:2+---------------------------T*gat-*catK:1*gctN*ctcS:1*gtcI:1*acaV:1*gtgG*tctA:1+C-*agt-:4*gatQ:1+--*cgtK:1*aatA*caaH*gttA*gctS*gaaN*atgI*gagS:2+--------------------------------------*attL*gagS*cttI*agtD:2*gatE*actS:3*gctL:2+------:2*actS:12+--LK-S*tatI*aatS:1*attL*tgcM*agc-*ctt-*ata-*aagR*cttM*tacF*aagS*cctA:1*ttc-*ttg-+--CE:2*aaaL*gatN:1*gctI*act-*gct-+-----------EDGTTHAH*aaaR:1*tca-*gga-*acc-*tca-*cct-*tca-*ggg-*cgt-*gca-*aag-*gtt-+-----------D:1+D*ggtA:1*gttY*aaaE*ttaV:1*atgT:1+---:8*gttL:2*gaaK*ctc-+----VLE*atgI*ggaS*gtc-*aca-:1*ttaM:2*aaaQ*aagA:2*catL*aaaQ:4+--*gtaL:3*gatH*gatL:1*accS*actS:2+L-*aag-:3*gacT:2*gagD*catS:2+---------:1*aatE:1*attV*agtA*gagS+----------------:1*acaK*ttgS:2*aacE*aaaT*caaV*ggaN*att-:1*gttT*ccaV*aatP*atgD*aatF:1*ttcA*tatQ*gca-*gac-:2+AR:1*tctG:2*gagR*aatH*gag-*atc-*aca-*gtt-*gag-*cat-*cat-*tat-*aga-*tat-*gac-*att-*ttc-*aca-*gtt-*gcg-*gtt-*gat-*cag-*caa-*gca-*caa-*gag-*ttg-*aat-*cac-*agg-*ttc-*agt-*gaa-*caa-*gct-*aca-*gaa-*ctt-*atg-*aga-*tta-*t-~gt27313ag-tt*cca-*aat-*atg-*aat-*gat-*ttc-*tat-*gca-*gac-*tac-*att-*cga-*tct-*cgt-*gca-+----------Q*gagQ*aatD:1*atcL:1*gttI*gagG:3+----K--------------*aga-*tatV:3+YA*acaV*gtt-*gcg-*gttI:1*cagS:1+L-*gca-:3*aatS*cacN:2*agtD*gaaH*caaK:1*acaM:2*atgI*agaV:1*tgtS*actS:4*agg-*gat-*tca-*ttt-*agcK+EMR----I:1*ttgF*aatR:4+-----------------------:1*tctK:1*gctV*tcaE:3+--:1*gctQ:2*ccaE*gagD*caaY:1*atgT*agtL*accQ:2*cttV:2*catE:1*tatF*aaaE:1*gatV*gtg-*cct-*ata-*aat-*tct-+-------QQLP*aagD:1*cagR*aatT:1*tcaE*accS:1*gctS:3*cgc-*cgt-*cta-*gca-*gaa-*act-*gga-*aaa-*tca-*gat-*gacR*tacW*tacL*ttgV*attK*gatT:1*t-+-----------*tat-*aac-*att-*tac-*aacK*ctt-*cat-*tta-*gtt-*gac-*tat-*ttt-*act-*ttt-*tta-*tta-*tta-*gca-*aat-*gct-*aatS*catN*gtcI*tttY:1+L-----V*tatF:1*ttgV*attV+T---*cgc-:14*gccS:4*aaaN*cttI*tatV:2*aggT:2*agtN:7*aggS*aatD:3
+ctg_478764	miniprot	mRNA	131809	160808	464	-	.	ID=MP000088;Rank=1;Identity=0.2894;Positive=0.3810;Frameshift=1;Target=*TIP100 1 895
+ctg_478764	miniprot	CDS	159746	160808	293	-	0	Parent=MP000088;Rank=1;Identity=0.2981;Target=*TIP100 1 586
+ctg_478764	miniprot	CDS	131809	132432	171	-	2	Parent=MP000088;Rank=1;Identity=0.2727;Frameshift=1;Target=*TIP100 587 895
+##PAF	*TIP100	895	0	895	-	ctg_336978	2247462	1830715	1832234	780	2685	0	AS:i:468	ms:i:468	np:i:343	da:i:168	do:i:93	cg:Z:9M1I13M5I3M4I3M5I4M5I8M6I3M5I13M8I3M1I2M2I13M2I4M5I2M2I4M15I11M3I3M1I15M3I9M28I13M2I7M2I11M38I14M6I15M6I16M4I5M10I13M22I12M3I13M7I18M2I11M2I11M9I6M16I23M2I4M67I10M19I5M2I7M2I29M8I7M23I8M2I27M11I29M1G11I25M7I4M4I41M	cs:Z::1*ttgI:4*tcaA:2+-:2*agaK*agaK:3*gcaS*cttI:4+-----:2*aaaR+----:3+-----:1*cgaQ:2+-----:2*gatG*cttV:1*cat-*gtt-:1+V----K:3+-----*tctA*gccS:4*gaaG*ata-*gat-*ttt-*gttI*ttaF:1+--I-LS-R:1*cat-:1+-:2+--:1*catQ:1*atgI:9+--:4+-----:2+--:3*cggK+---------------:1*aagL*ttcI*ataL*gaaD:6+---:1*attV:1+-:4*caaR:7*gcaS:2+---:2*cccI*gagP:2*aatQ*tatF:1+---------------------------T*gag-*catK:1*gctN*ctcS:1*gtcI:1*acaV:1*gtgG*tctA:1+C-*agt-:4*gatQ:1+--*cgtK:1*aatA*caaH*gttA*gctS*gaaN*atgI*gagS:2+--------------------------------------*attL*gagS*cttI*agtD:2*gatE*actS:3*gctL:2+------:2*actS:12+--LK-S*tatI*aatS:1*attL*tgcM*agc-*ctt-*ata-*aagR*cttM*tacF*aagS*cctA:1*ttc-*ttg-+--CE:2*aaaL*gatN:1+I---------*gct-*act-*gct-*aaa-*ggtE*tcaD:2*tcaT*cctH*tcaA*gggH:1+G---------------------*gca-*aagD:1*gcaD*ggtA:1*gttY*aaaE*ttaV:1*atgT:1+---:8*gttL:2*gaaK*ctc-+----VLE*atgI*ggaS*gtc-*aca-:1*ttaM:2*aaaQ*aagA:2*catL*aaaQ:4+--*gtaL:3*gatH*gatL:1*accS*actS:2+L-*aag-:3*gacT:2*gagD*catS:2+---------:1*aatE:1*attV*agtA*gagS+----------------:1*acaK*ttgS:2*aacE*aaaT*caaV*ggaN*att-:1*gttT*tcaV*aatP*atgD*aatF:1*ttcA*tatQ*gca-*gac-:2+AR:1*tctG:2+RH----------------------------------------------------------------Q*gagQ*aatD:1*atcL:1*gttI*gagG:3+----K--------------*aga-*tatV:3+YA*acaV*gtt-*gcg-*gttI:1*cagS:1+L-*gca-*gaaQ:2*aatS*cacN:2*agtD*gaaH*caaK:1*acaM:2*atgI*agaV:1*tgtS*actS:4*agg-*gat-*tca-*ttt-*agcK+EMR----I:1*ttgF*aatR:4+-----------------------:1*tctK:1*gctV*tcaE:3+--:1*gctQ:2*ccaE*gagD*caaY:1*atgT*agtL*accQ:2*cttV:2*catE:1*tatF*aaaE:1*gatV*gtg-*cct-*ata-*aat-*tct-+-------QQLP*aagD:1*cagR*aatT:1*tcaE*accS:1*gctS:3*cgc-*cgt-*cta-*gca-*gaa-*act-*gga-*aaa-*tca-*gat-*gacR*tacW*tacL*ttgV*attK*gatT:1*t-+-----------*tat-*aac-*att-*tac-*aacK*ctt-*cat-*tta-*gtt-*gac-*tat-*ttt-*act-*ttt-*tta-*tta-*tta-*gca-*aat-*gct-*aatS*catN*gtcI*tttY:1+L-----V*tatF:1*ttgV*attV+T---*cgc-:14*gccS:4*aaaN*cttI*tatV:2*aggT:2*agtN:7*aggS*aatD:3
+ctg_336978	miniprot	mRNA	1830716	1832234	468	-	.	ID=MP000089;Rank=2;Identity=0.2905;Positive=0.3832;Frameshift=1;Target=*TIP100 1 895
+ctg_336978	miniprot	CDS	1830716	1832234	468	-	0	Parent=MP000089;Rank=2;Identity=0.2905;Frameshift=1;Target=*TIP100 1 895
+##PAF	*TIP100	895	0	895	-	ctg_26610	1944957	848123	849642	780	2685	0	AS:i:471	ms:i:460	np:i:343	da:i:168	do:i:93	cg:Z:9M1I13M5I3M4I3M5I4M5I8M6I3M5I13M8I3M1I2M2I13M2I4M5I2M2I4M15I11M3I3M1I15M3I9M28I13M2I7M2I11M38I14M6I15M6I16M4I5M10I13M22I12M3I13M7I18M2I11M2I11M9I6M16I7M1I16M1I4M67I10M19I5M2I7M2I29M8I7M23I8M2I27M11I29M1G11I25M7I4M4I41M	cs:Z::1*ttgI:4*tcaA:2+-:2*agaK*agaK:3*gcaS*cttI:1*gttL:2+-----:2*aaaR+----:3+-----:1*cgaQ:2+-----:2*gatG*cttV:1*cat-*gtt-:1+V----K:3+-----*tctA*gccS:4*gaaG*ata-*gat-*ttt-*gttI*ttaF:1+--I-LS-R:1*cat-:1+-:2+--:1*catQ:1*atgI:9+--:4+-----:2+--:3*cggK+---------------:1*aagL*ttcI*ataL*gaaD:6+---:1*attV:1+-:4*caaR:7*gcaS:2+---:2*cccI*gagP:2*aatQ:2+---------------------------T*gag-*catK:1*gctN*ctcS:1*gtcI:1*acaV:1*gtgG*tctA:1+C-*agt-:4*gatQ:1+--*cgtK:1*aatA*caaH*gttA*gctS*gaaN*atgI*gagS:2+--------------------------------------*attL*gagS*cttI*agtD:2*gatE*actS:3*gctL:2+------:2*actS:12+--LK-S*tatI*aatS:1*attL*tgcM*agc-*ctt-*ata-*aagR*cttM*tacF*aagS*cctA:1*ttc-*ttg-+--CE:2*aaaL*gatN:1+I---------*gct-*act-*gct-*aaa-*ggtE*tcaD:2*tcaT*cctH*ttaA*gggH:1+G---------------------*gca-*aagD:1*gcaD*ggtA:1*gttY*aaaE*ttaV:1*atgT:1+---:8*gttL:2*gaaK*ctc-+----VLE*atgI*ggaS*gtc-*aca-:1*ttaM:2*aaaQ*aagA:2*catL*aaaQ:4+--*gtaL:3*gatH*gatL:1*accS*actS:2+L-*aag-:3*gacT:2*gagD*catS:2+---------:1*aatE:1*attV*agtA*gagS+----------------:1*acaK*ttgS:2*aacE*aaaT+V*caaN*gga-:1*ataT:2*aatD*atgF*aatD*gatA*ttcQ*tat-*gca-*gacY*tacI*attA+R:1*tctG:2+RH----------------------------------------------------------------Q*gagQ*aatD:1*atcL:1*gttI*gagG:3+----K--------------*aga-*tatV:3+YA*acaV*gtt-*gcg-*gttI:1*cagS:1+L-*gca-:3*aatS*cacN:2*agtD*gaaH*caaK:1*acaM:2*atgI*agaV:1*tgtS*actS:4*agg-*gat-*tca-*ttt-*agcK+EMR----I:1*ttgF*aatR:4+-----------------------:1*tctK:1*gctV*tcaE:3+--:1*gctQ:2*ccaE*gagD*caaY:1*atgT*agtL*accQ:2*cttV:2*catE:1*tatF*aaaE:1*gatV*gtg-*cct-*ata-*aat-*tct-+-------QQLP*aagD:1*cagR*aatT:1*tcaE*accS:1*gctS:3*cgc-*cgt-*cta-*gca-*gaa-*act-*gga-*aaa-*tca-*gat-*gaaR*tacW*tacL*ttgV*attK*gatT:1*t-+-----------*tat-*aac-*att-*tac-*aacK*ctt-*cat-*tta-*gtt-*gac-*tat-*ttt-*act-*ttt-*tta-*tta-*tta-*gca-*aat-*gct-*aatS*catN*gtcI*tttY:1+L-----V*tatF:1*ttgV*attV+T---*cgc-:14*gccS:4*aaaN*cttI*tatV:2*aggT:2*agtN:7*aggS*aatD:3
+ctg_26610	miniprot	mRNA	848124	849642	460	-	.	ID=MP000090;Rank=3;Identity=0.2905;Positive=0.3832;Frameshift=1;Target=*TIP100 1 895
+ctg_26610	miniprot	CDS	848124	849642	460	-	0	Parent=MP000090;Rank=3;Identity=0.2905;Frameshift=1;Target=*TIP100 1 895
+##PAF	*TIP100	895	0	895	-	ctg_315373	824904	156963	158482	780	2685	0	AS:i:471	ms:i:460	np:i:344	da:i:168	do:i:93	cg:Z:9M1I13M5I3M4I3M5I4M5I8M6I3M5I13M8I3M1I2M2I13M2I4M5I2M2I4M15I11M3I3M1I15M3I9M28I13M2I7M2I11M38I14M6I15M6I16M4I5M10I13M22I12M3I13M7I18M2I11M2I11M9I6M16I7M1I16M1I4M67I10M19I5M2I7M2I29M8I7M23I8M2I27M11I29M1G11I25M7I4M4I41M	cs:Z::1*ttgI:4*tcaA:2+-:2*agaK*agaK:3*gcaS*cttI:1*gttL:2+-----:2*aaaR+----:3+-----:1*cgaQ:2+-----:2*gatG*cttV:1*cat-*gtt-:1+V----K:3+-----*tctA*gccS:4*gaaG*ata-*gat-*ttt-*gttI*ttaF:1+--I-LS-R:1*cat-:1+-:2+--:1*catQ:1*atgI:9+--:4+-----:2+--:3*cggK+---------------:1*aagL*ttcI*ataL*gaaD:6+---:1*attV:1+-:4*caaR:7*gcaS:2+---:2*cccI*gagP:2*aatQ:2+---------------------------T*gag-*catK:1*gctN*ctcS:1*gtcI:1*acaV:1*gtgG*tctA:1+C-*agt-:4*gatQ:1+--*cgtK:1*aatA*caaH*gttA*gctS*gaaN*atgI*gagS:2+--------------------------------------*attL*gagS*cttI*agtD:2*gatE*actS:3*gctL:2+------:2*actS:12+--LK-S*tatI*aatS:1*attL*tgcM*agc-*ctt-*ata-*aagR*cttM*tacF*aagS*cctA:1*ttc-*ttg-+--CE:2*aaaL*gatN:1+I---------*gct-*act-*gct-*aaa-*ggtE*tcaD:2*tcaT*cctH*tcaA*gggH:1+G---------------------*gca-*aagD:1*gcaD*ggtA:1*gttY*aaaE*ttaV:1*atgT:1+---:8*gttL:2*gaaK*ctc-+----VLE*atgI*ggaS*gtc-*aca-:1*ttaM:2*aaaQ*aagA:2*catL*aaaQ:4+--*gtaL:3*gatH*gatL:1*accS*actS:2+L-*aag-:3*gacT:2*gagD*catS:2+---------:1*aatE:1*attV*agtA*gagS+----------------:1*acaK*ttgS:2*aacE*aaaT+V*caaN*gga-:1*ataT:2*aatD*atgF*aatD*gatA*ttcQ*tat-*gca-*gacY*tacI*attA+R:1*tctG:2+RH----------------------------------------------------------------Q*gagQ*aatD:1*atcL:1*gttI*gagG:3+----K--------------*aga-*tatV:3+YA*acaV*gtt-*gcg-*gttI:1*cagS:1+L-*gca-:3*aatS*cacN:2*agtD*gaaH*caaK:1*acaM:2*atgI*agaV:1*tgtS*actS:4*agg-*gat-*tca-*ttt-*agcK+EMR----I:1*ttgF*aatR:4+-----------------------:1*tctK:1*gctV*tcaE:3+--:1*gctQ:2*ccaE*gagD*caaY:1*atgT*agtL*accQ:2*cttV:2*catE:1*tatF*aaaE:1*gatV*gtg-*cct-*ata-*aat-*tct-+-------QQLP*aagD:1*cagR*aatT:1*tcaE*accS:1*gctS:3*cgc-*cgt-*cta-*gca-*gaa-*act-*gga-*aaa-*tca-*gat-*gacR*tacW*tacL*ttgV*attK*gatT:1*t-+-----------*tat-*aac-*att-*tac-*aacK*ctt-*cat-*tta-*gtt-*gac-*tat-*ttt-*act-*ttt-*tta-*tta-*tta-*gca-*aat-*gct-*aatS*catN*gtcI*tttY:1+L-----V*tatF:1*ttgV*attV+T---*cgc-:14*gccS:4*aaaN*cttI*tatV:2*aggT:2*agtN:7*aggS*aatD:3
+ctg_315373	miniprot	mRNA	156964	158482	460	-	.	ID=MP000091;Rank=4;Identity=0.2905;Positive=0.3844;Frameshift=1;Target=*TIP100 1 895
+ctg_315373	miniprot	CDS	156964	158482	460	-	0	Parent=MP000091;Rank=4;Identity=0.2905;Frameshift=1;Target=*TIP100 1 895
+##PAF	hAT-22_SM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-37_SM	895	422	433	-	ctg_392505	1970053	189790	189823	21	33	0	AS:i:25	ms:i:37	np:i:11	da:i:84	do:i:18	cg:Z:11M	cs:Z:*aacD:5*tctT:1*tacF:1*gagQ
+ctg_392505	miniprot	mRNA	189791	189823	37	-	.	ID=MP000092;Rank=1;Identity=0.6364;Positive=1.0000;Target=hAT-37_SM 423 433
+ctg_392505	miniprot	CDS	189791	189823	37	-	0	Parent=MP000092;Rank=1;Identity=0.6364;Target=hAT-37_SM 423 433
+##PAF	*hAT-7_HM	895	882	895	+	ctg_554503	349434	89958	89997	18	39	0	AS:i:27	ms:i:35	np:i:12	da:i:-1	do:i:111	cg:Z:13M	cs:Z:*acgS*aagR*ctaM:1*actS*aacD:5*tcaA*tctI
+ctg_554503	miniprot	mRNA	89959	89997	35	+	.	ID=MP000093;Rank=1;Identity=0.4615;Positive=0.9231;Target=*hAT-7_HM 883 895
+ctg_554503	miniprot	CDS	89959	89997	35	+	0	Parent=MP000093;Rank=1;Identity=0.4615;Target=*hAT-7_HM 883 895
+##PAF	hAT-20_SM	895	855	895	+	ctg_53447	6979927	2274608	2274728	90	120	0	AS:i:150	ms:i:150	np:i:37	da:i:72	do:i:102	cg:Z:40M	cs:Z::1*ttgY:2*attL:3*gttS:1*tctT:6*aaaR:2*ttaI*ttgI:1*tccN:7*caaN:3*aatS:4
+ctg_53447	miniprot	mRNA	2274609	2274728	150	+	.	ID=MP000094;Rank=1;Identity=0.7500;Positive=0.9250;Target=hAT-20_SM 856 895
+ctg_53447	miniprot	CDS	2274609	2274728	150	+	0	Parent=MP000094;Rank=1;Identity=0.7500;Target=hAT-20_SM 856 895
+##PAF	hAT-20_SM	895	855	895	-	ctg_328371	946976	205352	205472	90	120	0	AS:i:149	ms:i:149	np:i:36	da:i:72	do:i:102	cg:Z:40M	cs:Z::1*ttgY:2*ataL:3*gttS:1*tctT:9*ttaI*ttgI:1*tccN:7*caaN:3*aatS:2*acaA:1
+ctg_328371	miniprot	mRNA	205353	205472	149	-	.	ID=MP000095;Rank=2;Identity=0.7500;Positive=0.9000;Target=hAT-20_SM 856 895
+ctg_328371	miniprot	CDS	205353	205472	149	-	0	Parent=MP000095;Rank=2;Identity=0.7500;Target=hAT-20_SM 856 895
+##PAF	hAT-34_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-23_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-41_HM	895	0	895	+	ctg_25375	3767570	3192379	3193874	609	2685	0	AS:i:243	ms:i:271	np:i:288	da:i:45	do:i:93	cg:Z:9M1I12M7I9M9I10M11I15M11I22M2I4M7I7M15I10M3I3M1I15M3I2M106V6M28I14M2I7M52I12M14I7M2I18M1I11M13I21M11I6M8I12M12I26M4I9M31I10M1I18M63I10M16I16M2I6M2I21M9I13M36I53M45I3M9I46M	cs:Z:*tctA:8+-*gtcI:2*gaaQ:3*actS*ctaM*attV*attL:1+Y-----V*tgtA*gtgD*aatG*atgT*tcaH*ggaS*aatD:2+AG---IYEH*agg-*gta-*gag-*gaa-*ttc-:1*ctgI*gagK:1*ttgI+--IV----ESS*aagT*gta-*gat-*gac-*aca-*tca-:1*ttgE*ggtN:2*actN*aaaT*tta-*cag-+-LVK-----EI*agtE*gcaM:1*tccG*tct-:2*tta-*aat-*attV*gatE*gatN*gtgI:7*agtG*tcaA+--:4+-----HN*aaa-*cac-*caaS:3*aat-+--------------A:4*attR:1*ccaS:2*ctaF+---:1*atgT:1+-:4*agtN*ctcY:2*actV:1*tgtG:2*ggaA:1+---*tctT:1*agS~gt103ag-g*cacD:1*attM:3+----------------------------:1*attT*atcL:4*acaA:3*aaaS:2+--:3*aagT*attV:1*gtt-+---------------------------------------------------K*gacK*aatH:1*ccaK:2*acaS:2*tcaP*tggL:1+--------------*aacE:4*agcC:1+--*ataM*aaaE:2*cagK:1*attV:1*tatF:1*actA*cctA*caaE*ataV*agaC*actD:2+-*aaa-*gaa-*tta-:2*gtgL*agtA*gcaK*ctgS*gacT:1+-------------:2*tcgQ*acaG*gttK:1*gacE*tgtA*caaE:4*gcaQ*cttM*gagT:1*tttY*gaaR:2+-----------:1*ggaA:1*gttC*attF:1+--------:1*gatS*attL:2*tctQ*ataV:1*aagF*gtcT:2+------------*aagE:3*aaaN*attT*gtgI*agtD:1*gatA*actA*actG:1*aagT*cacS*ataF:1*gatK*gtcL*ataF*tcaD*tatW*tttL*atgK*aaaT:1+----:1*gatE*gacT:1*ttgF*actV*tcaA*agtA*atgL+I------------------------------*gaa-*acaD:2*accE*attL:1*tcaN:2+-*gatE:6*acaQ:2*aaaC*agcY:1*agaK:2*cagT*tatF+LYE------------------------------------------------------------*gat-*gaa-*caa-*gat-*gacS*gaaS:2*gaaP:1+LDPKT-----------*caa-*cga-*tcg-*gct-*ttg-*gat-*gacE:2*acaV*gatN*tacF:2*gttQ*atgV+--*attV:1*gctK:1*attL*gct-+-Q:2*actQ*actP:2*gatM:1*atgL:1*gcaE*tttH*aatH*gaaK*gttL:4*ttcY:1+F--------*tca-*gaa-*aat-*ttg-*aaaQ*tccN*ttaM*gatS*gaaK*gttE:2*tgg-+--------------------------------RKHS:1*cgcD*tgcL*aagE*gttI*tttA*gtgL*gatT*aaaD*tttI*tctT*gatK:2*tcaE*tcaG*gatF*gttM*gag-*atc-*aat-*gat-*tttL*tttS*caaE:1*ttaM*aagE*gtgA*ttgI*caaK*gtgP*gctI:2*gatV*tctQ*atgQ*ataQ*tcaK*gcaP*tctK:1*attL*ctaF:1*ttc-*gtt-*atg-*gat-*gca-*gat-*tac-+---YLACNDR----------------S----------------TA*tatF:2+-----LFIA*gttL*tcaK*gtt-*gcc-*tat-*cga-:2*ttaM:1*gtaI:6*gctG:9*ttgI:1*aacT:4*actV*atgI*tcaN:5*ggcN:2*atgL
+ctg_25375	miniprot	mRNA	3192380	3193874	271	+	.	ID=MP000096;Rank=1;Identity=0.2268;Positive=0.3218;Target=hAT-41_HM 1 895
+ctg_25375	miniprot	CDS	3192380	3192735	129	+	0	Parent=MP000096;Rank=1;Identity=0.3069;Target=hAT-41_HM 1 188
+ctg_25375	miniprot	CDS	3192839	3193874	142	+	1	Parent=MP000096;Rank=1;Identity=0.2054;Target=hAT-41_HM 189 895
+##PAF	hAT-22_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	SPIN_Og	895	0	0	*	*	0	0	0	0	0	0
+##PAF	*hAT-14_SM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-2_XT	895	771	782	+	ctg_452870	907406	573293	573326	9	33	0	AS:i:22	ms:i:27	np:i:11	da:i:72	do:i:90	cg:Z:11M	cs:Z::2*aggK*actS*ttaM*tacF*cagE*agcT*tcaT:1*gatN
+ctg_452870	miniprot	mRNA	573294	573326	27	+	.	ID=MP000097;Rank=1;Identity=0.2727;Positive=1.0000;Target=hAT-2_XT 772 782
+ctg_452870	miniprot	CDS	573294	573326	27	+	0	Parent=MP000097;Rank=1;Identity=0.2727;Target=hAT-2_XT 772 782
+##PAF	hAT-2_SM	895	878	895	+	ctg_95002	1452551	469748	469799	21	51	0	AS:i:44	ms:i:44	np:i:13	da:i:-1	do:i:51	cg:Z:17M	cs:Z::1*agcK*aacY*aatR*acaS:4*caaE:1*aatD:1*aagR*gtcI*agtA*acaI
+ctg_95002	miniprot	mRNA	469749	469799	44	+	.	ID=MP000098;Rank=1;Identity=0.4118;Positive=0.7647;Target=hAT-2_SM 879 895
+ctg_95002	miniprot	CDS	469749	469799	44	+	0	Parent=MP000098;Rank=1;Identity=0.4118;Target=hAT-2_SM 879 895
+##PAF	hAT-5_DR	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-42_SM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	*hAT-12_SM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	*hAT-19_HM	895	664	675	-	ctg_499614	495334	359664	359697	18	33	0	AS:i:28	ms:i:44	np:i:11	da:i:69	do:i:42	cg:Z:11M	cs:Z:*aagR:2*aatD:2*cagE*caaE:1*gatN:1
+ctg_499614	miniprot	mRNA	359665	359697	44	-	.	ID=MP000099;Rank=1;Identity=0.5455;Positive=1.0000;Target=*hAT-19_HM 665 675
+ctg_499614	miniprot	CDS	359665	359697	44	-	0	Parent=MP000099;Rank=1;Identity=0.5455;Target=*hAT-19_HM 665 675
+##PAF	hAT-5_SM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-11_XT	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-3_DR	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-18_HM	895	739	754	+	ctg_536634	1073818	424405	424450	21	45	0	AS:i:46	ms:i:46	np:i:13	da:i:-1	do:i:102	cg:Z:15M	cs:Z:*agtN*gagN*agtN*aggM:3*caaE:1*actS:3*atcV*atgL
+ctg_536634	miniprot	mRNA	424406	424450	46	+	.	ID=MP000100;Rank=1;Identity=0.4667;Positive=0.8667;Target=hAT-18_HM 740 754
+ctg_536634	miniprot	CDS	424406	424450	46	+	0	Parent=MP000100;Rank=1;Identity=0.4667;Target=hAT-18_HM 740 754
+##PAF	hAT-20_HM	895	874	895	-	ctg_527149	687915	686509	686572	33	63	0	AS:i:54	ms:i:54	np:i:16	da:i:-1	do:i:78	cg:Z:21M	cs:Z::1*ccaI*cttI*actI*aaaT:1*catI*cttR:3*tccT*attV:2*attV:3*atcM:1
+ctg_527149	miniprot	mRNA	686510	686572	54	-	.	ID=MP000101;Rank=1;Identity=0.5238;Positive=0.7619;Target=hAT-20_HM 875 895
+ctg_527149	miniprot	CDS	686510	686572	54	-	0	Parent=MP000101;Rank=1;Identity=0.5238;Target=hAT-20_HM 875 895
+##PAF	hAT-20_HM	895	874	895	+	ctg_322935	2058503	1466461	1466524	33	63	0	AS:i:54	ms:i:54	np:i:16	da:i:-1	do:i:87	cg:Z:21M	cs:Z::1*ccaI*cttI*actI*aaaT:1*catI*cttR:3*tccT*attV:2*atcV:3*atcM:1
+ctg_322935	miniprot	mRNA	1466462	1466524	54	+	.	ID=MP000102;Rank=2;Identity=0.5238;Positive=0.7619;Target=hAT-20_HM 875 895
+ctg_322935	miniprot	CDS	1466462	1466524	54	+	0	Parent=MP000102;Rank=2;Identity=0.5238;Target=hAT-20_HM 875 895
+##PAF	hAT-20_HM	895	874	895	-	ctg_499792	865064	568482	568545	33	63	0	AS:i:54	ms:i:54	np:i:16	da:i:-1	do:i:90	cg:Z:21M	cs:Z::1*ccaI*cttI*actI*aaaT:1*catI*cttR:3*tccT*attV:2*attV:3*atcM:1
+ctg_499792	miniprot	mRNA	568483	568545	54	-	.	ID=MP000103;Rank=3;Identity=0.5238;Positive=0.7619;Target=hAT-20_HM 875 895
+ctg_499792	miniprot	CDS	568483	568545	54	-	0	Parent=MP000103;Rank=3;Identity=0.5238;Target=hAT-20_HM 875 895
+##PAF	hAT-20_HM	895	874	895	+	ctg_40573	5025622	1463057	1463120	33	63	0	AS:i:54	ms:i:54	np:i:16	da:i:-1	do:i:27	cg:Z:21M	cs:Z::1*ccaI*cttI*actI*aaaT:1*catI*cttR:3*tccT*attV:2*atcV:3*attM:1
+ctg_40573	miniprot	mRNA	1463058	1463120	54	+	.	ID=MP000104;Rank=4;Identity=0.5238;Positive=0.7619;Target=hAT-20_HM 875 895
+ctg_40573	miniprot	CDS	1463058	1463120	54	+	0	Parent=MP000104;Rank=4;Identity=0.5238;Target=hAT-20_HM 875 895
+##PAF	hAT-36_SM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	Gulliver	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-31_HM	895	433	446	+	ctg_83320	2769888	498459	498498	24	39	0	AS:i:41	ms:i:50	np:i:12	da:i:-1	do:i:21	cg:Z:13M	cs:Z::2*gtaI:1*ttgM:1*ttcY:1*actS:2*atcA:1
+ctg_83320	miniprot	mRNA	498460	498498	50	+	.	ID=MP000105;Rank=1;Identity=0.6154;Positive=0.9231;Target=hAT-31_HM 434 446
+ctg_83320	miniprot	CDS	498460	498498	50	+	0	Parent=MP000105;Rank=1;Identity=0.6154;Target=hAT-31_HM 434 446
+##PAF	hAT-31_HM	895	433	446	+	ctg_348334	973839	282174	282213	24	39	0	AS:i:50	ms:i:50	np:i:13	da:i:450	do:i:33	cg:Z:13M	cs:Z:*gatN:1*gtaI:1*ttgM:1*ttcY:1*actS:4
+ctg_348334	miniprot	mRNA	282175	282213	50	+	.	ID=MP000106;Rank=2;Identity=0.6154;Positive=1.0000;Target=hAT-31_HM 434 446
+ctg_348334	miniprot	CDS	282175	282213	50	+	0	Parent=MP000106;Rank=2;Identity=0.6154;Target=hAT-31_HM 434 446
+##PAF	*hAT5-3_NV	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-30_SM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-4_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-39_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-1_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-57_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-38_HM	895	21	32	-	ctg_151282	3281391	1462681	1462714	21	33	0	AS:i:31	ms:i:39	np:i:11	da:i:-1	do:i:528	cg:Z:11M	cs:Z:*cgaK:1*caaE*aagR:2*gttI:4
+ctg_151282	miniprot	mRNA	1462682	1462714	39	-	.	ID=MP000107;Rank=1;Identity=0.6364;Positive=1.0000;Target=hATm-38_HM 22 32
+ctg_151282	miniprot	CDS	1462682	1462714	39	-	0	Parent=MP000107;Rank=1;Identity=0.6364;Target=hATm-38_HM 22 32
+##PAF	hATm-29_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-9_SM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-1_AA	895	418	432	+	ctg_280768	1267313	151893	151935	30	42	0	AS:i:59	ms:i:59	np:i:13	da:i:-1	do:i:63	cg:Z:14M	cs:Z::4*aaaR:4*gttI:1*cggK*tttV:1
+ctg_280768	miniprot	mRNA	151894	151935	59	+	.	ID=MP000108;Rank=1;Identity=0.7143;Positive=0.9286;Target=hATm-1_AA 419 432
+ctg_280768	miniprot	CDS	151894	151935	59	+	0	Parent=MP000108;Rank=1;Identity=0.7143;Target=hATm-1_AA 419 432
+##PAF	hATm-3_AA	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-2_AA	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-35_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-4_HR	895	878	892	+	ctg_290858	1223359	651669	651711	27	42	0	AS:i:43	ms:i:43	np:i:12	da:i:6	do:i:57	cg:Z:14M	cs:Z::1*ctgT*gtaN*tcgT:1*aatD:2*gagQ:5
+ctg_290858	miniprot	mRNA	651670	651711	43	+	.	ID=MP000109;Rank=1;Identity=0.6429;Positive=0.8571;Target=hATm-4_HR 879 892
+ctg_290858	miniprot	CDS	651670	651711	43	+	0	Parent=MP000109;Rank=1;Identity=0.6429;Target=hATm-4_HR 879 892
+##PAF	*hATm-2_HR	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hAT-4D_AP	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-20_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-3_HR	895	0	0	*	*	0	0	0	0	0	0
+##PAF	*hATm-1_CS	895	0	0	*	*	0	0	0	0	0	0
+##PAF	*hATm-1_SM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-55_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-45_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-47_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-21_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATx-7_HM	895	0	0	*	*	0	0	0	0	0	0
+##PAF	hATm-7_HM	975	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok-4_TV	428	201	212	+	ctg_40573	5025622	2941134	2941167	21	33	0	AS:i:33	ms:i:44	np:i:11	da:i:-1	do:i:69	cg:Z:11M	cs:Z:*cgcK*actS*cggK:5*cgcK:2
+ctg_40573	miniprot	mRNA	2941135	2941167	44	+	.	ID=MP000110;Rank=1;Identity=0.6364;Positive=1.0000;Target=Kolobok-4_TV 202 212
+ctg_40573	miniprot	CDS	2941135	2941167	44	+	0	Parent=MP000110;Rank=1;Identity=0.6364;Target=Kolobok-4_TV 202 212
+##PAF	Kolobok-1_MicRcc299	428	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok-1_FraCyl	428	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok-1_AA	428	412	424	+	ctg_341269	2420220	2290616	2290652	15	36	0	AS:i:26	ms:i:38	np:i:12	da:i:-1	do:i:48	cg:Z:12M	cs:Z::2*gagQ:3*gtgI*gttI*tccT*tcgT*atgL*agaQ
+ctg_341269	miniprot	mRNA	2290617	2290652	38	+	.	ID=MP000111;Rank=1;Identity=0.4167;Positive=1.0000;Target=Kolobok-1_AA 413 424
+ctg_341269	miniprot	CDS	2290617	2290652	38	+	0	Parent=MP000111;Rank=1;Identity=0.4167;Target=Kolobok-1_AA 413 424
+##PAF	Kolobok-1_Ppac	428	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok1-1_SP	428	123	137	-	ctg_177117	2968737	1653815	1653857	24	42	0	AS:i:54	ms:i:54	np:i:13	da:i:-1	do:i:33	cg:Z:14M	cs:Z::4*gttI*gtcI:3*aatD*acaS*acaS*tgtT:1
+ctg_177117	miniprot	mRNA	1653816	1653857	54	-	.	ID=MP000112;Rank=1;Identity=0.5714;Positive=0.9286;Target=Kolobok1-1_SP 124 137
+ctg_177117	miniprot	CDS	1653816	1653857	54	-	0	Parent=MP000112;Rank=1;Identity=0.5714;Target=Kolobok1-1_SP 124 137
+##PAF	Kolobok1-1_SP	428	123	137	+	ctg_426378	1682746	1157524	1157566	24	42	0	AS:i:54	ms:i:54	np:i:13	da:i:60	do:i:21	cg:Z:14M	cs:Z::4*gttI*gtcI:3*aatD*acaS*acaS*tgtT:1
+ctg_426378	miniprot	mRNA	1157525	1157566	54	+	.	ID=MP000113;Rank=2;Identity=0.5714;Positive=0.9286;Target=Kolobok1-1_SP 124 137
+ctg_426378	miniprot	CDS	1157525	1157566	54	+	0	Parent=MP000113;Rank=2;Identity=0.5714;Target=Kolobok1-1_SP 124 137
+##PAF	Kolobok-2_Aplcal	428	409	420	+	ctg_474745	831179	621550	621583	21	33	0	AS:i:30	ms:i:37	np:i:11	da:i:-1	do:i:51	cg:Z:11M	cs:Z::2*tctT:1*cagE*agcT:3*atgL:1
+ctg_474745	miniprot	mRNA	621551	621583	37	+	.	ID=MP000114;Rank=1;Identity=0.6364;Positive=1.0000;Target=Kolobok-2_Aplcal 410 420
+ctg_474745	miniprot	CDS	621551	621583	37	+	0	Parent=MP000114;Rank=1;Identity=0.6364;Target=Kolobok-2_Aplcal 410 420
+##PAF	Kolobok-1_Aplcal	428	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok-1_NVi	428	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok-19_HMa	428	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok-1_NV	428	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok-1_DR	428	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok-1_CS	428	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok-1_XT	428	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok-2_TV	428	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok-1_NaeGru	428	42	54	+	ctg_11302	1886044	1111877	1111913	24	36	0	AS:i:43	ms:i:43	np:i:12	da:i:12	do:i:192	cg:Z:12M	cs:Z:*ctaV:3*aagR:1*accS:3*acgS:1
+ctg_11302	miniprot	mRNA	1111878	1111913	43	+	.	ID=MP000115;Rank=1;Identity=0.6667;Positive=1.0000;Target=Kolobok-1_NaeGru 43 54
+ctg_11302	miniprot	CDS	1111878	1111913	43	+	0	Parent=MP000115;Rank=1;Identity=0.6667;Target=Kolobok-1_NaeGru 43 54
+##PAF	Kolobok-1_TV	428	0	0	*	*	0	0	0	0	0	0
+##PAF	Kolobok-3_TV	508	0	0	*	*	0	0	0	0	0	0
+##PAF	MERLIN1_SM	186	0	0	*	*	0	0	0	0	0	0
+##PAF	MERLIN4_SM	186	76	91	-	ctg_337736	5307595	3656770	3656815	18	45	0	AS:i:40	ms:i:49	np:i:13	da:i:15	do:i:18	cg:Z:15M	cs:Z:*tccT*aagR*aaaR*aaaR:2*atcV:4*tcaF*tatI*ataV*aagR
+ctg_337736	miniprot	mRNA	3656771	3656815	49	-	.	ID=MP000116;Rank=1;Identity=0.4000;Positive=0.8667;Target=MERLIN4_SM 77 91
+ctg_337736	miniprot	CDS	3656771	3656815	49	-	0	Parent=MP000116;Rank=1;Identity=0.4000;Target=MERLIN4_SM 77 91
+##PAF	Merlin10_SM	186	0	0	*	*	0	0	0	0	0	0
+##PAF	Merlin5_SM	186	0	0	*	*	0	0	0	0	0	0
+##PAF	Merlin1_CB	186	0	0	*	*	0	0	0	0	0	0
+##PAF	Merlin-1_Psojae	186	86	108	+	ctg_210679	2281974	204771	204834	24	66	0	AS:i:38	ms:i:38	np:i:17	da:i:12	do:i:0	cg:Z:8M1I13M	cs:Z::2*gtgI*caaG*tggK*tatH*caaI:1+A*aacG*acaS*agtT*gtaI*gtaI:1*aatD*gaaQ:1*acaS:3
+ctg_210679	miniprot	mRNA	204772	204834	38	+	.	ID=MP000117;Rank=1;Identity=0.3636;Positive=0.7727;Target=Merlin-1_Psojae 87 108
+ctg_210679	miniprot	CDS	204772	204834	38	+	0	Parent=MP000117;Rank=1;Identity=0.3636;Target=Merlin-1_Psojae 87 108
+##PAF	Merlin-1_Smo	186	0	0	*	*	0	0	0	0	0	0
+##PAF	Merlin-1_Hrobusta	186	0	0	*	*	0	0	0	0	0	0
+##PAF	Merlin-1_Aplcal	186	0	0	*	*	0	0	0	0	0	0
+##PAF	Merlin1_CI	186	0	0	*	*	0	0	0	0	0	0
+##PAF	Merlin-1_Roryzae	186	0	0	*	*	0	0	0	0	0	0
+##PAF	Merlin-4_Roryzae	266	0	0	*	*	0	0	0	0	0	0
+##PAF	MULE1_EI	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MuDR1_TP	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MuDR1_SM	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MuDR-3_TV	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MuDR-6_TV	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MuDr-1_TV	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MuDR7x_AP	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MuDR2x_SM	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MuDR4x_SM	343	151	164	+	ctg_391337	2976239	365407	365446	27	39	0	AS:i:39	ms:i:50	np:i:12	da:i:144	do:i:0	cg:Z:13M	cs:Z::2*ataV:1*tttY:5*tcaT*aaaD:1
+ctg_391337	miniprot	mRNA	365408	365446	50	+	.	ID=MP000118;Rank=1;Identity=0.6923;Positive=0.9231;Target=MuDR4x_SM 152 164
+ctg_391337	miniprot	CDS	365408	365446	50	+	0	Parent=MP000118;Rank=1;Identity=0.6923;Target=MuDR4x_SM 152 164
+##PAF	MuDR1x_SM	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MuDr-1x_AP	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MUDR	343	0	343	-	ctg_257873	891026	574972	575488	315	1032	0	AS:i:297	ms:i:286	np:i:125	da:i:285	do:i:3	cg:Z:8M3I7M5I4M3I30M3I11M3I20M28I17M28I7M1I12M12I5M1D9M43I9M41I13M2I19M	cs:Z::2*ataV:5+---:7+-----:4+---:1*gctG*ctaV:2*aacH:6*gcaC:3*ataF*gatQ*ggcA:2*cgtV*aacD:2*gaaI:3*act-+KQL*cagK*ttg-*cat-:1*gccV*ataV:2*ctaM*cctT*cat-+--L:4*actS:2*tgcQ:3*gagM*acaH:2*aagN*caaE:3+----------------------------*catY:2*catR:8*aagG:1*ttcY*tttV:1+------------HHAG------------*aag-*ttt-*gga-*ggt-*gat-*tct-*ttt-+S*tctE*aagH:9*act-+-----------R*gaaD:2*caaE*tatH-ttc*ttc-*aat-:2*aaaS*gagK*gctV*agtR*gatN+VHKI---------------------------------------*gaa-*gtg-*gtgA*ccaE*tggY:2*aatQ:1+-----------------------------------------:5*atgY:2*gcaG:2*cct-*ata-+KD*ttcI:8*cttM:2*tgtV*tttY:3*attV:1
+ctg_257873	miniprot	mRNA	574973	575488	286	-	.	ID=MP000119;Rank=1;Identity=0.3052;Positive=0.3634;Target=MUDR 1 343
+ctg_257873	miniprot	CDS	574973	575488	286	-	0	Parent=MP000119;Rank=1;Identity=0.3052;Target=MUDR 1 343
+##PAF	MUDR	343	0	343	-	ctg_235990	1819732	258751	259267	309	1029	0	AS:i:297	ms:i:286	np:i:122	da:i:285	do:i:291	cg:Z:8M3I7M5I3M3I31M3I11M3I21M28I16M28I7M1I11M12I12M42I13M41I13M2I19M	cs:Z::2*ataV:5+---:7+-----:3+A--*acc-:1*gctG*ctaV:9*gcaC:3*ataF*gatQ*ggaA:2*acgV*aatD:2*caaI:3*act-+KQL*cagK*ttg-*cat-:1*gccV*ataV:2*ctaM*cctT*cat-+--L:4*actS:2*tgcQ:3*gagM*accH:2*aagN*gatE:3*aat-+---------------------------Y:2*catR:8*cagG:1*ttcY*ctcV:1+------------HHAG------------*aag-*ttt-*ggg-*ggt-*gat-*tct-*ttt-+S*tcaE*aagH:9+------------*cctR*gaaD:2*catE*tatH*ttc-*ttt-*aatH*tgtV*gttS*caaK+VRNVHKI-----------------------------------*gag-*gct-*agc-*gat-*caa-*gtg-*ttgA*ccaE*tggY:1*gaaD*gcgQ:1+-----------------------------------------:8*gcaG:2*cct-*gta-+KD*ttcI:8*cttM:2*tgtV*tttY:3*attV:1
+ctg_235990	miniprot	mRNA	258752	259267	286	-	.	ID=MP000120;Rank=2;Identity=0.3003;Positive=0.3557;Target=MUDR 1 343
+ctg_235990	miniprot	CDS	258752	259267	286	-	0	Parent=MP000120;Rank=2;Identity=0.3003;Target=MUDR 1 343
+##PAF	MUDR	343	0	343	-	ctg_178844	1352754	504949	505465	309	1029	0	AS:i:297	ms:i:286	np:i:122	da:i:285	do:i:726	cg:Z:8M3I7M5I4M3I30M3I11M3I21M28I16M28I7M1I11M12I12M42I13M41I13M2I19M	cs:Z::2*ataV:5+---:7+-----:1*acaA:2+---:1*gctG*ctaV:9*gcaC:3*ataF*gatQ*ggaA:2*acgV*aatD:2*caaI:3*act-+KQL*cagK*ttg-*cat-:1*gccV*ataV:2*ctaM*cctT*cat-+--L:4*actS:2*tgcQ:3*gagM*accH:2*aagN*gatE:3*aat-+---------------------------Y:2*catR:8*cagG:1*ttcY*ctcV:1+------------HHAG------------*aag-*ttt-*ggg-*ggt-*gat-*tct-*ttt-+S*tcaE*aagH:9+------------*cctR*gaaD:2*catE*tatH*ttc-*ttt-*aatH*tgtV*gttS*caaK+VRNVHKI-----------------------------------*gag-*gct-*agc-*gat-*caa-*gtg-*ttgA*ccaE*tggY:1*gaaD*gcgQ:1+-----------------------------------------:8*gcaG:2*cct-*gta-+KD*ttcI:8*cttM:2*tgtV*tttY:3*attV:1
+ctg_178844	miniprot	mRNA	504950	505465	286	-	.	ID=MP000121;Rank=3;Identity=0.3003;Positive=0.3557;Target=MUDR 1 343
+ctg_178844	miniprot	CDS	504950	505465	286	-	0	Parent=MP000121;Rank=3;Identity=0.3003;Target=MUDR 1 343
+##PAF	MUDR	343	0	343	-	ctg_178844	1352754	1189697	1190213	309	1029	0	AS:i:297	ms:i:286	np:i:122	da:i:285	do:i:726	cg:Z:8M3I7M5I4M3I30M3I11M3I21M28I16M28I7M1I11M12I12M42I13M41I13M2I19M	cs:Z::2*ataV:5+---:7+-----:4+---:1*gctG*ctaV:9*gcaC:3*ataF*gatQ*ggaA:2*acgV*aatD:2*caaI:3*act-+KQL*cagK*ttg-*cat-:1*gccV*ataV:2*ctaM*cctT*cat-+--L:4*actS:2*tgcQ:3*gagM*accH:2*aagN*gatE:3*aac-+---------------------------Y:2*catR:8*cagG:1*ttcY*ctcV:1+------------HHAG------------*aag-*ttt-*ggg-*ggt-*gat-*tct-*ttt-+S*tcaE*aagH:3*acaA:5+------------*cctR*gaaD:2*catE*tatH*ttc-*ttt-*aatH*tgtV*gttS*caaK+VRNVHKI-----------------------------------*gag-*gct-*agc-*gat-*caa-*gtg-*ttgA*ccaE*tggY:1*gaaD*gcgQ:1+-----------------------------------------:8*gcaG:2*cct-*gta-+KD*ttcI:8*cttM:2*tgtV*tttY:3*attV:1
+ctg_178844	miniprot	mRNA	1189698	1190213	286	-	.	ID=MP000122;Rank=4;Identity=0.3003;Positive=0.3557;Target=MUDR 1 343
+ctg_178844	miniprot	CDS	1189698	1190213	286	-	0	Parent=MP000122;Rank=4;Identity=0.3003;Target=MUDR 1 343
+##PAF	Mudr5_OS	343	0	343	-	ctg_553319	373914	9191	9803	456	1029	0	AS:i:502	ms:i:539	np:i:166	da:i:51	do:i:804	cg:Z:8M3I7M5I4M3I29M1I4M2I9M1I10M87N11M28I16M12I5M16I15M12I5M2I13M40I7M41I11M2I21M	cs:Z::8+---:2*aggK*catY:3+-----:4+---:2*attM:10*atgF:15+-:4+--*gatN:4*gacE:1*act-:1+Y:10~gt87ag:6*gagQ*aaaQ:3+----------------------------*gacE:15+L-----------*gga-*cacQ:3+----------------:4*gacN:10+------------:1*atgQ*aaaE:2+K-*tat-:3*aagV:1*aagR*gcaN:3*gacS:1+----------------------------------------*tttY*gatE:4*atgL+-----------------------------------------:11+--:21
+ctg_553319	miniprot	mRNA	9192	9803	539	-	.	ID=MP000123;Rank=1;Identity=0.4431;Positive=0.4840;Target=Mudr5_OS 1 343
+ctg_553319	miniprot	CDS	9591	9803	279	-	0	Parent=MP000123;Rank=1;Identity=0.7442;Target=Mudr5_OS 1 86
+ctg_553319	miniprot	CDS	9192	9503	260	-	0	Parent=MP000123;Rank=1;Identity=0.3424;Target=Mudr5_OS 87 343
+##PAF	Mudr5_OS	343	0	343	-	ctg_474422	1627515	412954	413566	453	1029	0	AS:i:501	ms:i:538	np:i:166	da:i:51	do:i:804	cg:Z:8M3I7M5I4M3I29M1I4M2I9M1I10M87N11M28I16M12I5M16I15M12I5M2I13M40I7M41I11M2I21M	cs:Z::8+---:2*aggK*catY:3+-----:4+---:2*attM:10*atgF:15+-:4+--*gatN:4*gacE:1*act-:1+Y:10~gt87ag:5*attV*gagQ*aaaQ:3+----------------------------*gacE:15+L-----------*gga-*cacQ:3+----------------:4*gacN:10+------------:1*atgQ*aaaE:2+K-*tat-:3*aagV:1*aagR*gcaN:3*gacS:1+----------------------------------------*tttY*gatE:4*atgL+-----------------------------------------:11+--:21
+ctg_474422	miniprot	mRNA	412955	413566	538	-	.	ID=MP000124;Rank=2;Identity=0.4402;Positive=0.4840;Target=Mudr5_OS 1 343
+ctg_474422	miniprot	CDS	413354	413566	279	-	0	Parent=MP000124;Rank=2;Identity=0.7442;Target=Mudr5_OS 1 86
+ctg_474422	miniprot	CDS	412955	413266	259	-	0	Parent=MP000124;Rank=2;Identity=0.3385;Target=Mudr5_OS 87 343
+##PAF	MuDR-8_SBi	343	0	343	-	ctg_531661	953737	257300	257909	462	1029	0	AS:i:555	ms:i:584	np:i:166	da:i:-1	do:i:546	cg:Z:8M3I7M5I4M3I29M1I4M2I20M81N11M28I17M12I4M16I15M12I6M2I10M42I7M39I13M2I21M	cs:Z::8+---:2*accA:4+-----:4+---:6*catN:4*gtaI*ccaA:7*tgtS:7*cttI+-:4+--:6*gaaN:2*gctQ:3*atcL:6~gt81ag:11+----------------------------:17+------------:4+----------------:12*gatA:2+------------*atgR*atgT:4+--:1*aaaR:4*cagK:3+------------------------------------------*caaE:2*gcaQ:3+---------------------------------------*aatS:1*tctD:1*gagQ:5*tatF:2+--*gttI:10*atgI:9
+ctg_531661	miniprot	mRNA	257301	257909	584	-	.	ID=MP000125;Rank=1;Identity=0.4490;Positive=0.4840;Target=MuDR-8_SBi 1 343
+ctg_531661	miniprot	CDS	257694	257909	301	-	0	Parent=MP000125;Rank=1;Identity=0.7326;Target=MuDR-8_SBi 1 86
+ctg_531661	miniprot	CDS	257301	257612	283	-	0	Parent=MP000125;Rank=1;Identity=0.3541;Target=MuDR-8_SBi 87 343
+##PAF	MuDR-8_SBi	343	0	343	+	ctg_465769	1757453	14672	15200	471	1029	0	AS:i:590	ms:i:590	np:i:169	da:i:57	do:i:786	cg:Z:8M3I7M5I4M3I29M1I4M2I31M28I17M12I4M16I14M12I7M2I10M42I7M39I13M2I21M	cs:Z::8+---:3*catN:3+-----:4+---:11*gtgI:6*tatI:1*tgcS:4*ttcY:2*cttI+-:4+--:3*aagN:1*acaS:3*gagQ:16*aatK:4+----------------------------:17+------------:4+----------------:14+C-----------*aac-:1*tcaT:4+--:6*caaK:3+------------------------------------------:7+---------------------------------------*aacS:1*tcaD:1*gagQ:5*tatF:2+--:3*tttN:7*ctgI:9
+ctg_465769	miniprot	mRNA	14673	15200	590	+	.	ID=MP000126;Rank=2;Identity=0.4577;Positive=0.4927;Target=MuDR-8_SBi 1 343
+ctg_465769	miniprot	CDS	14673	15200	590	+	0	Parent=MP000126;Rank=2;Identity=0.4577;Target=MuDR-8_SBi 1 343
+##PAF	MuDR-8_SBi	343	0	343	+	ctg_109490	5994734	4015953	4016481	489	1029	0	AS:i:587	ms:i:587	np:i:169	da:i:138	do:i:756	cg:Z:8M3I7M5I4M3I29M1I4M2I31M28I17M12I4M16I15M12I6M2I10M42I7M39I13M2I21M	cs:Z::8+---:7+-----:4+---:15*acaA:4*tgcS:2*agtT:4*cttI+-:4+--:3*aaaN:7*tagW:3*ttaS:10*aatK:4+----------------------------:17+------------*atgK:2*aacD+----------------:15+------------:1*tctT:4+--:6*caaK:3+------------------------------------------:7+---------------------------------------:13+--*gttI:20
+ctg_109490	miniprot	mRNA	4015954	4016481	587	+	.	ID=MP000127;Rank=3;Identity=0.4752;Positive=0.4927;StopCodon=1;Target=MuDR-8_SBi 1 343
+ctg_109490	miniprot	CDS	4015954	4016481	587	+	0	Parent=MP000127;Rank=3;Identity=0.4752;StopCodon=1;Target=MuDR-8_SBi 1 343
+##PAF	MuDR-8_SBi	343	0	343	-	ctg_380941	979618	616615	617143	486	1029	0	AS:i:611	ms:i:611	np:i:170	da:i:141	do:i:261	cg:Z:8M3I7M5I4M3I29M1I4M2I31M28I17M12I4M16I15M12I6M2I9M42I8M39I13M2I21M	cs:Z::8+---:7+-----:4+---:16*atcV:3*tgcS:2*agtT:4*cttI+-:4+--:3*aaaN:11*ttaS:10*aatK:4+----------------------------:17+------------:3*aacD+----------------:15+------------:1*tctT:4+--:6*caaK:2+P-----------------------------------------*ctt-:7+---------------------------------------:13+--*tttI:4*aacD:12*aacS:2
+ctg_380941	miniprot	mRNA	616616	617143	611	-	.	ID=MP000128;Rank=4;Identity=0.4723;Positive=0.4956;Target=MuDR-8_SBi 1 343
+ctg_380941	miniprot	CDS	616616	617143	611	-	0	Parent=MP000128;Rank=4;Identity=0.4723;Target=MuDR-8_SBi 1 343
+##PAF	ATMU3	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MuDR-12_VV	343	31	53	-	ctg_261470	1197314	164673	164739	36	66	0	AS:i:69	ms:i:69	np:i:19	da:i:-1	do:i:3	cg:Z:22M	cs:Z::1*gtaY:3*aatD:1*cttM:2*atgL:1*tatF:2*attM*gaaS*actS:1*tccN*aatY:1
+ctg_261470	miniprot	mRNA	164674	164739	69	-	.	ID=MP000129;Rank=1;Identity=0.5455;Positive=0.8636;Target=MuDR-12_VV 32 53
+ctg_261470	miniprot	CDS	164674	164739	69	-	0	Parent=MP000129;Rank=1;Identity=0.5455;Target=MuDR-12_VV 32 53
+##PAF	MuDR4_SM	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MuDR-6_VV	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MUDRAVI2	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MDR2	343	0	139	-	ctg_445664	3632391	1043558	1043852	174	417	0	AS:i:207	ms:i:207	np:i:72	da:i:117	do:i:495	cg:Z:8M3I7M5I4M3I29M1I5M2I6M2I24M25I15M	cs:Z::1*tctA:6+---*cttT:3*atgQ:2+-----:2*gtaT:1+---:1*tccG*tatV:2*gacG*aatL*gcaH:10*aggK:2*aaaT*gatS*agtN:1*ggaE:2*atgI+-*aggN*cttM*gtgL:1*ata-+-N*catK*gttL:3*gaaN+--:4*gtcI:5*cagP:3*agtN*gcgS*gtgI*cagI*gagH*cagI*ataM:1*gggH*tatH+L------------------------*gct-*cctT*ttgI:5*actM:2*cttF*gcgC*cagA:1
+ctg_445664	miniprot	mRNA	1043559	1043852	207	-	.	ID=MP000130;Rank=1;Identity=0.4173;Positive=0.5180;Target=MDR2 1 139
+ctg_445664	miniprot	CDS	1043559	1043852	207	-	0	Parent=MP000130;Rank=1;Identity=0.4173;Target=MDR2 1 139
+##PAF	MuDR2_OS	343	213	229	-	ctg_214995	1427389	748068	748116	27	48	0	AS:i:52	ms:i:52	np:i:13	da:i:-1	do:i:0	cg:Z:16M	cs:Z::1*gaaD*agaE*aggL*cgcT:1*cgaK:2*aacD:3*agcT:2
+ctg_214995	miniprot	mRNA	748069	748116	52	-	.	ID=MP000131;Rank=1;Identity=0.5625;Positive=0.8125;Target=MuDR2_OS 214 229
+ctg_214995	miniprot	CDS	748069	748116	52	-	0	Parent=MP000131;Rank=1;Identity=0.5625;Target=MuDR2_OS 214 229
+##PAF	MuDR-3_SBi	343	0	343	-	ctg_435438	2356222	1366287	1366827	507	1029	0	AS:i:588	ms:i:588	np:i:174	da:i:-1	do:i:162	cg:Z:8M3I7M5I4M3I29M1I4M2I7M2I25M25I17M12I4M16I15M12I6M2I13M39I7M39I12M2I22M	cs:Z::8+---:7+-----:4+---:29+-:4+--:6*gaaH+--:14*aatS:10+-------------------------:12*cagE:4+------------:3*tcgT+----------------:10*tgcA:4+------------:1*atgP*caaF:3+--:13+---------------------------------------:3*atcL*acaL:2+---------------------------------------*cttM:11+N-*att-:21
+ctg_435438	miniprot	mRNA	1366288	1366827	588	-	.	ID=MP000132;Rank=1;Identity=0.4927;Positive=0.5073;Target=MuDR-3_SBi 1 343
+ctg_435438	miniprot	CDS	1366288	1366827	588	-	0	Parent=MP000132;Rank=1;Identity=0.4927;Target=MuDR-3_SBi 1 343
+##PAF	MuDR-9_SBi	343	0	343	-	ctg_108997	2494627	1090923	1230244	414	1029	0	AS:i:465	ms:i:482	np:i:159	da:i:132	do:i:702	cg:Z:8M3I6M6I5M2I32M3I8M2I25M25I17M12I4M16I15M12I6M2I13M39I37M138667U21M2I21M	cs:Z:*ataV:7+---:1*gacG:4+T-----*gtgL*ttgM:1*atgA*gct-+--:5*aagE*gacN:4*atgL:3*attL:13*gct-*catR:1+LR-*cag-*ataL:6+--*caaR:3*atgL*acaI:6*cttI:4*gaaG:3*gaaD:1*ctcH:1+-------------------------:17+------------:4+----------------:3*tctA:2*gtgL:1*gcaE:2*tgtN*gtcK:2+------------:1*cgtH:2*ctaK:1+--*gaaT*aagM*caaA:2*gatQ*aggK:1*ctaM:2*gaaA:1+---------------------------------------:4*gaaD*aggQ:1*atg-*gaa-*cac-*aaa-*gcc-*aag-*tgg-*gca-*ttg-*gca-*tat-*gat-*gtt-*ggt-*ggc-*tat-*agg-*tat-*ggc-*atc-*atg-*aca-*atg-*aac-*gct-*tcc-*gag-*tct-*ttc-*aat-*c-~gt138664ag-ag*gct-*aag-*gaa-*tgg-*cta-*gaa-*aac-*cag-:1*gcaE*gatN:10+--:2*tacF:1*tggY:1*ttcI:14
+ctg_108997	miniprot	mRNA	1090924	1230244	482	-	.	ID=MP000133;Rank=1;Identity=0.4023;Positive=0.4636;Target=MuDR-9_SBi 1 343
+ctg_108997	miniprot	CDS	1229716	1230244	345	-	0	Parent=MP000133;Rank=1;Identity=0.3645;Target=MuDR-9_SBi 1 298
+ctg_108997	miniprot	CDS	1090924	1091051	137	-	2	Parent=MP000133;Rank=1;Identity=0.6591;Target=MuDR-9_SBi 299 343
+##PAF	MuDR-9_SBi	343	0	343	+	ctg_465414	1826411	48504	49044	420	1029	0	AS:i:481	ms:i:481	np:i:160	da:i:-1	do:i:117	cg:Z:8M3I7M5I4M3I32M3I8M2I25M25I17M12I4M16I15M12I6M2I13M39I7M39I12M2I22M	cs:Z:*ataV:7+---:6*gtgT+-----:4+---:2*attV:3*gacN:3*gcaP*atgL:3*attL*gttA:5*gagD:6*gct-*catR*gttL+LR-*cgg-*ataL:6+--:4*atgL:7*cttI:3*acaA*gaaG:3*gaaD:1*ctcH:1+-------------------------:17+------------:4+----------------:3*tctA:2*gtcL:1*gcaE:2*tgtN*gttK:2+------------:4*ctaK:1+--*gaaT*aagM*caaA:2*gatQ*aggK:1*ctaM:2*gaaA:1+---------------------------------------:4*gaaD*aggQ:1+---------------------------------------:2*cacN:9+E-*gca-:2*tatF:8*gctS:8*acaK
+ctg_465414	miniprot	mRNA	48505	49044	481	+	.	ID=MP000134;Rank=2;Identity=0.4082;Positive=0.4665;Target=MuDR-9_SBi 1 343
+ctg_465414	miniprot	CDS	48505	49044	481	+	0	Parent=MP000134;Rank=2;Identity=0.4082;Target=MuDR-9_SBi 1 343
+##PAF	MuDR-9_SBi	343	0	343	+	ctg_130135	1846887	180147	180687	423	1029	0	AS:i:480	ms:i:480	np:i:161	da:i:132	do:i:369	cg:Z:8M3I7M5I4M3I32M3I8M2I25M25I17M12I4M16I15M12I6M2I13M39I7M39I12M2I22M	cs:Z:*ataV:7+---:6*gtgT+-----:4+---:6*gacN:4*atgL:3*attL:13*gct-*catR:1+LR-*cgg-*ataL:6+--:4*atgL:7*cttI:4*gaaG:3*gaaD:1*ctcH:1+-------------------------:17+------------:4+----------------:3*tctA:2*gtcL:1*gcaE:2*tgtN*gtcK*tggR:1+------------:4*ctaK:1+--*gaaT*aagM*caaA:2*gatQ*aggK:1*ctaM:1*aaaR*gaaA:1+---------------------------------------:4*gaaD*aggQ:1+---------------------------------------:2*cacN:2*gagK:6+E-*gca-:2*tatF:6*atgT:1*gctS:1*aagE:6*acaK
+ctg_130135	miniprot	mRNA	180148	180687	480	+	.	ID=MP000135;Rank=3;Identity=0.4111;Positive=0.4694;Target=MuDR-9_SBi 1 343
+ctg_130135	miniprot	CDS	180148	180687	480	+	0	Parent=MP000135;Rank=3;Identity=0.4111;Target=MuDR-9_SBi 1 343
+##PAF	MuDR-9_SBi	343	0	343	-	ctg_246090	2534368	2057508	2058048	426	1029	0	AS:i:478	ms:i:478	np:i:159	da:i:132	do:i:492	cg:Z:8M3I7M5I4M3I32M3I6M2I27M25I17M12I4M16I15M12I6M2I13M39I7M39I12M2I22M	cs:Z:*ataV:7+---:6*gtgT+-----:4+---:6*gacN:4*atgL:3*attL:13*gct-*catR:1+LR-*cag-*ataL:4+PS*ctg-*tat-:4*atgL:1*tttS:5*cttI:4*gaaG:3*gaaD:1*ctcH:1+-------------------------:17+------------:4+----------------:3*tctA:2*gtcL:1*gctE:2*tgtN*gtcK:2+------------:1*cgtH:2*ctaK:1+--*gaaT*aagM*caaA:2*gatQ*aggK:1*ctaM:2*gaaA:1+---------------------------------------:4*gaaD*aggQ:1+---------------------------------------:2*cacN:9+E-*gca-:2*tatF:8*aatS:8*acaK
+ctg_246090	miniprot	mRNA	2057509	2058048	478	-	.	ID=MP000136;Rank=4;Identity=0.4140;Positive=0.4636;Target=MuDR-9_SBi 1 343
+ctg_246090	miniprot	CDS	2057509	2058048	478	-	0	Parent=MP000136;Rank=4;Identity=0.4140;Target=MuDR-9_SBi 1 343
+##PAF	VANDAL14	343	0	97	-	ctg_195266	4472192	3110750	3157202	93	291	0	AS:i:77	ms:i:106	np:i:42	da:i:-1	do:i:294	cg:Z:9M3I5M8I42M4I8M46209N6M1I11M	cs:Z::1*cttV*ttcI:2*actA*ttcH:1*acc-+--K:3*aggG:1+C-----LL*gtgT*ttgA*atg-*atg-*gat-*gccS*gctG*gttQ:1*cctA*aagN*gacF:1*ataV*gtaF:1*atgI:2*gcgG*attV*gctV*gaaD*ggtS:2*aatD*gagD*tcaA:1*tctE:2*atgF*tct-*catR*cttV*cggL*ataS*cat-*gtg-*cttT+AIPD:1*ccgD*tct-*cga-*aca-*attN*tgcL*atgT~gt46209ag:1*cgcV*cgaS*ctgD*ttaR:1+S:1*gtgI:9
+ctg_195266	miniprot	mRNA	3110751	3157202	106	-	.	ID=MP000137;Rank=1;Identity=0.3196;Positive=0.4330;Target=VANDAL14 1 97
+ctg_195266	miniprot	CDS	3157011	3157202	57	-	0	Parent=MP000137;Rank=1;Identity=0.2405;Target=VANDAL14 1 79
+ctg_195266	miniprot	CDS	3110751	3110801	49	-	0	Parent=MP000137;Rank=1;Identity=0.6667;Target=VANDAL14 80 97
+##PAF	CUMULE	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MULE-2_Cglob	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MULE-1_Cglob	343	0	0	*	*	0	0	0	0	0	0
+##PAF	Hop	343	0	0	*	*	0	0	0	0	0	0
+##PAF	MuDR-4_SBi	343	0	343	+	ctg_273930	3118726	3104718	3105246	483	1029	0	AS:i:566	ms:i:555	np:i:168	da:i:27	do:i:912	cg:Z:8M3I7M5I4M3I29M1I4M2I7M3I21M28I17M12I4M16I14M13I6M2I14M37I1M1I6M39I12M2I22M	cs:Z::8+---:7+-----:4+---:20*tgcR*actA:3*gtaI:3+-:4+--:7+---:3*ataV:17+----------------------------:17+------------:4+----------------*ggcN:6*gcgT:6+-------------:6+--:6*tgtS:1*ttcY*cagE:4+-------------------------------------*aca-+R*gatE:5+---------------------------------------:2*agtN:6*ggtA:2+R-*tat-:7*aaaR:13
+ctg_273930	miniprot	mRNA	3104719	3105246	555	+	.	ID=MP000138;Rank=1;Identity=0.4694;Positive=0.4898;Target=MuDR-4_SBi 1 343
+ctg_273930	miniprot	CDS	3104719	3105246	555	+	0	Parent=MP000138;Rank=1;Identity=0.4694;Target=MuDR-4_SBi 1 343
+##PAF	MuDR-8_ZM	343	0	343	+	ctg_518609	409042	253070	254222	372	1029	0	AS:i:386	ms:i:421	np:i:151	da:i:33	do:i:66	cg:Z:8M3I7M5I4M3I29M1I4M5I13M603U14M28I18M12I8M8I20M12I4M2I12M39I8M39I13M2I21M	cs:Z::8+---:2*ttaM:1*gaaD:2+-----:1*gccG:2+---:2*gcgS:3*atgL:5*gccG*attF:7*atcV*gagD:6+-*aagN:3+--TCM*aacG:1*atgD:1*gga-*aaa-*gac-:1*acaR*tgcV*attM:2*gD~gt600ag-ac:8*atcL*aaaG*accR:3+----------------------------:1*gctT:9*ctcQ:2*ttcY*cagM*gcgP*ctg-+-----------H:8+EDM-----*ttc-*aag-*caa-*aatD:2*gagT*aagR*tggF*cacQ:1*gtcI:5*acaN*atg-*ggt-+----------EM:4+--:2*aaaQ:1*ctgM*ataL:1*gagD:1*gagQ:2+E--------------------------------------*gca-*gacN*ccgN:2*aaaA*gtaR:1+---------------------------------------:1*gacE*atgI:1*tcaK*gagD:4*tatF:2+--*gatG:4*atgL:1*atcV:7*gtgM:1*aacK*attL:2
+ctg_518609	miniprot	mRNA	253071	254222	421	+	.	ID=MP000139;Rank=1;Identity=0.3615;Positive=0.4402;Target=MuDR-8_ZM 1 343
+ctg_518609	miniprot	CDS	253071	253266	207	+	0	Parent=MP000139;Rank=1;Identity=0.5783;Target=MuDR-8_ZM 1 82
+ctg_518609	miniprot	CDS	253867	254222	214	+	2	Parent=MP000139;Rank=1;Identity=0.2923;Target=MuDR-8_ZM 83 343
+##PAF	MuDR-6_SBi	343	0	343	-	ctg_333240	5935945	2508763	2516702	456	1029	0	AS:i:517	ms:i:546	np:i:164	da:i:-1	do:i:189	cg:Z:8M3I7M5I4M3I29M1I4M2I7M3I21M28I17M12I8M10I17M12I5M2I14M39I43M7279N1I15M2I21M	cs:Z::8+---:7+-----:1*acaA:2+---:6*accA:22+-:4+--*cctD:3*aggG*atgI:1+---:17*gagQ:3+----------------------------*ggtS*gctT:10*accS:2*tatC:1+------------:2*gcaG:3*aaaR:1+NP--------*acc-*gag-*gatE:2*gagD:7*tcgF*gcaT:2+------------:4*aagE+T-*atg-:4*ttaI*gagG:2*catY*cagD*ttgM:1*gaaS+---------------------------------------:7*acc-*tcc-*acc-*aaa-*gaa-*atg-*tgg-*gca-*cct-*aca-*tat-*ttc-*aag-*aag-*tgc-*ttc-*ttt-*cct-*ttc-*aca-*agc-*aca-*atg-*ggc-*aga-*tct-*gag-*agt-*atg-*aat-*gcc-*ttg-*ttc-*aag-*aaa-*atg-~gt7279ag+-*aac-*atg-*accS:3*gaaS:4*acaA:3+--:19*tacF:1
+ctg_333240	miniprot	mRNA	2508764	2516702	546	-	.	ID=MP000140;Rank=1;Identity=0.4431;Positive=0.4781;Target=MuDR-6_SBi 1 343
+ctg_333240	miniprot	CDS	2516151	2516702	404	-	0	Parent=MP000140;Rank=1;Identity=0.4013;Target=MuDR-6_SBi 1 304
+ctg_333240	miniprot	CDS	2508764	2508871	142	-	0	Parent=MP000140;Rank=1;Identity=0.7692;Target=MuDR-6_SBi 305 343
+##PAF	MuDR-6_SBi	343	0	343	-	ctg_336200	2201800	1589391	1589937	462	1029	0	AS:i:549	ms:i:549	np:i:165	da:i:-1	do:i:84	cg:Z:8M3I7M5I4M3I29M1I4M2I8M3I19M28I18M12I8M10I17M12I5M2I14M39I7M39I13M2I21M	cs:Z::8+---:2*cagR:4+-----:4+---:6*accA:22+-:4+--*catD:4*acgI:1*ctg-+--P:2*gtcI:13*gagQ:2+P---------------------------*ctt-*ggtS*gctT:10*accS:4+------------:2*gcaG:3*aaaR:1+NP--------*acc-*gag-*gatE:10*tcgF:3+------------:5+T-*atg-:4*ttaI*gagG*gcaV:1*catY*cacD*ttgM:1*gaaS+---------------------------------------:1*aatD:5+---------------------------------------*accS:3*gaaS:8+--:21
+ctg_336200	miniprot	mRNA	1589392	1589937	549	-	.	ID=MP000141;Rank=2;Identity=0.4490;Positive=0.4810;Target=MuDR-6_SBi 1 343
+ctg_336200	miniprot	CDS	1589392	1589937	549	-	0	Parent=MP000141;Rank=2;Identity=0.4490;Target=MuDR-6_SBi 1 343
+##PAF	MuDR-6_SBi	343	0	343	+	ctg_350410	837854	620413	620959	450	1029	0	AS:i:542	ms:i:542	np:i:164	da:i:63	do:i:15	cg:Z:8M3I7M5I4M3I29M1I4M2I7M3I20M28I18M12I8M10I17M12I5M2I14M39I7M39I13M2I21M	cs:Z::8+---:7+-----:4+---:6*accA:7*gtgA:14+-:4+--*catD*acaA:3*atgI:1+---:3*gtcI:13*gagQ:2+P---------------------------*tct-:1*gctT:2*aagR:7*aacS:4+------------:2*gcaG:3*aaaR:1+NP--------*acc-*aag-*gatE:1*gtaA*gagD:7*tcgF*gcaT:2+------------:5+T-*atg-:4*ttaI*gagG:2*catY*cagD*ttgM:1*gaaS+---------------------------------------:4*catQ:1*ataM+---------------------------------------*accS:3*gaaS:4*tcaA:3+--:21
+ctg_350410	miniprot	mRNA	620414	620959	542	+	.	ID=MP000142;Rank=3;Identity=0.4373;Positive=0.4781;Target=MuDR-6_SBi 1 343
+ctg_350410	miniprot	CDS	620414	620959	542	+	0	Parent=MP000142;Rank=3;Identity=0.4373;Target=MuDR-6_SBi 1 343
+##PAF	MuDR-6_SBi	343	0	343	+	ctg_309210	3339435	1729210	1729756	459	1029	0	AS:i:541	ms:i:541	np:i:165	da:i:150	do:i:42	cg:Z:8M3I7M5I4M3I29M1I4M2I7M3I21M28I17M12I8M10I17M12I5M2I14M39I7M39I13M2I21M	cs:Z::8+---*atgT:6+-----:4+---:6*accA:10*ctaP:11+-:4+--*catD:4*atgI:1+---:3*gtcI:2*aacD:10*gagQ:3+----------------------------*ggtS*gctT:10*accS:4+------------:2*gcaG:3*aaaR:1+NP--------*acc-*gag-*gatE:2*gagD:7*tcgF*gcaT:2+------------:5+T-*atg-:4*ttaI*gagG:2*catY*cagD*ttgM:1*gaaS+---------------------------------------:7+---------------------------------------*accS:3*gaaS:3*cttP:4+--:21
+ctg_309210	miniprot	mRNA	1729211	1729756	541	+	.	ID=MP000143;Rank=4;Identity=0.4461;Positive=0.4810;Target=MuDR-6_SBi 1 343
+ctg_309210	miniprot	CDS	1729211	1729756	541	+	0	Parent=MP000143;Rank=4;Identity=0.4461;Target=MuDR-6_SBi 1 343
+##PAF	MuDR-5_OS	343	0	343	-	ctg_2621	1207429	33002	33554	297	1029	0	AS:i:258	ms:i:253	np:i:129	da:i:102	do:i:96	cg:Z:8M3I6M5I5M3I30M3I9M3I22M28I17M12I11M8I16M12I5M12I9M32I9M36I16M2I21M	cs:Z:*atcV:6*aacK+---:2*aagR:1*aatD:1+P----*aaa-:3*attF+---:6*gctG:6*gctY:2*atcL*aagQ:3*ataS:3*gagQ:1*ataL:1*caa-+NTF*atgL*atg-*ctt-*agcD:5+V--*cat-:1*aagA:7*atgL:2*agaK:3*aggA*aagI:1*ttgF:1+----------------------------*gggD:1*attV:4*ttcL:2*attM*gtgL*aagS*aaaN:1*cagR*gagD+------------:1*ggtT:2*atcT:1*tcgN*ttgS*aagE*aagD*aacE+--------*gaa-*catE*ctaV:1*gacK:1*ctgF*tttH:2*ctcV*aagT*aacK:1*ttgQ:1+------------:1*cctA:3+Y--LWKDFIRRN*acaN*atgL:1*aaaN*cag-*ttg-*ttc-*acc-*aaa-+--------------------------------*tat-*gaa-:1*aaaR*ggaY:1*aaaQ*tatL*cttM+------------------------------------*gga-*gac-*atg-:1*ctcV*aacT:2*aacR*tttW*gttA:1*ttgV:3+--*aaaS*gatN*ttcW*ttcC:1*ttcL:1*aacQ*tcgT:9*ttgR*ttcY:1
+ctg_2621	miniprot	mRNA	33003	33554	253	-	.	ID=MP000144;Rank=1;Identity=0.2886;Positive=0.3761;Target=MuDR-5_OS 1 343
+ctg_2621	miniprot	CDS	33003	33554	253	-	0	Parent=MP000144;Rank=1;Identity=0.2886;Target=MuDR-5_OS 1 343
+##PAF	Jittery	343	0	343	-	ctg_418583	2257942	1149613	1150162	372	1029	0	AS:i:376	ms:i:365	np:i:146	da:i:144	do:i:483	cg:Z:8M3I7M5I4M3I29M1I5M2I6M3I21M28I17M12I10M10I15M11I1M1I4M2I12M39I9M39I14M1I21M	cs:Z:*attV:6*accS+---:6*aaaR+-----:1*gtgA:2+---:6*ttaM:1*aatR:2*cttF:13*gtaE:2*ttgF+-*aagR:3*aag-+-V:1*ttgM:2*gtaK:1+---:1*catR:2*acaI:6*atgI*attK*gctS:2*gctR*gagT*attT:2+----------------------------:2*actI:2*tttL:6*gatE:2*cctS:1+------------:3*cccH*tctP*ataT:1*aaaH:1*caaK+----------*aatE:1*ttgW*gtaD*agaA:2*aagT:4*accS:1*aatT+-----------*tca-+P*gatE*gatE:2+M-*tca-*caaR:2*tctA*atcL:1*acaD*gatA:3+ES-------------------------------------*atg-*gga-:1*gatE:1*tttL*tctA:2+---------------------------------------*tttY*gccK:6*tcgP*gtaA*tacF:1*ttgM:1+-*ataT:4*atgV:15
+ctg_418583	miniprot	mRNA	1149614	1150162	365	-	.	ID=MP000145;Rank=1;Identity=0.3615;Positive=0.4257;Target=Jittery 1 343
+ctg_418583	miniprot	CDS	1149614	1150162	365	-	0	Parent=MP000145;Rank=1;Identity=0.3615;Target=Jittery 1 343
+##PAF	MUMET1	343	0	343	-	ctg_524641	977140	961195	961806	300	1041	0	AS:i:235	ms:i:235	np:i:133	da:i:6	do:i:105	cg:Z:7M3I8M8I33M2G1I3M2I7M3I20M28I18M2I44M12I8M3I7M40I9M39I14M2I17M4D4M	cs:Z:*ttaV*gttS*ttcL:3*tttY+C--*gga-:2*aagY*gagA*agcN:2+-----LAF:1*gga-*gtc-*ttt-*gttS:4*ttcY:1*gaaG*gcaS:1*gttI:10*tttS*cagE:2*aaaR:3*ga-+D:3+--*aaaQ:3*ggaN:1*caaK+---:3*ttcI*tatF:4*ggtQ:2*ggaA*aagR:3*gaaD:1*tttM+P---------------------------*aca-:1*gcaT*tggH:5*tttW:1*attL*atgL:2*gctG*ttgV:1+--*cat-*cta-*cat-*gaa-*gag-*aag-*gat-*gaa-*gag-*aag-*aatH*gaaL:1*aagN*gaaM*aagM:1*aagG:1*aaaS*gtg-*aag-*aat-*gat-*gag-*gac-*aac-*gaa-*gac-*aca-:1*attL:2*gaaD*tttI*agtK*gcaK:2*tttY*gaaD*tatI:1+I-----------*gac-*ataE:1*gaaN:1*gatE*cagK*aaa-+-LW:2*ctcM*ttgI*aggH*agcK*atgF+NIHD------------------------------------*gtg-*aca-*aag-*caaK*gctS:1*ctgI*aatI:1+T--------------------------------------*ata-:1*aagE:2*gaaK:3*gaaS:4+--*gatG:1*tgcL:6*tcaT:1*ttgV:5-aatgatttgaaa*atcA:3
+ctg_524641	miniprot	mRNA	961196	961806	235	-	.	ID=MP000146;Rank=1;Identity=0.2882;Positive=0.3833;Frameshift=1;Target=MUMET1 1 343
+ctg_524641	miniprot	CDS	961196	961806	235	-	0	Parent=MP000146;Rank=1;Identity=0.2882;Frameshift=1;Target=MUMET1 1 343
+##PAF	MUJITOS2	343	0	343	+	ctg_348591	581704	456829	457458	411	1029	0	AS:i:408	ms:i:452	np:i:156	da:i:27	do:i:405	cg:Z:8M3I7M5I4M3I29M1I4M2I7M3I20M28I18M12I15M59V19M12I6M2I13M39I7M39I10M3I23M	cs:Z::7*caaD+---:3*tttC:3+-----:3*attL+---:2*tgcT:10*tgtA:2*ataL:1*gatN*gagQ:9+-:4+--:7+---:20+R---------------------------*cca-:2*gctS:8*tgcY:2*gctG*gctG:1+------------*catN:1*ggtS:3*aatH*gctK*tcaH*aaaP:1*aag-*ttg-*aag-*ggc-*aa-~gt56ag-a*cat-*gta-*gat-*aac-:2*tggL:1*gaaD:2*agtR:1*atcV:4*gcaS+------------:1*attY:2*acaN*cagK+--*aaaM:5*gctS*aagE:1*aaaN:2*aacD+---------------------------------------:1*tcaK:1*atgI*gaaS:2+---------------------------------------:1*ggtK:2*gcaE:3*gcg-*gtaI+VFR*tac-*cgt-*gacN:5*atgI*aacT:11*tttY:1
+ctg_348591	miniprot	mRNA	456830	457458	452	+	.	ID=MP000147;Rank=1;Identity=0.3994;Positive=0.4548;Target=MUJITOS2 1 343
+ctg_348591	miniprot	CDS	456830	457167	325	+	0	Parent=MP000147;Rank=1;Identity=0.5235;Target=MUJITOS2 1 169
+ctg_348591	miniprot	CDS	457224	457458	127	+	1	Parent=MP000147;Rank=1;Identity=0.2775;Target=MUJITOS2 170 343
+##PAF	MUJITOS2	343	0	343	-	ctg_454412	1134816	119039	119585	420	1029	0	AS:i:470	ms:i:470	np:i:162	da:i:27	do:i:366	cg:Z:8M3I7M5I4M3I29M1I4M2I7M3I21M28I17M12I11M9I17M11I5M3I12M39I7M39I10M3I23M	cs:Z::7*cagD+---*agtT:2*tttC:3+-----:3*atcL+---:16*ataL:2*gagQ:9+-*caaE:3+--*caaT:6+---:13*ggaA:3*tatF:2*aaaR+----------------------------:8*tttW:3*gttL:1*gctG*gctG:1+------------*catN:1*gggS:1*ataV:2*gagK:2*gatN+---------:3*ccaA*gctD:10*gaa-*gct-+----------E*attY*ttcY*atcF*cagN:1+--M:1*aatH:9*gagD+---------------------------------------:1*gaaK:1*atgI*aaaS:2+---------------------------------------:1*gatK:6*gct-*gtcI+VFR*tac-*cgc-*gacN:5*atgI*aacT:11*tttY:1
+ctg_454412	miniprot	mRNA	119040	119585	470	-	.	ID=MP000148;Rank=2;Identity=0.4082;Positive=0.4723;Target=MUJITOS2 1 343
+ctg_454412	miniprot	CDS	119040	119585	470	-	0	Parent=MP000148;Rank=2;Identity=0.4082;Target=MUJITOS2 1 343
+##PAF	MUJITOS2	343	0	343	+	ctg_304906	4292944	2100569	2101115	417	1029	0	AS:i:467	ms:i:467	np:i:162	da:i:27	do:i:375	cg:Z:8M3I6M5I5M3I29M1I4M2I7M3I21M28I17M12I11M9I15M11I7M3I11M39I8M39I10M3I23M	cs:Z:*atcV:6*caaD+---:3*tttC:2+P----*tca-:3*tttL+---*gttL:15*ataL:2*gagQ:9+-*caaE:3+--:1*ataA:5+---:13*ggaA:2*tctA*tatF:3+----------------------------:14*gctG*gctG:1+------------*catN:1*aacS:3*cagH:3*gagN+---------:3*tctA*aatD:10+-----------*gaa-*gatE*ataY*tttY*atcF*cagN:1+--M:1*cgtH:4*aagE:1*gacN:2+D--------------------------------------*aag-:1*caaK:1*atgI*gcaS:2+---------------------------------------:1*gatK:2*aaaE:3*att-*gtcI+VFR*tac-*cat-*gacN:5*atgI:12*ttcY:1
+ctg_304906	miniprot	mRNA	2100570	2101115	467	+	.	ID=MP000149;Rank=3;Identity=0.4052;Positive=0.4723;Target=MUJITOS2 1 343
+ctg_304906	miniprot	CDS	2100570	2101115	467	+	0	Parent=MP000149;Rank=3;Identity=0.4052;Target=MUJITOS2 1 343
+##PAF	MUJITOS2	343	0	343	-	ctg_143643	2957696	1527644	1528190	423	1029	0	AS:i:462	ms:i:462	np:i:159	da:i:27	do:i:102	cg:Z:8M3I7M5I4M3I29M1I4M2I7M3I20M28I18M12I11M9I15M12I6M2I13M39I7M39I10M3I23M	cs:Z::1*acaS:5*cagD+---:3*tttC:3+-----:3*atcL+---:13*gttA*gtcA:1*attL:2*gagQ:9+-:4+--:7+---:13*ggaA:3*tatF:2+R---------------------------*cca-:8*tttW:3*gttL:1*gctG*gctG:1+------------*catN:1*ggcS:7*gagN+---------:3*ccaA*gctD:10+------------:1*gctY*attY:1*atcN:1+--*aaaM:1*aatH:6*gacN:3+---------------------------------------:1*caaK:1*atgI*caaS:2+---------------------------------------*tttY*gagK*tcgL:5*gct-*gtcI+VFR*tat-*cgc-:1*gctS:4*atgI*aatT:7*acgM:3*tttY:1
+ctg_143643	miniprot	mRNA	1527645	1528190	462	-	.	ID=MP000150;Rank=4;Identity=0.4111;Positive=0.4636;Target=MUJITOS2 1 343
+ctg_143643	miniprot	CDS	1527645	1528190	462	-	0	Parent=MP000150;Rank=4;Identity=0.4111;Target=MUJITOS2 1 343
+##PAF	MUJITOS2	343	0	343	-	ctg_531982	984195	366670	367216	414	1029	0	AS:i:462	ms:i:462	np:i:160	da:i:27	do:i:366	cg:Z:8M3I7M5I4M3I29M1I4M2I7M3I21M28I17M12I11M9I17M11I5M3I12M39I7M39I10M3I23M	cs:Z::7*cagD+---:3*tttC:3+-----:3*atcL+---:2*atcT:13*ataL:2*gagQ:9+-*caaE:3+--*caaT:6+---:13*ggaA:3*tatF*ataV:1*aaaR+----------------------------:4*catR:3*tttW:3*gttL:1*gctG*gctG:1+------------*catN:1*gggS:1*ataV:2*gagK:2*gatN+---------:3*ccaA*gctD:10*gaa-*gct-+----------E*attY*ttcY*atcF*caaN:1+--M:1*aatH:9*gagD+---------------------------------------:1*gaaK:1*atgI*aaaS:2+---------------------------------------:1*gatK:6*gct-*gtcI+VFR*tac-*cgc-*gacN:5*atgI*aacT:11*tttY:1
+ctg_531982	miniprot	mRNA	366671	367216	462	-	.	ID=MP000151;Rank=5;Identity=0.4023;Positive=0.4665;Target=MUJITOS2 1 343
+ctg_531982	miniprot	CDS	366671	367216	462	-	0	Parent=MP000151;Rank=5;Identity=0.4023;Target=MUJITOS2 1 343
+##PAF	MUJITOS2	343	0	343	+	ctg_225175	2106284	2053218	2053764	414	1029	0	AS:i:455	ms:i:455	np:i:159	da:i:27	do:i:366	cg:Z:8M3I7M5I4M3I29M1I4M2I7M3I21M28I17M12I11M9I17M11I5M3I12M39I7M39I10M3I23M	cs:Z::7*cagD+---:3*tttC:3+-----:3*atcL+---:1*gaaG:11*actA:2*ataL*ttaF:1*gagQ:9+-*caaE:3+--*caaT:6+---:13*gaaA:3*tatF:2*aaaR+----------------------------:8*tttW:3*gttL:1*gctG*gctG:1+------------*catN:1*gggS:1*ataV:2*gagK:2*gatN+---------:3*ccaA*gctD:10*gaa-*gct-+----------E*attY*ttcY*atcF*cagN:1+--M:1*aatH:9*gagD+---------------------------------------:1*gaaK:1*atgI*aaaS:2+---------------------------------------:1*gatK:6*gct-*gtcI+VFR*tac-*cgc-*gacN:5*atgI*aacT:11*tttY:1
+ctg_225175	miniprot	mRNA	2053219	2053764	455	+	.	ID=MP000152;Rank=6;Identity=0.4023;Positive=0.4636;Target=MUJITOS2 1 343
+ctg_225175	miniprot	CDS	2053219	2053764	455	+	0	Parent=MP000152;Rank=6;Identity=0.4023;Target=MUJITOS2 1 343
+##PAF	MUJITOS2	343	0	343	-	ctg_80669	4776052	3508952	3509498	423	1029	0	AS:i:474	ms:i:474	np:i:162	da:i:27	do:i:192	cg:Z:8M3I7M5I4M3I29M1I4M2I7M3I21M28I17M12I11M9I17M11I5M3I12M39I7M39I10M3I23M	cs:Z::7*cagD+---:3*tttC:3+-----:3*atcL+---:16*ataL:2*gagQ:9+-*caaE:3+--*caaT:6+---:13*ggaA:3*tatF:2*aaaR+----------------------------:8*tttW:3*gttL:1*gctG*gctG:1+------------*catN:1*gggS:1*ataV:2*gagK:2*gatN+---------:3*ccaA*gctD:10*gaa-*gct-+----------E*attY*ttcY*atcF*cagN:1+--M:1*aatH:9*gagD+---------------------------------------:1*gaaK:1*atgI*aaaS:2+---------------------------------------:1*gatK:6*gct-*gtcI+VFR*tac-*cgc-*gacN:5*atgI*aacT:11*tttY:1
+ctg_80669	miniprot	mRNA	3508953	3509498	474	-	.	ID=MP000153;Rank=7;Identity=0.4111;Positive=0.4723;Target=MUJITOS2 1 343
+ctg_80669	miniprot	CDS	3508953	3509498	474	-	0	Parent=MP000153;Rank=7;Identity=0.4111;Target=MUJITOS2 1 343
+##PAF	MULE-1_CapOwc	343	0	0	*	*	0	0	0	0	0	0
+##PAF	Rehavkus-3_TC	343	0	0	*	*	0	0	0	0	0	0
+##PAF	Rehavkus-1_HR	343	0	0	*	*	0	0	0	0	0	0
+##PAF	Rehavkus-1_TC	343	151	170	+	ctg_21523	1603894	441291	441348	24	57	0	AS:i:50	ms:i:50	np:i:15	da:i:33	do:i:192	cg:Z:19M	cs:Z::1*accS*agcN*accK:1*gtgQ*ttcK*gtcK:1*tacF*cggK:2*gtgI:2*atcV:1*ttgM
+ctg_21523	miniprot	mRNA	441292	441348	50	+	.	ID=MP000154;Rank=1;Identity=0.4211;Positive=0.7895;Target=Rehavkus-1_TC 152 170
+ctg_21523	miniprot	CDS	441292	441348	50	+	0	Parent=MP000154;Rank=1;Identity=0.4211;Target=Rehavkus-1_TC 152 170
+##PAF	Rehavkus-2_NVi	343	219	235	+	ctg_397822	2333225	1260635	1260683	24	48	0	AS:i:38	ms:i:38	np:i:13	da:i:-1	do:i:114	cg:Z:16M	cs:Z::1*ggtY:1*ccaF*cctN:2*atcV:1*cagE*cgaK:1*caaE:2*aatD
+ctg_397822	miniprot	mRNA	1260636	1260683	38	+	.	ID=MP000155;Rank=1;Identity=0.5000;Positive=0.8125;Target=Rehavkus-2_NVi 220 235
+ctg_397822	miniprot	CDS	1260636	1260683	38	+	0	Parent=MP000155;Rank=1;Identity=0.5000;Target=Rehavkus-2_NVi 220 235
+##PAF	Rehavkus-2_NVi	343	219	235	+	ctg_115361	2400685	1201411	1201459	24	48	0	AS:i:38	ms:i:38	np:i:13	da:i:-1	do:i:114	cg:Z:16M	cs:Z::1*ggtY:1*ccaF*cctN:2*atcV:1*cagE*cgaK:1*caaE:2*aatD
+ctg_115361	miniprot	mRNA	1201412	1201459	38	+	.	ID=MP000156;Rank=2;Identity=0.5000;Positive=0.8125;Target=Rehavkus-2_NVi 220 235
+ctg_115361	miniprot	CDS	1201412	1201459	38	+	0	Parent=MP000156;Rank=2;Identity=0.5000;Target=Rehavkus-2_NVi 220 235
+##PAF	Rehavkus-1_DY	343	0	0	*	*	0	0	0	0	0	0
+##PAF	Rehavkus1_AP	423	11	38	-	ctg_395357	2411093	17240	17324	36	84	0	AS:i:47	ms:i:47	np:i:18	da:i:-1	do:i:21	cg:Z:12M1D15M	cs:Z::2*ccaK:1*acaF*atcG*accM*aagN:1*aagT:1*tcaT-aaa*gtgI*gctY*aacL*actY:2*atgL*ataV*ttcY*aacD:5
+ctg_395357	miniprot	mRNA	17241	17324	47	-	.	ID=MP000157;Rank=1;Identity=0.4286;Positive=0.6429;Target=Rehavkus1_AP 12 38
+ctg_395357	miniprot	CDS	17241	17324	47	-	0	Parent=MP000157;Rank=1;Identity=0.4286;Target=Rehavkus1_AP 12 38
+##PAF	Novosib-1_EmiHux	316	0	0	*	*	0	0	0	0	0	0
+##PAF	Novosib-6_CR	316	0	0	*	*	0	0	0	0	0	0
+##PAF	Novosib-5_CR	316	68	85	+	ctg_301888	2455057	591032	591083	24	51	0	AS:i:29	ms:i:38	np:i:12	da:i:-1	do:i:369	cg:Z:17M	cs:Z:*acaS:3*acgS*tcgT*acgS:4*cgaA*gcaG*accR*gccG*agcG:1
+ctg_301888	miniprot	mRNA	591033	591083	38	+	.	ID=MP000158;Rank=1;Identity=0.4706;Positive=0.7059;Target=Novosib-5_CR 69 85
+ctg_301888	miniprot	CDS	591033	591083	38	+	0	Parent=MP000158;Rank=1;Identity=0.4706;Target=Novosib-5_CR 69 85
+##PAF	Novosib-3_CR	316	7	18	-	ctg_365851	234049	103609	103642	21	33	0	AS:i:29	ms:i:46	np:i:11	da:i:0	do:i:297	cg:Z:11M	cs:Z:*atgL:4*acaS*gttI:3*caaE
+ctg_365851	miniprot	mRNA	103610	103642	46	-	.	ID=MP000159;Rank=1;Identity=0.6364;Positive=1.0000;Target=Novosib-3_CR 8 18
+ctg_365851	miniprot	CDS	103610	103642	46	-	0	Parent=MP000159;Rank=1;Identity=0.6364;Target=Novosib-3_CR 8 18
+##PAF	Novosib-1_CR	396	0	0	*	*	0	0	0	0	0	0
+##PAF	P-1_TV	449	276	288	+	ctg_95735	2032919	1101436	1101472	24	36	0	AS:i:50	ms:i:50	np:i:12	da:i:84	do:i:42	cg:Z:12M	cs:Z::3*agtT*gtgI:2*gtaI:3*cgtK
+ctg_95735	miniprot	mRNA	1101437	1101472	50	+	.	ID=MP000160;Rank=1;Identity=0.6667;Positive=1.0000;Target=P-1_TV 277 288
+ctg_95735	miniprot	CDS	1101437	1101472	50	+	0	Parent=MP000160;Rank=1;Identity=0.6667;Target=P-1_TV 277 288
+##PAF	P-2_TV	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P3_AG	449	388	400	-	ctg_490372	1182078	1164644	1164680	9	36	0	AS:i:38	ms:i:38	np:i:12	da:i:-1	do:i:126	cg:Z:12M	cs:Z:*cttV*gtcI:1*cgaK:1*acgS*atgL*gagQ*gtcI*tatF*gagQ:1
+ctg_490372	miniprot	mRNA	1164645	1164680	38	-	.	ID=MP000161;Rank=1;Identity=0.2500;Positive=1.0000;Target=P3_AG 389 400
+ctg_490372	miniprot	CDS	1164645	1164680	38	-	0	Parent=MP000161;Rank=1;Identity=0.2500;Target=P3_AG 389 400
+##PAF	P_DM_Q7M3K2	449	176	196	-	ctg_453324	1237395	895041	895101	30	60	0	AS:i:42	ms:i:52	np:i:14	da:i:-1	do:i:63	cg:Z:20M	cs:Z::2*aacD*aatD:3*gtaI:3*tacS*ctcD*ggaT*tctP:1*cgtL*gtcI*atgK:1
+ctg_453324	miniprot	mRNA	895042	895101	52	-	.	ID=MP000162;Rank=1;Identity=0.5000;Positive=0.7000;Target=P_DM_Q7M3K2 177 196
+ctg_453324	miniprot	CDS	895042	895101	52	-	0	Parent=MP000162;Rank=1;Identity=0.5000;Target=P_DM_Q7M3K2 177 196
+##PAF	P-2_HM	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P1_Cis	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P-1_AP	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P-1_Aplcal	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P-32_HM	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P-3_AP	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P-15_HM	449	0	0	*	*	0	0	0	0	0	0
+##PAF	PROTOP	449	267	278	-	ctg_67453	5105363	1514321	1514354	24	33	0	AS:i:34	ms:i:46	np:i:11	da:i:-1	do:i:60	cg:Z:11M	cs:Z:*agtT:1*tatF:2*cttM:5
+ctg_67453	miniprot	mRNA	1514322	1514354	46	-	.	ID=MP000163;Rank=1;Identity=0.7273;Positive=1.0000;Target=PROTOP 268 278
+ctg_67453	miniprot	CDS	1514322	1514354	46	-	0	Parent=MP000163;Rank=1;Identity=0.7273;Target=PROTOP 268 278
+##PAF	Galileo_DB	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P-7_HM	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P-3_Hrobusta	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P-6_HM	449	93	117	-	ctg_397822	2333225	1601057	1601129	30	72	0	AS:i:51	ms:i:51	np:i:15	da:i:-1	do:i:48	cg:Z:24M	cs:Z::1*aaa-*aaaN*gctL:1*aatS*tccD*accF*gatQ*cacQ*cccE:1*atcC:2*gttI*atcV:3*caaE:2*ctgM
+ctg_397822	miniprot	mRNA	1601058	1601129	51	-	.	ID=MP000164;Rank=1;Identity=0.4167;Positive=0.6250;Target=P-6_HM 94 117
+ctg_397822	miniprot	CDS	1601058	1601129	51	-	0	Parent=MP000164;Rank=1;Identity=0.4167;Target=P-6_HM 94 117
+##PAF	P-3_HM	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P-1_AllMac	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P-1_AurAno	449	192	208	-	ctg_273140	3370868	757333	757381	27	48	0	AS:i:47	ms:i:47	np:i:13	da:i:-1	do:i:327	cg:Z:16M	cs:Z:*attL*gtgI:1*tccT:5*acaS:2*gatG*gaaT*ggtD:1
+ctg_273140	miniprot	mRNA	757334	757381	47	-	.	ID=MP000165;Rank=1;Identity=0.5625;Positive=0.8125;Target=P-1_AurAno 193 208
+ctg_273140	miniprot	CDS	757334	757381	47	-	0	Parent=MP000165;Rank=1;Identity=0.5625;Target=P-1_AurAno 193 208
+##PAF	P-1_CR	449	0	0	*	*	0	0	0	0	0	0
+##PAF	P-2_CR	529	191	206	+	ctg_421122	2168331	1158987	1159032	30	45	0	AS:i:52	ms:i:52	np:i:12	da:i:-1	do:i:54	cg:Z:15M	cs:Z::1*gcaL*catI*gctK:1*cttM:5*cgaK:3
+ctg_421122	miniprot	mRNA	1158988	1159032	52	+	.	ID=MP000166;Rank=1;Identity=0.6667;Positive=0.8000;Target=P-2_CR 192 206
+ctg_421122	miniprot	CDS	1158988	1159032	52	+	0	Parent=MP000166;Rank=1;Identity=0.6667;Target=P-2_CR 192 206
+##PAF	IS4EU-1_AA	200	0	0	*	*	0	0	0	0	0	0
+##PAF	IS4EU-2_DR	200	0	0	*	*	0	0	0	0	0	0
+##PAF	ISL2EU-5_HM	200	0	0	*	*	0	0	0	0	0	0
+##PAF	ISL2EU-4_HM	200	0	0	*	*	0	0	0	0	0	0
+##PAF	ISL2EU-2_CS	200	0	0	*	*	0	0	0	0	0	0
+##PAF	IS4EU-1_NV	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-2_PleOst	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-2_EmiHux	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-1_Ngru	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-1_AllMac	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-1_PleOst	200	0	0	*	*	0	0	0	0	0	0
+##PAF	Harbinger1_TP	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-1_PB	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-1_EmiHux	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-1_TV	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-1_TreMes	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-2_Mlaricis	200	0	74	-	ctg_507051	470235	296808	296991	75	225	0	AS:i:78	ms:i:78	np:i:34	da:i:216	do:i:90	cg:Z:18M13I1D14M1I28M	cs:Z::1*tcaV:4*catL:1*aagT*gttL*gtgA*gtgT*ccaG*aagP*aggE:1*aggN:1+ED------------taa:1*ttgR*aacT:1*cacK*aacS*gaaT*actY*tcaA*cagL:1*gtgS*cttM*gca-+L:3*tttH*gacR*atgK:1*tttI*accI*tttY*gtgA*ctaT*tcgH:2*cctC:5*acgS:3*aaaR*gatN*gcaS
+ctg_507051	miniprot	mRNA	296809	296991	78	-	.	ID=MP000167;Rank=1;Identity=0.3333;Positive=0.4533;Target=PIF_Harbinger-2_Mlaricis 1 74
+ctg_507051	miniprot	CDS	296809	296991	78	-	0	Parent=MP000167;Rank=1;Identity=0.3333;Target=PIF_Harbinger-2_Mlaricis 1 74
+##PAF	PIF_Harbinger-1_CryNeo	200	0	0	*	*	0	0	0	0	0	0
+##PAF	HARB-4A_SBi	200	0	200	-	ctg_216715	1776518	342939	343359	384	600	0	AS:i:534	ms:i:534	np:i:134	da:i:159	do:i:255	cg:Z:10M1I9M11I13M1I29M4I5M20I7M13I14M9I26M1I27M	cs:Z::7*gttI:2+-:2*tccA:6+-----------:5*caaG:7+-:29+----*ctaM*gtcS:3+--------------------*aagQ:6+-------------:10*tcaP:3+---------:14*gctS:1*catR:6*aagM:2+-:7*atgL:6*actA:12
+ctg_216715	miniprot	mRNA	342940	343359	534	-	.	ID=MP000168;Rank=1;Identity=0.6400;Positive=0.6700;Target=HARB-4A_SBi 1 200
+ctg_216715	miniprot	CDS	342940	343359	534	-	0	Parent=MP000168;Rank=1;Identity=0.6400;Target=HARB-4A_SBi 1 200
+##PAF	ATIS112A	200	0	200	-	ctg_206657	2494221	1544608	1545040	273	600	0	AS:i:390	ms:i:390	np:i:112	da:i:6	do:i:300	cg:Z:20M11I43M3I9M17I14M1I4M1I14M22I13M1I27M	cs:Z::2*cttI:5*cagE:5*gtgT:5+-----------*ttcY:3*gatS*tatG:1*aagP*gccT*accI:1*atgL*cttE*gaa-:4*catQ:10*actP*gcaP:1*tcaT*aacL:6*aatD*caaR:1+--P*aca-*ataV:1*acaD*gaaD*gtgI:3+-----------------:3*gaaK:1*cagK*tttY*atgV:3*aacK*cagD:1+-:1*atgL*ggcA:1+-:8*gagK:4*gtgI+---------QSISI--------*aaa-*tca-*tta-*cct-*aag-:1*ttaQ*agtG*gagD:1*gatA*acaS:1+-:1*tccA*ctcT*aaaT:1*gcaE*gaaA*gtaC:5*tgtR:7*catR:4*cgtK
+ctg_206657	miniprot	mRNA	1544609	1545040	390	-	.	ID=MP000169;Rank=1;Identity=0.4550;Positive=0.5600;Target=ATIS112A 1 200
+ctg_206657	miniprot	CDS	1544609	1545040	390	-	0	Parent=MP000169;Rank=1;Identity=0.4550;Target=ATIS112A 1 200
+##PAF	TURMOIL1	200	0	0	*	*	0	0	0	0	0	0
+##PAF	TURMOIL2	200	0	0	*	*	0	0	0	0	0	0
+##PAF	HARBINGER1_AG	200	0	0	*	*	0	0	0	0	0	0
+##PAF	Harbinger-1_BF	200	0	0	*	*	0	0	0	0	0	0
+##PAF	Harbinger1_DYa	200	0	0	*	*	0	0	0	0	0	0
+##PAF	HARB4_ZM	200	0	200	+	ctg_391337	2976239	1405171	1405600	255	600	0	AS:i:345	ms:i:345	np:i:103	da:i:6	do:i:300	cg:Z:19M11I14M1I29M3I9M17I15M1I3M1I16M9I3M13I7M1I28M	cs:Z::8*accE:1*aaaE*aatR:2*gttT*ggaA:1*aaaQ:1+S----------*gtg-:4*aaaF:1*gagK:2*gttL:3+-:1*gtcI*gtcT:1*aaaH:10*atgL:3*catC:6*caaH:2+--P*cct-*ataV:1*gcaD*aggS*cttI:1*gaaT:1+-----------------*gagD*ggtV:1*catP:1*aatT:1*agcE*atcV:2*aatT*aacQ:1*aca-+D:1*ggtP:1+-:2*gcaC:5*tctP:3*ttcL*gtcI*aaa-*acc-+-------SG*ataV:1*gagS+-------------*ccaA*caaV*ggcS:2*aagQ*aaaR+L*tac-:1*gccT*aagM*gcaK:1*gaaA*gctE*tgtY:6*gcaC:4*cgaQ*gctG*cgtQ*ttcY:3*cgaK
+ctg_391337	miniprot	mRNA	1405172	1405600	345	+	.	ID=MP000170;Rank=1;Identity=0.4250;Positive=0.5150;Target=HARB4_ZM 1 200
+ctg_391337	miniprot	CDS	1405172	1405600	345	+	0	Parent=MP000170;Rank=1;Identity=0.4250;Target=HARB4_ZM 1 200
+##PAF	Harbinger3_TP	200	173	200	+	ctg_46236	477712	203037	203118	45	81	0	AS:i:73	ms:i:73	np:i:18	da:i:-1	do:i:198	cg:Z:27M	cs:Z::1*gcaN*cagT*cggN*caaL:1*gggS*gcaI:11*cagK*tctK:1*tttW*tgtR*gttI:1*cgtD
+ctg_46236	miniprot	mRNA	203038	203118	73	+	.	ID=MP000171;Rank=1;Identity=0.5556;Positive=0.6667;Target=Harbinger3_TP 174 200
+ctg_46236	miniprot	CDS	203038	203118	73	+	0	Parent=MP000171;Rank=1;Identity=0.5556;Target=Harbinger3_TP 174 200
+##PAF	PIF_Harbinger-1_Smoe	200	0	0	*	*	0	0	0	0	0	0
+##PAF	HARBINGER1_DR	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-2_PI	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-3_PI	200	0	0	*	*	0	0	0	0	0	0
+##PAF	PIF_Harbinger-4_PI	200	0	0	*	*	0	0	0	0	0	0
+##PAF	Harbinger3_DR	280	0	0	*	*	0	0	0	0	0	0
+##PAF	PiggyBac-3_PI	338	0	0	*	*	0	0	0	0	0	0
+##PAF	LEAPFROG1_EI	338	0	0	*	*	0	0	0	0	0	0
+##PAF	PiggyBac-1_Mcir	338	0	0	*	*	0	0	0	0	0	0
+##PAF	PiggyBac-1_FO	338	0	0	*	*	0	0	0	0	0	0
+##PAF	PiggyBac-1_PI	338	0	0	*	*	0	0	0	0	0	0
+##PAF	piggyBac-8_SM	338	0	0	*	*	0	0	0	0	0	0
+##PAF	piggyBac-6_SM	338	283	294	+	ctg_442998	461940	139888	139921	18	33	0	AS:i:28	ms:i:41	np:i:11	da:i:42	do:i:12	cg:Z:11M	cs:Z:*acaS:1*gtcI:2*ttcY*ttcY:2*tcaT:1
+ctg_442998	miniprot	mRNA	139889	139921	41	+	.	ID=MP000172;Rank=1;Identity=0.5455;Positive=1.0000;Target=piggyBac-6_SM 284 294
+ctg_442998	miniprot	CDS	139889	139921	41	+	0	Parent=MP000172;Rank=1;Identity=0.5455;Target=piggyBac-6_SM 284 294
+##PAF	POKEY_DP	338	0	0	*	*	0	0	0	0	0	0
+##PAF	piggyBac-5_SM	338	0	0	*	*	0	0	0	0	0	0
+##PAF	piggyBac-1_XT	338	0	0	*	*	0	0	0	0	0	0
+##PAF	PiggyBac-3_HM	338	0	0	*	*	0	0	0	0	0	0
+##PAF	piggyBac-4_SM	338	0	0	*	*	0	0	0	0	0	0
+##PAF	piggyBac-3_SM	338	0	0	*	*	0	0	0	0	0	0
+##PAF	piggyBac-3_NV	338	0	0	*	*	0	0	0	0	0	0
+##PAF	piggyBac1_CI	338	129	150	+	ctg_489209	913694	716460	716532	21	72	0	AS:i:34	ms:i:34	np:i:16	da:i:3	do:i:42	cg:Z:10M3D11M	cs:Z::1*acg-*tatH:2*gacW*atgH*caaS*gtaL*atcY-ttgagaagc*cttM*aatD*gacN:1*ttcY:1*acaS*ataV:1*ctcM:1
+ctg_489209	miniprot	mRNA	716461	716532	34	+	.	ID=MP000173;Rank=1;Identity=0.2917;Positive=0.6667;Target=piggyBac1_CI 130 150
+ctg_489209	miniprot	CDS	716461	716532	34	+	0	Parent=MP000173;Rank=1;Identity=0.2917;Target=piggyBac1_CI 130 150
+##PAF	piggyBac-2_SM	338	0	0	*	*	0	0	0	0	0	0
+##PAF	piggyBac-2_NV	338	162	173	+	ctg_109490	5994734	287461	287494	21	33	0	AS:i:34	ms:i:44	np:i:11	da:i:-1	do:i:183	cg:Z:11M	cs:Z:*tccT:1*tcgT:4*aaaR:2*tacF
+ctg_109490	miniprot	mRNA	287462	287494	44	+	.	ID=MP000174;Rank=1;Identity=0.6364;Positive=1.0000;Target=piggyBac-2_NV 163 173
+ctg_109490	miniprot	CDS	287462	287494	44	+	0	Parent=MP000174;Rank=1;Identity=0.6364;Target=piggyBac-2_NV 163 173
+##PAF	piggyBac-1_NV	338	0	0	*	*	0	0	0	0	0	0
+##PAF	piggyBac-1_SM	338	0	0	*	*	0	0	0	0	0	0
+##PAF	PiggyBac-1_FraCyl	338	0	0	*	*	0	0	0	0	0	0
+##PAF	PiggyBac-1_EmiHux	338	0	0	*	*	0	0	0	0	0	0
+##PAF	PiggyBac-1_PhaTri	418	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-2_Psojae	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-2_AA	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-3_Lgigantea	153	103	114	+	ctg_463978	1639542	948001	948034	18	33	0	AS:i:24	ms:i:38	np:i:11	da:i:-1	do:i:75	cg:Z:11M	cs:Z::5*ttgM*atcV*agcT:1*atgL*agcT
+ctg_463978	miniprot	mRNA	948002	948034	38	+	.	ID=MP000175;Rank=1;Identity=0.5455;Positive=1.0000;Target=Sola1-3_Lgigantea 104 114
+ctg_463978	miniprot	CDS	948002	948034	38	+	0	Parent=MP000175;Rank=1;Identity=0.5455;Target=Sola1-3_Lgigantea 104 114
+##PAF	Sola1-2_AP	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-1_CS	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-1_BM	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-1_AC	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-7_AP	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-9_AP	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-1_HM	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-1_AA	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-8_AP	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-1_Dpulex	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-1_PP	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-1_FraCyl	153	11	34	+	ctg_358696	2578328	2181076	2181151	24	75	0	AS:i:43	ms:i:43	np:i:15	da:i:24	do:i:60	cg:Z:7M2D16M	cs:Z::1*cagN*gatG*attT*gagQ:2-cctctt*tccE*aagT*acaY*gtg-*caa-:1*ttcY*accS:1*ttgM*tctT*attV:1*agtT:2
+ctg_358696	miniprot	mRNA	2181077	2181151	43	+	.	ID=MP000176;Rank=1;Identity=0.3200;Positive=0.6000;Target=Sola1-1_FraCyl 12 34
+ctg_358696	miniprot	CDS	2181077	2181151	43	+	0	Parent=MP000176;Rank=1;Identity=0.3200;Target=Sola1-1_FraCyl 12 34
+##PAF	Sola1-1_PI	153	100	111	+	ctg_94426	3067245	1773376	1773409	24	33	0	AS:i:33	ms:i:46	np:i:11	da:i:6	do:i:147	cg:Z:11M	cs:Z::2*gagQ:3*gatN*tttY:3
+ctg_94426	miniprot	mRNA	1773377	1773409	46	+	.	ID=MP000177;Rank=1;Identity=0.7273;Positive=1.0000;Target=Sola1-1_PI 101 111
+ctg_94426	miniprot	CDS	1773377	1773409	46	+	0	Parent=MP000177;Rank=1;Identity=0.7273;Target=Sola1-1_PI 101 111
+##PAF	Sola1-1_MonBre	153	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola1-1_CapTel	233	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola2-2_NVi	157	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola2-1_NV	157	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola2-1_AC	157	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola2-2_HM	157	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola2-3_SP	157	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola2-1_AA	157	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola2-1_BM	157	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola2-1_Hrobusta	237	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola3-1_CapOwc	158	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola3-1_EmiHux	158	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola3-2_PS	158	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola3-1_AA	158	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola3-4_HM	158	0	0	*	*	0	0	0	0	0	0
+##PAF	Sola3-1_BF	238	0	0	*	*	0	0	0	0	0	0
+##PAF	GIZMO1_EI	193	0	0	*	*	0	0	0	0	0	0
+##PAF	TBE1	193	137	160	+	ctg_229750	3068432	1498554	1498623	27	69	0	AS:i:30	ms:i:46	np:i:14	da:i:-1	do:i:48	cg:Z:23M	cs:Z:*gacN:4*cggK:1*cggK*cagE:2*gtcK*accS*aga-*cgc-*gtc-*cga-:1*cctE*gacQ*cta-*act-:1
+ctg_229750	miniprot	mRNA	1498555	1498623	46	+	.	ID=MP000178;Rank=1;Identity=0.3913;Positive=0.6087;Target=TBE1 138 160
+ctg_229750	miniprot	CDS	1498555	1498623	46	+	0	Parent=MP000178;Rank=1;Identity=0.3913;Target=TBE1 138 160
+##PAF	Mariner-25_SM	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Tec-1	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Mariner-6_SM	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Mariner-10_HM	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Mariner-3_AN	193	0	0	*	*	0	0	0	0	0	0
+##PAF	ATHPOGO	193	0	0	*	*	0	0	0	0	0	0
+##PAF	SMAR25	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Tigger1	193	0	0	*	*	0	0	0	0	0	0
+##PAF	pogo	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Mariner-18_HM	193	137	148	-	ctg_33227	5533057	14551	14584	18	33	0	AS:i:23	ms:i:36	np:i:11	da:i:-1	do:i:363	cg:Z:11M	cs:Z:*gacN*atgL*actS:5*cagE*acgS:1
+ctg_33227	miniprot	mRNA	14552	14584	36	-	.	ID=MP000179;Rank=1;Identity=0.5455;Positive=1.0000;Target=Mariner-18_HM 138 148
+ctg_33227	miniprot	CDS	14552	14584	36	-	0	Parent=MP000179;Rank=1;Identity=0.5455;Target=Mariner-18_HM 138 148
+##PAF	Pogo_SM	193	0	0	*	*	0	0	0	0	0	0
+##PAF	SMAR6	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Mariner-1_SP	193	45	64	-	ctg_497108	624047	557279	557348	33	69	0	AS:i:32	ms:i:44	np:i:16	da:i:-1	do:i:15	cg:Z:11M4D8M	cs:Z::2*tttY:2*actS:1*gtgI:2*ataV-ggggctagtcat:2*tgcP:1*attF*cttI*gggF:1
+ctg_497108	miniprot	mRNA	557280	557348	44	-	.	ID=MP000180;Rank=1;Identity=0.4783;Positive=0.6957;Target=Mariner-1_SP 46 64
+ctg_497108	miniprot	CDS	557280	557348	44	-	0	Parent=MP000180;Rank=1;Identity=0.4783;Target=Mariner-1_SP 46 64
+##PAF	Mariner-1_SP	193	34	53	+	ctg_393081	822548	453011	453068	21	57	0	AS:i:34	ms:i:44	np:i:15	da:i:3	do:i:42	cg:Z:19M	cs:Z:*gttI:3*cagE:2*cagE:1*atcV*agtT*tcaV*attV*cgtY*tcgT*attV*ggaS*ttcA:1
+ctg_393081	miniprot	mRNA	453012	453068	44	+	.	ID=MP000181;Rank=2;Identity=0.3684;Positive=0.7895;Target=Mariner-1_SP 35 53
+ctg_393081	miniprot	CDS	453012	453068	44	+	0	Parent=MP000181;Rank=2;Identity=0.3684;Target=Mariner-1_SP 35 53
+##PAF	CIRT2_CA	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Mariner-1_AF	193	0	0	*	*	0	0	0	0	0	0
+##PAF	FOTYL	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Fot1	193	0	0	*	*	0	0	0	0	0	0
+##PAF	SMAR24	193	175	189	-	ctg_337736	5307595	2289103	2289145	27	42	0	AS:i:38	ms:i:50	np:i:13	da:i:-1	do:i:6	cg:Z:14M	cs:Z::3*gagQ:1*gtgI:3*atgL:1*gtcK:1*tggF
+ctg_337736	miniprot	mRNA	2289104	2289145	50	-	.	ID=MP000182;Rank=1;Identity=0.6429;Positive=0.9286;Target=SMAR24 176 189
+ctg_337736	miniprot	CDS	2289104	2289145	50	-	0	Parent=MP000182;Rank=1;Identity=0.6429;Target=SMAR24 176 189
+##PAF	GEMINI1_EI	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Soymar1	193	0	193	+	ctg_179109	2270889	1255927	1256562	336	579	0	AS:i:497	ms:i:532	np:i:139	da:i:42	do:i:255	cg:Z:16M4I67M98U24M1I14M3I20M1I13M3I9M1I16M	cs:Z:*gttI*gtgI*tacH:7*aggM:1*cgtK*aggK*aacS*caaE+----*aaaR:3*gcaL*aatP:2*gaaD*cgaK:1*caaH:1*gcaS*gtgC:5*attV*gagP:5*gctT*gtgA:1*acaA:5*gagS*aatE*ggaK*cagN*tgtV:2*gatS:2*ctaI:3*cctL:3*ttgQ:5*tggT:1*ccaV:2*gacV:1*gG~gt95ag-gt:1*cttM*gtaE:3*atgI:2*gtaI*acaN*aagR*gaaD*gtgL*agcI:1*gatS*ttcV*cttF*gtgI*aacE:3+-:2*atcT:1*tcaE*aagV:2*gcaR*gaaD:1*aga-*gga-:1+GS-*cccT:1*tacF:10*gatN*gtgP*aatD:2*gcaE:1+-:4*caaT*gcaQ:2*tggF:4+M--*aca-:8+-*ctcF:8*gcaS:3*gccS:1*ttcH
+ctg_179109	miniprot	mRNA	1255928	1256562	532	+	.	ID=MP000183;Rank=1;Identity=0.5803;Positive=0.7202;Target=Soymar1 1 193
+ctg_179109	miniprot	CDS	1255928	1256177	268	+	0	Parent=MP000183;Rank=1;Identity=0.5795;Target=Soymar1 1 87
+ctg_179109	miniprot	CDS	1256273	1256562	264	+	2	Parent=MP000183;Rank=1;Identity=0.5810;Target=Soymar1 88 193
+##PAF	OSMAR1	193	0	193	-	ctg_222906	3772844	1791276	1791817	363	580	0	AS:i:535	ms:i:535	np:i:140	da:i:36	do:i:66	cg:Z:15M4I81M1F12M1I11M2I3M1I20M1I14M3I8M1I16M	cs:Z:*accF*gttI:7*tatN*ttaI:3*tctT+V---*gag-:3*ttgA*cttA*gagP*gatT*gagA*gatS*gaaR*cccR*ttgI:2*tgtI*agaQ*agcN:2*aacF:5*ttcI:1*tgtT:1*actL:1*cccR:4*gagS:2*atgN:3*tttD:7*ctaF:2*tttY*gagT*cgtA:3*cgtS:8*ttgI:1*gtgM:3*ccaE:4-a:4*tacS:3*aacE:3+-:2*attV:5*catR*gatE:1+--*gtgA:2+-:3*gttI:5*ccgR*tcaP:1*atgI*gaaA*cttP*ggtD:1*ccgR*caaM:1+-*gttC:8*gacN:1*aggK:1*attV+---:3*ccaA:4+-*tttL:1*atcV:6*cgtN*gctS:2*gcaS:2
+ctg_222906	miniprot	mRNA	1791277	1791817	535	-	.	ID=MP000184;Rank=1;Identity=0.6259;Positive=0.7241;Frameshift=1;Target=OSMAR1 1 193
+ctg_222906	miniprot	CDS	1791277	1791817	535	-	0	Parent=MP000184;Rank=1;Identity=0.6259;Frameshift=1;Target=OSMAR1 1 193
+##PAF	OSMAR1	193	0	193	+	ctg_364403	1599988	476889	477426	333	579	0	AS:i:533	ms:i:533	np:i:139	da:i:51	do:i:81	cg:Z:15M4I36M1I56M1I12M3I22M1I14M3I8M1I16M	cs:Z::1*gtgI:3*aaaE:3*tacN*ctcI*tctT*caaR:1*tctT+V---*gag-*aaaR:2*ttgA*ctaA:1*gagT*gaaA*gatS*gatR*ccaR*catI:2*tgtI*aaaQ:3*tacF:2*aggK*cttI:1*ttcI:1*tgtT*gttA*gttL:5+D*agaS:2*gagN:11*cttF*atcV:2*gaaT*cgtA:1*gttK:1*agaS:1*gaaV:2*cttP*cgtA:1*gaaT*ctaI*gtaE*atcM:3*actE:3*aggK:4*gatS:2*gtaI*aacE:3+-:2*attV:8*gtg-+-AG*aacK*aaa-:2*ttcY:6*cctR*tccP:1*ttaI*aaaA*ttgP:2*cctR*attM:1+-:6*gaaD:2*gacN:1*cgtK:1*attV+---:3*cccA:4+-*tttL:1*attV:6*cgaN*gctS:2*gctS:2
+ctg_364403	miniprot	mRNA	476890	477426	533	+	.	ID=MP000185;Rank=2;Identity=0.5751;Positive=0.7202;Target=OSMAR1 1 193
+ctg_364403	miniprot	CDS	476890	477426	533	+	0	Parent=MP000185;Rank=2;Identity=0.5751;Target=OSMAR1 1 193
+##PAF	SMAR27	193	0	0	*	*	0	0	0	0	0	0
+##PAF	MAR1_TV	193	34	45	-	ctg_270115	4151793	2371299	2371332	18	33	0	AS:i:33	ms:i:41	np:i:11	da:i:-1	do:i:66	cg:Z:11M	cs:Z:*agaK*cgaK:5*ttgM*ctaM*cttM:1
+ctg_270115	miniprot	mRNA	2371300	2371332	41	-	.	ID=MP000186;Rank=1;Identity=0.5455;Positive=1.0000;Target=MAR1_TV 35 45
+ctg_270115	miniprot	CDS	2371300	2371332	41	-	0	Parent=MP000186;Rank=1;Identity=0.5455;Target=MAR1_TV 35 45
+##PAF	Mariner-16_HM	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Mos1	193	97	108	+	ctg_7913	2445537	1933810	1933843	27	33	0	AS:i:39	ms:i:49	np:i:11	da:i:9	do:i:120	cg:Z:11M	cs:Z:*atcV:1*tcgT:8
+ctg_7913	miniprot	mRNA	1933811	1933843	49	+	.	ID=MP000187;Rank=1;Identity=0.8182;Positive=1.0000;Target=Mos1 98 108
+ctg_7913	miniprot	CDS	1933811	1933843	49	+	0	Parent=MP000187;Rank=1;Identity=0.8182;Target=Mos1 98 108
+##PAF	AVMAR1	193	0	16	+	ctg_394018	2779613	2078467	2078515	18	48	0	AS:i:39	ms:i:39	np:i:13	da:i:-1	do:i:6	cg:Z:16M	cs:Z:*gtaL*ccaI:1*ttcG*ttgD:1*cggK:2*atgL*tttY:2*tttY*tctT*aagR
+ctg_394018	miniprot	mRNA	2078468	2078515	39	+	.	ID=MP000188;Rank=1;Identity=0.3750;Positive=0.8125;Target=AVMAR1 1 16
+ctg_394018	miniprot	CDS	2078468	2078515	39	+	0	Parent=MP000188;Rank=1;Identity=0.3750;Target=AVMAR1 1 16
+##PAF	impala	193	0	0	*	*	0	0	0	0	0	0
+##PAF	AMARI	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Tc1-2Xt	193	0	0	*	*	0	0	0	0	0	0
+##PAF	minos	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Tc3	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Tc1	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Tc1-1_AG	193	0	0	*	*	0	0	0	0	0	0
+##PAF	MARINCE1	193	98	119	+	ctg_447999	1915899	259157	259220	24	63	0	AS:i:48	ms:i:48	np:i:14	da:i:-1	do:i:63	cg:Z:21M	cs:Z::1*aatG*attN:2*atgL:1*ttgM:3*cagE*atgL*ctaM*ttt-*aagP*tttW*tttV*ttaK*ttgK:1
+ctg_447999	miniprot	mRNA	259158	259220	48	+	.	ID=MP000189;Rank=1;Identity=0.3810;Positive=0.6667;Target=MARINCE1 99 119
+ctg_447999	miniprot	CDS	259158	259220	48	+	0	Parent=MP000189;Rank=1;Identity=0.3810;Target=MARINCE1 99 119
+##PAF	PrD37D	193	0	0	*	*	0	0	0	0	0	0
+##PAF	VENSMAR1	193	0	0	*	*	0	0	0	0	0	0
+##PAF	Bmmar1	274	0	0	*	*	0	0	0	0	0	0
+##PAF	Transib-1_HM	427	305	317	-	ctg_405236	989419	17550	17586	21	36	0	AS:i:43	ms:i:43	np:i:12	da:i:-1	do:i:9	cg:Z:12M	cs:Z:*aagR:1*atgL:3*ttcY:1*atgL:2*actS
+ctg_405236	miniprot	mRNA	17551	17586	43	-	.	ID=MP000190;Rank=1;Identity=0.5833;Positive=1.0000;Target=Transib-1_HM 306 317
+ctg_405236	miniprot	CDS	17551	17586	43	-	0	Parent=MP000190;Rank=1;Identity=0.5833;Target=Transib-1_HM 306 317
+##PAF	Transib-10_HM	427	0	0	*	*	0	0	0	0	0	0
+##PAF	Transib1_AA	427	0	0	*	*	0	0	0	0	0	0
+##PAF	Transib-11_HM	507	74	87	-	ctg_406460	533462	376807	376846	27	39	0	AS:i:41	ms:i:52	np:i:12	da:i:-1	do:i:12	cg:Z:13M	cs:Z::2*gagQ:1*cgaK*cgaK:5*ttaS:1
+ctg_406460	miniprot	mRNA	376808	376846	52	-	.	ID=MP000191;Rank=1;Identity=0.6923;Positive=0.9231;Target=Transib-11_HM 75 87
+ctg_406460	miniprot	CDS	376808	376846	52	-	0	Parent=MP000191;Rank=1;Identity=0.6923;Target=Transib-11_HM 75 87
+##PAF	Zator-1_BF	190	0	0	*	*	0	0	0	0	0	0
+##PAF	Zator-2_AA	190	0	0	*	*	0	0	0	0	0	0
+##PAF	Zator-4_HM	190	0	0	*	*	0	0	0	0	0	0
+##PAF	Zator-1_Ngru	190	80	91	+	ctg_264405	2611098	2388558	2388591	27	33	0	AS:i:30	ms:i:47	np:i:11	da:i:30	do:i:90	cg:Z:11M	cs:Z:*aaaR*gagQ:9
+ctg_264405	miniprot	mRNA	2388559	2388591	47	+	.	ID=MP000192;Rank=1;Identity=0.8182;Positive=1.0000;Target=Zator-1_Ngru 81 91
+ctg_264405	miniprot	CDS	2388559	2388591	47	+	0	Parent=MP000192;Rank=1;Identity=0.8182;Target=Zator-1_Ngru 81 91

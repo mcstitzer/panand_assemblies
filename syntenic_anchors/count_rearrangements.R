@@ -1,4 +1,5 @@
-
+library(data.table)
+library(ggrepel)
 
 asize=fread('../general_summaries/panand_assembly_sizes.txt', header=T, quote="", fill=T)
 asize$ploidy=factor(asize$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
@@ -98,7 +99,11 @@ ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xint
 summary(lm(data=asize, scaledTransloc~chrCount))
 
 ## with regression line
-ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(9,11:19,21:29), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(10,20,30), color='gray80', lty='dashed', alpha=0.3)+ geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + scale_color_manual(values=ploidycolors)+ xlab('Haploid Chromosome Number') + ylab('Rearrangements per Diploid Equivalent') + stat_smooth(method='lm', aes(group=NA), se=F, color='gray80')
+fig_chrrearr=ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(9,11:19,21:29), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(10,20,30), color='gray80', lty='dashed', alpha=0.3)+ geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + scale_color_manual(values=ploidycolors)+ xlab('Haploid Chromosome Number') + ylab('Rearrangements per\nDiploid Equivalent') + stat_smooth(method='lm', aes(group=NA), se=F, color='gray80')
+fig_chrrearr 
+
+##### laxy and putting this in the other document, count_anchors_and_plot.R
+
 
 ## add text label for toby
 ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(9,11:19,21:29), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(10,20,30), color='gray80', lty='dashed', alpha=0.3)+ geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + scale_color_manual(values=ploidycolors)+ xlab('Haploid Chromosome Number') + ylab('Rearrangements per Diploid Equivalent') + stat_smooth(method='lm', aes(group=NA), se=F, color='gray80') + geom_text_repel(aes(label=V2))
