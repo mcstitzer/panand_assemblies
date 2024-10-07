@@ -589,7 +589,7 @@ aapp=ggplot(tapp, aes(x=width/2, y=pct, fill=variable, width=width)) +
 
 plot_grid(ksplot, cpb ,  aapp + theme(axis.line.y=element_blank()) , allsisters, ncol=4,  rel_widths=c(1,0.2,0.2,0.5), align='h', axis = 'tb',labels=c('A', 'B', 'C', ''))
 
-homeol=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesLabel)) %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%summarize(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10) %>% group_by(genome, shortspeciesLabel, ploidy) %>% mutate(ks=median(ks, na.rm=T))  %>% group_by(genome, shortspeciesLabel, ploidy) %>% summarize(n=n(), ks=mean(ks))
+homeol=final_merged_data %>% filter(!is.na(shortspeciesLabel)) %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%summarize(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10) %>% group_by(genome, shortspeciesLabel, ploidy) %>% mutate(ks=median(ks, na.rm=T))  %>% group_by(genome, shortspeciesLabel, ploidy) %>% summarize(n=n(), ks=mean(ks))
 
 het=data.frame(genome=unique(final_merged_data$refGenome), shortspeciesLabel=unique(final_merged_data$shortspeciesLabel))
 het$ks=homeol$ks[match(het$genome, homeol$genome)]
@@ -602,14 +602,38 @@ het$het[het$genome=='ppanic']=0.006
 het$het[het$genome=='rrottb']=0.002
 het$het[het$genome=='smicro']=0.004
 het$het[het$genome=='udigit']=2.81e-6
+het$het[het$genome=='achine']=0.004859949
+het$het[het$genome=='tdacs1']=0.004768089
+het$het[het$genome=='tdacn1']=0.01200872
+het$het[het$genome=='rtuber']=1.202468e-06
+het$het[het$genome=='irugos']=0.003000871
+het$het[het$genome=='etrips']=0.007441668
+het$het[het$genome=='zmhuet']=0.001369575
+het$het[het$genome=='zTIL25']=1.629226e-06
 het$het[het$genome=='ccitra']=het$ks[het$genome=='ccitra']
 het$het[het$genome=='vcuspi']=het$ks[het$genome=='vcuspi']
-het$het[het$genome=='aburma']=het$ks[het$genome=='aburma']
+het$het[het$genome=='atenui']=het$ks[het$genome=='atenui']
 het$het[het$genome=='hconto']=het$ks[het$genome=='hconto']
 het$het[het$genome=='hcompr']=het$ks[het$genome=='hcompr']
+het$het[het$genome=='zdgigi']=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesLabel), genome=='zdgigi') %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%summarize(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10) %>% filter(ks<0.05) %>% group_by(genome, shortspeciesLabel, ploidy) %>% summarize(lowks=mean(ks)) %>% pull(lowks)
+het$het[het$genome=='blagur']=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesLabel), genome=='blagur') %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%summarize(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10) %>% filter(ks<0.05) %>% group_by(genome, shortspeciesLabel, ploidy) %>% summarize(lowks=mean(ks)) %>% pull(lowks)
+het$het[het$genome=='agerar']=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesLabel), genome=='agerar') %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%summarize(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10) %>% filter(ks<0.05) %>% group_by(genome, shortspeciesLabel, ploidy) %>% summarize(lowks=mean(ks)) %>% pull(lowks)
+het$het[het$genome=='sscopa']=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesLabel), genome=='sscopa') %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%summarize(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10) %>% filter(ks<0.02) %>% group_by(genome, shortspeciesLabel, ploidy) %>% summarize(lowks=mean(ks)) %>% pull(lowks)
+het$het[het$genome=='snutan']=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesLabel), genome=='snutan') %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%summarize(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10) %>% filter(ks<0.02) %>% group_by(genome, shortspeciesLabel, ploidy) %>% summarize(lowks=mean(ks)) %>% pull(lowks)
+## add back diploids
+het$het[het$genome=='cserru']=het$ks[het$genome=='cserru']
+het$het[het$genome=='telega']=het$ks[het$genome=='telega']
+het$het[het$genome=='ttrian']=het$ks[het$genome=='ttrian']
+
+het$ks[het$ploidy=='Diploid']=0
+#het$het[het$genome%in% c('zTIL01', 'zmB735', 'zTIL11', 'zTIL25', 'zTIL18', 'zmhuet', 'zluxur')]=0
+
+het$type=ifelse(het$het==het$ks, 'autopolyploid', 'allopolyploid')
+het$type[het$genome%in%c('achine', 'ccitra', 'blagur', 'agerar', 'sscopa')| het$ploidy=='Paleotetraploid']='non-monophyletic allopolyploid'
+
 
 library(ggrepel)
-heterozygosity=ggplot(het, aes(x = het, y = 0, color=ploidy)) +  # Keep y=0 to represent the number line
+heterozygosity=ggplot(het, aes(x = het, y = 0, color=ploidy)) +  # Keep y=0 to represent the number line , pch=type
   geom_hline(yintercept = 0, linetype = "solid", color = "black") +  # Horizontal number line
   geom_point(size = 3, alpha=0.8) +  # Plot points on the number line
   geom_text_repel(aes(label = shortspeciesLabel), 
@@ -618,7 +642,7 @@ heterozygosity=ggplot(het, aes(x = het, y = 0, color=ploidy)) +  # Keep y=0 to r
                   direction = "y",     # Labels are repelled vertically
                   arrow = arrow(length = unit(0.02, "npc"), type = "closed"),  # Add arrows from labels to points
                   box.padding = 0.5,   # Space between label and the point
-                  point.padding = 0.5) +  # Space between points and labels
+                  point.padding = 0.5, max.overlaps = 15) +  # Space between points and labels
   scale_color_manual(values=ploidycolors)+theme(legend.position='none') +xlab('Heterozygosity')+
   theme(axis.title.y = element_blank(),
         axis.text.y = element_blank(),
@@ -627,16 +651,45 @@ heterozygosity=ggplot(het, aes(x = het, y = 0, color=ploidy)) +  # Keep y=0 to r
         axis.ticks.x = element_blank(),axis.line.y=element_blank(),
         panel.grid = element_blank())  # Remove y-axis and other clutter
 
-hethomeo=ggplot(het, aes(x=het, y=ks, color=ploidy))+
+hethomeo=ggplot(het, aes(x=het, y=ks, color=ploidy, pch=type))+geom_abline(slope=1, intercept=0, lwd=5, color='gray90') +
   geom_point(size=2, alpha=0.8)+
   scale_color_manual(values=ploidycolors)+theme(legend.position='none') +
-  ylab('Ks between duplicates') + xlab('Heterozygosity') +
+  ylab('Ks between duplicates') + xlab('Heterozygosity') + 
   theme()  # Remove y-axis and other clutter
 
+ae=read.csv('~/Downloads/ranges_panand_aubuchonelder2023.csv')
+ae$het=het$het[match(ae$V2, het$genome)]
+ae$ploidy=het$ploidy[match(ae$V2, het$genome)]
+hetrange=ggplot(ae, aes(x=het, y=as.numeric(ConR.AOO.km2), color=ploidy, label=V2)) +
+  geom_point(size=2, alpha=0.8)+ geom_text()+
+  scale_color_manual(values=ploidycolors)+theme(legend.position='none') +
+  ylab('Area of Occupancy (km2)') + xlab('Heterozygosity') + 
+  theme()  # Remove y-axis and other clutter
 
-allsisters=plot_grid(tripbp, sscopabp, achinebp, agerarbp, ccitrabp, blagurbp, ncol=1, labels=c('F','G','H','I','J', 'K'), align='hv')
+allsisters=plot_grid(tripbp, sscopabp, achinebp, agerarbp, ccitrabp, blagurbp, ncol=1, labels=c('E','F','G','H','I','J'), align='hv')
 
+#pdf('~/Downloads/polyploidy_prevalence.pdf',10,10)
 plot_grid(plot_grid(heterozygosity, hethomeo, axis='tb', align='h', rel_widths=c(1,0.5), labels=c('A','B')), 
-plot_grid(ksplot, cpb ,  aapp + theme(axis.line.y=element_blank()) , allsisters, ncol=4,  rel_widths=c(1,0.2,0.2,0.5), align='h', axis = 'tb',labels=c('C', 'D', 'E', '')),
+plot_grid(ksplot, 
+          #cpb ,  
+          aapp + theme(axis.line.y=element_blank()) , allsisters, ncol=3,  rel_widths=c(1,0.2,0.5), align='h', axis = 'tb',labels=c('C', 'D', '')),
 ncol=1, rel_heights = c(0.35,1), align='v', axis='rl')
+#dev.off()
+
+
+
+
+mean(
+  median(homeol$ks[homeol$ploidy=='Paleotetraploid'& substr(homeol$genome,1,1)=='z'], na.rm=T),
+  median(homeol$ks[homeol$ploidy=='Paleotetraploid'& substr(homeol$genome,1,3)=='tda'], na.rm=T)
+)
+mean(
+median(homeol$ks[homeol$ploidy=='Paleotetraploid'& substr(homeol$genome,1,1)=='z'], na.rm=T)/6.5e-9/2/1e6,
+median(homeol$ks[homeol$ploidy=='Paleotetraploid'& substr(homeol$genome,1,3)=='tda'], na.rm=T)/6.5e-9/2/1e6
+)
+
+
+
+
+
 
