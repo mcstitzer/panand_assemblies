@@ -8,8 +8,8 @@ library(tidyr)
 all=read.table('../panand_sp_ploidy.txt', header=F)
 
 for( i in 1:nrow(all)){
-if(file.exists(paste0('../',all$V2[i],'-Pv-', all$V3[i]*2))){
-a=read.table(paste0('../',all$V2[i],'-Pv-', all$V3[i]*2), header=T)
+if(file.exists(paste0('../syntenic_anchors/anchors/',all$V2[i],'-Pv-', all$V3[i]*2))){
+a=read.table(paste0('../syntenic_anchors/anchors/',all$V2[i],'-Pv-', all$V3[i]*2), header=T)
 
 b=a[a$gene!='interanchor',]
 
@@ -29,7 +29,7 @@ out=grouped %>% group_by(refChr) %>% summarize(first=first(queryChr), second=nth
 ## get all contigs with synteny! 
 singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
 output=c(paste(out$first, out$second, sep='\t'), singletons)
-  write.table(output, paste0(all$V2[i],'_subphaserinput.aw.txt'), col.names=F, row.names=F, quote=F)
+  write.table(output, paste0('subphaser_config/', all$V2[i],'_subphaserinput.aw.txt'), col.names=F, row.names=F, quote=F)
 }
   if(ploidy==3){
     grouped=b %>% group_by(refChr, queryChr) %>% summarize(n=n()) %>% top_n(n=ploidy) %>% data.frame() %>% filter(grepl('Chr', refChr))
@@ -37,7 +37,7 @@ out=grouped %>% group_by(refChr) %>% summarize(first=first(queryChr), second=nth
 ## get all contigs with synteny! 
 singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
 output=c(paste(out$first, out$second, out$third, sep='\t'), singletons)
-    write.table(output, paste0(all$V2[i],'_subphaserinput.aw.txt'), col.names=F, row.names=F, quote=F)
+    write.table(output, paste0('subphaser_config/', all$V2[i],'_subphaserinput.aw.txt'), col.names=F, row.names=F, quote=F)
     }
   
 
@@ -47,8 +47,8 @@ output=c(paste(out$first, out$second, out$third, sep='\t'), singletons)
 
 ## now try doubled ploidy??
 for( i in 1:nrow(all)){
-if(file.exists(paste0('../',all$V2[i],'-Pv-', all$V3[i]*2))){
-a=read.table(paste0('../',all$V2[i],'-Pv-', all$V3[i]*2), header=T)
+if(file.exists(paste0('../syntenic_anchors/anchors/',all$V2[i],'-Pv-', all$V3[i]*2))){
+a=read.table(paste0('../syntenic_anchors/anchors/',all$V2[i],'-Pv-', all$V3[i]*2), header=T)
 
 b=a[a$gene!='interanchor',]
 
@@ -68,7 +68,7 @@ out=grouped %>% group_by(refChr) %>% summarize(first=first(queryChr), second=nth
 ## get all contigs with synteny! 
 singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
 output=c(paste(out$first, out$second, out$third, out$fourth, sep='\t'), singletons)
-  write.table(output, paste0(all$V2[i],'_subphaserinput.awd.txt'), col.names=F, row.names=F, quote=F)
+  write.table(output, paste0('subphaser_config/',all$V2[i],'_subphaserinput.awd.txt'), col.names=F, row.names=F, quote=F)
 }
   if(ploidy==3){
     grouped=b %>% group_by(refChr, queryChr) %>% summarize(n=n()) %>% top_n(n=ploidy*2) %>% data.frame() %>% filter(grepl('Chr', refChr))
@@ -76,7 +76,7 @@ out=grouped %>% group_by(refChr) %>% summarize(first=first(queryChr), second=nth
 ## get all contigs with synteny! 
 singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
 output=c(paste(out$first, out$second, out$third, out$fourth, out$fifth, out$sixth, sep='\t'), singletons)
-    write.table(output, paste0(all$V2[i],'_subphaserinput.awd.txt'), col.names=F, row.names=F, quote=F)
+    write.table(output, paste0('subphaser_config/', all$V2[i],'_subphaserinput.awd.txt'), col.names=F, row.names=F, quote=F)
     }
   
 
