@@ -1,0 +1,46 @@
+alt-scaf_37	chr1	chr5	chr9
+alt-scaf_54	alt-scaf_94	chr2	chr7
+alt-scaf_43	alt-scaf_93	chr3	chr8
+alt-scaf_26	alt-scaf_41	chr4	chr5
+chr10	chr2	chr3	chr4
+alt-scaf_148	alt-scaf_96	chr10	chr2
+chr1	chr10	chr4	chr6
+chr1	chr10	chr3	chr6
+alt-scaf_42	chr10	chr6	chr8
+chr5	chr6	chr9	scaf_269
+alt-scaf_40
+alt-scaf_72
+scaf_170
+alt-scaf_39
+alt-scaf_70
+scaf_263
+scaf_264
+alt-scaf_51
+alt-scaf_71
+scaf_244
+alt-scaf_75
+scaf_231
+alt-scaf_67
+alt-scaf_87
+scaf_217
+alt-scaf_64
+alt-scaf_135
+alt-scaf_101
+alt-scaf_105
+scaf_230
+scaf_255
+alt-scaf_92
+alt-scaf_108
+alt-scaf_125
+alt-scaf_80
+scaf_240
+alt-scaf_158
+alt-scaf_150
+scaf_241
+alt-scaf_79
+alt-scaf_155
+alt-scaf_47
+alt-scaf_153
+alt-scaf_151
+alt-scaf_73
+alt-scaf_152

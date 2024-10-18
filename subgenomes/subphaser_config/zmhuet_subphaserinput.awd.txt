@@ -1,0 +1,42 @@
+chr1	chr5	chr9	ctg_509709
+alt-ctg_499123	alt-ctg_503391	chr2	chr7
+alt-ctg_512264	chr3	chr8	NA
+alt-ctg_490161	alt-ctg_490610	chr4	chr5
+chr2	chr3	chr4	NA
+alt-ctg_489886	alt-ctg_495623	chr10	chr2
+chr1	chr10	chr4	chr6
+alt-ctg_425391	chr1	chr10	chr3
+alt-ctg_496642	chr10	chr6	chr8
+alt-ctg_516157	chr5	chr6	chr9
+alt-ctg_306320
+alt-ctg_429208
+alt-ctg_430234
+alt-ctg_473960
+alt-ctg_487107
+alt-ctg_490368
+alt-ctg_501781
+alt-ctg_504776
+alt-ctg_492280
+alt-ctg_497999
+alt-ctg_448829
+alt-ctg_489508
+alt-ctg_504317
+alt-ctg_510926
+alt-ctg_520124
+alt-ctg_492199
+alt-ctg_521735
+ctg_512566
+alt-ctg_521751
+alt-ctg_521116
+alt-ctg_510126
+alt-ctg_521366
+alt-ctg_509231
+alt-ctg_509841
+alt-ctg_509399
+alt-ctg_505903
+alt-ctg_513309
+alt-ctg_516200
+alt-ctg_511958
+alt-ctg_512490
+alt-ctg_522033
+alt-ctg_521497

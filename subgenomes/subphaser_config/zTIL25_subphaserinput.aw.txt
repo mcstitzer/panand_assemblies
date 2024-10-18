@@ -1,0 +1,30 @@
+chr1	chr9
+chr2	chr7
+chr3	chr8
+chr4	chr5
+chr2	chr4
+chr10	chr2
+chr1	chr4
+chr10	chr3
+chr6	chr8
+chr6	chr9
+scaf_97
+scaf_56
+scaf_77
+scaf_103
+alt-scaf_23
+alt-scaf_22
+scaf_91
+scaf_80
+scaf_84
+scaf_111
+alt-scaf_26
+scaf_73
+scaf_108
+scaf_107
+scaf_78
+scaf_116
+scaf_102
+scaf_100
+scaf_93
+alt-scaf_29

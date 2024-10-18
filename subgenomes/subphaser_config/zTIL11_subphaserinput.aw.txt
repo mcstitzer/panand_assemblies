@@ -1,0 +1,13 @@
+chr1	chr9
+chr2	chr7
+chr3	chr8
+chr4	chr5
+chr2	chr4
+chr10	chr2
+chr1	chr4
+chr1	chr10
+chr6	chr8
+chr6	chr9
+scaf_603
+scaf_611
+scaf_606

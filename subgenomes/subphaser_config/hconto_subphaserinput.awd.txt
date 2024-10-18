@@ -1,0 +1,29 @@
+scaf_11	scaf_5	scaf_6	scaf_7
+scaf_10	scaf_4	scaf_8	scaf_9
+scaf_12	scaf_13	scaf_14	scaf_15
+scaf_19	scaf_20	scaf_21	scaf_40
+scaf_1	scaf_2	scaf_3	scaf_36
+scaf_27	scaf_29	scaf_35	scaf_39
+scaf_18	scaf_26	scaf_30	scaf_33
+scaf_16	scaf_17	scaf_22	scaf_24
+scaf_25	scaf_32	scaf_34	scaf_42
+scaf_23	scaf_28	scaf_31	scaf_37
+scaf_41
+scaf_43
+scaf_48
+scaf_38
+scaf_44
+scaf_45
+scaf_51
+scaf_47
+scaf_46
+scaf_155
+scaf_128
+alt-scaf_140
+alt-scaf_138
+scaf_131
+scaf_82
+alt-scaf_66
+alt-scaf_68
+alt-scaf_56
+scaf_134

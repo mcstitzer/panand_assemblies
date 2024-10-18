@@ -589,7 +589,7 @@ aapp=ggplot(tapp, aes(x=width/2, y=pct, fill=variable, width=width)) +
 
 plot_grid(ksplot, cpb ,  aapp + theme(axis.line.y=element_blank()) , allsisters, ncol=4,  rel_widths=c(1,0.2,0.2,0.5), align='h', axis = 'tb',labels=c('A', 'B', 'C', ''))
 
-homeol=final_merged_data %>% filter(!is.na(shortspeciesLabel)) %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%summarize(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10) %>% group_by(genome, shortspeciesLabel, ploidy) %>% mutate(ks=median(ks, na.rm=T))  %>% group_by(genome, shortspeciesLabel, ploidy) %>% summarize(n=n(), ks=mean(ks))
+homeol=final_merged_data %>% filter(!is.na(shortspeciesLabel)) %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%mutate(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10)   %>% group_by(genome, shortspeciesLabel, ploidy) %>% summarize(n=n(), ks=mean(V17, na.rm=T))
 
 het=data.frame(genome=unique(final_merged_data$refGenome), shortspeciesLabel=unique(final_merged_data$shortspeciesLabel))
 het$ks=homeol$ks[match(het$genome, homeol$genome)]
@@ -610,6 +610,7 @@ het$het[het$genome=='irugos']=0.003000871
 het$het[het$genome=='etrips']=0.007441668
 het$het[het$genome=='zmhuet']=0.001369575
 het$het[het$genome=='zTIL25']=1.629226e-06
+het$het[het$genome=='zTIL18']=9.86714e-05
 het$het[het$genome=='ccitra']=het$ks[het$genome=='ccitra']
 het$het[het$genome=='vcuspi']=het$ks[het$genome=='vcuspi']
 het$het[het$genome=='atenui']=het$ks[het$genome=='atenui']
@@ -621,7 +622,7 @@ het$het[het$genome=='agerar']=final_merged_data %>% filter(ploidy!='Diploid', !i
 het$het[het$genome=='sscopa']=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesLabel), genome=='sscopa') %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%summarize(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10) %>% filter(ks<0.02) %>% group_by(genome, shortspeciesLabel, ploidy) %>% summarize(lowks=mean(ks)) %>% pull(lowks)
 het$het[het$genome=='snutan']=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesLabel), genome=='snutan') %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%summarize(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10) %>% filter(ks<0.02) %>% group_by(genome, shortspeciesLabel, ploidy) %>% summarize(lowks=mean(ks)) %>% pull(lowks)
 ## add back diploids
-het$het[het$genome=='cserru']=het$ks[het$genome=='cserru']
+het$het[het$genome=='cserru']=NA ## ignore nanopore  het$ks[het$genome=='cserru']
 het$het[het$genome=='telega']=het$ks[het$genome=='telega']
 het$het[het$genome=='ttrian']=het$ks[het$genome=='ttrian']
 
@@ -651,11 +652,11 @@ heterozygosity=ggplot(het, aes(x = het, y = 0, color=ploidy)) +  # Keep y=0 to r
         axis.ticks.x = element_blank(),axis.line.y=element_blank(),
         panel.grid = element_blank())  # Remove y-axis and other clutter
 
-hethomeo=ggplot(het, aes(x=het, y=ks, color=ploidy, pch=type))+geom_abline(slope=1, intercept=0, lwd=5, color='gray90') +
-  geom_point(size=2, alpha=0.8)+
-  scale_color_manual(values=ploidycolors)+theme(legend.position='none') +
-  ylab('Ks between duplicates') + xlab('Heterozygosity') + 
-  theme()  # Remove y-axis and other clutter
+hethomeo=ggplot(het[!is.na(het$type),], aes(x=het, y=ks, color=ploidy, pch=ifelse(type=='autopolyploid', 'autopolyploid', ifelse(ploidy=='Diploid', 'diploid', 'allopolyploid'))))+geom_abline(slope=1, intercept=0, lwd=5, color='gray90') +
+  geom_point(size=3, alpha=0.8)+
+  scale_color_manual(values=ploidycolors)+theme(legend.position=c(0.75,0.9), legend.text = element_text(size=8)) +
+  ylab('Ks between duplicates') + xlab('Heterozygosity') + labs(color='Ploidy', pch='') +guides(color='none')+
+  theme() # Remove y-axis and other clutter
 
 ae=read.csv('~/Downloads/ranges_panand_aubuchonelder2023.csv')
 ae$het=het$het[match(ae$V2, het$genome)]
@@ -690,6 +691,36 @@ median(homeol$ks[homeol$ploidy=='Paleotetraploid'& substr(homeol$genome,1,3)=='t
 
 
 
+#### now prepare trees for just gerardi parentage
+gerardiclade=c('avirgi', 'achine', 'agerar', 'sscopa', 'smicro', 'pvagin')
+bas=sapply(1:length(filenames), function(i){ ## ep2 is not there
+  
+  awt=read.raxml(paste0('',filenames[i]))
+  awt=as.phylo(awt)
+  awt$tip.label=gsub('_R_', '', awt$tip.label)
+  ## add to make sure outgroup is there, and is monophyletic - otherwise skip this tree
+  if(any(substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1'))){
+    if(is.monophyletic(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1')])){
+      awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1')], resolve.root=T)
+      
+      ## now keep only six digit code
+      awt$tip.label=paste0(awt$tip.label, '_', substr(awt$tip.label,1,6))
+      sixtips=substr(awt$tip.label,1,6)
+      #awt$tip.label[grepl('Pavag', sixtips)]=paste0(awt$tip.label[grepl('Pavag', sixtips)], '_','paspal')
 
+   #   print(i)
+      if(any(gerardiclade%in%sixtips)){
+      awt=keep.tip(awt, awt$tip.label[sixtips %in% gerardiclade])
+      #awt$tip.label=paste0(awt$tip.label, 1:length(awt$tip.label),'_', awt$tip.label) ## grampa usese the species name after the _species, so just fake this
+      return(as.phylo(awt))
+      }
+    }
+  }
+})
+
+bas <- bas[!sapply(bas,is.null)]
+d=do.call("c",bas)
+
+write.tree(d, paste0('gerardiclade_anchors_grampa.', Sys.Date(), '.tre'))
 
 
