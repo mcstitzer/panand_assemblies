@@ -20,7 +20,7 @@ set -u
 module load mafft
 module load samtools
 
-module load miniconda
+module load miniconda3
 conda activate anchorwave_new
 
 ## running first with 4 cpu per tree, can fail due to too little memory (~12 gb?)
