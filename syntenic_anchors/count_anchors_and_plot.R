@@ -6,6 +6,8 @@ library(ggimage)
 library(pdftools)
 library(gridExtra)
 library(magick)
+library(GenomicRanges)
+library(grid)
 
 ## generalize!
 # Set the theme and color palette
@@ -16,6 +18,10 @@ muted_colors <- c("#b34064", "#459abf", "#68b488", "#b3ac40", "#8d4cba",
                   "#bf9140", "#ae459a", "#99aabf", "#409f90", "#405973")
 
 names(muted_colors) <- c(paste0('Chr0', 1:9), 'Chr10')
+
+ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
+names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
+
 
 
 process_anchors_to_dotplot <- function(filepath, color_palette=muted_colors, minBlock=10, title='', refChrs=c(paste0('Chr0', 1:9), 'Chr10'), queryChrs='') {
@@ -57,10 +63,21 @@ process_anchors_to_dotplot <- function(filepath, color_palette=muted_colors, min
     facet_grid(queryChr ~ refChr, scales = 'free', space = 'free') +
     scale_color_manual(values = color_palette) +
     theme(legend.position = 'none') +
-    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size=9), 
+          strip.placement.y = "outside" , 
+          strip.text = element_text(size = 8, color = "darkblue", face = "bold"),
+          strip.text.y=element_text(angle=0),
+          strip.background = element_rect(fill = "lightblue", color = "darkblue", linewidth = 1),
+          #      strip.text.y = element_blank(),
+  
+          axis.text.y=element_text(size=5),
+          panel.spacing = unit(0.1, 'lines')
+    ) +
     geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray') +
     ggtitle(title)
 }
+
+
 
 
 # Example of usage
@@ -94,17 +111,17 @@ countRearrangements <- function(filepath, color_palette=muted_colors, minBlock=1
 }
 
 for(i in diploids){
-  print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*'))))
+  print(countRearrangements(Sys.glob(paste0('anchors/', i, '-Pv-*'))))
 }
 
 for(i in tetraploids){
-  print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*'))))
+  print(countRearrangements(Sys.glob(paste0('anchors/', i, '-Pv-*'))))
 }
 for(i in hexaploids){
-  print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*')), minBlock=50))
+  print(countRearrangements(Sys.glob(paste0('anchors/', i, '-Pv-*')), minBlock=50))
 }                              
 for(i in c('zmB735')){
-  print(countRearrangements(Sys.glob(paste0('~/Downloads/', i, '-Pv-*')), minBlock=50))
+  print(countRearrangements(Sys.glob(paste0('anchors/', i, '-Pv-*')), minBlock=50))
 }  
 
 
@@ -173,16 +190,20 @@ process_anchors_to_dotplot_Tripsacinae <- function(filepath, color_palette=muted
     ylab('Position (Mb)') + 
         theme(#strip.text.y = element_text(angle = 0, hjust = 0), 
       strip.placement.y = "outside" , 
-      strip.text = element_text(size = 8),
+      strip.text = element_text(size = 8, color = "darkblue", face = "bold"),
+      strip.text.y=element_text(angle=0),
+      strip.background = element_rect(fill = "lightblue", color = "darkblue", linewidth = 1),
 #      strip.text.y = element_blank(),
       axis.text.x=element_text(size=9),
       axis.text.y=element_text(size=5),
-      panel.spacing = unit(0, 'lines'),
+      panel.spacing = unit(0.1, 'lines'),
       plot.title=element_text(color=ploidycolors[ploidy], size=10))+
     scale_x_continuous(breaks = scales::breaks_pretty(n = 2), expand=c(0,0)) +  # Automatically choose 3 breaks for x-axis
     scale_y_continuous(breaks = scales::breaks_pretty(n = 2), expand=c(0,0))    # Automatically choose 3 breaks for y-axis
   
-  
+#  strip.background = element_rect(fill = "lightblue", color = "darkblue", size = 1),
+#  strip.text = element_text(color = "white", face = "bold"),
+#  panel.spacing = unit(1, "lines")
   
   #  p + annotation_custom(img, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf)
   p
@@ -392,7 +413,7 @@ process_anchors_to_dotplot_FIGURE <- function(filepath, color_palette=muted_colo
   # Convert the image to a rasterGrob
   img <- rasterGrob(as.raster(image_raster), 
  #                   x = 0.9, y = 0.12, width = 0.25, height = 0.25, just = c("right", "bottom"))
-  x = 0.99, y = 0.15, width = 0.25, height = 0.25, just = c("right", "bottom"))
+  x = 0.90, y = 0.15, width = 0.25, height = 0.25, just = c("right", "bottom"))
 
   # Create a black border (rectangular grob)
 #  border <- rectGrob(gp = gpar(col = "black", fill = NA, lwd = 2))  # lwd sets the thickness of the border
@@ -412,6 +433,8 @@ process_anchors_to_dotplot_FIGURE <- function(filepath, color_palette=muted_colo
   # Combine the image and the border into a single grob
 #  imgA <- grobTree(border, imgA)
   
+  ystriptextsize=ifelse(length(unique(queryChrs))>50, 6,9)
+  
   # Create the plot
   p=ggplot(data[ data$refChr %in% names(color_palette) & data$refChr%in%refChrs & data$queryChr%in%queryChrs, ],
          aes(x = referenceStart / 1e6, y = revQueryStart / 1e6, color = refChr)) +
@@ -427,17 +450,17 @@ process_anchors_to_dotplot_FIGURE <- function(filepath, color_palette=muted_colo
     ylab('Position (Mb)') +
     theme(#strip.text.y = element_text(angle = 0, hjust = 0), 
           strip.placement.y = "outside" , 
-          strip.text = element_text(size = 8),
-          strip.text.y = element_blank(),
+          strip.text = element_text(size = 8, color = "darkblue", face = "bold"),
+          strip.background = element_rect(fill = "lightblue", color = "darkblue", linewidth = 1),
+          strip.text.y = element_text(angle=0, size=ystriptextsize),
           axis.text.x=element_text(size=9),
           axis.text.y=element_text(size=5),
-          panel.spacing = unit(0, 'lines'),
+          panel.spacing = unit(0.1, 'lines'),
           plot.title=element_text(color=ploidycolors[ploidy], size=10))+
     scale_x_continuous(breaks = scales::breaks_pretty(n = 2), expand=c(0,0)) +  # Automatically choose 3 breaks for x-axis
     scale_y_continuous(breaks = scales::breaks_pretty(n = 2), expand=c(0,0))    # Automatically choose 3 breaks for y-axis
   
-  
-  
+ 
 #  p + annotation_custom(img, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf)
   ggdraw(p) + 
     draw_grob(img) + draw_grob(imgA)

@@ -609,8 +609,9 @@ het$het[het$genome=='rtuber']=1.202468e-06
 het$het[het$genome=='irugos']=0.003000871
 het$het[het$genome=='etrips']=0.007441668
 het$het[het$genome=='zmhuet']=0.001369575
-het$het[het$genome=='zTIL25']=1.629226e-06
-het$het[het$genome=='zTIL18']=9.86714e-05
+het$het[het$genome=='zTIL25']=2.602244e-05 ### with just chromosomes, without is 1.629226e-06
+het$het[het$genome=='zTIL18']=9.86714e-05  ### with just chromosomes, witout is 9.86714e-05
+het$het[het$genome=='zTIL01']=0.0001058948 ## just chromosmes, didn't calculate without..
 het$het[het$genome=='ccitra']=het$ks[het$genome=='ccitra']
 het$het[het$genome=='vcuspi']=het$ks[het$genome=='vcuspi']
 het$het[het$genome=='atenui']=het$ks[het$genome=='atenui']
@@ -699,9 +700,9 @@ bas=sapply(1:length(filenames), function(i){ ## ep2 is not there
   awt=as.phylo(awt)
   awt$tip.label=gsub('_R_', '', awt$tip.label)
   ## add to make sure outgroup is there, and is monophyletic - otherwise skip this tree
-  if(any(substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1'))){
-    if(is.monophyletic(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1')])){
-      awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1')], resolve.root=T)
+  if(any(substr(as.phylo(awt)$tip.label,1,6) %in% c('pvagin'))){
+ #   if(is.monophyletic(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1')])){
+      awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('pvagin')], resolve.root=T)
       
       ## now keep only six digit code
       awt$tip.label=paste0(awt$tip.label, '_', substr(awt$tip.label,1,6))
@@ -722,5 +723,219 @@ bas <- bas[!sapply(bas,is.null)]
 d=do.call("c",bas)
 
 write.tree(d, paste0('gerardiclade_anchors_grampa.', Sys.Date(), '.tre'))
+
+rspsix=read.tree(text='((((((((((((zTIL11:1.0,zmB735:1.0):0.00399,zTIL01:1.0):0.123008,(zTIL25:1.0,zTIL18:1.0):0.051481):0.078959,zmhuet:1.0):0.315942,(zluxur:1.0,znicar:1.0):1.343):0.035313,(zdmomo:1.0,zdgigi:1.0):1.085725):4.966642,(((((tdacs1:1.0,tdacs2:1.0):0.104529,tdacn2:1.0):0.344325,tdacn1:1.0):0.085028,tdactm:1.0):3.804823,tzopol:1.0):0.163575):3.340689,((udigit:1.0,vcuspi:1.0):0.130867,rrottb:1.0):0.2067):0.532529,((rtuber:1.0,hcompr:1.0):1.047055,etrips:1.0):0.311621):0.382165,(((((((((((sscopa:1.0,smicro:1.0):0.375104,avirgi:1.0):0.464688,(achine:1.0,agerar:1.0):0.197343):2.589164,(crefra:1.0,ccitra:1.0):4.376438):0.274712,((hconto:1.0,ttrian:1.0):0.601483,blagur:1.0):0.896994):0.456651,ppanic:1.0):0.093559,sbicol:1.0):0.131326,irugos:1.0):0.006381,snutan:1.0):0.144602,atenui:1.0):0.524102,(telega:1.0,cserru:1.0):0.446963):0.337256):2.735692,((bdista:1.0,osativ:1.0):8.038372,svirid:1.0):0.322258):1.0,pvagin:1.0);')
+rspger=keep.tip(rspsix, gerardiclade)
+write.tree(rspger, paste0('gerardiclade_sptree_grampa.', Sys.Date(), '.tre'))
+
+
+
+
+
+### for polyphest
+#### now prepare trees for just gerardi parentage
+gerardiclade=c('avirgi', 'achine', 'agerar', 'sscopa', 'smicro', 'pvagin')
+bas=sapply(1:length(filenames), function(i){ ## ep2 is not there
+  
+  awt=read.raxml(paste0('',filenames[i]))
+  awt=as.phylo(awt)
+  awt$tip.label=gsub('_R_', '', awt$tip.label)
+  ## add to make sure outgroup is there, and is monophyletic - otherwise skip this tree
+  if(any(substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1'))){
+    if(is.monophyletic(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1')])){
+      awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1')], resolve.root=T)
+      
+
+      sixtips=substr(awt$tip.label,1,6)
+      #awt$tip.label[grepl('Pavag', sixtips)]=paste0(awt$tip.label[grepl('Pavag', sixtips)], '_','paspal')
+      
+      #   print(i)
+ #     if(any(gerardiclade%in%sixtips)){
+        awt=keep.tip(awt, awt$tip.label[sixtips %in% c(all$V2[!all$V2%in%c('tdacn2', 'tdacs2')], 'pvagin')])
+        ## now keep only six digit code
+        awt$tip.label=substr(awt$tip.label,1,6)
+        #awt$tip.label=paste0(awt$tip.label, 1:length(awt$tip.label),'_', awt$tip.label) ## grampa usese the species name after the _species, so just fake this
+        return(as.phylo(awt))
+ #     }
+    }
+  }
+})
+
+bas <- bas[!sapply(bas,is.null)]
+d=do.call("c",bas)
+
+write.tree(d, paste0('syntenic_anchors_polyphest.', Sys.Date(), '.tre'))
+
+
+
+### for polyphest - gerardi
+#### now prepare trees for just gerardi parentage
+gerardiclade=c('avirgi', 'achine', 'agerar', 'sscopa', 'smicro', 'pvagin')
+bas=lapply(1:length(filenames), function(i){ ## ep2 is not there
+  
+  awt=read.raxml(paste0('',filenames[i]))
+  awt=as.phylo(awt)
+  awt$tip.label=gsub('_R_', '', awt$tip.label)
+  ## add to make sure outgroup is there, and is monophyletic - otherwise skip this tree
+  if(any(substr(as.phylo(awt)$tip.label,1,6) %in% c('pvagin'))){
+ #   if(is.monophyletic(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1')])){
+ #     awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1')], resolve.root=T)
+      awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('pvagin')], resolve.root=T)
+      
+      
+      sixtips=substr(awt$tip.label,1,6)
+      #awt$tip.label[grepl('Pavag', sixtips)]=paste0(awt$tip.label[grepl('Pavag', sixtips)], '_','paspal')
+      
+      #   print(i)
+      #     if(any(gerardiclade%in%sixtips)){
+      awt=keep.tip(awt, awt$tip.label[sixtips %in% c(gerardiclade, 'pvagin')])
+      ## now keep only six digit code
+      awt$tip.label=substr(awt$tip.label,1,6)
+      #awt$tip.label=paste0(awt$tip.label, 1:length(awt$tip.label),'_', awt$tip.label) ## grampa usese the species name after the _species, so just fake this
+      return(as.phylo(awt))
+      #     }
+    }
+#  }
+})
+
+bas <- bas[!sapply(bas,is.null)]
+d=do.call("c",bas)
+
+write.tree(d, paste0('gerardi_anchors_polyphest.', Sys.Date(), '.tre'))
+
+
+
+
+
+#### udigit subgenomes - who is sister?
+
+#udsg=read.table('~/Downloads/udigitk17_q50_f2.chrom-subgenome.tsv', header=F)
+udsg=read.table('udigitk17_q50_f2.chrom-subgenome.tsv', header=F)
+
+gerardiclade=c('avirgi', 'achine', 'agerar', 'sscopa', 'smicro', 'pvagin')
+
+
+
+rotate_clades <- function(tree) {
+  # Helper function to check if a node is a leaf
+  is.leaf <- function(node) {
+    return(!(node %in% tree$edge[, 1]))
+  }
+  
+  # Helper function to get all tips of a clade
+  get_tips <- function(tree, node) {
+    if (is.leaf(node)) {
+      return(tree$tip.label[node])
+    } else {
+      children <- tree$edge[tree$edge[, 1] == node, 2]
+      return(unlist(sapply(children, function(x) get_tips(tree, x))))
+    }
+  }
+  
+  # Function to recursively sort the labels in a clade
+  sort_clade <- function(node) {
+    if (is.leaf(node)) {
+      return(node)
+    } else {
+      children <- which(tree$edge[, 1] == node)
+      child_nodes <- tree$edge[children, 2]
+      
+      # Recursively sort the child nodes
+      sorted_children <- sapply(child_nodes, sort_clade)
+      
+      # Sort the child nodes alphabetically based on their tips
+      tips <- sapply(sorted_children, function(x) min(get_tips(tree, x)))
+      sorted_order <- order(tips)
+      
+      tree$edge[children, 2] <<- sorted_children[sorted_order]
+      return(node)
+    }
+  }
+  
+  # Start sorting from the root
+  root <- Ntip(tree) + 1
+  sort_clade(root)
+  return(tree)
+}
+
+udtree=lapply(1:length(filenames), function(i){ ## ep2 is not there
+  
+  awt=read.raxml(paste0('',filenames[i]))
+  awt=as.phylo(awt)
+  awt$tip.label=gsub('_R_', '', awt$tip.label)
+  ## add to make sure outgroup is there, and is monophyletic - otherwise skip this tree
+  if(any(substr(as.phylo(awt)$tip.label,1,6) %in% c('pvagin')) & any(substr(as.phylo(awt)$tip.label,1,6)=='udigit')){
+    #   if(is.monophyletic(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1')])){
+    #     awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate', 'pvagin', 'Pavag0', 'Pavag1')], resolve.root=T)
+    awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('pvagin')], resolve.root=T)
+    
+    
+    sixtips=substr(awt$tip.label,1,6)
+    #awt$tip.label[grepl('Pavag', sixtips)]=paste0(awt$tip.label[grepl('Pavag', sixtips)], '_','paspal')
+    
+    #   print(i)
+    #     if(any(gerardiclade%in%sixtips)){
+    awt=keep.tip(awt, awt$tip.label[sixtips %in% c('udigit', 'pvagin')])
+    ut=awt
+    ### get scaffold, so i can assign subgenome!!!
+    ## udigit_Pavag01G000200_scaf_2_215007925-215011286
+    ## now keep only six digit code
+    awt$tip.label[substr(awt$tip.label,1,6)=='udigit']=udsg$V2[match(paste0('scaf_', str_split_fixed(awt$tip.label[substr(awt$tip.label,1,6)=='udigit'], '_',5)[,4]), udsg$V1)]
+    awt$tip.label[substr(awt$tip.label,1,6)=='pvagin']='pvagin'
+    #awt$tip.label=paste0(awt$tip.label, 1:length(awt$tip.label),'_', awt$tip.label) ## grampa usese the species name after the _species, so just fake this
+    stripped_tree <- awt
+    stripped_tree$edge.length <- NULL
+    stripped_tree$node.label <- NULL
+    
+    sorted_tree <- rotate_clades(stripped_tree)
+    topology <- write.tree(sorted_tree)
+    
+    ## now store 
+    chr=paste0('scaf_', str_split_fixed(ut$tip.label[substr(ut$tip.label,1,6)=='udigit'], '_',5)[,4])
+    startend=str_split_fixed(ut$tip.label[substr(ut$tip.label,1,6)=='udigit'], '_',5)[,5]
+    start=str_split_fixed(startend, '-', 2)[,1]
+    end=str_split_fixed(startend, '-', 2)[,2]
+    pavag=str_split_fixed(ut$tip.label[substr(ut$tip.label,1,6)=='udigit'],'_',3)[,2]
+    
+     return(data.frame(tix=i, pavag=pavag, chr=chr, start=start, end=end, topology=topology))
+    #     }
+  }
+  #  }
+})
+
+#sort(table(unlist(udtree)))
+
+## so major topology is ((2,3),1) but ((1,2),3) is also really common, and other alt is also - where are these along chromsomes?
+
+
+udig=do.call(rbind, udtree)
+
+
+halloween_palette <- c("#FF7518",  # Pumpkin orange
+                       "#4B0082",  # Dark purple (witch's robe)
+                       "#000000",  # Black (night)
+                       "#8A9A5B",  # Eerie green
+                       "#FF6347",  # Blood red
+                       "#FFD700")  # Gold (moonlight)
+
+
+udig$pchr=substr(udig$pavag,6,7)
+udig$subgenome=udsg$V2[match(udig$chr, udsg$V1)]
+
+pdf('~/transfer/udig_topologies.pdf',20,20) 
+ggplot(udig[udig$topology%in%names(tail(sort(table(udig$topology)))),], aes(x=as.numeric(start), fill=topology)) + geom_histogram(binwidth=10000000, position='fill')+ facet_wrap(pchr~paste(chr, subgenome), ncol=3) + scale_fill_manual(values=halloween_palette)
+ggplot(udig[udig$topology%in%names(tail(sort(table(udig$topology)))),], aes(x=as.numeric(start), fill=topology)) + geom_histogram(binwidth=10000000)+ facet_wrap(pchr~paste(chr, subgenome), ncol=3) + scale_fill_manual(values=halloween_palette)
+ggplot(udig[udig$topology%in%names(tail(sort(table(udig$topology)))),], aes(x=as.numeric(start), fill=topology)) + geom_histogram(binwidth=1000000, position='fill')+ facet_wrap(pchr~paste(chr, subgenome), ncol=3) + scale_fill_manual(values=halloween_palette)
+dev.off()
+
+
+
+pdf('~/transfer/udig_topologies.pdf',20,20) 
+ggplot(udig[udig$topology%in%names(tail(sort(table(udig$topology)))),], aes(x=as.numeric(start), fill=topology)) + geom_histogram(binwidth=10000000, position='fill')+ facet_wrap(pchr~paste(chr, subgenome), ncol=3) + scale_fill_manual(values=halloween_palette)
+ggplot(udig[udig$topology%in%names(tail(sort(table(udig$topology)))),], aes(x=as.numeric(start), fill=topology)) + geom_histogram(binwidth=10000000)+ facet_wrap(pchr~paste(chr, subgenome), ncol=3) + scale_fill_manual(values=halloween_palette)
+ggplot(udig[udig$topology%in%names(tail(sort(table(udig$topology)))),], aes(x=as.numeric(start), fill=topology)) + geom_histogram(binwidth=1000000, position='fill')+ facet_wrap(pchr~paste(chr, subgenome), ncol=3) + scale_fill_manual(values=halloween_palette)
+dev.off()
+
+
 
 
