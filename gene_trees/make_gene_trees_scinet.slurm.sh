@@ -22,7 +22,7 @@ module load samtools
 
 
 module load miniconda3
-source activate anchorwave_new
+source activate /project/buckler_lab_panand/michelle.stitzer/conda/envs/anchorwave_new
 
 #module load miniconda3
 #conda activate anchorwave_new
