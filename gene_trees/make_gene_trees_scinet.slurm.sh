@@ -20,8 +20,12 @@ set -u
 module load mafft
 module load samtools
 
-module load miniconda3
+
+source /home/${USER}/miniconda3/etc/profile.d/conda.sh
 conda activate anchorwave_new
+
+#module load miniconda3
+#conda activate anchorwave_new
 
 ## running first with 4 cpu per tree, can fail due to too little memory (~12 gb?)
 ## rerun again, after
