@@ -39,6 +39,7 @@ source activate /project/buckler_lab_panand/michelle.stitzer/conda/envs/anchorwa
 #ls *0.fa > Pv_falist.txt
 SAMPLE_LIST=($(<../syntenic_anchors/sharedSyntenicAnchors.txt))
 i=${SAMPLE_LIST[${SLURM_ARRAY_TASK_ID}]}
+gene=$i
 ## slurm array limit on ceres
 ## so for second batch , add 10000
 #i=${SAMPLE_LIST[$((SLURM_ARRAY_TASK_ID+10000))]}
