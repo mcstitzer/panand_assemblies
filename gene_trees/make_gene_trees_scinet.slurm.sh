@@ -21,8 +21,8 @@ module load mafft
 module load samtools
 
 
-source /home/${USER}/miniconda3/etc/profile.d/conda.sh
-conda activate anchorwave_new
+module load miniconda3
+source activate anchorwave_new
 
 #module load miniconda3
 #conda activate anchorwave_new
