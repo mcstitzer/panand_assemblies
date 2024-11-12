@@ -51,8 +51,8 @@ pruned_tree <- drop.tip(tree, tips_to_remove)
 filtered_fasta <- fasta[!(names(fasta) %in% tips_to_remove)]
 
 # Generate output filenames based on input
-tree_output_file <- sub("\\.tre$", "_filtered.tre", tree_file)
-alignment_output_file <- sub("\\.fasta$", "_filtered.fasta", alignment_file)
+tree_output_file <- sub("$", "_filtered.tre", tree_file)
+alignment_output_file <- sub("\\.fa$", "_filtered.fasta", alignment_file)
 
 # Save outputs
 write.tree(pruned_tree, tree_output_file)
