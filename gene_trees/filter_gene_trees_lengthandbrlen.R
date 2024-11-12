@@ -56,7 +56,15 @@ alignment_output_file <- sub("\\.fa$", "_filtered.fasta", alignment_file)
 
 # Save outputs
 write.tree(pruned_tree, tree_output_file)
-writeXStringSet(filtered_fasta, alignment_output_file)
+cat("Filtered and rooted tree saved as:", tree_output_file, "\n")
 
-cat("Filtered tree saved as:", tree_output_file, "\n")
+if(length(tips_to_remove)>0){
+writeXStringSet(filtered_fasta, alignment_output_file)
 cat("Filtered alignment saved as:", alignment_output_file, "\n")
+
+}
+
+print(alignment_file)
+print(tips_to_remove)
+
+
