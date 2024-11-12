@@ -64,7 +64,6 @@ cat("Filtered alignment saved as:", alignment_output_file, "\n")
 
 }
 
-print(alignment_file)
 print(tips_to_remove)
 
 
