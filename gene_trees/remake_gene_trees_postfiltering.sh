@@ -64,7 +64,7 @@ Rscript filter_gene_trees_lengthandbrlen.R trees/RAxML_bipartitions.${gene} alig
 
 ##aligned/Pavag01G009500.aln_filtered.fasta if tips removed
 
-if [ -f aligned/${gene}.aln_filtered.fasta ]
+if [ -f trees/RAxML_bipartitions.${gene}_filtered.tre ]
 then
 mafft --genafpair --maxiterate 1000 --adjustdirection aligned/${gene}.aln_filtered.fasta > aligned/${gene}.aln_filtered.realn.fa
 sed -i 's/()//g' aligned/${gene}.aln_filtered.realn.fa
@@ -78,7 +78,7 @@ sed -i 's/_R_//g' aligned/${gene}.aln_filtered.realn.fa
 # fi
 
 mkdir -p trees
-if [ ! -f trees/RAxML_bipartitions.${gene}_filtered.tre ]
+if [ ! -f trees/RAxML_bipartitions.${gene}_filtered_realn ]
 then
 raxmlHPC-PTHREADS-AVX2 -T 6 -m GTRGAMMA -p 12345 -x 12345 -# 100 -f a -s aligned/${gene}.aln_filtered.realn.fa -n ${gene}_filtered_realn -w /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/gene_trees/trees/
 
