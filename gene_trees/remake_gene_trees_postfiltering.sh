@@ -40,6 +40,7 @@ source activate /project/buckler_lab_panand/michelle.stitzer/conda/envs/anchorwa
 SAMPLE_LIST=($(<../syntenic_anchors/sharedSyntenicAnchors.txt))
 i=${SAMPLE_LIST[${SLURM_ARRAY_TASK_ID}]}
 gene=$i
+echo $gene
 ## slurm array limit on ceres
 ## so for second batch , add 10000
 #i=${SAMPLE_LIST[$((SLURM_ARRAY_TASK_ID+10000))]}
@@ -57,6 +58,7 @@ gene=$i
 # fi
 
 if [ -f trees/RAxML_bipartitions.${gene} ]
+then
 Rscript filter_gene_trees_lengthandbrlen.R trees/RAxML_bipartitions.${gene} aligned/${gene}.aln.fa
 
 
@@ -83,4 +85,3 @@ raxmlHPC-PTHREADS-AVX2 -T 6 -m GTRGAMMA -p 12345 -x 12345 -# 100 -f a -s aligned
 fi
 fi
 fi
-
