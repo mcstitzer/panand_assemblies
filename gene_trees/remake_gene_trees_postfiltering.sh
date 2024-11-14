@@ -59,6 +59,7 @@ gene=$i
 if [ -f trees/RAxML_bipartitions.${gene} ]
 Rscript filter_gene_trees_lengthandbrlen.R trees/RAxML_bipartitions.${gene} aligned/${gene}.aln.fa
 
+
 ##aligned/Pavag01G009500.aln_filtered.fasta if tips removed
 
 if [ -f aligned/${gene}.aln_filtered.fasta ]
@@ -81,5 +82,5 @@ raxmlHPC-PTHREADS-AVX2 -T 6 -m GTRGAMMA -p 12345 -x 12345 -# 100 -f a -s aligned
 
 fi
 fi
-
+fi
 
