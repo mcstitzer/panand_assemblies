@@ -33,6 +33,8 @@ source activate /project/buckler_lab_panand/michelle.stitzer/conda/envs/anchorwa
 ## which gets rid of *.withPvCDS.aln.fa (and .aln.fa if it exists)
 ## then rerun with --mem=48000
 ## can go up if needed
+### quick one chr first??
+## find -size 0c -name "Pavag01G*" -delete
 
 ## running all at max limit of 2 days on short partition
 
