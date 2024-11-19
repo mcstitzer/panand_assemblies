@@ -44,7 +44,29 @@ gpar <- init_genespace(
     nCores=64)
   
   
-  out <- run_genespace(gpar, overwrite = T)
+  out <- run_genespace(gpar, overwrite = F)
+  
+  
+  ## wait, maybe I don't want outgroup :(
+  ## it keeps pvagin from being in the figures
+  ## I can keep the already completed orthofinder results
+  ## pvagin first makes plotting easier
+    mkdir ../genespace_noog
+  wd <- "/workdir/mcs368/genespace_noog" # no outgroup
+  
+  gpar <- init_genespace(
+  wd = wd,
+  path2mcscanx = path2mcscanx,
+  genomeIDs=c('pvagin', asize$V2 ),
+    ploidy= c(1, asize$ploidy),
+#    outgroup='pvagin',
+    nCores=64)
+    
+    out <- run_genespace(gpar, overwrite = F)
+  
+  ## dangit that stupid outgroup - this won't work
+
+
   
 #     genomeDirs = c(asize$V2, 'pvagin'),
 #   genomeIDs = c(asize$V2, 'pvagin'),

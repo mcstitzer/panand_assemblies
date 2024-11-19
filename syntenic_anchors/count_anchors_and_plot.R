@@ -216,7 +216,7 @@ process_anchors_to_dotplot_ZeaTrip <- function(filepath,
                                                paspalum_tripsacum,
                                                paspalum_maize,
                                                color_palette=muted_colors, minBlock=10, title='', refChrs=c(paste0('Chr0', 1:9), 'Chr10'), queryChrs='', 
-                                                   queryChrtoFlip='', ylabelspecies='', pathtokaryotype='', pathtoalluvial='', ploidy='Paleotetraploid', origChrOrientation) {
+                                                   queryChrtoFlip='', ylabelspecies='', pathtokaryotype='', pathtoalluvial='', ploidy='Paleotetraploid', origChrOrientation=F) {
   # Load data
   data <- read.table(filepath, header = TRUE)
   data <- data[data$gene != 'interanchor', ]
@@ -344,11 +344,11 @@ process_anchors_to_dotplot_ZeaTrip <- function(filepath,
     ylab('Position (Mb)') + 
     theme(strip.text.y = element_text(angle = 0, hjust = 0), 
       strip.placement.y = "outside" , 
-      strip.text = element_text(size = 8),
- #     strip.text.y = element_blank(),
+      strip.text = element_text(size = 8, color = "darkblue", face = "bold"),
+      strip.background = element_rect(fill = "lightblue", color = "darkblue", linewidth = 1),
       axis.text.x=element_text(size=9),
       axis.text.y=element_text(size=5),
-      panel.spacing = unit(0, 'lines'),
+      panel.spacing = unit(0.1, 'lines'),
       plot.title=element_text(color=ploidycolors[ploidy], size=10))+
     scale_x_continuous(breaks = scales::breaks_pretty(n = 2), expand=c(0,0)) +  # Automatically choose 3 breaks for x-axis
     scale_y_continuous(breaks = scales::breaks_pretty(n = 2), expand=c(0,0))    # Automatically choose 3 breaks for y-axis
@@ -508,6 +508,33 @@ plot_grid(plot_grid(av, tz,
           bl, ncol=2, labels=c('', 'B'), align='h')#,
 #tz, ncol=1, rel_heights=c(1,0.5))
 dev.off()
+
+
+plot_grid(plot_grid(av, td , ncol=1, align='hv', rel_heights = c(1,2)), bl, ncol=2, align='h')
+#                    plot_grid(tzdp + ylab('T. dactyloides KS position (Mb)'), fig_chrrearr + theme(legend.position='bottom'), labels=c('E','F'), align='v'),  labels=c('A', '',''), align='v', ncol=1, rel_heights = c(1,1,1)),
+#          bl, ncol=2, labels=c('', 'B'), align='h')#,
+
+
+plot_grid(plot_grid(av, fig_chrrearr + theme(legend.position='bottom') , rel_heights=c(2,1),ncol=1, align='h', labels=c('A', 'C')), bl, ncol=2, align='h')
+
+
+## dynamically determine plot dimenstions
+
+
+facet_sums <- av %>%
+  group_by(PANEL) %>%  # PANEL corresponds to facets
+  summarise(total_y = sum(y), total_x=sum(x))
+
+# Total y sum across all facets
+total_y_sum <- sum(facet_sums$total_y)
+total_x_sum=sum(facet_sums$total_x)
+# Set dynamic height based on total sum
+plot_height <- total_y_sum / 100  # Adjust scale as needed
+
+pdf('~/Downloads/avirgi_scaled_dotplot.pdf', )
+
+
+
 
 ## todo
 ## XXXX - axis title with species name, colored by ploidy
