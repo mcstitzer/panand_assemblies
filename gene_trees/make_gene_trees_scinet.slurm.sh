@@ -62,7 +62,7 @@ mkdir -p aligned
 
 if [ ! -f aligned/${gene}.aln.fa ]
 then
-mafft --genafpair --maxiterate 1000 --adjustdirection ../syntenic_anchors/gene_tree_unalignedfa/${gene}.fa > aligned/${gene}.aln.fa
+mafft --thread 12 --genafpair --maxiterate 1000 --adjustdirection ../syntenic_anchors/gene_tree_unalignedfa/${gene}.fa > aligned/${gene}.aln.fa
 sed -i 's/()//g' aligned/${gene}.aln.fa
 sed -i 's/_R_//g' aligned/${gene}.aln.fa
 
@@ -78,6 +78,6 @@ fi
 mkdir -p trees
 if [ ! -f trees/RAxML_bestTree.${gene} ]
 then
-raxmlHPC-PTHREADS-AVX2 -T 3 -m GTRGAMMA -p 12345 -x 12345 -# 100 -f a -s aligned/${gene}.aln.fa -n ${gene} -w /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/gene_trees/trees/
+raxmlHPC-PTHREADS-AVX2 -T 12 -m GTRGAMMA -p 12345 -x 12345 -# 100 -f a -s aligned/${gene}.aln.fa -n ${gene} -w /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/gene_trees/trees/
 
 fi
