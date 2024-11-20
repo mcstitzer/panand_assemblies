@@ -43,6 +43,28 @@ gpar <- init_genespace(
     outgroup='pvagin',
     nCores=64)
   
+  ## failing just get something out of this
+  ## rerunning orthofinder within blocks seems to fail??? wait and redo later without og specified because i want to do stuff with paspalum!!
+  gpar <- init_genespace(
+  wd = wd,
+  path2mcscanx = path2mcscanx,
+  genomeIDs=c(asize$V2, 'pvagin'),
+    ploidy= c(asize$ploidy, 1),
+    outgroup='pvagin',
+    nCores=64,
+    orthofinderInBlk=F)
+  
+  ## running out of memory!! 13% per thread...
+    gpar <- init_genespace(
+  wd = wd,
+  path2mcscanx = path2mcscanx,
+  genomeIDs=c(asize$V2, 'pvagin'),
+    ploidy= c(asize$ploidy, 1),
+    outgroup='pvagin',
+    nCores=5,
+    orthofinderInBlk=F, 
+    dotplots='never')
+  
   
   out <- run_genespace(gpar, overwrite = F)
   

@@ -19,7 +19,7 @@ set -u
 #module load raxml
 module load mafft
 module load samtools
-
+module load seqkit
 
 module load miniconda3
 source activate /project/buckler_lab_panand/michelle.stitzer/conda/envs/anchorwave_new
@@ -62,6 +62,7 @@ mkdir -p aligned
 
 if [ ! -f aligned/${gene}.aln.fa ]
 then
+
 mafft --thread 12 --genafpair --maxiterate 1000 --adjustdirection ../syntenic_anchors/gene_tree_unalignedfa/${gene}.fa > aligned/${gene}.aln.fa
 sed -i 's/()//g' aligned/${gene}.aln.fa
 sed -i 's/_R_//g' aligned/${gene}.aln.fa
@@ -79,7 +80,14 @@ mkdir -p trees
 if [ ! -f trees/RAxML_bestTree.${gene} ]
 then
 
+if [ -f trees/RAxML_info.${gene} ]
+then
+seqkit rmdup < aligned/${gene}.aln.fa > aligned/${gene}.aln.rmdup.fa
+rm -f trees/RAxML*${gene}
+raxmlHPC-PTHREADS-AVX2 -T 12 -m GTRGAMMA -p 12345 -x 12345 -# 100 -f a -s aligned/${gene}.aln.rmdup.fa -n ${gene} -w /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/gene_trees/trees/
+else
+
 rm -f trees/RAxML*${gene}
 raxmlHPC-PTHREADS-AVX2 -T 12 -m GTRGAMMA -p 12345 -x 12345 -# 100 -f a -s aligned/${gene}.aln.fa -n ${gene} -w /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/gene_trees/trees/
-
+fi
 fi
