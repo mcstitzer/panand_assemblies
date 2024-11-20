@@ -78,6 +78,8 @@ fi
 mkdir -p trees
 if [ ! -f trees/RAxML_bestTree.${gene} ]
 then
+
+rm -f trees/RAxML*${gene}
 raxmlHPC-PTHREADS-AVX2 -T 12 -m GTRGAMMA -p 12345 -x 12345 -# 100 -f a -s aligned/${gene}.aln.fa -n ${gene} -w /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/gene_trees/trees/
 
 fi
