@@ -186,8 +186,8 @@ process_anchors_to_dotplot_Tripsacinae <- function(filepath, color_palette=muted
     geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray') +
     geom_vline(xintercept=0, color='gray95')+
     ggtitle(paste0(ylabelspecies,', ', ploidy)) + xlab('P. vaginatum position (Mb)') +
- #   ylab(paste0(ylabelspecies, ' position (Mb)')) + 
-    ylab('Position (Mb)') + 
+    ylab(paste0(ylabelspecies, ' position (Mb)')) + 
+ #   ylab('Position (Mb)') + 
         theme(#strip.text.y = element_text(angle = 0, hjust = 0), 
       strip.placement.y = "outside" , 
       strip.text = element_text(size = 8, color = "darkblue", face = "bold"),
@@ -341,7 +341,7 @@ process_anchors_to_dotplot_ZeaTrip <- function(filepath,
  #   ggtitle(paste0(ylabelspecies,', ', ploidy)) + 
     xlab('Z. m. ssp. mays B73 position (Mb)') +
        ylab(paste0(ylabelspecies, ' position (Mb)')) + 
-    ylab('Position (Mb)') + 
+ #   ylab('Position (Mb)') + 
     theme(strip.text.y = element_text(angle = 0, hjust = 0), 
       strip.placement.y = "outside" , 
       strip.text = element_text(size = 8, color = "darkblue", face = "bold"),
@@ -446,8 +446,8 @@ process_anchors_to_dotplot_FIGURE <- function(filepath, color_palette=muted_colo
     geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray') +
     geom_vline(xintercept=0, color='gray95')+
     ggtitle(paste0(ylabelspecies,', ', ploidy)) + xlab('P. vaginatum position (Mb)') +
-#    ylab(paste0(ylabelspecies, ' position (Mb)')) + 
-    ylab('Position (Mb)') +
+    ylab(paste0(ylabelspecies, ' position (Mb)')) + 
+  #  ylab('Position (Mb)') +
     theme(#strip.text.y = element_text(angle = 0, hjust = 0), 
           strip.placement.y = "outside" , 
           strip.text = element_text(size = 8, color = "darkblue", face = "bold"),
