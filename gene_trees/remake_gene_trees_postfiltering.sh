@@ -66,6 +66,7 @@ Rscript filter_gene_trees_lengthandbrlen.R trees/RAxML_bipartitions.${gene} alig
 
 if [ -f aligned/${gene}.aln_filtered.fasta ]
 then
+
 mafft --genafpair --maxiterate 1000 --adjustdirection aligned/${gene}.aln_filtered.fasta > aligned/${gene}.aln_filtered.realn.fa
 sed -i 's/()//g' aligned/${gene}.aln_filtered.realn.fa
 sed -i 's/_R_//g' aligned/${gene}.aln_filtered.realn.fa
