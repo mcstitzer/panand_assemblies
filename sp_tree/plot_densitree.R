@@ -150,6 +150,42 @@ ggtree(dated[[2]]) + geom_tiplab(fontface='italic') + coord_cartesian(clip="off"
 #revts(p)
 
 
+
+
+# Initialize a vector to store MRCA-to-tip values
+mrca_to_tip_values <- numeric(length(dd))
+
+# Loop through all trees in dd
+for (i in seq_along(dd)) {
+  tree <- dd[[i]]  # Get the tree
+  
+  # Ensure the tree is valid
+  if (inherits(tree, "phylo")) {
+    # Calculate tree height
+    tree_height <- max(node.depth.edgelength(tree))
+    
+    # Find the MRCA of tips matching a specific condition
+    group_tips <- tree$tip.label[substr(tree$tip.label, 1, 6) == "ttrian"]
+    
+    # Check if there are enough tips to calculate an MRCA
+    if (length(group_tips) > 1) {
+      mrca_node <- getMRCA(tree, group_tips)
+      
+      # Calculate the MRCA depth
+      mrca_depth <- node.depth.edgelength(tree)[mrca_node]
+      
+      # Calculate MRCA-to-tip length
+      mrca_to_tip_values[i] <- tree_height - mrca_depth
+    } else {
+      mrca_to_tip_values[i] <- NA  # Not enough tips
+    }
+  } else {
+    mrca_to_tip_values[i] <- NA  # Invalid tree
+  }
+}
+
+summary(mrca_to_tip_values)
+
 ## oh dang i should be doing this with the whole tip name, so i can go back to subgenomes!!!!!
 
 
