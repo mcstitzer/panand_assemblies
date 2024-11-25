@@ -3,6 +3,7 @@ library(ggtree)
 library(phytools)
 library(tidypaleo) ## facet species names in italics!!!!!
 library(ggh4x) ## facet strips spanning groups (subtribe)
+library(treeio)
 
 
 taxonnames=c("Zea mays ssp. parviglumis TIL11", "Zea mays ssp. mays B73v5", "Zea mays ssp. parviglumis TIL01", "Zea mays ssp. mexicana TIL25", "Zea mays ssp. mexicana TIL18", "Zea mays ssp. huehuetengensis", 
@@ -59,11 +60,40 @@ revts(p)
 trees=read.tree('paspalum_anchors_aster.2024-11-22.tre')
 dated <- vector("list", length(trees))  # Initialize list for dated trees
 
+filenames=list.files('../gene_trees/trees/', pattern='RAxML_bipartitionsBranchLabels.*0')
+
+#all=read.table('../panand_sp_ploidy.txt')                                
+
+
+b=lapply(c(1:length(filenames))[-40], function(i){ ## ep2 is not there
+
+print(i)
+awto=read.raxml(paste0('../gene_trees/trees/',filenames[i]))
+awt=as.phylo(awto)
+awt$node.label <- awto@data$bootstrap
+awt$tip.label=gsub('_R_', '', awt$tip.label)
+  ## add to make sure outgroup is there, and is monophyletic - otherwise skip this tree
+  if(any(substr(as.phylo(awt)$tip.label,1,6) %in% c('pvagin'))){
+#    if(is.monophyletic(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('pvagin')])){
+  awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('pvagin')], resolve.root=T)
+
+## now keep only six digit code
+####awt$tip.label=substr(awt$tip.label,1,6)
+
+return(awt)
+}
+#}
+                                              })
+trees=do.call("c",b)
+
+
+
 # Loop through each tree
-for (tree in 1:length(trees)) {
+chronograms=lapply(1:length(trees), function(tree) {
   # Root the tree
-  rsp <- root(trees[[tree]], outgroup = 'pvagin', resolve.root = TRUE)
-  
+ # print(tree)
+  #rsp <- root(trees[[tree]], outgroup = 'pvagin', resolve.root = TRUE)
+  rsp=trees[[tree]]
   # Try different lambda values, fallback to NA if both fail
   chronogram <- tryCatch({
     # First attempt with lambda = 0.01
@@ -79,21 +109,83 @@ for (tree in 1:length(trees)) {
   })
   
   # Store the result
-  dated[[tree]] <- chronogram
+  return(chronogram)
+})
+
+valid_trees <- chronograms[!vapply(chronograms, function(x) {
+  # Ensure x is scalar and test its properties
+  if (length(x) != 1) {
+    TRUE  # Exclude non-scalar objects
+  } else {
+    is.na(x) || !inherits(x, "phylo")
+  }
+}, logical(1))]
+
+# Check if any valid trees exist
+if (length(valid_trees) > 0) {
+  dd <- do.call(c, valid_trees)
+  class(dd) <- "multiPhylo"
+} else {
+  stop("No valid phylogenetic trees available for export.")
 }
 
 # Check the results
-summary(dated)
-
+dd=do.call("c",c(chronograms, na.rm=T))
+class(dd)='multiPhylo'
 
 ### not working - need to fix missing trees, and i stopped it early
-d=do.call("c",dated)
 
 ##rsp$tip.label=taxonnames[rsp$tip.label]
 
-write.tree(d, paste0('paspalum_anchors_aster.dated.', Sys.Date(), '.tre'))
+## some trees are wrong???
+dd <- dd[!sapply(dd, function(tree) {
+  !inherits(tree, "phylo") || is.null(tree$edge.length)
+})]
+class(dd) <- "multiPhylo"
+
+write.tree(dd, paste0('paspalum_anchors_aster.dated.', Sys.Date(), '.tre'))
+
+ggtree(dated[[2]]) + geom_tiplab(fontface='italic') + coord_cartesian(clip="off") +  scale_x_continuous(expand = expansion(mult = 1.5), labels = abs) + theme_tree2()
+
+#revts(p)
 
 
-p=ggtree(dated[[2]]) + geom_tiplab(fontface='italic') + coord_cartesian(clip="off") +  scale_x_continuous(expand = expansion(mult = 3), labels = abs) + theme_tree2()
 
-revts(p)
+
+# Initialize a vector to store MRCA-to-tip values
+mrca_to_tip_values <- numeric(length(dd))
+
+# Loop through all trees in dd
+for (i in seq_along(dd)) {
+  tree <- dd[[i]]  # Get the tree
+  
+  # Ensure the tree is valid
+  if (inherits(tree, "phylo")) {
+    # Calculate tree height
+    tree_height <- max(node.depth.edgelength(tree))
+    
+    # Find the MRCA of tips matching a specific condition
+    group_tips <- tree$tip.label[substr(tree$tip.label, 1, 6) == "ttrian"]
+    
+    # Check if there are enough tips to calculate an MRCA
+    if (length(group_tips) > 1) {
+      mrca_node <- getMRCA(tree, group_tips)
+      
+      # Calculate the MRCA depth
+      mrca_depth <- node.depth.edgelength(tree)[mrca_node]
+      
+      # Calculate MRCA-to-tip length
+      mrca_to_tip_values[i] <- tree_height - mrca_depth
+    } else {
+      mrca_to_tip_values[i] <- NA  # Not enough tips
+    }
+  } else {
+    mrca_to_tip_values[i] <- NA  # Invalid tree
+  }
+}
+
+summary(mrca_to_tip_values)
+
+## oh dang i should be doing this with the whole tip name, so i can go back to subgenomes!!!!!
+
+
