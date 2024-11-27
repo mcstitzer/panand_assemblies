@@ -16,5 +16,13 @@ nw_ed paspalum_anchors_aster.2023-12-05.tre 'i & b<=10' o > paspalum_anchors_ast
 ## now use astral-pro3 to root and get proportions of topologies
 ./ASTER-Linux/bin/astral-pro3 --root pvagin -t 8 -u 2 -o paspalum_anchors_aster.2024-11-22.ASTRALPRO3OUT.support.tre paspalum_anchors_aster.2024-11-22.tre 
 
+./ASTER-Linux/bin/astral-pro3 --root pvagin -t 8 -u 3 -w 10 -o paspalum_anchors_aster.2024-11-22.ASTRALPRO3OUT.u3.tre paspalum_anchors_aster.2024-11-22.tre 
+## outputs freqQuad.csv
+
+## try sampling 1000 combos of tips??? -w
+./ASTER-Linux/bin/astral-pro3 --root pvagin -t 8 -u 3 -w 1000 -o paspalum_anchors_aster.2024-11-22.ASTRALPRO3OUT.u3.tre paspalum_anchors_aster.2024-11-22.tre 
+## outputs freqQuad.csv
+
+
 
 
