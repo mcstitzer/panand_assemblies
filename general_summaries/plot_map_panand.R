@@ -140,3 +140,128 @@ ggplot() +
   geom_point(data=andro_decimal, aes(x=decimalLongitude, y=decimalLatitude), color='gold', size=0.5, alpha=0.9)+ theme(legend.position='NULL')+
   xlab('')+ylab('')
 
+
+
+
+## which occurrences go to each species>??
+
+andro$genome=NA
+andro$genome[andro$AcceptedSpeciesCorrected=='Andropogon chinensis']='achine'
+andro$genome[andro$AcceptedSpeciesCorrected=='Andropogon gerardi']='agerar'
+andro$genome[andro$AcceptedSpeciesCorrected=='Andropogon burmanicus']='atenui'
+andro$genome[andro$AcceptedSpeciesCorrected=='Andropogon virginicus']='avirgi' ## had not been switched for taylor's paper
+andro$genome[andro$AcceptedSpeciesCorrected=='Bothriochloa laguroides']='blagur'
+andro$genome[andro$AcceptedSpeciesCorrected=='Chrysopogon serrulatus']='cserru'
+andro$genome[andro$AcceptedSpeciesCorrected=='Cymbopogon citratus']='ccitra'
+andro$genome[andro$AcceptedSpeciesCorrected=='Cymbopogon refractus']='crefra'
+andro$genome[andro$AcceptedSpeciesCorrected=='Elionurus tripsacoides']='etrips'
+andro$genome[andro$AcceptedSpeciesCorrected=='Hemarthria compressa']='hcompr'
+andro$genome[andro$AcceptedSpeciesCorrected=='Heteropogon contortus']='hconto'
+andro$genome[andro$AcceptedSpeciesCorrected=='Ischaemum rugosum']='irugos'
+andro$genome[andro$AcceptedSpeciesCorrected=='Pogonatherum paniceum']='ppanic'
+andro$genome[andro$AcceptedSpeciesCorrected=='Rhytachne rottboellioides']='rrottb'
+andro$genome[andro$AcceptedSpeciesCorrected=='Rottboellia tuberculosa']='rtuber'
+andro$genome[andro$AcceptedSpeciesCorrected=='Schizachyrium microstachyum']='smicro'
+andro$genome[andro$AcceptedSpeciesCorrected=='Schizachyrium scoparium']='sscopa'
+andro$genome[andro$AcceptedSpeciesCorrected=='Sorghastrum nutans']='snutan'
+andro$genome[andro$AcceptedSpeciesCorrected=='Thelepogon elegans']='telega'
+andro$genome[andro$AcceptedSpeciesCorrected=='Themeda triandra']='ttrian'
+andro$genome[andro$AcceptedSpeciesCorrected=='Tripsacum dactyloides']='tdac'
+andro$genome[andro$AcceptedSpeciesCorrected=='Urelytrum digitatum']='udigit'
+andro$genome[andro$AcceptedSpeciesCorrected=='Vossia cuspidata']='vcuspi'
+andro$genome[andro$AcceptedSpeciesCorrected=='Zea diploperennis']='zdip'
+andro$genome[andro$AcceptedSpeciesCorrected=='Zea luxurians']='zluxur'
+andro$genome[andro$AcceptedSpeciesCorrected=='Zea mays subsp. huehuetenangensis']='zmhuet'
+andro$genome[andro$AcceptedSpeciesCorrected=='Zea mexicana']='zTILm'
+andro$genome[andro$AcceptedSpeciesCorrected=='Zea mays subsp. parviglumis']='zTILp'
+andro$genome[andro$AcceptedSpeciesCorrected=='Zea nicaraguensis']='znicar'
+andro$genome[andro$AcceptedSpeciesCorrected=='Sorghum bicolor']='sbicol'
+andro$genome[andro$AcceptedSpeciesCorrected=='Zea mays subsp. mays']='zmB735'
+
+
+
+andro$genusMap=NA
+andro$genusMap[andro$genus=='Andropogon']='andro'
+andro$genusMap[andro$genus=='Andropogon']='andro'
+andro$genusMap[andro$genus=='Andropogon']='andro'
+andro$genusMap[andro$genus=='Andropogon']='andro' ## had not been switched for taylor's paper
+andro$genusMap[andro$genus=='Bothriochloa']='blagur'
+andro$genusMap[andro$genus=='Chrysopogon']='cserru'
+andro$genusMap[andro$genus=='Cymbopogon']='cymbo'
+andro$genusMap[andro$genus=='Cymbopogon']='cymbo'
+andro$genusMap[andro$genus=='Elionurus']='etrips'
+andro$genusMap[andro$genus=='Hemarthria']='hcompr'
+andro$genusMap[andro$genus=='Heteropogon']='hconto'
+andro$genusMap[andro$genus=='Ischaemum']='irugos'
+andro$genusMap[andro$genus=='Pogonatherum']='ppanic'
+andro$genusMap[andro$genus=='Rhytachne']='rrottb'
+andro$genusMap[andro$genus=='Rottboellia']='rtuber'
+andro$genusMap[andro$genus=='Schizachyrium']='schiza'
+andro$genusMap[andro$genus=='Schizachyrium']='schiza'
+andro$genusMap[andro$genus=='Sorghastrum']='snutan'
+andro$genusMap[andro$genus=='Thelepogon']='telega'
+andro$genusMap[andro$genus=='Themeda']='ttrian'
+andro$genusMap[andro$genus=='Tripsacum']='tdac'
+andro$genusMap[andro$genus=='Urelytrum']='udigit'
+andro$genusMap[andro$genus=='Vossia']='vcuspi'
+andro$genusMap[andro$genus=='Zea']='zea'
+andro$genusMap[andro$genus=='Zea']='zea'
+andro$genusMap[andro$genus=='Zea']='zea'
+andro$genusMap[andro$genus=='Zea']='zea'
+andro$genusMap[andro$genus=='Zea']='zea'
+andro$genusMap[andro$genus=='Zea ']='zea'
+andro$genusMap[andro$genus=='Sorghum']='sbicol'
+andro$genusMap[andro$genus=='Zea']='zea'
+
+
+
+## now, plot these occurrences for each species!!
+
+for(i in asize$V2){
+  pdf(paste0('maps_by_sp/', i, '_range.pdf'),8,4)
+  species=i
+  if(i%in%c('tdacn1', 'tdacs1')){
+    species='tdac'
+  }
+  if(i%in%c('zTIL25', 'zTIL18')){
+    species='zTILm'
+  }
+  if(i%in%c('zdmomo', 'zdgigi')){
+    species='zdip'
+  }
+  if(i%in%c('zTIL01', 'zTIL11')){
+    species='zTILp'
+  }
+  genus=i
+  if(substr(i,1,1)=='z'){
+    genus='zea'
+  }
+  if(i%in%c('tdacn1', 'tdacs1')){
+    genus='tdac'
+  }
+  if(i%in%c('smicro', 'sscopa')){
+    genus='schiza'
+  }
+  if(i%in%c('achine', 'agerar', 'atenui', 'avirgi')){
+    genus='andro'
+  }
+  if(i%in%c('ccitra', 'crefra')){
+    genus='cymbo'
+  }
+  genusdim=nrow(andro[andro$genusMap==genus,])
+ # print(genusdim)
+  print(ggplot() +
+          geom_sf(data = ne_countries(type = "countries",returnclass = "sf"), fill = "gray90", color = "gray80", lwd = 0.5) +
+          geom_spatraster(data = range_andro_do20, aes(fill = layer), alpha = 0.9) +
+          scale_fill_gradient(low = "white", high = "#238b45", na.value = NA) +
+          new_scale_fill() +
+          #  geom_point(data=asize, aes(x=longloose, y=latloose), color='black', size=2.2) +
+  #        geom_point(data=andro[andro$genusMap==genus,], aes(x=Longitude, y=Latitude), color='gray50',size=0.4, alpha=ifelse(genusdim>2000,0.1,0.3))+
+          geom_point(data=andro[andro$genome==species,], aes(x=Longitude, y=Latitude), color='black',size=1)+
+          geom_point(data=asize[asize$V2==i,], aes(x=longloose, y=latloose, fill=ploidy), pch=21, color='black',size=2) + scale_fill_manual(values=ploidycolors) + theme(legend.position='NULL')+
+          xlab('')+ylab(''))
+  dev.off()
+}
+
+
+

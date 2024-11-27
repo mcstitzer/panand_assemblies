@@ -1,7 +1,7 @@
 library(ggplot2) ## cbsu or scinet - but need 96 cpu to run in parallel
 library(cowplot)
 theme_set(theme_cowplot())
-library(rtracklayer)
+#library(rtracklayer)
 library(stringr)
 library(tidyr)
 library(dplyr)
@@ -12,12 +12,22 @@ library(reshape2)
 ## module load bedtools
 ## module load r ## to get r to work on scinet
 
+
+### atlas!
+# module load samtools
+# module load bedtools2
+# conda activate anchorwave_new
+
+
+
+
 all=read.table('../panand_sp_ploidy.txt')
 all=all[all$V2!='pprate',]
-
+all$V3[all$V2=='rtuber']=2
+all$V3[all$V2=='telega']=2
 
 anchors=lapply(all$V2, function(x) {
- a=read.table(paste0(x, '-Pv-', 2*all$V3[all$V2==x]), header=T)
+ a=read.table(paste0('anchors/',x, '-Pv-', 2*all$V3[all$V2==x]), header=T)
  a$genome=x
  return(a)
  })
@@ -27,7 +37,9 @@ ab=Reduce(function(...) merge(..., all=T), anchors)
 b=ab[ab$gene!='interanchor',] ## keep only genes
 b$quickgene=substr(b$gene,1,14)
 
-
+sharedSyn=read.table('sharedSyntenicAnchors.txt', header=F)
+b=b[b$quickgene%in%sharedSyn$V1,]
+dim(b)
 ## just do them all, but note this includes genes with very little conservation
           
 faf=b %>% group_by(quickgene) %>% summarize(n=n())
@@ -52,7 +64,7 @@ bed$genome=NULL
 outfile=paste0('gene_tree_beds/', gene, '_', sp, '.bed')
 
 write.table(bed, outfile, row.names=F, col.names=F, sep='\t', quote=F)
-system(paste0('bedtools getfasta -s -nameOnly -fi ../genomes/', all$V1[all$V2==sp], '.fasta -bed ', outfile, ' >> gene_tree_unalignedfa/', gene, '.fa'))
+system(paste0('bedtools getfasta -s -nameOnly -fi ../genomes/', all$V1[all$V2==sp], '.fa -bed ', outfile, ' >> gene_tree_unalignedfa/', gene, '.fa'))
 #### bedtools getfasta -s -fi test.fa -bed test.bed
 }
  ## also do paspalum genomic region!

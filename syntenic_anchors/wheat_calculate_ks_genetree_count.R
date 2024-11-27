@@ -118,12 +118,25 @@ treea=drop.tip(treer, treer$tip.label[substr(treer$tip.label,1,5)=='Pavag'])
   start=as.numeric(str_split_fixed(str_split_fixed(androtips, '_', 4)[,4], '-', 2)[,1])
   end=as.numeric(str_split_fixed(str_split_fixed(androtips, '_', 4)[,4], '-', 2)[,2])
   
+  tip_index=sapply(androtips, function(x) which(tree$tip.label==x))
+  
+  tbl=sapply(tip_index, function(x) tree$edge.length[tree$edge[,2]==x])
+  
+  treelength=sum(drop.tip(tree, tree$tip.label[!tree$tip.label%in%androtips])$edge.length)
+  
+  ultra=chronos(tree, lambda=0)  
+  
+  ultratbl=sapply(tip_index, function(x) ultra$edge.length[ultra$edge[,2]==x])
+  
   outpos <- data.frame(
     gene = paste0(gene_id, ".1.v3.1"),
     copy = paste0(substr(androtips, 1, 7), substr(androtips, 29, 29)),
     chrom = chrom,
     start = start,
-    end = end
+    end = end,
+    tbl=tbl,
+    ultratbl=ultratbl,
+    treelength=treelength
   )
   
   out <- data.frame(
@@ -179,6 +192,29 @@ outmelt=melt(out_combined[,-11])
 
 ## add virginicus
 
+
+# Function to determine sister lineage based on the topology
+### stupid chat gpt let me just hard code this dumb thing
+
+oo=outpos_combined[outpos_combined$common & outpos_combined$samechr,]
+oo$sister_lineage=NA
+oo$sister_lineage[oo$topology=='(pvagin,((taestiA,taestiB),taestiD));' & substr(oo$chrom,2,2)=='A']='B'
+oo$sister_lineage[oo$topology=='(pvagin,((taestiA,taestiB),taestiD));' & substr(oo$chrom,2,2)=='B']='A'
+oo$sister_lineage[oo$topology=='(pvagin,((taestiA,taestiB),taestiD));' & substr(oo$chrom,2,2)=='D']='(A,B)'
+oo$sister_lineage[oo$topology=='(pvagin,((taestiA,taestiD),taestiB));' & substr(oo$chrom,2,2)=='A']='D'
+oo$sister_lineage[oo$topology=='(pvagin,((taestiA,taestiD),taestiB));' & substr(oo$chrom,2,2)=='B']='(A,D)'
+oo$sister_lineage[oo$topology=='(pvagin,((taestiA,taestiD),taestiB));' & substr(oo$chrom,2,2)=='D']='A'
+oo$sister_lineage[oo$topology=='(pvagin,(taestiA,(taestiB,taestiD)));' & substr(oo$chrom,2,2)=='A']='(B,D)'
+oo$sister_lineage[oo$topology=='(pvagin,(taestiA,(taestiB,taestiD)));' & substr(oo$chrom,2,2)=='B']='D'
+oo$sister_lineage[oo$topology=='(pvagin,(taestiA,(taestiB,taestiD)));' & substr(oo$chrom,2,2)=='D']='B'
+
+
+## okay, may be easier to think about "who" is sister
+
+
+
+
+
 pdf('taesti_subgenome_proportions.pdf',14,8)
 ggplot(outpos_combined[outpos_combined$common15 & !duplicated(outpos_combined$gene),], aes(x = topology, fill = topology)) +
   geom_histogram(stat='count') +
@@ -214,6 +250,19 @@ ggplot(outpos_combined[outpos_combined$samechr & outpos_combined$common15 & grep
   scale_fill_manual(values = color_palette15) +
   labs(x = "Genomic Position (Mb)", y = "Proportion", title = "Proportional Stacked Histogram of Topologies in 50 Mb Windows") +
   theme_minimal()
+  
+  ggplot(outpos_combined[outpos_combined$samechr & 
+                       outpos_combined$common15 & 
+                       grepl('taesti', outpos_combined$copy),], 
+       aes(x = substr(chrom,1,1), fill = topology)) +
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = color_palette15) +
+  labs(x = "", y = "Proportion", title = "Overall Proportion of Topologies Across All Chromosomes") +
+  theme_minimal()+
+  theme(axis.text.y = element_text(size = 40))+
+  geom_text(stat = "count", aes(label = ..count../3), 
+            position = position_fill(vjust = 0.5), size = 30)
+
 
 ggplot(outpos_combined[outpos_combined$samechr & 
                        outpos_combined$common15 & 
@@ -227,91 +276,195 @@ ggplot(outpos_combined[outpos_combined$samechr &
   geom_text(stat = "count", aes(label = ..count../3), 
             position = position_fill(vjust = 0.5), size = 30)
 
-dev.off()
-                      
 
-############# OLD - GERARDI ONLY!!                      
-pdf('gerardi_subgenome_proportions.pdf',14,8)
-ggplot(outpos_combined[outpos_combined$common & !duplicated(outpos_combined$gene),], aes(x = topology, fill = topology)) +
-  geom_histogram(stat='count') +
-  scale_fill_manual(values = color_palette) +
-  labs(x = "Haplotype", y = "Proportion", title = "Proportional Stacked Histogram of Topologies") 
-ggplot(outmelt, aes(x=value, group=variable, color=variable, fill=variable)) + geom_density(alpha=0.2) + scale_color_manual(values=c(color_palette, 'black'))+ scale_fill_manual(values=c(color_palette, 'black')) + xlim(0,0.2)
-ggplot(outmelt, aes(x=value, group=variable, color=variable, fill=variable)) + geom_density(alpha=0.2) + scale_color_manual(values=c(color_palette, 'black'))+ scale_fill_manual(values=c(color_palette, 'black')) + xlim(0,0.2) + facet_wrap(~variable, ncol=1)
-                     
-dev.off()
-
-## make a nice figure
-## plot each topology in the color it's plotted
-top=read.tree(text='(((A.1,A.2),(B.1,B.2)),(C.1,C.2));')
-mid=read.tree(text='(((A.1,A.2),(C.1,C.2)),(B.1,B.2));')               
-low=read.tree(text='((A.1,A.2),((B.1,B.2),(C.1,C.2)));')
-genecount=outpos_combined[!duplicated(outpos_combined$gene),] %>% group_by(topology) %>% summarize(genes=n())
-gco=genecount %>% filter(genes>1000) %>% add_row(topology='Other', genes=sum(genecount$genes[genecount$genes<=1000]))
-genecount=genecount %>% arrange(desc(genes))
-                      
-pdf('gerardi_subgenome_fig.pdf',8,3)
-tp=ggtree(top, layout='slanted')+ geom_tree(color = "#009E73", layout='slanted')+ scale_color_manual("#009E73") + geom_tiplab(size=1.5) + xlim(-3,9)
-mp=ggtree(mid, layout='slanted')+ geom_tree(color = "#F0E442", layout='slanted') + scale_color_manual("#F0E442") + geom_tiplab(size=1.5)+ xlim(-3,9)
-bp=ggtree(low, layout='slanted')+ geom_tree(color = "#CC79A7", layout='slanted') + scale_color_manual("#CC79A7") + geom_tiplab(size=1.5)+ xlim(-3,9)
-empty_plot <- ggplot() + 
-  theme_void() + 
-  theme(
-    panel.background = element_blank(), 
-    panel.grid = element_blank(),
-    axis.title = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank()
-  )
-trees=plot_grid(tp,mp,bp, ncol=1)
-treesr=plot_grid(tp,mp,bp, empty_plot, nrow=1)
-genecount$topology_highlight='gray'
-genecount$topology_highlight[1]="#009E73"
-genecount$topology_highlight[2]="#F0E442"
-genecount$topology_highlight[3]="#CC79A7"
-tops=ggplot(genecount, aes(x=reorder(topology, -genes), y=genes, fill=topology_highlight, color=topology_highlight)) + geom_bar(stat='identity',position='identity') + scale_color_identity()  +scale_fill_identity()                   
-plot_grid(tops, trees, ncol=2, rel_widths=c(1,0.1))             
-
-p2_grob <- ggplotGrob(treesr)
-
-# Overlay the grob on the first plot
-tops + annotation_custom(grob = p2_grob, xmin = 10, xmax = 130, ymin = 1000, ymax = 2000)
-
-tops2=ggplot(genecount, aes(x=reorder(topology_highlight, -genes), group=topology, y=genes, fill=topology_highlight)) + geom_bar(stat='identity',position='stack') + scale_color_identity()  +scale_fill_identity()                   
-tops2
-plot_grid(tops2 + theme(axis.title.x=element_blank()) + scale_x_discrete(labels=c('((A,B),C)', '((A,C),B)', '((B,C),A)', 'Other')), treesr, nrow=2, rel_heights=c(1,0.6), align='hv')             
-
-plot_grid(tops2 + theme(axis.title.x=element_blank()) + scale_x_discrete(labels=c('((A,B),C)', '((A,C),B)', '((B,C),A)', 'Other')) + theme(plot.margin = margin(6, 0, 0, 0)), treesr+ theme(plot.margin = margin(0, 0, 0, 0)), nrow=2, rel_heights=c(1,0.6), align='hv')             
-                     
-                      
-dev.off()
-
-                      
-                      
-pdf('gerardi_trees_chr.pdf',14,24)
-ggplot(outpos_combined[outpos_combined$common & grepl('1',outpos_combined$copy),], aes(x=start,color=topology,y=topology)) + geom_point()+facet_wrap(~chrom, ncol=1) + scale_color_manual(values=color_palette)
-ggplot(outpos_combined[outpos_combined$common & grepl('1',outpos_combined$copy),], aes(x = start, fill = topology)) +
-  geom_histogram(binwidth = 1e6, position = "stack") +
+ggplot(oo, aes(x = start, fill = sister_lineage)) +
+  geom_histogram(binwidth = 10e6, position = "fill") +
   facet_wrap(~ chrom, ncol = 1) +
-  scale_fill_manual(values = color_palette) +
-  labs(x = "Genomic Position (Mb)", y = "Count", title = "Stacked Histogram of Topologies in 1 Mb Windows") 
-ggplot(outpos_combined[outpos_combined$common & grepl('1',outpos_combined$copy),], aes(x = start, fill = topology)) +
-  geom_histogram(binwidth = 1e6, position = "fill") +
-  facet_wrap(~ chrom, ncol = 1) +
-  scale_fill_manual(values = color_palette) +
-  labs(x = "Genomic Position (Mb)", y = "Proportion", title = "Proportional Stacked Histogram of Topologies in 1 Mb Windows") +
+  scale_fill_manual(values = color_palette15) +
+  labs(x = "Genomic Position (Mb)", y = "Proportion", title = "Proportional Stacked Histogram of Topologies in 10 Mb Windows") +
   theme_minimal()
-ggplot(outpos_combined[outpos_combined$common & grepl('2',outpos_combined$copy),], aes(x=start,color=topology,y=topology)) + geom_point()+facet_wrap(~chrom, ncol=1) + scale_color_manual(values=color_palette)
-ggplot(outpos_combined[outpos_combined$common & grepl('2',outpos_combined$copy),], aes(x = start, fill = topology)) +
-  geom_histogram(binwidth = 1e6, position = "stack") +
-  facet_wrap(~ chrom, ncol = 1) +
-  scale_fill_manual(values = color_palette) +
-  labs(x = "Genomic Position (Mb)", y = "Count", title = "Stacked Histogram of Topologies in 1 Mb Windows") 
-ggplot(outpos_combined[outpos_combined$common & grepl('2',outpos_combined$copy),], aes(x = start, fill = topology)) +
-  geom_histogram(binwidth = 1e6, position = "fill") +
-  facet_wrap(~ chrom, ncol = 1) +
-  scale_fill_manual(values = color_palette) +
-  labs(x = "Genomic Position (Mb)", y = "Proportion", title = "Proportional Stacked Histogram of Topologies in 1 Mb Windows") 
+
+ggplot(oo, aes(x = chrom, fill = sister_lineage)) +
+  geom_bar(position='fill') + scale_fill_manual(values=color_palette15) +
+  labs(x = "Chromosome", y = "Proportion", title = "Proportional Stacked Histogram of Topologies by Chromosome") +
+  theme_minimal()
+
+ggplot(oo, aes(x = chrom, fill = sister_lineage)) +
+  geom_bar(position='dodge') + scale_fill_manual(values=color_palette15) +
+  labs(x = "Chromosome", y = "Proportion", title = "Topologies by Chromosome") +
+  theme_minimal()
+
+ggplot(oo%>% group_by(gene)%>% mutate(maxtbl=max(tbl))%>% filter(maxtbl<0.1), aes(x = chrom, fill = sister_lineage, y=tbl)) +
+  geom_violin() + scale_fill_manual(values=color_palette15) +
+  labs(x = "Chromosome", y = "Proportion", title = "Topologies by Chromosome") +
+  theme_minimal()
+
+ggplot(oo%>% group_by(gene)%>% mutate(maxtbl=max(tbl))%>% filter(maxtbl<0.1), aes(x = chrom, fill = sister_lineage, y=tbl)) +
+  geom_boxplot(position='dodge') + scale_fill_manual(values=color_palette15) +
+  labs(x = "Chromosome", y = "Proportion", title = "Topologies by Chromosome") +
+  theme_minimal()
 
 dev.off()
-                      
+         
+pdf('taesti_trees_tbl.pdf',6,4)         
+ggplot(oo%>% group_by(gene)%>% mutate(maxtbl=max(tbl))%>% filter(maxtbl<0.1), aes(x = chrom, fill = sister_lineage, y=tbl)) +
+  geom_violin() + scale_fill_manual(values=color_palette15) +
+  labs(x = "Chromosome", y = "Proportion", title = "Topologies by Chromosome") +
+  theme_minimal()
+
+ggplot(oo%>% group_by(gene)%>% mutate(maxtbl=max(tbl))%>% filter(maxtbl<0.1), aes(x = chrom, fill = sister_lineage, y=tbl)) +
+  geom_boxplot(position='dodge') + scale_fill_manual(values=color_palette15) +
+  labs(x = "Chromosome", y = "Proportion", title = "Topologies by Chromosome") +
+  theme_minimal()     
+ggplot(oo%>% group_by(gene)%>% mutate(maxtbl=max(tbl))%>% filter(maxtbl<0.1), aes(x = chrom, fill = sister_lineage, y=tbl)) +
+  geom_boxplot(position='dodge') + scale_fill_manual(values=color_palette15) +
+  labs(x = "Chromosome", y = "Terminal Branch Length of Focal Chromosome") +
+  theme_minimal()   + facet_wrap(substr(chrom,2,2)~substr(chrom,1,1), ncol=7, scale='free_x')
+  
+ggplot(oo%>% group_by(gene)%>% mutate(maxtbl=max(tbl))%>% filter(maxtbl<0.1), aes(x = substr(chrom,2,2), fill = sister_lineage, y=tbl)) +
+  geom_boxplot(position='dodge') + scale_fill_manual(values=color_palette15) +
+  labs(x = "Subgenome", y = "Terminal Branch Length of Focal Chromosome") +
+  theme_minimal()                    
+
+ggplot(oo, aes(x = chrom, fill = sister_lineage, y=ultratbl)) +
+  geom_boxplot(position='dodge') + scale_fill_manual(values=color_palette15) +
+  labs(x = "Chromosome", y = "Ultrametric Terminal Branch Length of Focal Chromosome") +
+  theme_minimal()   + facet_wrap(substr(chrom,2,2)~substr(chrom,1,1), ncol=7, scale='free_x')
+  
+ggplot(oo, aes(x = substr(chrom,2,2), fill = sister_lineage, y=ultratbl)) +
+  geom_boxplot(position='dodge') + scale_fill_manual(values=color_palette15) +
+  labs(x = "Subgenome", y = "Ultrametric Terminal Branch Length of Focal Chromosome") +
+  theme_minimal()    
+
+ggplot(oo, aes(x = chrom, fill = sister_lineage, y=treelength)) +
+  geom_boxplot(position='dodge') + scale_fill_manual(values=color_palette15) +
+  labs(x = "Chromosome", y = "Tree Length of Focal Chromosome") + coord_cartesian(y=c(0,0.15))+
+  theme_minimal()   + facet_wrap(substr(chrom,2,2)~substr(chrom,1,1), ncol=7, scale='free_x')
+  
+ggplot(oo, aes(x = substr(chrom,2,2), fill = sister_lineage, y=treelength)) +
+  geom_boxplot(position='dodge') + scale_fill_manual(values=color_palette15) +
+  labs(x = "Subgenome", y = "Tree Length of Focal Chromosome") + coord_cartesian(y=c(0,0.15))+
+  theme_minimal()    
+
+
+dev.off()
+
+
+anova_result <- aov(treelength ~ paste(sister_lineage), data = oo[substr(oo$chrom,2,2)=='A',])
+pairwise.t.test(oo$treelength[substr(oo$chrom,2,2)=='D'], oo$sister_lineage[substr(oo$chrom,2,2)=='D'], p.adjust.method = "bonferroni")
+
+####
+# Define a function to process each gene
+process_trees_thomas <- function(tree_file='wheat_all_trees.txt') {
+  # Read MSA and tree files with error handling
+#  tree_file <- "wheat_all_trees.txt"
+  
+  
+  tree <- tryCatch({
+    read.tree(tree_file)
+  }, error = function(e) {
+    # Print the error message and return NULL
+    message("Error reading tree  ", ": ", e$message)
+    return(NULL)
+  })
+  
+  
+  out <- data.frame(
+    gene = 1:length(tree),
+   chrom = NA,
+   topology=NA
+  )
+
+  for(i in 1:length(tree)){
+  if(sum(grepl('TAES', tree[[i]]$tip.label))>2){
+#  print('tree processed')
+  # Process the tree
+  tre=tree[[i]]
+  treer=tre
+  treer$tip.label[grepl("TAES", treer$tip.label)] <- paste0("TAES_", substr(treer$tip.label[grepl("TAES", treer$tip.label)], 8, 8))
+# treer$tip.label[grepl('pvagin', treer$tip.label)]='pvagin'
+#treea=keep.tip(treer, treer$tip.label[treer$tip.label %in% c("taestiA", "taestiB", "taestiD", "pvagin")])
+treea=keep.tip(treer, treer$tip.label[grepl("TAES", treer$tip.label)])
+
+    
+  stripped_tree <- treea
+  stripped_tree$edge.length <- NULL
+  stripped_tree$node.label <- NULL
+  
+  sorted_tree <- rotate_clades(stripped_tree)
+  topology <- write.tree(sorted_tree)
+  
+  # Extract genomic positions
+  # gerarditips <- tree$tip.label[grepl("agerjg", tree$tip.label)]
+  # matches <- regexec("_Chr(\\d+[A-Z]?)_(\\d+)-(\\d+)", gerarditips)
+  # matches_list <- regmatches(gerarditips, matches)
+    androtips=treer$tip.label[grepl('TAES', treer$tip.label)]     
+ #   print(androtips)       
+    fullnames=tre$tip.label[grepl('TAES', treer$tip.label)]
+  
+
+  if(all(androtips %in% c('TAES_A', 'TAES_B', 'TAES_D')) & length(androtips)==3){
+  chrom=substr(str_split_fixed(fullnames, '_',4)[,2],1,1)
+
+
+  out$chrom[i]=chrom
+  out$topology[i]=topology
+}
+  
+  }}
+  return(out)
+}
+            
+            
+             
+# Process each gene and combine results, skipping NULLs
+out=process_trees_thomas()
+# Print the resulting data frames
+#print(out_combined)
+#print(outpos_combined)
+
+out$common=out$topology%in%names(tail(sort(table(out$topology)),8))
+out$common15=out$topology%in%names(tail(sort(table(out$topology)),3))
+
+library(tidyr)
+oo <- out[out$common15, ] %>%
+  uncount(3) %>%
+  mutate(new_column = rep(c("A", "B", "D"), length.out = n()),   # Create the new column
+         chrSG = paste0(chrom, new_column))  # Concatenate 'chrom' with new_column
+
+oo$sister_lineage=NA
+oo$sister_lineage[oo$topology=='((TAES_A,TAES_B),TAES_D);' & substr(oo$chrSG,2,2)=='A']='B'
+oo$sister_lineage[oo$topology=='((TAES_A,TAES_B),TAES_D);' & substr(oo$chrSG,2,2)=='B']='A'
+oo$sister_lineage[oo$topology=='((TAES_A,TAES_B),TAES_D);' & substr(oo$chrSG,2,2)=='D']='(A,B)'
+oo$sister_lineage[oo$topology=='((TAES_A,TAES_D),TAES_B);' & substr(oo$chrSG,2,2)=='A']='D'
+oo$sister_lineage[oo$topology=='((TAES_A,TAES_D),TAES_B);' & substr(oo$chrSG,2,2)=='B']='(A,D)'
+oo$sister_lineage[oo$topology=='((TAES_A,TAES_D),TAES_B);' & substr(oo$chrSG,2,2)=='D']='A'
+oo$sister_lineage[oo$topology=='(TAES_A,(TAES_B,TAES_D));' & substr(oo$chrSG,2,2)=='A']='(B,D)'
+oo$sister_lineage[oo$topology=='(TAES_A,(TAES_B,TAES_D));' & substr(oo$chrSG,2,2)=='B']='D'
+oo$sister_lineage[oo$topology=='(TAES_A,(TAES_B,TAES_D));' & substr(oo$chrSG,2,2)=='D']='B'
+
+#outpos_combined =  outpos_combined %>% group_by(gene) %>% mutate(samechr=length(unique(substr(chrom,1,1)))==1)
+ outpos_combined=out         
+          
+pdf('taesti_thomas_trees_chr.pdf',14,10)
+ggplot(out[outpos_combined$common15,], aes(x=chrom,fill=topology)) + 
+geom_bar(position='fill') + scale_fill_manual(values=color_palette15) + geom_hline(yintercept=c(0.33,0.66), lty='dashed', color='gray')
+
+ggplot(oo, aes(x=chrSG,fill=sister_lineage)) + 
+geom_bar(position='fill') + scale_fill_manual(values=color_palette15) 
+
+ggplot(outpos_combined[ 
+                       outpos_combined$common15,], 
+       aes(x = "All Chromosomes", fill = topology)) +
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = color_palette15) +
+  labs(x = "", y = "Proportion", title = "Overall Proportion of Topologies Across All Chromosomes") +
+  theme_minimal()+
+  theme(axis.text.y = element_text(size = 40))+
+  geom_text(stat = "count", aes(label = ..count..), 
+            position = position_fill(vjust = 0.5), size = 30)
+
+dev.off()
+                        
+          
+          

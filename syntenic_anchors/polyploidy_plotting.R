@@ -175,13 +175,13 @@ cpb <- ggplot(tppp[tppp$doubledCount %in% 1:6 & !is.na(tppp$species) & tppp$ploi
   scale_y_continuous(n.breaks = 3)
 
 
-shorttaxonnames=c("Z. mays ssp. parviglumis TIL11", "Z. mays ssp. mays B73v5", "Z. mays ssp. parviglumis TIL01", "Z. mays ssp. mexicana TIL25", "Z. mays ssp. mexicana TIL18", "Z. mays ssp. huehuetengensis", 
+shorttaxonnames=c("Z. mays ssp. parviglumis TIL11",  "Z. mays ssp. parviglumis TIL01", "Z. mays ssp. mays B73v5", "Z. mays ssp. mexicana TIL25", "Z. mays ssp. mexicana TIL18", "Z. mays ssp. huehuetenangensis", 
              "Z. luxurians", "Z. nicaraguensis", "Z. diploperennis Momo", "Z. diploperennis Gigi", "T. zoloptense", "T. dactyloides FL", "T. dactyloides Southern Hap2", 
              "T. dactyloides Northern Hap2", "T. dactyloides KS", "T. dactyloides tetraploid", "U. digitatum", "V. cuspidata", "R. rottboellioides", "R. tuberculosa", 
              "H. compressa", "E. tripsacoides", "S. scoparium", "S. microstachyum", "A. virginicum", "A. chinensis", "A. gerardi", 
              "C. refractus", "C. citratus", "H. contortus", "T. triandra", "B. laguroides", "P. paniceum", "S. bicolor", 
              "I. rugosum", "S. nutans", '"A." burmanicus', "T. elegans", "C. serrulatus", "P. vaginatum")
-names(shorttaxonnames)=c("zTIL11", "zmB735", "zTIL01", "zTIL25", "zTIL18", "zmhuet", 
+names(shorttaxonnames)=c("zTIL11",  "zTIL01", "zmB735", "zTIL25", "zTIL18", "zmhuet", 
                     "zluxur", "znicar", "zdmomo", "zdgigi", "tzopol", "tdacs1", "tdacs2", 
                     "tdacn2", "tdacn1", "tdactm", "udigit", "vcuspi", "rrottb", "rtuber", 
                     "hcompr", "etrips", "sscopa", "smicro", "avirgi", "achine", "agerar", 
@@ -190,16 +190,17 @@ names(shorttaxonnames)=c("zTIL11", "zmB735", "zTIL01", "zTIL25", "zTIL18", "zmhu
 
 
 ## from ks_plotting
-final_merged_data$shortspeciesLabel=ifelse(final_merged_data$genome%in%asize$V2[asize$haploid], paste0(shorttaxonnames[match(final_merged_data$genome, names(shorttaxonnames))], '*'), shorttaxonnames[match(final_merged_data$genome, names(shorttaxonnames))])
-final_merged_data$shortspeciesLabel=factor(final_merged_data$shortspeciesLabel, levels=levels(tppp$speciesLabel))
-final_merged_data$shortspeciesLabel[final_merged_data$genome=='zmhuet']=levels(tppp$speciesLabel)[6]
+#final_merged_data$shortspeciesLabel=ifelse(final_merged_data$genome%in%asize$V2[asize$haploid], paste0(shorttaxonnames[match(final_merged_data$genome, names(shorttaxonnames))], '*'), shorttaxonnames[match(final_merged_data$genome, names(shorttaxonnames))])
+final_merged_data$shortspeciesLabel=shorttaxonnames[match(final_merged_data$genome, names(shorttaxonnames))]
+final_merged_data$shortspeciesLabel=factor(final_merged_data$shortspeciesLabel, levels=shorttaxonnames)
 #final_merged_data$speciesLabel=factor(final_merged_data$speciesLabel, levels=unique(tppp$speciesLabel))
 #levels(final_merged_data$speciesLabel)=levels(tppp$speciesLabel)
 ####### what i really need ot do is consider this in 100 gene windows or something so that entire chromososomes don't skew edians!!!!!!
 ksplot=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesLabel)) %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%summarize(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10) %>% ggplot()+ 
-  geom_vline(xintercept=seq(from=0,to=0.25,by=0.01), color='gray', lty='dashed', alpha=0.2) + geom_histogram(aes(x=ks, color=ploidy, fill=ploidy, weight=n), binwidth=0.001) + facet_wrap(~shortspeciesLabel, ncol=1, scales='free_y', strip.position = 'left', drop = TRUE) + scale_color_manual(values=ploidycolors)+ scale_fill_manual(values=ploidycolors)+
+  geom_vline(xintercept=seq(from=0,to=0.25,by=0.01), color='gray', lty='dashed', alpha=0.2) + geom_histogram(aes(x=ks, color=ploidy, fill=ploidy, weight=n), binwidth=0.001) + 
+  facet_wrap(~shortspeciesLabel, ncol=1, scales='free_y', strip.position = 'left', drop = TRUE, labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))) + scale_color_manual(values=ploidycolors)+ scale_fill_manual(values=ploidycolors)+
   theme(strip.background = element_blank(), 
-        strip.text.y.left = element_text(angle = 0), 
+        strip.text.y.left = element_text(angle = 0, hjust=1), 
         panel.spacing = unit(3, "pt"), 
         axis.text.y = element_blank(), 
         axis.text.x = element_text(size = 9),
@@ -209,10 +210,10 @@ ksplot=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesLabel)
   ylab(label = '')+
 #  xlim(0,0.25)
   ## from gerardi plot
-  scale_x_continuous( "Mean Ks of Syntenic Homologs per Block", limits=c(0,0.25),  sec.axis = sec_axis(~ . /6.5e-9/2/1e6, name = "Syntenic Homolog Divergence (million years)"))+
+  scale_x_continuous( "Mean Ks of Syntenic Homologs per Block", limits=c(0,0.25),  sec.axis = sec_axis(~ . /6.5e-9/2/1e6, name = "Syntenic Homolog Divergence\n(million years)"))+
   theme(axis.text.x.top=element_text(color='blue'), axis.title.x.top=element_text(color='blue'))
 
-
+#purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))
 
 plot_grid(cpb + theme(axis.title.x=element_text(angle = 45, hjust = 0.8, vjust = 1)), NULL, aapp+ theme(axis.title.x=element_text(angle = 45, hjust = 1, vjust=1)), ncol=4, rel_widths = c(0.1,-0.5,1), align='hv')
 
