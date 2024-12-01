@@ -213,6 +213,25 @@ ksplot=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesLabel)
   scale_x_continuous( "Mean Ks of Syntenic Homologs per Block", limits=c(0,0.25),  sec.axis = sec_axis(~ . /6.5e-9/2/1e6, name = "Syntenic Homolog Divergence\n(million years)"))+
   theme(axis.text.x.top=element_text(color='blue'), axis.title.x.top=element_text(color='blue'))
 
+## labels on right
+ksplotright=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesLabel)) %>% group_by(queryChr, refChr, paspChr, genome,ploidy, speciesLabel, shortspeciesLabel) %>%summarize(ks=mean(V17), n=length(unique(gene))) %>% filter(n>10) %>% ggplot()+ 
+  geom_vline(xintercept=seq(from=0,to=0.25,by=0.01), color='gray', lty='dashed', alpha=0.2) + geom_histogram(aes(x=ks, color=ploidy, fill=ploidy, weight=n), binwidth=0.001) + 
+  facet_wrap(~shortspeciesLabel, ncol=1, scales='free_y', strip.position = 'right', drop = TRUE, labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))) + scale_color_manual(values=ploidycolors)+ scale_fill_manual(values=ploidycolors)+
+  theme(strip.background = element_blank(), 
+        strip.text.y.right = element_text(angle = 0, hjust=0), 
+        panel.spacing = unit(3, "pt"), 
+        axis.text.y = element_blank(), 
+        axis.text.x = element_text(size = 9),
+        legend.position = 'NULL',
+        axis.ticks.y=element_blank(),
+        axis.line.y=element_blank()) +
+  ylab(label = '')+
+#  xlim(0,0.25)
+  ## from gerardi plot
+  scale_x_continuous( "Mean Ks of Syntenic Homologs per Block", limits=c(0,0.25),  sec.axis = sec_axis(~ . /6.5e-9/2/1e6, name = "Syntenic Homolog Divergence\n(million years)"))+
+  theme(axis.text.x.top=element_text(color='blue'), axis.title.x.top=element_text(color='blue'))
+
+
 #purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))
 
 plot_grid(cpb + theme(axis.title.x=element_text(angle = 45, hjust = 0.8, vjust = 1)), NULL, aapp+ theme(axis.title.x=element_text(angle = 45, hjust = 1, vjust=1)), ncol=4, rel_widths = c(0.1,-0.5,1), align='hv')

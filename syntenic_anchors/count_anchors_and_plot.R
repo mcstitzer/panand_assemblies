@@ -531,9 +531,132 @@ total_x_sum=sum(facet_sums$total_x)
 # Set dynamic height based on total sum
 plot_height <- total_y_sum / 100  # Adjust scale as needed
 
-pdf('~/Downloads/avirgi_scaled_dotplot.pdf', )
 
 
+
+### each species dotplot supp
+
+process_anchors_to_dotplot_SUPP <- function(filepath, color_palette=muted_colors, minBlock=10, title='', refChrs=c(paste0('Chr0', 1:9), 'Chr10'), queryChrs='', 
+                                              queryChrtoFlip='', ylabelspecies='',ploidy='') {
+  # Load data
+  data <- read.table(filepath, header = TRUE)
+  data <- data[data$gene != 'interanchor', ]
+  
+  ## get queryChrs if they aren't supplied
+  if(queryChrs[1]==''){
+    queryChrs=unique(data$queryChr)
+  }
+  
+  
+  # Reduce to blocks and calculate stats
+  data <- data %>%
+    group_by(blockIndex) %>%
+    mutate(blockLength = dplyr::n()) %>%
+    group_by(queryChr) %>%
+    mutate(freqStrand = names(which.max(table(strand))),
+           maxChr = max(queryStart),
+           freqRef = names(which.max(table(refChr))))
+  
+  # Filter data based on block length
+  data <- data[data$blockLength > minBlock, ]
+  data$refChr <- factor(data$refChr, levels = c(paste0('Chr0', 1:9), 'Chr10'))
+  
+  # Reverse strand calculations
+  data <- data %>%
+    arrange(freqRef, referenceStart, queryStart)
+  data$queryChr <- factor(data$queryChr, levels = rev(data$queryChr[!duplicated(data$queryChr)]))
+  data$revQueryStart <- data$queryStart
+  data$revQueryStart[data$freqStrand == '-'] <- abs(data$queryStart - data$maxChr)[data$freqStrand == '-']
+  
+  ## flip querychr that look funny
+  if(queryChrtoFlip!=''){
+    data$revQueryStart[data$queryChr%in%queryChrtoFlip]=abs(data$queryStart - data$maxChr)[data$queryChr%in%queryChrtoFlip]
+  }
+  
+  ## clean up future facet labels - this is very specific to chr level s
+  #  data$refLabel=gsub('Chr0', '', data$refChr)
+  #  data$refLabel=gsub('Chr', '', data$refLabel)
+  #  data$queryLabel=gsub('chr', '', data$queryLabel)
+  
+  ## set up the image
+  #  im=data.frame(refChr='Chr01', queryChr=NA, referenceStart=1, revQueryStart=1, path=pathtokaryotype)
+  #  im$queryChr=names(which.max(table(data$queryChr[data$refChr=='Chr01'])))
+  
+  # Combine the image and the border into a single grob
+  #  imgA <- grobTree(border, imgA)
+  
+  ystriptextsize=ifelse(length(unique(queryChrs))>50, 6,9)
+  
+  # Create the plot
+  p=ggplot(data[ data$refChr %in% names(color_palette) & data$refChr%in%refChrs & data$queryChr%in%queryChrs, ],
+           aes(x = referenceStart / 1e6, y = revQueryStart / 1e6, color = refChr)) +
+    geom_point(size=0.5) +
+    facet_grid(queryChr ~ refChr, scales = 'free', space='free') +
+    scale_color_manual(values = color_palette) +
+    theme(legend.position = 'none') +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    geom_hline(aes(yintercept=maxChr/1e6), lty='dashed', color='gray') +
+    geom_vline(xintercept=0, color='gray95')+
+    ggtitle(paste0(ylabelspecies,', ', ploidy)) + xlab('P. vaginatum position (Mb)') +
+    ylab(paste0(ylabelspecies, ' position (Mb)')) + 
+    #  ylab('Position (Mb)') +
+    theme(#strip.text.y = element_text(angle = 0, hjust = 0), 
+      strip.placement.y = "outside" , 
+      strip.text = element_text(size = 8, color = "darkblue", face = "bold"),
+      strip.background = element_rect(fill = "lightblue", color = "darkblue", linewidth = 1),
+      strip.text.y = element_text(angle=0, size=ystriptextsize),
+      axis.text.x=element_text(size=9),
+      axis.text.y=element_text(size=5),
+      panel.spacing = unit(0.1, 'lines'),
+      plot.title=element_text(color=ploidycolors[ploidy], size=10))+
+    scale_x_continuous(breaks = scales::breaks_pretty(n = 2), expand=c(0,0)) +  # Automatically choose 3 breaks for x-axis
+    scale_y_continuous(breaks = scales::breaks_pretty(n = 2), expand=c(0,0))    # Automatically choose 3 breaks for y-axis
+  
+p  
+
+}
+
+## diploids
+for(i in asize$V2[asize$ploidy=='Diploid']){
+  pdf(paste0('../figures/dotplots_by_sp/', i, '.pdf'),14,10)
+  if(!i%in%c('rtuber', 'telega')){
+  dp=process_anchors_to_dotplot_SUPP(filepath = paste0('../syntenic_anchors/anchors/', i, '-Pv-2'), minBlock=20, queryChrtoFlip = 'chr9', ylabelspecies = asize$speciesLabel[asize$V2==i],  ploidy='Diploid')
+}else(
+  dp=process_anchors_to_dotplot_SUPP(filepath = paste0('../syntenic_anchors/anchors/', i, '-Pv-4'), minBlock=20, queryChrtoFlip = 'chr9', ylabelspecies = asize$speciesLabel[asize$V2==i],  ploidy='Diploid')
+  
+)
+  print(dp)
+  dev.off()  
+}
+
+## tetraploids
+for(i in asize$V2[asize$ploidy=='Tetraploid']){
+pdf(paste0('../figures/dotplots_by_sp/', i, '.pdf'),14,10)
+dp=process_anchors_to_dotplot_SUPP(filepath = paste0('../syntenic_anchors/anchors/', i, '-Pv-4'), minBlock=20, queryChrtoFlip = 'chr9', ylabelspecies = asize$speciesLabel[asize$V2==i],  ploidy='Tetraploid')
+print(dp)
+dev.off()  
+}
+
+
+## hexaploids
+for(i in asize$V2[asize$ploidy=='Hexaploid']){
+  pdf(paste0('../figures/dotplots_by_sp/', i, '.pdf'),14,10)
+  dp=process_anchors_to_dotplot_SUPP(filepath = paste0('../syntenic_anchors/anchors/', i, '-Pv-6'), minBlock=20, queryChrtoFlip = 'chr9', ylabelspecies = asize$speciesLabel[asize$V2==i],  ploidy='Hexaploid')
+  print(dp)
+  dev.off()  
+}
+
+## paleotetraploid
+for(i in asize$V2[asize$ploidy=='Paleotetraploid']){
+  pdf(paste0('../figures/dotplots_by_sp/', i, '.pdf'),14,10)
+  if(!i%in%c('tdacn1', 'tdacs1')){
+  dp=process_anchors_to_dotplot_SUPP(filepath = paste0('../syntenic_anchors/anchors/', i, '-Pv-4'), minBlock=20, queryChrtoFlip = 'chr9', ylabelspecies = asize$speciesLabel[asize$V2==i],  ploidy='Paleotetraploid')
+  }else{
+    dp=process_anchors_to_dotplot_SUPP(filepath = paste0('../syntenic_anchors/anchors/', i, '-Pv-2'), minBlock=20, queryChrtoFlip = 'chr9', ylabelspecies = asize$speciesLabel[asize$V2==i],  ploidy='Paleotetraploid')
+  }
+    print(dp)
+  dev.off()  
+}
 
 
 ## todo
