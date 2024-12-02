@@ -12,28 +12,75 @@ library(tidypaleo) ## facet species names in italics!!!!!
 library(ggh4x) ## facet strips spanning groups (subtribe)
 
 ## need to be in `scinet_trees/` ###AGGagfag
-filenames=list.files('.', pattern='RAxML_bipartitionsBranchLabels.')
-                                       
-outdf=data.frame(filenames=filenames)
+#filenames=list.files('.', pattern='RAxML_bipartitionsBranchLabels.')
+dd=read.tree('../sp_tree/paspalum_anchors_aster.dated.2024-11-25.tre')                                              
+ outdf=data.frame(pvgene=sapply(dd, function(tree){str_split_fixed(tree$tip.label, '_', 3)[1,2]}) )                                     
+#outdf=data.frame(filenames=filenames)
+ddd=lapply(dd, function(tree){
+ nt=tree
+ nt$tip.label=substr(tree$tip.label,1,6)
+ return(nt)
+})
+ddd=do.call('c', ddd)
+
+
 all=read.table('../panand_sp_ploidy.txt')                                
 #for(sp in c('vcuspi', 'rtuber', 'blagur', 'hcompr', 'udigit', 'telega')){
+
+## do southerns because they're in the gene tree
+tripsacinae=c('tdacn2', 'tdacs2',"tdacn1", "tdacs1", "zdgigi", "zdmomo", "zluxur", "zmhuet", "zTIL18", "zTIL25", "zTIL01", "zTIL11", "znicar", "zmB735")
+  
 for(sp in all$V2){
 
   outdf[,paste0(sp, 'Count')]=NA
   outdf[,paste0(sp, 'Monophyletic')]=NA
 #brlenlist=list()
+# 
+# for(i in (1:length(filenames))){ ## ep2 is not there
+# 
+# awt=read.raxml(paste0('',filenames[i]))
+# #tryCatch(("reroot" (
+# #awt=root(awt, awt$tip.label[substr(awt$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate')]))), error = function(err) print("Outgroups already at the root"))
+# awt=as.phylo(awt)
+# awt$tip.label=gsub('_R_', '', awt$tip.label)
+#   ## add to make sure outgroup is there, and is monophyletic - otherwise skip this tree
+#   if(any(substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate'))){
+#     if(is.monophyletic(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate')])){
+# awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate')])
+# 
+# vc=sum(substr(as.phylo(awt)$tip.label,1,6) %in% sp)
+# outdf[i, paste0(sp, 'Count')]=vc
+# if(vc>1){
+# mrcanode=getMRCA(as.phylo(awt), as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c(sp)])
+# getDescendants(as.phylo(awt), mrcanode)
+# tips=as.phylo(awt)$tip.label[getDescendants(as.phylo(awt), mrcanode)]
+# tips=tips[!is.na(tips)]
+# outdf[i, paste0(sp, 'Monophyletic')]=all(substr(tips,1,6)==sp)
+#   ## get terminal branch length for each copy
+#   ## first get the node numbers of the tips
+# nodes<-sapply(as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c(sp)],function(x,y) which(y==x),y=as.phylo(awt)$tip.label)
+# ## then get the edge lengths for those nodes
+# edge.lengths<-setNames(awt$edge.length[sapply(nodes,function(x,y) which(y==x),y=awt$edge[,2])],names(nodes))
+# #brlenlist[i]=edge.lengths
+# }}
+# }
+# }
+#                                               }
+               
+                                            
+for(i in (1:length(ddd))){ ## ep2 is not there
 
-for(i in (1:length(filenames))){ ## ep2 is not there
-
-awt=read.raxml(paste0('',filenames[i]))
+awt=dd[[i]]
 #tryCatch(("reroot" (
 #awt=root(awt, awt$tip.label[substr(awt$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate')]))), error = function(err) print("Outgroups already at the root"))
 awt=as.phylo(awt)
 awt$tip.label=gsub('_R_', '', awt$tip.label)
   ## add to make sure outgroup is there, and is monophyletic - otherwise skip this tree
-  if(any(substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate'))){
-    if(is.monophyletic(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate')])){
-awt=root(awt, as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c('osativ', 'bdista', 'pprate')])
+  
+  ## since we've sampled multiple tips of this polyploidy, count each once!!
+if(sp %in% tripsacinae){
+awt=drop.tip(awt, awt$tip.label[substr(awt$tip.label,1,6)%in%tripsacinae[-which(tripsacinae==sp)]])
+}
 
 vc=sum(substr(as.phylo(awt)$tip.label,1,6) %in% sp)
 outdf[i, paste0(sp, 'Count')]=vc
@@ -49,12 +96,9 @@ nodes<-sapply(as.phylo(awt)$tip.label[substr(as.phylo(awt)$tip.label,1,6) %in% c
 ## then get the edge lengths for those nodes
 edge.lengths<-setNames(awt$edge.length[sapply(nodes,function(x,y) which(y==x),y=awt$edge[,2])],names(nodes))
 #brlenlist[i]=edge.lengths
-}}
 }
 }
-                                              }
-                                              
-                                              
+}
 
 
 ## plot out each species, with barplot of Count,  and barplot of monophyletic count (or split bars of monophyly on first barplot!)
@@ -74,8 +118,13 @@ tp$NotApplicable=is.na(tp$Monophyletic)
 tpp=tp[!is.na(tp$Count),] %>% group_by(Count, genome) %>% dplyr::summarize(Monophyletic=sum(Monophyletic, na.rm=T), Polyphyletic=sum(Polyphyletic, na.rm=T), NotApplicable=sum(NotApplicable))
 
 
+
+
+
+
+
                                               
-pdf(paste0('~/transfer/genetree_counting.', Sys.Date(), '.pdf'), 35,5)
+pdf(paste0('~/Downloads/genetree_counting.', Sys.Date(), '.pdf'), 35,5)
 ggplot(tp, aes(x=genome,  group=Count, fill=Monophyletic)) + geom_histogram(stat='count', position='dodge') + scale_fill_manual(values=c('slateblue', 'gray'))
 ggplot(tp, aes(x=factor(Count), y=genome,  group=Count, fill=Monophyletic)) + stat_binline() + scale_fill_manual(values=c('slateblue', 'gray'))
 ggplot(tp[!is.na(tp$Count),], aes(x=factor(Count),  group=Count, fill=Monophyletic)) + geom_histogram(stat='count', position='dodge') + facet_wrap(~genome, nrow=1) + scale_fill_manual(values=c('slateblue', 'forestgreen'))
@@ -108,7 +157,7 @@ names(taxonnames)=c("zTIL11", "zmB735", "zTIL01", "zTIL25", "zTIL18", "zmhuet",
 "crefra", "ccitra", "hconto", "ttrian", "blagur", "ppanic", "sbicol", 
 "irugos", "snutan", "atenui", "telega", "cserru", "pvagin")
 
-gs=read.table('~/transfer/panand_assembly_sizes.txt', header=T, sep='\t')
+#gs=read.table('~/transfer/panand_assembly_sizes.txt', header=T, sep='\t')
                                  
 all=read.table('../panand_sp_ploidy.txt', header=F)
 all=all[!all$V2 %in% c('tdactm', 'agerjg', 'bdista', 'eophiu', 'osativ', 'svirid', 'tdactn', 'tdacts'),]
@@ -121,7 +170,7 @@ all$trip=all$V2 %in% c('tdacn1', 'tdacn2', 'tdacs1', 'tdacs2', 'tdactm', 'zdgigi
 
 tppp=reshape2::melt(tpp[!is.na(tpp$Count) & !tpp$genome %in% c('tdactm', 'tzopol', 'osativ', 'pprate', 'tdacs2', 'tdacn2', 'pvagin'),], id.vars=c('genome', 'Count'))
 tppp$genome=factor(tppp$genome, levels=names(taxonnames))
-tppp$ploidy=gs$ploidy[match(tppp$genome, gs$V2)]
+tppp$ploidy=asize$ploidy[match(tppp$genome, asize$V2)]
 tppp$phyleticcol=paste0(tppp$ploidy, tppp$variable)
 ## make singletons "monophyletic"
 tppp$phyleticcol[tppp$Count==1]=paste0(tppp$ploidy[tppp$Count==1], 'Monophyletic')
@@ -140,7 +189,7 @@ tppp=tppp[!is.na(tppp$genome),]
 # # tg$V3[tg$genome=='ccitra']=2
 
                              
-tppp$haploid=gs$haploid[match(tppp$genome, gs$V2)]
+tppp$haploid=asize$haploid[match(tppp$genome, asize$V2)]
 tppp$doubledCount=ifelse(tppp$haploid, tppp$Count*2, tppp$Count)
 
 tppp$speciesLabel=ifelse(tppp$haploid, paste0(tppp$species, '*'), as.character(tppp$species))
@@ -153,65 +202,78 @@ tppp$linetype[tppp$doubledCount%in%1:6]=rep(c('dotted', 'dashed'),3)[tppp$double
 ## switch it back, not thinking this through!
 tppp$variable[tppp$Count==1]='NotApplicable'                                
 
-## assembly size, since we don't have flow for everybody
-asize=read.table('../general_summaries/panand_assembly_sizes.txt', header=F)
-asize=asize[asize$V2 %in% tppp$genome,]
-asize$haploid=gs$haploid[match(asize$V2, gs$V2)]
-asize$haploid[asize$V2=='zmB735']=T
-                                
-asize$doubledAssembly=ifelse(asize$haploid, asize$V3*2, asize$V3)
+# asize$species=taxonnames[match(asize$V2, names(taxonnames))]
+# asize$species=factor(asize$species, levels=taxonnames)
+# 
+# asize$speciesLabel=ifelse(asize$haploid, paste0(asize$species, '*'), as.character(asize$species))
+# asize$speciesLabel=asize$species
+# levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]]=paste0(levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]], '*')
+# asize$ploidy=gs$ploidy[match(asize$V2, gs$V2)]
 
-## there are 1.5 Gb of Ns in one of these assemblies screamemoji
-asize$nCountDoubled=ifelse(asize$haploid, asize$V8*2, asize$V8)
-asize$nCount=asize$V8
 
-## also check GC content because it's cool - these genomes are so big i get integer overflows adding?????
-asize$gc=(asize$V5/1e6+asize$V6/1e6)/(asize$V4/1e6+asize$V5/1e6+asize$V6/1e6+asize$V7/1e6)
-## nm it's kinda boring 43-47% 
-                 
-asize$species=taxonnames[match(asize$V2, names(taxonnames))]
-asize$species=factor(asize$species, levels=taxonnames)
+shorttaxonnames=c("Z. mays ssp. parviglumis TIL11",  "Z. mays ssp. parviglumis TIL01", "Z. mays ssp. mays B73v5", "Z. mays ssp. mexicana TIL25", "Z. mays ssp. mexicana TIL18", "Z. mays ssp. huehuetenangensis", 
+             "Z. luxurians", "Z. nicaraguensis", "Z. diploperennis Momo", "Z. diploperennis Gigi", "T. zoloptense", "T. dactyloides FL", "T. dactyloides Southern Hap2", 
+             "T. dactyloides Northern Hap2", "T. dactyloides KS", "T. dactyloides tetraploid", "U. digitatum", "V. cuspidata", "R. rottboellioides", "R. tuberculosa", 
+             "H. compressa", "E. tripsacoides", "S. scoparium", "S. microstachyum", "A. virginicum", "A. chinensis", "A. gerardi", 
+             "C. refractus", "C. citratus", "H. contortus", "T. triandra", "B. laguroides", "P. paniceum", "S. bicolor", 
+             "I. rugosum", "S. nutans", '"A." burmanicus', "T. elegans", "C. serrulatus", "P. vaginatum")
+names(shorttaxonnames)=c("zTIL11",  "zTIL01", "zmB735", "zTIL25", "zTIL18", "zmhuet", 
+                    "zluxur", "znicar", "zdmomo", "zdgigi", "tzopol", "tdacs1", "tdacs2", 
+                    "tdacn2", "tdacn1", "tdactm", "udigit", "vcuspi", "rrottb", "rtuber", 
+                    "hcompr", "etrips", "sscopa", "smicro", "avirgi", "achine", "agerar", 
+                    "crefra", "ccitra", "hconto", "ttrian", "blagur", "ppanic", "sbicol", 
+                    "irugos", "snutan", "atenui", "telega", "cserru", "pvagin")
 
-asize$speciesLabel=ifelse(asize$haploid, paste0(asize$species, '*'), as.character(asize$species))
-asize$speciesLabel=asize$species
-levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]]=paste0(levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$haploid]], '*')
-asize$ploidy=gs$ploidy[match(asize$V2, gs$V2)]
+tppp$shortspeciesLabel=shorttaxonnames[match(tppp$genome, names(shorttaxonnames))]
+tppp$shortspeciesLabel=factor(tppp$shortspeciesLabel, levels=rev(shorttaxonnames))
 
-## add flow, for supp
-flow=read.table('../panand_flow_cyt.txt', header=T, sep='\t') 
-asize$flow=flow[,2][match(asize$V2, flow[,1])]
-cor.test((asize$doubledAssembly)/2, asize$flow, use='complete.obs')
-cor.test((asize$doubledAssembly-asize$nCountDoubled)/2, asize$flow, use='complete.obs')
 
-## add TE/tandemrepeat content (reduce on gff, so each bp only counted ONCE)
-te=read.table('../transposable_elements/total_repeat_bp.txt', header=T, sep='\t') 
-asize$repeatbp=te$repeatbp[match(asize$V2, te$genome)]
-## also double for haploids
-asize$doubledRepeat=ifelse(asize$haploid, asize$repeatbp*2, asize$repeatbp)
-## and then divide to get haploid for comparison/plotting
-asize$haploidRepeatSize=asize$doubledRepeat/2
 
-                                
-pdf(paste0('~/transfer/supp_flow_assembly.', Sys.Date(), '.pdf'), 4,4)
-## "haploid" assembly size
-ggplot(asize, aes(x=doubledAssembly/1e9/2, y=flow/1000, color=ploidy)) +  scale_color_manual(values=ploidycolors)  + geom_point() + ylab('Genome Size, Flow Cytometry (Gb)')+ xlab('Haploid Assembly\nSize (Gb)') 
-ggplot(asize, aes(x=(doubledAssembly-nCountDoubled)/1e9/2, y=flow/1000, color=ploidy)) +  scale_color_manual(values=ploidycolors)  + geom_point() + ylab('Genome Size, Flow Cytometry (Gb)')+ xlab('Haploid Assembly\n Not N Size (Gb)') 
-                                 
-dev.off()
+## try a barplot instead of a pie chart???
+## pie
+aap=tppp %>% filter(ploidy!='Diploid') %>% group_by(speciesLabel, variable) %>% summarize(n=n(), count=sum(value)) %>% filter(variable!='NotApplicable') %>% mutate(pct = count/sum(count)*100, width=sum(count))%>%
+                                ggplot(aes(x=width/2, y=pct, fill=variable, width=width)) + 
+                                geom_bar(stat='identity', position='fill') + 
+                                coord_polar(theta='y') + 
+                                facet_wrap(~speciesLabel, ncol=1, strip.position='left')+   
+                                theme( strip.background = element_blank(), strip.text.y.left = element_blank(), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ 
+                                theme(legend.position = "none") + 
+                                theme(axis.ticks=element_blank(), axis.text=element_blank(), panel.grid=element_blank(), panel.border=element_blank()) + 
+                                scale_fill_manual(values=c('#5F4B8BFF', '#E69A8DFF')) + ylab('Proportion\nDuplicates\nMonophyletic') + xlab('')
 
-## also write means in text
-asize %>% group_by(ploidy) %>% summarize(flow=mean(flow, na.rm=T), gs=mean(doubledAssembly/2, na.rm=T), repeats=mean(haploidRepeatSize, na.rm=T))
-summary(asize$haploidRepeatSize/asize$haploidAssemblySize)
+## bar
+aapbar <- tppp %>%
+  filter(ploidy != 'Diploid') %>%
+  group_by(shortspeciesLabel, variable) %>%
+  summarize(n = n(), count = sum(value)) %>%
+  filter(variable != 'NotApplicable') %>%
+  ggplot(aes(x = shortspeciesLabel, y = count, fill = variable)) + 
+  geom_hline(yintercept=c(2000,4000,6000), color='snow2', linetype='dotted') + 
+  geom_hline(yintercept=c(1000,3000,5000,7000), color='snow3', linetype='dotted') + 
+  geom_bar(stat = 'identity', position = 'stack', alpha=0.9, width=0.8) +
+  coord_flip() +  # Flip coordinates for horizontal bars
+  theme(
+    strip.background = element_blank(),
+    strip.text.y.left = element_blank(),
+    panel.spacing = unit(3, "pt"),
+    axis.text = element_text(size = 9),
+    legend.position = "top",
+    legend.title=element_blank(),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank(),
+    panel.border = element_blank()
+  ) + 
+  scale_fill_manual(values = c('#5F4B8BFF', '#E69A8DFF'), guide = guide_legend(nrow = 2)) +
+  xlab('') + 
+  ylab('Multi-copy Syntenic Genes')
 
-                                
-## MAKE SURE I HAVE THIS
-asize$haploidAssemblySize=asize$doubledAssembly/2
 
-asize$haploidNCount=asize$nCountDoubled/2
-asize$rawAssemblySize=asize$V3
-asize$rawRepeatSize=asize$repeatbp
-asize$rawNCount=asize$nCount
-write.table(asize[,c('V2', 'haploid', 'species', 'speciesLabel', 'ploidy', 'flow', 'rawAssemblySize', 'haploidAssemblySize', 'rawRepeatSize', 'haploidRepeatSize', 'rawNCount', 'haploidNCount', 'gc')], '~/transfer/panand_assembly_sizes.txt', sep='\t', quote=F, row.names=F, col.names=T)
+
+
+
+
+
+
 
 
 ## okay now try ks!

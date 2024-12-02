@@ -218,7 +218,7 @@ ksplotright=final_merged_data %>% filter(ploidy!='Diploid', !is.na(shortspeciesL
   geom_vline(xintercept=seq(from=0,to=0.25,by=0.01), color='gray', lty='dashed', alpha=0.2) + geom_histogram(aes(x=ks, color=ploidy, fill=ploidy, weight=n), binwidth=0.001) + 
   facet_wrap(~shortspeciesLabel, ncol=1, scales='free_y', strip.position = 'right', drop = TRUE, labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))) + scale_color_manual(values=ploidycolors)+ scale_fill_manual(values=ploidycolors)+
   theme(strip.background = element_blank(), 
-        strip.text.y.right = element_text(angle = 0, hjust=0), 
+        strip.text.y.right = element_text(angle = 0, hjust=0, size=9, vjust=0), 
         panel.spacing = unit(3, "pt"), 
         axis.text.y = element_blank(), 
         axis.text.x = element_text(size = 9),

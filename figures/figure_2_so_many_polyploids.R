@@ -139,6 +139,9 @@ tplks=ggplot(asize, aes(x=ks, y=haploidRepeatSize/1e6, color=ploidy)) +
   xlab('Ploidy') + ylab('Repeat Megabases (Mb)') + theme(legend.position='NULL')
 
 
+## aapbar from ../gene_trees/count_topologies_genetrees.R
+aapbar
+
 
 ## bcd
 threerules=plot_grid(cpl+ theme(axis.text.x=element_blank(), axis.title.x=element_blank()), spl+ theme(axis.text.x=element_blank(), axis.title.x=element_blank()), tpl+ theme(axis.text.x=element_text(size = 9)), ncol=1, labels=c('B', 'C', 'D'), align='v')
@@ -152,12 +155,14 @@ figure2=plot_grid(ksplot, threerules, ncol=2, labels=c('A',''), rel_widths=c(1,0
 figure2ks=plot_grid( threerulesabc, ksplot,threeks, ncol=3, labels=c('','D', ''), rel_widths=c(0.7,1,0.7), align='v', axis='b')
 figure2ks=plot_grid( ksplot,threerules, threeks, ncol=3, labels=c('A','', ''), rel_widths=c(1,0.7,0.7), align='v', axis='b')
 
-figure2right=plot_grid(threerulesabc, ksplotright,ncol=2, labels=c('','D'), rel_widths=c(0.6,1), align='v', axis='b')
+figure2right=plot_grid(threerulesabc, 
+             plot_grid(ksplotright, aapbar+theme(axis.text.y=element_blank()), ncol=2, rel_widths=c(1,0.4),labels=c('D', 'E'), align='h', axis='tb'),
+             ncol=2, rel_widths=c(0.4,1), align='v', axis='tb')
 
 
 
 
-pdf('../figures/figure2_so-many-polyploids.pdf',12,9)
+pdf('../figures/figure2_so-many-polyploids.pdf',14,9)
 figure2right
 dev.off()
 
