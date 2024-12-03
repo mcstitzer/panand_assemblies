@@ -159,11 +159,14 @@ figure2right=plot_grid(threerulesabc,
              plot_grid(ksplotright, aapbar+theme(axis.text.y=element_blank()), ncol=2, rel_widths=c(1,0.4),labels=c('D', 'E'), align='h', axis='tb'),
              ncol=2, rel_widths=c(0.4,1), align='v', axis='tb')
 
+figure2rightflip=plot_grid(threerulesabc, 
+             plot_grid(aapbar+theme(axis.text.y=element_blank()) + scale_y_reverse(), ksplotright, ncol=2, rel_widths=c(0.4, 1),labels=c('D', 'E'), align='h', axis='tb'),
+             ncol=2, rel_widths=c(0.4,1), align='v', axis='tb')
 
 
 
 pdf('../figures/figure2_so-many-polyploids.pdf',14,9)
-figure2right
+figure2rightflip
 dev.off()
 
 
@@ -184,6 +187,25 @@ ksplotsp= ggplot(data=ksdat)+
   facet_wrap(~shortspeciesLabel, ncol=1, scales='free_y', strip.position = 'left', drop = TRUE, labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))) + scale_color_manual(values=ploidycolors)+ scale_fill_manual(values=ploidycolors)+
   theme(strip.background = element_blank(), 
         strip.text.y.left = element_text(angle = 0, hjust=1), 
+        panel.spacing = unit(3, "pt"), 
+        axis.text.y = element_blank(), 
+        axis.text.x = element_text(size = 9),
+        legend.position = 'NULL',
+        axis.ticks.y=element_blank(),
+        axis.line.y=element_blank()) +
+  ylab(label = '')+
+#  xlim(0,0.25)
+  ## from gerardi plot
+  scale_x_continuous( "Mean Ks of Syntenic Homologs per Block", limits=c(0,0.25),  sec.axis = sec_axis(~ . /6.5e-9/2/1e6, name = "Syntenic Homolog Divergence\n(million years)"))+
+  theme(axis.text.x.top=element_text(color='blue'), axis.title.x.top=element_text(color='blue'))
+
+ksplotrightsp= ggplot(data=ksdat)+ 
+  geom_vline(xintercept=seq(from=0,to=0.25,by=0.01), color='gray', lty='dashed', alpha=0.2) + 
+  geom_histogram(aes(x=ks,weight=n), fill='gray', color='gray',binwidth=0.001) + 
+  geom_histogram(data=ksdat[ksdat$genome==i,],aes(x=ks, color=ploidy, fill=ploidy, weight=n), binwidth=0.001) + 
+  facet_wrap(~shortspeciesLabel, ncol=1, scales='free_y', strip.position = 'right', drop = TRUE, labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))) + scale_color_manual(values=ploidycolors)+ scale_fill_manual(values=ploidycolors)+
+  theme(strip.background = element_blank(), 
+        strip.text.y.right = element_text(angle = 0, hjust=0, size=10, vjust=0),
         panel.spacing = unit(3, "pt"), 
         axis.text.y = element_blank(), 
         axis.text.x = element_text(size = 9),
@@ -238,9 +260,49 @@ tplsp=ggplot(asize, aes(x=ploidy, y=haploidRepeatSize/1e6, group=ploidy, color=p
   geom_point(data=asize %>% mutate(newcolor=ifelse(V2==i,as.character(ploidy),'gray'), size=ifelse(V2==i, 4,3)), position = position_jitter(w=0.3, h=0,seed = 1), aes(size=size, color=newcolor))+ 
   xlab('Ploidy') + ylab('Repeat Megabases (Mb)') + theme(legend.position='NULL')
 
+## bar
+databar=tppp %>%
+  filter(ploidy != 'Diploid') %>%
+  group_by(shortspeciesLabel, genome, variable) %>%
+  summarize(n = n(), count = sum(value)) %>%
+  filter(variable != 'NotApplicable')
+  
+aapbarsp <- 
+  ggplot(data=databar, aes(x = shortspeciesLabel, y = count, fill = variable)) + 
+  geom_hline(yintercept=c(2000,4000,6000), color='snow2', linetype='dotted') + 
+  geom_hline(yintercept=c(1000,3000,5000,7000), color='snow3', linetype='dotted') + 
+  geom_bar(stat = 'identity', position = 'stack', alpha=0.1, width=0.8) +
+  geom_bar(data=databar[databar$genome==i,], stat = 'identity', position = 'stack', alpha=0.9, width=0.8) +
+  coord_flip() +  # Flip coordinates for horizontal bars
+  theme(
+    strip.background = element_blank(),
+    strip.text.y.left = element_blank(),
+    panel.spacing = unit(3, "pt"),
+    axis.text = element_text(size = 9),
+    legend.position = "top",
+    legend.justification = "center",
+    legend.title=element_blank(),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank(),
+    panel.border = element_blank()
+  ) + 
+  scale_fill_manual(values = c("Monophyletic"='#5F4B8BFF', "Polyphyletic"='#E69A8DFF'), labels=c("Polyphyletic"='Non-Monophyletic', 'Monophyletic'='Monophyletic'), guide = guide_legend(nrow = 2)) +
+  xlab('') + 
+  ylab('Multi-copy Syntenic Genes')
+
+
+
+
+
+
 threerulessp=plot_grid(cplsp+ theme(axis.text.x=element_blank(), axis.title.x=element_blank()), splsp+ theme(axis.text.x=element_blank(), axis.title.x=element_blank()), tplsp+ theme(axis.text.x=element_text(size = 9)), ncol=1, labels=c('B', 'C', 'D'), align='v')
 figure2sp=plot_grid(ksplotsp, threerulessp, ncol=2, labels=c('A',''), rel_widths=c(1,0.8), align='v', axis='b')
-print(figure2sp)
+
+figure2rightflipsp=plot_grid(threerulessp, 
+             plot_grid(aapbarsp+theme(axis.text.y=element_blank()) + scale_y_reverse(), ksplotrightsp, ncol=2, rel_widths=c(0.4, 1),labels=c('D', 'E'), align='h', axis='tb'),
+             ncol=2, rel_widths=c(0.4,1), align='v', axis='tb')
+
+print(figure2rightflipsp)
 dev.off()
 
 }

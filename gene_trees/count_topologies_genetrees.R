@@ -258,12 +258,13 @@ aapbar <- tppp %>%
     panel.spacing = unit(3, "pt"),
     axis.text = element_text(size = 9),
     legend.position = "top",
+    legend.justification = "center",
     legend.title=element_blank(),
     axis.ticks = element_blank(),
     panel.grid = element_blank(),
     panel.border = element_blank()
   ) + 
-  scale_fill_manual(values = c('#5F4B8BFF', '#E69A8DFF'), guide = guide_legend(nrow = 2)) +
+  scale_fill_manual(values = c("Monophyletic"='#5F4B8BFF', "Polyphyletic"='#E69A8DFF'), labels=c("Polyphyletic"='Non-Monophyletic', 'Monophyletic'='Monophyletic'), guide = guide_legend(nrow = 2)) +
   xlab('') + 
   ylab('Multi-copy Syntenic Genes')
 
