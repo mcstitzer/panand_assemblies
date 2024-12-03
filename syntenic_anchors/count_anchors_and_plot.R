@@ -485,7 +485,7 @@ tz=plot_grid(td, zm, ncol=2, align='hv', labels=c('C', 'D'))
 
 ### new trick - color zea/tripsacum by paspalum chromosomes???? Or 
 
-tzdp=process_anchors_to_dotplot_ZeaTrip('anchors/tdacs1-zB73v5-2', paspalum_tripsacum = 'anchors/tdacs1-Pv-2', paspalum_maize = 'anchors/zmB735-Pv-4', color_palette=muted_colors, minBlock=10, refChrs = paste0('chr',1:10), queryChrs=paste0('chr',1:18), ylabelspecies='T. dactyloides KS ')
+tzdp=process_anchors_to_dotplot_ZeaTrip('../syntenic_anchors/anchors/tdacs1-zB73v5-2', paspalum_tripsacum = '../syntenic_anchors/anchors/tdacs1-Pv-2', paspalum_maize = '../syntenic_anchors/anchors/zmB735-Pv-4', color_palette=muted_colors, minBlock=10, refChrs = paste0('chr',1:10), queryChrs=paste0('chr',1:18), ylabelspecies='T. dactyloides KS ')
 tzdp+ ylab('T. dactyloides KS position (Mb)')
 
 
@@ -623,8 +623,11 @@ for(i in asize$V2[asize$ploidy=='Diploid']){
   dp=process_anchors_to_dotplot_SUPP(filepath = paste0('../syntenic_anchors/anchors/', i, '-Pv-2'), minBlock=20, queryChrtoFlip = 'chr9', ylabelspecies = asize$speciesLabel[asize$V2==i],  ploidy='Diploid')
 }else(
   dp=process_anchors_to_dotplot_SUPP(filepath = paste0('../syntenic_anchors/anchors/', i, '-Pv-4'), minBlock=20, queryChrtoFlip = 'chr9', ylabelspecies = asize$speciesLabel[asize$V2==i],  ploidy='Diploid')
-  
 )
+  if(i=='telega'){
+    dp=process_anchors_to_dotplot_SUPP(filepath = paste0('../syntenic_anchors/anchors/', i, '-Pv-4'), minBlock=40, queryChrtoFlip = 'chr9', ylabelspecies = asize$speciesLabel[asize$V2==i],  ploidy='Diploid')
+  }
+  
   print(dp)
   dev.off()  
 }

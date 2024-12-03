@@ -82,6 +82,8 @@ gpar <- init_genespace(
   genomeIDs=c('pvagin', asize$V2 ),
     ploidy= c(1, asize$ploidy),
 #    outgroup='pvagin',
+     dotplots = "never",
+     orthofinderInBlk=F, ## since orthofinder gets the species tree wrong, don't make hogs!!
     nCores=64)
     
     out <- run_genespace(gpar, overwrite = F)
