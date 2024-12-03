@@ -637,6 +637,13 @@ print(dp)
 dev.off()  
 }
 
+# A. tenuifolius has way too many contigs - plot it separately :(
+i='atenui'
+pdf(paste0('../figures/dotplots_by_sp/', i, '.pdf'),14,10)
+dp=process_anchors_to_dotplot_SUPP(filepath = paste0('../syntenic_anchors/anchors/', i, '-Pv-4'), minBlock=60, queryChrtoFlip = 'chr9', ylabelspecies = asize$speciesLabel[asize$V2==i],  ploidy='Tetraploid')
+print(dp)
+dev.off()  
+
 
 ## hexaploids
 for(i in asize$V2[asize$ploidy=='Hexaploid']){
