@@ -45,7 +45,7 @@ for(i in c('zmB735')){
   print(countRearrangements(Sys.glob(paste0('../syntenic_anchors/anchors/', i, '-Pv-*')), minBlock=50))
 }  
 
-lowQualAssemblies=c('telega', 'atenui', 'rrottb')
+lowQualAssemblies=c('telega', 'atenui', 'rrottb', 'ccitra')
 
 asize$transloc=sapply(asize$V2, function(x) countRearrangements(Sys.glob(paste0('../syntenic_anchors/anchors/', x, '-Pv-*')), minBlock=30))
 asize$transloc=ifelse(asize$haploid, asize$transloc, asize$transloc/2) ## if haploid, this is true number, if allelic, don't count each allele
@@ -84,6 +84,7 @@ ggplot(asize, aes(x=ploidy, y=scaledTransloc, group=ploidy, color=ploidy)) + geo
 
 
 ## no clear relatioonship with parental age?? fair if it's all cytotype age...
+asize$mya=het$mya[match(asize$V2, het$genome)]
 ggplot(asize[!asize$V2%in%lowQualAssemblies,], aes(x=mya, y=scaledTransloc, color=ploidy)) + geom_point() + scale_color_manual(values=ploidycolors)
 
 ## translocations are related to chromosome count, reassuringly!!!
@@ -101,6 +102,14 @@ summary(lm(data=asize, scaledTransloc~chrCount))
 ## with regression line
 fig_chrrearr=ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(9,11:19,21:29), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(10,20,30), color='gray80', lty='dashed', alpha=0.3)+ geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + scale_color_manual(values=ploidycolors)+ xlab('Haploid Chromosome Number') + ylab('Rearrangements per\nDiploid Equivalent') + stat_smooth(method='lm', aes(group=NA), se=F, color='gray80')
 fig_chrrearr 
+
+### compare rearrangemnets to age
+fig_agerearr=ggplot(asize, aes(x=mya, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(2,4,6,8,10,12,14), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(1,3,5,7,9,11,13), color='gray80', lty='dashed', alpha=0.3)+ 
+  geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + 
+  scale_color_manual(values=ploidycolors)+ xlab('Divergence between Parental Subgenomes (Mya)') + ylab('Rearrangements per\nDiploid Equivalent') #+ 
+#  stat_smooth(method='lm', aes(group=NA), se=F, color='gray80')
+fig_agerearr 
+
 
 ##### laxy and putting this in the other document, count_anchors_and_plot.R
 

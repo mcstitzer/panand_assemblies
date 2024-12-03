@@ -92,6 +92,64 @@ gpar <- init_genespace(
 
 
   
+  
+#    mkdir ../genespace_noog
+  wd <- "/workdir/mcs368/genespace_diploids" # no outgroup
+  
+  gpar <- init_genespace(
+  wd = wd,
+  path2mcscanx = path2mcscanx,
+  genomeIDs=c('pvagin', asize$V2[asize$V2%in%c('avirgi', 'crefra', 'cserru', 'irugos', 'ppanic', 'sbicol', 'smicro', 'ttrian')] ),
+    ploidy= c(1, asize$ploidy[asize$V2%in%c('avirgi', 'crefra', 'cserru', 'irugos', 'ppanic', 'sbicol', 'smicro', 'ttrian')]),
+#    outgroup='pvagin',
+     dotplots = "never",
+     orthofinderInBlk=F, ## since orthofinder gets the species tree wrong, don't make hogs!!
+    nCores=64)
+    
+    diploids <- run_genespace(gpar, overwrite = F)
+  
+  
+  
+    wd <- "/workdir/mcs368/genespace_tetraploids" # no outgroup
+  gpar <- init_genespace(
+  wd = wd,
+  path2mcscanx = path2mcscanx,
+  genomeIDs=c('pvagin', asize$V2[asize$V2%in%c('achine', 'atenui', 'etrips', 'hconto', 'snutans', 'sscopa', 'vcuspi')] ),
+    ploidy= c(1, asize$ploidy[asize$V2%in%c('achine', 'atenui', 'etrips', 'hconto', 'snutans', 'sscopa', 'vcuspi')]),
+#    outgroup='pvagin',
+     dotplots = "never",
+     orthofinderInBlk=F, ## since orthofinder gets the species tree wrong, don't make hogs!!
+    nCores=64)
+    
+    tetraploids <- run_genespace(gpar, overwrite = F)
+  
+  
+    wd <- "/workdir/mcs368/genespace_hexaploids" # no outgroup
+  gpar <- init_genespace(
+  wd = wd,
+  path2mcscanx = path2mcscanx,
+  genomeIDs=c('pvagin', asize$V2[asize$V2%in%c('agerar', 'blagur', 'udigit', 'hcompr')] ),
+    ploidy= c(1, asize$ploidy[asize$V2%in%c('agerar', 'blagur', 'udigit', 'hcompr')]),
+#    outgroup='pvagin',
+     dotplots = "never",
+     orthofinderInBlk=F, ## since orthofinder gets the species tree wrong, don't make hogs!!
+    nCores=64)
+    
+    hexaploids <- run_genespace(gpar, overwrite = F)
+  
+wd <- "/workdir/mcs368/genespace_paleotetraploids" # no outgroup
+  gpar <- init_genespace(
+  wd = wd,
+  path2mcscanx = path2mcscanx,
+  genomeIDs=c('pvagin', asize$V2[asize$V2%in%c('tdacn1', 'tdacs1', 'zdgigi', 'zdmomo', 'zluxur', 'zmB735', 'zmhuet', 'znicar', 'zTIL01', 'zTIL11', 'zTIL18', 'zTIL25')] ),
+    ploidy= c(1, asize$ploidy[asize$V2%in%c('tdacn1', 'tdacs1', 'zdgigi', 'zdmomo', 'zluxur', 'zmB735', 'zmhuet', 'znicar', 'zTIL01', 'zTIL11', 'zTIL18', 'zTIL25')]),
+#    outgroup='pvagin',
+     dotplots = "never",
+     orthofinderInBlk=F, ## since orthofinder gets the species tree wrong, don't make hogs!!
+    nCores=64)
+    
+    paleotetraploids <- run_genespace(gpar, overwrite = F)
+    
 #     genomeDirs = c(asize$V2, 'pvagin'),
 #   genomeIDs = c(asize$V2, 'pvagin'),
 #   ploidy= c(asize$ploidy, 1),
