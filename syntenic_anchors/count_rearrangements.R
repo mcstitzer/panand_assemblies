@@ -106,7 +106,7 @@ fig_chrrearr
 ### compare rearrangemnets to age
 fig_agerearr=ggplot(asize, aes(x=mya, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(2,4,6,8,10,12,14), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(1,3,5,7,9,11,13), color='gray80', lty='dashed', alpha=0.3)+ 
   geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + 
-  scale_color_manual(values=ploidycolors)+ xlab('Divergence between Parental Subgenomes (Mya)') + ylab('Rearrangements per\nDiploid Equivalent') #+ 
+  scale_color_manual(values=ploidycolors)+ xlab('Divergence between\nParental Subgenomes (Mya)') + ylab('Rearrangements per\nDiploid Equivalent') #+ 
 #  stat_smooth(method='lm', aes(group=NA), se=F, color='gray80')
 fig_agerearr 
 
