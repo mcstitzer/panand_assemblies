@@ -5,13 +5,14 @@ library(cowplot)
 theme_set(theme_cowplot())
 library(rtracklayer)
 library(stringr)
+library(zoo)
 
 all=read.table('../panand_sp_ploidy.txt')
 all$V3[all$V2=='rtuber']=2
 all$V3[all$V2=='telega']=2
 
 anchors=lapply(all$V2, function(x) {
-  a=read.table(paste0('anchors/',x, '-Pv-', 2*all$V3[all$V2==x]), header=T)
+  a=read.table(paste0('../syntenic_anchors/anchors/',x, '-Pv-', 2*all$V3[all$V2==x]), header=T)
   a$genome=x
   return(a)
 })
@@ -157,3 +158,487 @@ print(
 )
 
 dev.off()
+
+
+ogout=out
+## got to filter the end of the chr, since they're walking off by one gene intervals
+## do it by flagging subsequent rows that decrease by 1??
+chr='Pavag01'
+out=out[!is.na(out$count),]
+out$ploidy=asize$ploidy[match(out$genome, asize$V2)]
+out=out%>% mutate(delta1=abs(count-lag(count))%in%c(1,2)) %>% filter(!is.na(delta1) & !is.na(copyCount))  ## one or two off??? will this be too permissive?
+#out$stretch=rle(out$delta1)$values==T&rle(out$delta1)$lengths>50
+out$stretch=data.table::rleid(out$delta1) ### oh dang this is just an id for each
+out$stretchLen=as.numeric(table(out$stretch)[out$stretch]) ## this is dumb but i am lazy - just want to see how long each stretch is!!!
+out$filterSwitch=out$stretchLen>5 & out$delta1
+  
+
+
+#out=out %>% group_by(genome, queryChr) %>% filter(slice(100:c(n()-100)))
+
+ggplot(out[out$pvChr==chr & out$genome=='crefra'& !out$genome%in%lowQualAssemblies & !out$filterSwitch & out$fractBias>0.2 & out$synt_window_start_index<1981 & out$stretchLen>1,], aes(x=synt_window_start_index, y=fractBias, group=queryChr, color=queryChr)) + geom_line() + ggtitle(chr) + facet_wrap(ploidy~genome) + xlim(0,2081-100)+ylim(0,1)
+
+
+fig3sp=c('smicro', 'avirgi', 'crefra', 'ppanic', 'etrips', 'achine', 'hconto', 'snutan', 'udigit', 'agerar', 'blagur', 'hcompr', 'zTIL01', 'zluxur', 'tdacs1', 'tdacn1')
+
+ggplot(out[out$genome%in% fig3sp & out$pvChr==chr& !out$genome%in%lowQualAssemblies & !out$filterSwitch & out$fractBias>0.2 & out$synt_window_start_index<1981 & out$stretchLen>1,], 
+       aes(x=synt_window_start_index, y=fractBias, group=queryChr, color=ploidy)) + scale_color_manual(values=ploidycolors) + geom_line(alpha=0.8) + theme(legend.position='NA')+ facet_wrap(ploidy~genome) + xlim(0,2081-100)+ylim(0,1)+
+       geom_hline(yintercept=c(0,0.25,0.5,0.75,1), lty='dotted', color='gray90') + ylab('Proportion Syntenic Genes Present (per 100 gene window)') + xlab('Paspalum gene index (Chr 1)') + theme(strip.background=element_blank())
+
+
+#### WATCH oUYT
+### changing this here so parv is shortened!!!!! for TIL01
+shorttaxonnames=c("Z. mays ssp. parviglumis TIL11",  "Z. mays ssp. parv. TIL01", "Z. mays ssp. mays B73v5", "Z. mays ssp. mexicana TIL25", "Z. mays ssp. mexicana TIL18", "Z. mays ssp. huehuetenangensis", 
+                  "Z. luxurians", "Z. nicaraguensis", "Z. diploperennis Momo", "Z. diploperennis Gigi", "T. zoloptense", "T. dactyloides FL", "T. dactyloides Southern Hap2", 
+                  "T. dactyloides Northern Hap2", "T. dactyloides KS", "T. dactyloides tetraploid", "U. digitatum", "V. cuspidata", "R. rottboellioides", "R. tuberculosa", 
+                  "H. compressa", "E. tripsacoides", "S. scoparium", "S. microstachyum", "A. virginicum", "A. chinensis", "A. gerardi", 
+                  "C. refractus", "C. citratus", "H. contortus", "T. triandra", "B. laguroides", "P. paniceum", "S. bicolor", 
+                  "I. rugosum", "S. nutans", '"A." burmanicus', "T. elegans", "C. serrulatus", "P. vaginatum")
+names(shorttaxonnames)=c("zTIL11",  "zTIL01", "zmB735", "zTIL25", "zTIL18", "zmhuet", 
+                         "zluxur", "znicar", "zdmomo", "zdgigi", "tzopol", "tdacs1", "tdacs2", 
+                         "tdacn2", "tdacn1", "tdactm", "udigit", "vcuspi", "rrottb", "rtuber", 
+                         "hcompr", "etrips", "sscopa", "smicro", "avirgi", "achine", "agerar", 
+                         "crefra", "ccitra", "hconto", "ttrian", "blagur", "ppanic", "sbicol", 
+                         "irugos", "snutan", "atenui", "telega", "cserru", "pvagin")
+
+
+## from ks_plotting
+out$shortSpeciesLabel=shorttaxonnames[match(out$genome, names(shorttaxonnames))]
+out$shortspeciesLabel=factor(out$shortSpeciesLabel, levels=shorttaxonnames)
+
+
+fractchr=ggplot(out[out$genome%in% fig3sp & out$pvChr==chr& !out$genome%in%lowQualAssemblies & !out$filterSwitch & out$fractBias>0.2 & out$synt_window_start_index<1981 & out$stretchLen>1,], 
+       aes(x=synt_window_start_index, y=fractBias, group=queryChr, color=ploidy)) + scale_color_manual(values=ploidycolors) + geom_line(alpha=0.8) + 
+  theme(strip.background = element_blank(), 
+        strip.text.y.right = element_text(angle = 0, hjust=0, size=10, vjust=0.5),
+        panel.spacing = unit(3, "pt"), 
+        axis.text.y = element_blank(), 
+        axis.text.x = element_text(size = 9),
+        legend.position = 'NULL',
+ #       axis.ticks.y=element_blank(),
+#        axis.line.y=element_blank()
+ ) +
+  facet_wrap(ploidy~shortSpeciesLabel, nrow=4, strip.position = 'top', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))) + 
+  xlim(0,2081-100)+ylim(0,1)+
+  geom_hline(yintercept=c(0,0.25,0.5,0.75,1), lty='dotted', color='gray90') + ylab('Proportion Syntenic Genes Present (per 100 gene window)') + xlab('Paspalum gene index (Chr 1)') + theme(strip.background=element_blank())
+
+
+dipFracChrPlot=ggplot(out[out$ploidy=='Diploid' & out$genome%in% fig3sp & out$pvChr==chr& !out$genome%in%lowQualAssemblies & !out$filterSwitch & out$fractBias>0.2 & out$synt_window_start_index<1981 & out$stretchLen>1,], 
+                      aes(x=synt_window_start_index, y=fractBias, group=queryChr, color=ploidy)) + scale_color_manual(values=ploidycolors) + geom_line(alpha=0.8) + 
+  theme(strip.background = element_blank(), 
+        strip.text.y.right = element_text(angle = 0, hjust=0, size=10, vjust=0.5),
+        panel.spacing = unit(3, "pt"), 
+        axis.text.y = element_blank(), 
+        axis.text.x = element_text(size = 9),
+        legend.position = 'NULL',
+        #       axis.ticks.y=element_blank(),
+        #        axis.line.y=element_blank()
+  ) +
+  facet_wrap(~shortSpeciesLabel, nrow=1, strip.position = 'top', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))) + 
+  xlim(0,2081-100)+ylim(0,1)+
+  geom_hline(yintercept=c(0,0.25,0.5,0.75,1), lty='dotted', color='gray90') + ylab('Proportion Syntenic Genes Present (per 100 gene window)') + xlab('Paspalum gene index (Chr 1)') + theme(strip.background=element_blank())
+
+
+
+## get medians to plot against
+medFrac=out[ out$pvChr==chr& !out$filterSwitch & out$fractBias>0.2 & out$synt_window_start_index<1981 & out$stretchLen>1,]%>% group_by(genome, ploidy) %>% summarize(median=median(fractBias), mean=mean(fractBias))
+asize$medFrac=medFrac$median[match(asize$V2, medFrac$genome)]
+asize$meanFrac=medFrac$mean[match(asize$V2, medFrac$genome)]
+
+ggplot(asize, aes(x=mya, y=medFrac, color=ploidy)) + geom_point() + scale_color_manual(values=ploidycolors)
+
+ggplot(asize, aes(x=mya, y=meanFrac, color=ploidy)) + geom_point() + scale_color_manual(values=ploidycolors) + geom_text(aes(label=V2))
+## maybe filter by contig length?????? onlly count things >10 mb?? 
+#### MUST DO THIS FILTER!!! gross genomes are ruining it all...
+
+cor.test(asize$mya, asize$medFrac)
+## so negative correlation....
+## these high fractionation diploids worry me... are these actually tetraploids??? i guess they are the nanorpore and the permanent translocation heteroygote....
+## i think filtering by contig lenght shoudl clean up the teosintes that are getting blumped by the duplicate genes from extra scaffolds
+
+### oh alos i should calculate these values for the genome as a whole!!
+## can i put these histograms alongside the y axis of the chromosome plots??
+## so maybe i do want a vertical column
+asize$genome=asize$V2
+ggplot(out[ out$pvChr==chr& !out$genome%in%lowQualAssemblies & !out$filterSwitch & out$fractBias>0.2 & out$synt_window_start_index<1981 & out$stretchLen>1,],
+       aes(x=fractBias, color=ploidy, fill=ploidy))+ geom_density() + facet_wrap(~genome, scales='free_x') + xlim(0,1) + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) +coord_flip() + geom_vline(data=asize, aes(xintercept=medFrac), lty='dashed', alpha=0.5)
+
+
+ggplot(out[out$pvChr==chr & !out$genome%in%lowQualAssemblies & !out$filterSwitch,], aes(x=synt_window_start_index, y=fractBias, group=queryChr, color=queryChr)) + geom_line() + ggtitle(chr) + theme(legend.position='NA') + facet_wrap(ploidy~genome) + xlim(0,2081-100)
+
+## try grouping by ploicy??
+ggplot(out[out$pvChr==chr & !out$genome%in%lowQualAssemblies & out$first_gene_index<2081-100,], aes(x=synt_window_start_index, y=fractBias, group=queryChr, color=queryChr)) + geom_line() + ggtitle(chr) + theme(legend.position='NA') + facet_wrap(~ploidy, ncol=1)
+
+
+################# combine linea nd density
+
+
+label_species <- function(species_name, dont_italicize = c()) {
+  # Split the species name into words
+  words <- unlist(strsplit(species_name, " "))
+  
+  # Process each word: italicize unless it matches dont_italicize
+  formatted_words <- sapply(words, function(word) {
+    if (word %in% dont_italicize) {
+      return(paste0("'", word, "'"))  # Leave plain with quotes
+    } else {
+      return(paste0("italic('", word, "')"))  # Wrap in italic() with quotes
+    }
+  })
+  
+  # Combine words into a single expression with spaces explicitly added
+  combined_label <- paste(formatted_words, collapse = " * ' ' * ")
+  return(parse(text = combined_label))  # Convert to R expression
+}
+
+
+
+
+# Filter data
+filtered_data <- out %>%
+  filter(ploidy == 'Diploid',
+         genome %in% fig3sp,
+         pvChr == chr,
+         !genome %in% lowQualAssemblies,
+         !filterSwitch,
+         fractBias > 0.2,
+         synt_window_start_index < 1981,
+         stretchLen > 1)
+
+
+# Unique species
+species_list <- unique(filtered_data$shortSpeciesLabel)
+
+# Calculate medians for each species
+medians <- filtered_data %>%
+  group_by(shortSpeciesLabel) %>%
+  summarize(medFrac = median(fractBias, na.rm = TRUE))
+
+# Create alternating line and density plots
+plot_list <- list()
+for (i in seq_along(species_list)) {
+  species <- species_list[i]
+  # Subset data for the current species
+  species_data <- filtered_data %>% filter(shortSpeciesLabel == species)
+  species_median <- medians %>% filter(shortSpeciesLabel == species)
+  species_label <- label_species(species, dont_italicize = c('subsp.', 'ssp.', 'TIL11', 'TIL01', 
+                                                             'TIL25', 'TIL18', 'Momo', 'Gigi', 
+                                                             'Southern Hap1', 'Northern Hap1', 
+                                                             'FL', 'KS', '\\*', '\\"', 'B73v5'))
+  
+  # Line plot
+  line_plot <- ggplot(species_data, aes(x = synt_window_start_index, y = fractBias, group = queryChr, color = ploidy)) +
+    geom_line(alpha = 0.8) +
+    scale_color_manual(values = ploidycolors) +
+    theme(legend.position = "none",
+          axis.title.x = element_blank(),
+          axis.text.x = element_text(size = 8),
+          axis.title.y = if (i == 1) element_text(size = 10) else element_blank(), # Y-axis title for first line plot only
+          axis.text.y = if (i == 1) element_text(size = 8) else element_blank(),  # Y-axis labels only for first plot
+          axis.ticks.y = if (i == 1) element_line() else element_blank(),         # Y-axis ticks only for first plot
+          plot.title = element_text(size = 10, hjust = 0.5)) +
+    geom_hline(yintercept=c(0,0.25,0.5,0.75,1), lty='dotted', color='gray90') +
+    ggtitle(species_label) +
+    ylim(0, 1) +
+    labs(x = "Gene index", y = if (i == 1) "Proportion Syntenic\nGenes Present" else NULL)
+  
+  # Density plot with median line
+  density_plot <- ggplot(species_data, aes(x = fractBias, color = ploidy, fill = ploidy)) +
+    geom_density(alpha = 0.6) +
+    geom_vline(xintercept = species_median$medFrac, linetype = "dashed", color = "gray40", alpha = 0.8) +
+    scale_color_manual(values = ploidycolors) +
+    scale_fill_manual(values = ploidycolors) +
+    coord_flip() +
+    theme(legend.position = "none",
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.x = element_blank(),  # Remove x-axis tick labels
+          axis.ticks.x = element_blank(), # Remove x-axis ticks
+          axis.text.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.line=element_blank()) +
+    xlim(0, 1) +
+    labs(y = NULL, x = NULL)
+  
+  # Combine line plot and density plot horizontally with width ratio
+  combined <- line_plot + density_plot + plot_layout(widths = c(6, 1), guides = "collect") & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0))
+  
+  # Add combined plot to the list
+  plot_list[[species]] <- combined
+}
+
+# Combine all plots in one row
+final_plot_dip <- wrap_plots(plot_list, nrow = 1)
+final_plot_dip
+
+
+
+#### tetraploid
+
+# Filter data
+filtered_data <- out %>%
+  filter(ploidy == 'Tetraploid',
+         genome %in% fig3sp,
+         pvChr == chr,
+         !genome %in% lowQualAssemblies,
+         !filterSwitch,
+         fractBias > 0.2,
+         synt_window_start_index < 1981,
+         stretchLen > 1)
+
+
+
+
+# Unique species
+species_list <- unique(filtered_data$shortSpeciesLabel)
+
+# Calculate medians for each species
+medians <- filtered_data %>%
+  group_by(shortSpeciesLabel) %>%
+  summarize(medFrac = median(fractBias, na.rm = TRUE))
+
+# Create alternating line and density plots
+plot_list <- list()
+for (i in seq_along(species_list)) {
+  species <- species_list[i]
+  # Subset data for the current species
+  species_data <- filtered_data %>% filter(shortSpeciesLabel == species)
+  species_median <- medians %>% filter(shortSpeciesLabel == species)
+  species_label <- label_species(species, dont_italicize = c('subsp.', 'ssp.', 'TIL11', 'TIL01', 
+                                                             'TIL25', 'TIL18', 'Momo', 'Gigi', 
+                                                             'Southern Hap1', 'Northern Hap1', 
+                                                             'FL', 'KS', '\\*', '\\"', 'B73v5'))
+  
+  # Line plot
+  line_plot <- ggplot(species_data, aes(x = synt_window_start_index, y = fractBias, group = queryChr, color = ploidy)) +
+    geom_line(alpha = 0.8) +
+    scale_color_manual(values = ploidycolors) +
+    theme(legend.position = "none",
+          axis.title.x = element_blank(),
+          axis.text.x = element_text(size = 8),
+          axis.title.y = if (i == 1) element_text(size = 10) else element_blank(), # Y-axis title for first line plot only
+          axis.text.y = if (i == 1) element_text(size = 8) else element_blank(),  # Y-axis labels only for first plot
+          axis.ticks.y = if (i == 1) element_line() else element_blank(),         # Y-axis ticks only for first plot
+          plot.title = element_text(size = 10, hjust = 0.5)) +
+    geom_hline(yintercept=c(0,0.25,0.5,0.75,1), lty='dotted', color='gray90') +
+    ggtitle(species_label) +
+    ylim(0, 1) +
+    labs(x = "Gene index", y = if (i == 1) "Proportion Syntenic\nGenes Present" else NULL)
+  
+  # Density plot with median line
+  density_plot <- ggplot(species_data, aes(x = fractBias, color = ploidy, fill = ploidy)) +
+    geom_density(alpha = 0.6) +
+    geom_vline(xintercept = species_median$medFrac, linetype = "dashed", color = "gray40", alpha = 0.8) +
+    scale_color_manual(values = ploidycolors) +
+    scale_fill_manual(values = ploidycolors) +
+    coord_flip() +
+    theme(legend.position = "none",
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.x = element_blank(),  # Remove x-axis tick labels
+          axis.ticks.x = element_blank(), # Remove x-axis ticks
+          axis.text.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.line=element_blank()) +
+    xlim(0, 1) +
+    labs(y = NULL, x = NULL)
+  
+  # Combine line plot and density plot horizontally with width ratio
+  combined <- line_plot + density_plot + plot_layout(widths = c(6, 1), guides = "collect") & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0))
+  
+  # Add combined plot to the list
+  plot_list[[species]] <- combined
+}
+
+# Combine all plots in one row
+final_plot_tetra <- wrap_plots(plot_list, nrow = 1)
+final_plot_tetra
+
+
+####### hexaploid
+
+# Filter data
+filtered_data <- out %>%
+  filter(ploidy == 'Hexaploid',
+         genome %in% fig3sp,
+         pvChr == chr,
+         !genome %in% lowQualAssemblies,
+         !filterSwitch,
+         fractBias > 0.2,
+         synt_window_start_index < 1981,
+         stretchLen > 1)
+
+
+
+# Unique species
+species_list <- unique(filtered_data$shortSpeciesLabel)
+
+# Calculate medians for each species
+medians <- filtered_data %>%
+  group_by(shortSpeciesLabel) %>%
+  summarize(medFrac = median(fractBias, na.rm = TRUE))
+
+# Create alternating line and density plots
+plot_list <- list()
+for (i in seq_along(species_list)) {
+  species <- species_list[i]
+  # Subset data for the current species
+  species_data <- filtered_data %>% filter(shortSpeciesLabel == species)
+  species_median <- medians %>% filter(shortSpeciesLabel == species)
+  species_label <- label_species(species, dont_italicize = c('subsp.', 'ssp.', 'TIL11', 'TIL01', 
+                                                             'TIL25', 'TIL18', 'Momo', 'Gigi', 
+                                                             'Southern Hap1', 'Northern Hap1', 
+                                                             'FL', 'KS', '\\*', '\\"', 'B73v5'))
+  
+  # Line plot
+  line_plot <- ggplot(species_data, aes(x = synt_window_start_index, y = fractBias, group = queryChr, color = ploidy)) +
+    geom_line(alpha = 0.8) +
+    scale_color_manual(values = ploidycolors) +
+    theme(legend.position = "none",
+          axis.title.x = element_blank(),
+          axis.text.x = element_text(size = 8),
+          axis.title.y = if (i == 1) element_text(size = 10) else element_blank(), # Y-axis title for first line plot only
+          axis.text.y = if (i == 1) element_text(size = 8) else element_blank(),  # Y-axis labels only for first plot
+          axis.ticks.y = if (i == 1) element_line() else element_blank(),         # Y-axis ticks only for first plot
+          plot.title = element_text(size = 10, hjust = 0.5)) +
+    geom_hline(yintercept=c(0,0.25,0.5,0.75,1), lty='dotted', color='gray90') +
+    ggtitle(species_label) +
+    ylim(0, 1) +
+    labs(x = "Gene index", y = if (i == 1) "Proportion Syntenic\nGenes Present" else NULL)
+  
+  # Density plot with median line
+  density_plot <- ggplot(species_data, aes(x = fractBias, color = ploidy, fill = ploidy)) +
+    geom_density(alpha = 0.6) +
+    geom_vline(xintercept = species_median$medFrac, linetype = "dashed", color = "gray40", alpha = 0.8) +
+    scale_color_manual(values = ploidycolors) +
+    scale_fill_manual(values = ploidycolors) +
+    coord_flip() +
+    theme(legend.position = "none",
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.x = element_blank(),  # Remove x-axis tick labels
+          axis.ticks.x = element_blank(), # Remove x-axis ticks
+          axis.text.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.line=element_blank()) +
+    xlim(0, 1) +
+    labs(y = NULL, x = NULL)
+  
+  # Combine line plot and density plot horizontally with width ratio
+  combined <- line_plot + density_plot + plot_layout(widths = c(6, 1), guides = "collect") & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0))
+  
+  # Add combined plot to the list
+  plot_list[[species]] <- combined
+}
+
+# Combine all plots in one row
+final_plot_hex <- wrap_plots(plot_list, nrow = 1)
+final_plot_hex
+
+### paleotetrploid
+
+# Filter data
+filtered_data <- out %>%
+  filter(ploidy == 'Paleotetraploid',
+         genome %in% fig3sp,
+         pvChr == chr,
+         !genome %in% lowQualAssemblies,
+         !filterSwitch,
+         fractBias > 0.2,
+         synt_window_start_index < 1981,
+         stretchLen > 1)
+
+
+
+
+# Unique species
+species_list <- unique(filtered_data$shortSpeciesLabel)
+
+# Calculate medians for each species
+medians <- filtered_data %>%
+  group_by(shortSpeciesLabel) %>%
+  summarize(medFrac = median(fractBias, na.rm = TRUE))
+
+# Create alternating line and density plots
+plot_list <- list()
+for (i in seq_along(species_list)) {
+  species <- species_list[i]
+  # Subset data for the current species
+  species_data <- filtered_data %>% filter(shortSpeciesLabel == species)
+  species_median <- medians %>% filter(shortSpeciesLabel == species)
+  species_label <- label_species(species, dont_italicize = c('subsp.', 'ssp.', 'TIL11', 'TIL01', 
+                                                             'TIL25', 'TIL18', 'Momo', 'Gigi', 
+                                                             'Southern Hap1', 'Northern Hap1', 
+                                                             'FL', 'KS', '\\*', '\\"', 'B73v5'))
+  
+  # Line plot
+  line_plot <- ggplot(species_data, aes(x = synt_window_start_index, y = fractBias, group = queryChr, color = ploidy)) +
+    geom_line(alpha = 0.8) +
+    scale_color_manual(values = ploidycolors) +
+    theme(legend.position = "none",
+          axis.title.x = element_blank(),
+          axis.text.x = element_text(size = 8),
+          axis.title.y = if (i == 1) element_text(size = 10) else element_blank(), # Y-axis title for first line plot only
+          axis.text.y = if (i == 1) element_text(size = 8) else element_blank(),  # Y-axis labels only for first plot
+          axis.ticks.y = if (i == 1) element_line() else element_blank(),         # Y-axis ticks only for first plot
+          plot.title = element_text(size = 10, hjust = 0.5)) +
+    geom_hline(yintercept=c(0,0.25,0.5,0.75,1), lty='dotted', color='gray90') +
+    ggtitle(species_label) +
+    ylim(0, 1) +
+    labs(x = "Gene index", y = if (i == 1) "Proportion Syntenic\nGenes Present" else NULL)
+  
+  # Density plot with median line
+  density_plot <- ggplot(species_data, aes(x = fractBias, color = ploidy, fill = ploidy)) +
+    geom_density(alpha = 0.6) +
+    geom_vline(xintercept = species_median$medFrac, linetype = "dashed", color = "gray40", alpha = 0.8) +
+    scale_color_manual(values = ploidycolors) +
+    scale_fill_manual(values = ploidycolors) +
+    coord_flip() +
+    theme(legend.position = "none",
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.x = element_blank(),  # Remove x-axis tick labels
+          axis.ticks.x = element_blank(), # Remove x-axis ticks
+          axis.text.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.line=element_blank()) +
+    xlim(0, 1) +
+    labs(y = NULL, x = NULL)
+  
+  # Combine line plot and density plot horizontally with width ratio
+  combined <- line_plot + density_plot + plot_layout(widths = c(6, 1), guides = "collect") & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0))
+  
+  # Add combined plot to the list
+  plot_list[[species]] <- combined
+}
+
+# Combine all plots in one row
+# Combine all species plots into one row
+final_plot_paleo <- wrap_plots(plot_list, nrow = 1)
+final_plot_paleo
+
+
+plot_grid(final_plot_dip, final_plot_tetra, final_plot_hex, final_plot_paleo + xlab('Paspalum Chr 1 Gene Position'), ncol=1, labels = 'AUTO', align='v', axis='lr' )
+
+# Combine all final plots with plot_grid
+combined_plots <- plot_grid(
+  final_plot_dip, 
+  final_plot_tetra, 
+  final_plot_hex, 
+  final_plot_paleo, 
+  ncol = 1, 
+  labels = 'AUTO', 
+  align = 'v', 
+  axis = 'lr'  # Align axes vertically
+)
+
+# Add shared x-axis label below the combined plots
+final_with_xlab <- plot_grid(
+  combined_plots,
+  ggdraw() + draw_label("Paspalum Chr 1 Gene Position", size = 12, fontface = "bold", hjust = 0.5),
+  ncol = 1,
+  rel_heights = c(1, 0.05)  # Adjust relative heights: 95% plots, 5% x-axis label
+)
+
+# Display the final plot
+final_with_xlab

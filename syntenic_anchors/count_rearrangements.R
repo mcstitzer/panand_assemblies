@@ -99,16 +99,31 @@ ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xint
 
 summary(lm(data=asize, scaledTransloc~chrCount))
 
+## get medians for zea and tripsacum genera separately
+asizezt=asize
+asizezt$V2zt=ifelse(asize$V2 %in% c('tdacn1', 'tdacs1'), 'trips', asize$V2)
+asizezt$V2zt=ifelse(asize$V2 %in% c("zdgigi", "zdmomo", "zluxur", "zmhuet", "zTIL18", "zTIL25", "zTIL01", "zTIL11", "znicar", "zmB735"), 'zea', asize$V2)
+asizezt=asizezt%>% group_by(V2zt, ploidy) %>% summarize(chrCount=median(chrCount), scaledTransloc=median(scaledTransloc), mya=median(mya))
+
+
 ## with regression line
-fig_chrrearr=ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(9,11:19,21:29), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(10,20,30), color='gray80', lty='dashed', alpha=0.3)+ geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + scale_color_manual(values=ploidycolors)+ xlab('Haploid Chromosome Number') + ylab('Rearrangements per\nDiploid Equivalent') + stat_smooth(method='lm', aes(group=NA), se=F, color='gray80')
+fig_chrrearr=ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(9,11:19,21:29), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(10,20,30), color='gray80', lty='dashed', alpha=0.3)+ 
+  geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + scale_color_manual(values=ploidycolors)+ 
+  xlab('Haploid Chromosome Number') + ylab('Rearrangements per\nDiploid Equivalent') + 
+  stat_smooth(data=asizezt, method='lm', aes(group=NA), se=F, color='gray80')
 fig_chrrearr 
+
+cor.test(asizezt$scaledTransloc, asizezt$chrCount)
 
 ### compare rearrangemnets to age
 fig_agerearr=ggplot(asize, aes(x=mya, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(2,4,6,8,10,12,14), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(1,3,5,7,9,11,13), color='gray80', lty='dashed', alpha=0.3)+ 
   geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + 
-  scale_color_manual(values=ploidycolors)+ xlab('Divergence between\nParental Subgenomes (Mya)') + ylab('Rearrangements per\nDiploid Equivalent') #+ 
-#  stat_smooth(method='lm', aes(group=NA), se=F, color='gray80')
-fig_agerearr 
+  scale_color_manual(values=ploidycolors)+ xlab('Divergence between\nParental Subgenomes (Mya)') + 
+#  stat_smooth(data=asizezt, method='lm', aes(group=NA), alpha=0.1, se=F, color='gray90')+
+  ylab('Rearrangements per\nDiploid Equivalent') 
+fig_agerearr
+
+cor.test(asizezt$scaledTransloc, asizezt$mya)
 
 
 ##### laxy and putting this in the other document, count_anchors_and_plot.R

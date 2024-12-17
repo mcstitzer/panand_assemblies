@@ -1,0 +1,150 @@
+Ontology	GO	Orthogroup	gene_descriptions
+BP	GO:0008285	OG0013576	Homeobox domain-containing protein ; HB transcription factor 
+BP	GO:0008285	OG0015682	transcription factor MYB36-like ; Putative MYB DNA-binding domain superfamily protein 
+BP	GO:0010371	OG0013576	Homeobox domain-containing protein ; HB transcription factor 
+BP	GO:0010400	OG0018938	Glycosyl transferase 64 domain-containing protein ; Glycosyltransferase family 64 protein C4 
+BP	GO:0019919	OG0013545	Methyltransferase domain-containing protein 
+BP	GO:0035987	OG0015682	transcription factor MYB36-like ; Putative MYB DNA-binding domain superfamily protein 
+BP	GO:0010305	OG0015048	Protein NO VEIN C-terminal domain-containing protein ; Histidine kinase-DNA gyrase B-and HSP90-like ATPase family protein 
+BP	GO:0010305	OG0017885	UniRef90_A0A1D6L709Probable glutamate carboxypeptidase VP8 ; Putative membrane localized peptidase 
+BP	GO:0006481	OG0016829	Prefoldin subunit 5 
+BP	GO:0010081	OG0017885	UniRef90_A0A1D6L709Probable glutamate carboxypeptidase VP8 ; Putative membrane localized peptidase 
+BP	GO:0010483	OG0015891	Oligosaccharide transporter ; Dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit 3 
+BP	GO:2000038	OG0015413	Protein kinase domain-containing protein ; LRR receptor-like serine/threonine-protein kinase ERL2 
+BP	GO:0034394	OG0014705	FAS1 domain-containing protein 
+BP	GO:0046951	OG0014896	hydroxymethylglutaryl-CoA lyase 
+BP	GO:0071076	OG0015602	Protein HESO1 
+BP	GO:0070301	OG0019286	NAC domain-containing protein ; NAC domain-containing protein 17 
+BP	GO:0010042	OG0015600	Cation efflux protein cytoplasmic domain-containing protein 
+BP	GO:0010080	OG0017885	UniRef90_A0A1D6L709Probable glutamate carboxypeptidase VP8 ; Putative membrane localized peptidase 
+BP	GO:0016598	OG0014754	CBM20 domain-containing protein 
+BP	GO:1904825	OG0016832	Microtubule-associated protein RP/EB family member 1C 
+BP	GO:0045454	OG0013396	Cytochrome C biogenesis protein transmembrane domain-containing protein 
+BP	GO:0045454	OG0019325	SelT-like protein 
+BP	GO:0002128	OG0018938	Glycosyl transferase 64 domain-containing protein ; Glycosyltransferase family 64 protein C4 
+BP	GO:0009652	OG0016832	Microtubule-associated protein RP/EB family member 1C 
+BP	GO:0010148	OG0015413	Protein kinase domain-containing protein ; LRR receptor-like serine/threonine-protein kinase ERL2 
+BP	GO:0080040	OG0015358	SPX domain-containing protein 
+BP	GO:0048281	OG0015413	Protein kinase domain-containing protein ; LRR receptor-like serine/threonine-protein kinase ERL2 
+BP	GO:0030155	OG0015413	Protein kinase domain-containing protein ; LRR receptor-like serine/threonine-protein kinase ERL2 
+BP	GO:0010375	OG0018138	Protein kinase domain-containing protein 
+BP	GO:0010087	OG0015413	Protein kinase domain-containing protein ; LRR receptor-like serine/threonine-protein kinase ERL2 
+BP	GO:0010087	OG0018938	Glycosyl transferase 64 domain-containing protein ; Glycosyltransferase family 64 protein C4 
+BP	GO:0010228	OG0013545	Methyltransferase domain-containing protein 
+BP	GO:0010228	OG0013576	Homeobox domain-containing protein ; HB transcription factor 
+BP	GO:0010228	OG0016453	BZIP domain-containing protein ; ABSCISIC ACID-INSENSITIVE 5-like protein 5 ; Delayed flowering1 
+BP	GO:0007023	OG0017848	Tubulin-specific chaperone D C-terminal domain-containing protein ; Tubulin-folding cofactor D 
+BP	GO:0010190	OG0013396	Cytochrome C biogenesis protein transmembrane domain-containing protein 
+BP	GO:0045597	OG0015682	transcription factor MYB36-like ; Putative MYB DNA-binding domain superfamily protein 
+BP	GO:0045737	OG0017248	Cyclin-like domain-containing protein ; Cyclin-T1-3 
+BP	GO:0007021	OG0017848	Tubulin-specific chaperone D C-terminal domain-containing protein ; Tubulin-folding cofactor D 
+BP	GO:0032147	OG0013768	TPX2 central domain-containing protein 
+BP	GO:0098609	OG0018938	Glycosyl transferase 64 domain-containing protein ; Glycosyltransferase family 64 protein C4 
+BP	GO:2000034	OG0017885	UniRef90_A0A1D6L709Probable glutamate carboxypeptidase VP8 ; Putative membrane localized peptidase 
+BP	GO:0007095	OG0020222	DNA damage signaling and repair protein ; FHA domain-containing protein 
+BP	GO:0060964	OG0015602	Protein HESO1 
+BP	GO:0070370	OG0015413	Protein kinase domain-containing protein ; LRR receptor-like serine/threonine-protein kinase ERL2 
+BP	GO:0042868	OG0019793	Cleavage stimulation factor subunit 77 
+BP	GO:1901703	OG0016829	Prefoldin subunit 5 
+BP	GO:0018401	OG0015040	Fe2OG dioxygenase domain-containing protein ; Putative prolyl 4-hydroxylase 9 
+BP	GO:0016441	OG0015602	Protein HESO1 
+BP	GO:0016441	OG0019793	Cleavage stimulation factor subunit 77 
+BP	GO:0071479	OG0020222	DNA damage signaling and repair protein ; FHA domain-containing protein 
+BP	GO:0090691	OG0013576	Homeobox domain-containing protein ; HB transcription factor 
+BP	GO:2000067	OG0015682	transcription factor MYB36-like ; Putative MYB DNA-binding domain superfamily protein 
+BP	GO:0007155	OG0015033	EGF-like domain-containing protein 
+BP	GO:0007155	OG0015413	Protein kinase domain-containing protein ; LRR receptor-like serine/threonine-protein kinase ERL2 
+BP	GO:0007155	OG0018938	Glycosyl transferase 64 domain-containing protein ; Glycosyltransferase family 64 protein C4 
+BP	GO:0006094	OG0014669	Cyanobacterial aminoacyl-tRNA synthetase CAAD domain-containing protein 
+BP	GO:0006094	OG0015932	UniRef90_P49105Glucose-6-phosphate isomerase, cytosolic 
+BP	GO:0030026	OG0015600	Cation efflux protein cytoplasmic domain-containing protein 
+CC	GO:0005789	OG0015040	Fe2OG dioxygenase domain-containing protein ; Putative prolyl 4-hydroxylase 9 
+CC	GO:0005789	OG0015592	Auxin efflux carrier family protein ; Auxin efflux carrier component 
+CC	GO:0005789	OG0015891	Oligosaccharide transporter ; Dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit 3 
+CC	GO:0005789	OG0016829	Prefoldin subunit 5 
+CC	GO:0005789	OG0017420	Phospholipase A(1) LCAT3 
+CC	GO:0005789	OG0018941	t-SNARE coiled-coil homology domain-containing protein 
+CC	GO:0005789	OG0019286	NAC domain-containing protein ; NAC domain-containing protein 17 
+CC	GO:0005789	OG0019325	SelT-like protein 
+CC	GO:0008024	OG0017248	Cyclin-like domain-containing protein ; Cyclin-T1-3 
+CC	GO:0016605	OG0020222	DNA damage signaling and repair protein ; FHA domain-containing protein 
+CC	GO:0000439	OG0017102	General transcription factor IIH subunit 
+CC	GO:0048226	OG0015682	transcription factor MYB36-like ; Putative MYB DNA-binding domain superfamily protein 
+CC	GO:0030870	OG0020222	DNA damage signaling and repair protein ; FHA domain-containing protein 
+CC	GO:0035371	OG0016832	Microtubule-associated protein RP/EB family member 1C 
+CC	GO:0051233	OG0016832	Microtubule-associated protein RP/EB family member 1C 
+MF	GO:0004347	OG0014669	Cyanobacterial aminoacyl-tRNA synthetase CAAD domain-containing protein 
+MF	GO:0004347	OG0015932	UniRef90_P49105Glucose-6-phosphate isomerase, cytosolic 
+MF	GO:0042973	OG0014663	X8 domain-containing protein 
+MF	GO:0042973	OG0015932	UniRef90_P49105Glucose-6-phosphate isomerase, cytosolic 
+MF	GO:0042973	OG0017266	Glucan endo-1,3-beta-D-glucosidase ; Glycosyl hydrolase superfamily protein 
+MF	GO:0001888	OG0018938	Glycosyl transferase 64 domain-containing protein ; Glycosyltransferase family 64 protein C4 
+MF	GO:0004057	OG0014754	CBM20 domain-containing protein 
+MF	GO:0004413	OG0015033	EGF-like domain-containing protein 
+MF	GO:0004671	OG0016829	Prefoldin subunit 5 
+MF	GO:0010486	OG0015600	Cation efflux protein cytoplasmic domain-containing protein 
+MF	GO:0102419	OG0015607	Phospholipid/glycerol acyltransferase domain-containing protein 
+MF	GO:0035241	OG0013545	Methyltransferase domain-containing protein 
+MF	GO:0035242	OG0013545	Methyltransferase domain-containing protein 
+MF	GO:0050265	OG0015602	Protein HESO1 
+MF	GO:0046429	OG0015034	4-hydroxy-3-methylbut-2-enyl diphosphate reductase ; UniRef90_Q6AVG64-hydroxy-3-methylbut-2-enyl diphosphate reductase, chloroplastic 
+MF	GO:0008469	OG0013545	Methyltransferase domain-containing protein 
+MF	GO:0016726	OG0015034	4-hydroxy-3-methylbut-2-enyl diphosphate reductase ; UniRef90_Q6AVG64-hydroxy-3-methylbut-2-enyl diphosphate reductase, chloroplastic 
+MF	GO:0008289	OG0014364	Plastid lipid-associated protein/fibrillin conserved domain-containing protein ; PAP fibrillin family protein 
+MF	GO:0008289	OG0014754	CBM20 domain-containing protein 
+MF	GO:0008289	OG0015045	Bifunctional inhibitor/plant lipid transfer protein/seed storage helical domain-containing protein 
+MF	GO:0008289	OG0015938	Bifunctional inhibitor/plant lipid transfer protein/seed storage helical domain-containing protein 
+MF	GO:0008289	OG0018763	Bifunctional inhibitor/plant lipid transfer protein/seed storage helical domain-containing protein ; Protein YLS3 
+MF	GO:0106050	OG0015947	tRNA:m(4)X modification enzyme TRM13 
+MF	GO:0004607	OG0017420	Phospholipase A(1) LCAT3 
+MF	GO:0102867	OG0015291	Molybdenum cofactor sulfurase ; Pyridoxal phosphate (PLP)-dependent transferase superfamily protein ; Aminotransferase class V domain-containing protein 
+MF	GO:0008265	OG0015291	Molybdenum cofactor sulfurase ; Pyridoxal phosphate (PLP)-dependent transferase superfamily protein ; Aminotransferase class V domain-containing protein 
+MF	GO:0048487	OG0017848	Tubulin-specific chaperone D C-terminal domain-containing protein ; Tubulin-folding cofactor D 
+MF	GO:0102420	OG0015607	Phospholipid/glycerol acyltransferase domain-containing protein 
+MF	GO:0097367	OG0013886	RNA helicase ; Os10g0213700 protein 
+MF	GO:0097367	OG0013896	Leucine-rich repeat-containing N-terminal plant-type domain-containing protein ; Protein TOO MANY MOUTHS 
+MF	GO:0097367	OG0013943	Pentacotripeptide-repeat region of PRORP domain-containing protein ; Pentatricopeptide repeat-containing protein 
+MF	GO:0097367	OG0014669	Cyanobacterial aminoacyl-tRNA synthetase CAAD domain-containing protein 
+MF	GO:0097367	OG0014707	Receptor-like serine/threonine-protein kinase 
+MF	GO:0097367	OG0014754	CBM20 domain-containing protein 
+MF	GO:0097367	OG0014757	1-phosphatidylinositol-3-phosphate 5-kinase 
+MF	GO:0097367	OG0014793	Phytocyanin domain-containing protein ; Early nodulin-like protein 16 
+MF	GO:0097367	OG0015001	HD domain-containing protein ; HD/PDEase domain-containing protein 
+MF	GO:0097367	OG0015033	EGF-like domain-containing protein 
+MF	GO:0097367	OG0015410	RRM domain-containing protein ; Nuclear speckle RNA-binding protein A ; RNA-binding protein 1-like isoform X2 
+MF	GO:0097367	OG0015413	Protein kinase domain-containing protein ; LRR receptor-like serine/threonine-protein kinase ERL2 
+MF	GO:0097367	OG0015932	UniRef90_P49105Glucose-6-phosphate isomerase, cytosolic 
+MF	GO:0097367	OG0016301	Protein kinase domain-containing protein 
+MF	GO:0097367	OG0016832	Microtubule-associated protein RP/EB family member 1C 
+MF	GO:0097367	OG0017102	General transcription factor IIH subunit 
+MF	GO:0097367	OG0017831	RNA helicase 
+MF	GO:0097367	OG0017854	Receptor-like serine/threonine-protein kinase 
+MF	GO:0097367	OG0018138	Protein kinase domain-containing protein 
+MF	GO:0097367	OG0018775	Purple acid phosphatase 
+MF	GO:0097367	OG0018941	t-SNARE coiled-coil homology domain-containing protein 
+MF	GO:0097367	OG0019133	DEAD-box ATP-dependent RNA helicase 41 
+MF	GO:0097367	OG0019510	Protein kinase domain-containing protein 
+MF	GO:0052658	OG0014995	Inositol polyphosphate-related phosphatase domain-containing protein 
+MF	GO:0052659	OG0014995	Inositol polyphosphate-related phosphatase domain-containing protein 
+MF	GO:0052381	OG0015179	LysM domain-containing protein ; Peptidoglycan-binding LysM domain-containing protein 
+MF	GO:0004419	OG0014896	hydroxymethylglutaryl-CoA lyase 
+MF	GO:0052740	OG0017420	Phospholipase A(1) LCAT3 
+MF	GO:0052739	OG0017420	Phospholipase A(1) LCAT3 
+MF	GO:0004366	OG0015607	Phospholipid/glycerol acyltransferase domain-containing protein 
+MF	GO:0016781	OG0014754	CBM20 domain-containing protein 
+MF	GO:0061575	OG0017248	Cyclin-like domain-containing protein ; Cyclin-T1-3 
+MF	GO:0004181	OG0017885	UniRef90_A0A1D6L709Probable glutamate carboxypeptidase VP8 ; Putative membrane localized peptidase 
+MF	GO:0030295	OG0013768	TPX2 central domain-containing protein 
+MF	GO:0030295	OG0017248	Cyclin-like domain-containing protein ; Cyclin-T1-3 
+MF	GO:0042500	OG0014765	PA domain-containing protein 
+MF	GO:0003724	OG0013886	RNA helicase ; Os10g0213700 protein 
+MF	GO:0003724	OG0017831	RNA helicase 
+MF	GO:0003724	OG0019133	DEAD-box ATP-dependent RNA helicase 41 
+MF	GO:0000976	OG0011857	MYB-RELATED transcription factor ; HTH myb-type domain-containing protein 
+MF	GO:0000976	OG0012830	WRKY domain-containing protein 
+MF	GO:0000976	OG0013576	Homeobox domain-containing protein ; HB transcription factor 
+MF	GO:0000976	OG0015682	transcription factor MYB36-like ; Putative MYB DNA-binding domain superfamily protein 
+MF	GO:0000976	OG0016877	26S proteasome non-ATPase regulatory subunit 10 
+MF	GO:0000976	OG0019286	NAC domain-containing protein ; NAC domain-containing protein 17 
+MF	GO:0051010	OG0016832	Microtubule-associated protein RP/EB family member 1C 
+MF	GO:0008271	OG0016993	STAS domain-containing protein 

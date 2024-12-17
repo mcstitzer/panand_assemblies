@@ -1,0 +1,634 @@
+Ontology	GO	Orthogroup	gene_descriptions
+BP	GO:0046777	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:0046777	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+BP	GO:0046777	OG0001870	Calcium-dependent protein kinase 20 
+BP	GO:0046777	OG0001931	Calcium-dependent protein kinase 13 
+BP	GO:0046777	OG0001951	non-specific serine/threonine protein kinase 
+BP	GO:0046777	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+BP	GO:0046777	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+BP	GO:0048766	OG0001626	Integral membrane Yip1 family protein ; Protein YIP 
+BP	GO:0048766	OG0001829	Dynamin-2A ; dynamin GTPase 
+BP	GO:0048766	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+BP	GO:0015790	OG0001374	Sugar phosphate transporter domain-containing protein 
+BP	GO:0015790	OG0001708	Nucleotide/sugar transporter family protein ; Sugar phosphate transporter domain-containing protein ; cytokinin riboside 5'-monophosphate phosphoribohydrolase 
+BP	GO:0018105	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+BP	GO:0018105	OG0001870	Calcium-dependent protein kinase 20 
+BP	GO:0018105	OG0001931	Calcium-dependent protein kinase 13 
+BP	GO:0018105	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+BP	GO:0018105	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+BP	GO:0002181	OG0001506	RNA helicase ; UniRef90_Q41741Eukaryotic initiation factor 4A 
+BP	GO:0002181	OG0001535	Ribosomal protein L15 
+BP	GO:0002181	OG0001927	Ribosomal protein L22 ; Large ribosomal subunit protein eL22 
+BP	GO:0002181	OG0002207	CDT1 Geminin-binding domain-containing protein ; CDT1-like protein a chloroplastic 
+BP	GO:0002181	OG0004184	60S acidic ribosomal protein P1 
+BP	GO:0035556	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:0035556	OG0001412	14-3-3 domain-containing protein ; Putative 14-3-3 protein 
+BP	GO:0035556	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+BP	GO:0035556	OG0001695	non-specific serine/threonine protein kinase ; UniRef90_Q6ZI44Serine/threonine-protein kinase SAPK6 
+BP	GO:0035556	OG0001870	Calcium-dependent protein kinase 20 
+BP	GO:0035556	OG0001921	AP2/ERF domain-containing protein ; UniRef90_B6T5Z6Ethylene-responsive transcription factor WIN1 ; Ethylene-responsive transcription factor WIN1 ; ERF6.3 ; Putative AP2/EREBP transcription factor superfamily protein 
+BP	GO:0035556	OG0001931	Calcium-dependent protein kinase 13 
+BP	GO:0035556	OG0001953	Protein kinase domain-containing protein ; non-specific serine/threonine protein kinase 
+BP	GO:0035556	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+BP	GO:0035556	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+BP	GO:0035556	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+BP	GO:0009738	OG0001482	Protein phosphatase 2A structural subunit ; TOG domain-containing protein ; Serine/threonine-protein phosphatase 2A 65 kDa regulatory subunit A beta isoform ; Protein phosphatase PP2A regulatory subunit A 
+BP	GO:0009738	OG0001695	non-specific serine/threonine protein kinase ; UniRef90_Q6ZI44Serine/threonine-protein kinase SAPK6 
+BP	GO:0009738	OG0001928	Histone H2A/H2B/H3 domain-containing protein ; Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; CCAAT-HAP5 transcription factor ; Os09g0480700 protein 
+BP	GO:0009738	OG0001953	Protein kinase domain-containing protein ; non-specific serine/threonine protein kinase 
+BP	GO:0009738	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+BP	GO:0009691	OG0001708	Nucleotide/sugar transporter family protein ; Sugar phosphate transporter domain-containing protein ; cytokinin riboside 5'-monophosphate phosphoribohydrolase 
+BP	GO:0009691	OG0001987	Cytokinin riboside 5'-monophosphate phosphoribohydrolase 
+BP	GO:0009958	OG0001976	ABC transporter B family member 19 
+BP	GO:0009958	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+BP	GO:0042325	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:0042325	OG0001482	Protein phosphatase 2A structural subunit ; TOG domain-containing protein ; Serine/threonine-protein phosphatase 2A 65 kDa regulatory subunit A beta isoform ; Protein phosphatase PP2A regulatory subunit A 
+BP	GO:0042325	OG0004184	60S acidic ribosomal protein P1 
+BP	GO:0015843	OG0001609	UniRef90_Q9ATL9Aquaporin TIP2-1 ; Tonoplast intrinsic protein ; UniRef90_Q84RL6Aquaporin TIP2-3 
+BP	GO:0015843	OG0001798	Ammonium transporter ; ammonium transporter 1 member 1 isoform X1 
+BP	GO:0009742	OG0001403	Serine/threonine-protein phosphatase 
+BP	GO:0009742	OG0001537	UniRef90_A2X9L8Transcription factor ILI5 ; BHLH domain-containing protein ; Transcription factor ILI5 
+BP	GO:0009742	OG0001951	non-specific serine/threonine protein kinase 
+BP	GO:0070262	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:0010157	OG0002187	Heat shock protein 90-5 chloroplastic ; Histidine kinase/HSP90-like ATPase domain-containing protein ; Heat shock protein 90-5, chloroplastic 
+BP	GO:0060485	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:1900030	OG0001708	Nucleotide/sugar transporter family protein ; Sugar phosphate transporter domain-containing protein ; cytokinin riboside 5'-monophosphate phosphoribohydrolase 
+BP	GO:0072489	OG0001609	UniRef90_Q9ATL9Aquaporin TIP2-1 ; Tonoplast intrinsic protein ; UniRef90_Q84RL6Aquaporin TIP2-3 
+BP	GO:0097272	OG0001798	Ammonium transporter ; ammonium transporter 1 member 1 isoform X1 
+BP	GO:0032092	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:0050732	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:2000306	OG0001928	Histone H2A/H2B/H3 domain-containing protein ; Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; CCAAT-HAP5 transcription factor ; Os09g0480700 protein 
+BP	GO:0030111	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:0035099	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+BP	GO:0008643	OG0001374	Sugar phosphate transporter domain-containing protein 
+BP	GO:0008643	OG0001626	Integral membrane Yip1 family protein ; Protein YIP 
+BP	GO:0008643	OG0001708	Nucleotide/sugar transporter family protein ; Sugar phosphate transporter domain-containing protein ; cytokinin riboside 5'-monophosphate phosphoribohydrolase 
+BP	GO:0008643	OG0003551	DUF641 domain-containing protein ; Bidirectional sugar transporter SWEET ; DUF641 family protein 
+BP	GO:0035006	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+BP	GO:0010119	OG0001482	Protein phosphatase 2A structural subunit ; TOG domain-containing protein ; Serine/threonine-protein phosphatase 2A 65 kDa regulatory subunit A beta isoform ; Protein phosphatase PP2A regulatory subunit A 
+BP	GO:0010119	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+BP	GO:0010119	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+BP	GO:0016132	OG0001895	Protein FAM32A-like ; CGI-like protein 
+BP	GO:0016132	OG0001992	Cytochrome P450 
+BP	GO:0033481	OG0001660	NAD-dependent epimerase/dehydratase domain-containing protein 
+BP	GO:0015031	OG0001417	Exocyst subunit Exo70 family protein 
+BP	GO:0015031	OG0001419	BAH domain-containing protein ; Chromatin remodeling protein EBS 
+BP	GO:0015031	OG0001482	Protein phosphatase 2A structural subunit ; TOG domain-containing protein ; Serine/threonine-protein phosphatase 2A 65 kDa regulatory subunit A beta isoform ; Protein phosphatase PP2A regulatory subunit A 
+BP	GO:0015031	OG0001509	GTP-binding protein ; Ras-related protein RABA1f 
+BP	GO:0015031	OG0001626	Integral membrane Yip1 family protein ; Protein YIP 
+BP	GO:0015031	OG0001672	Pyruvate dehydrogenase E1 component subunit beta 
+BP	GO:0015031	OG0001719	Coatomer subunit alpha 
+BP	GO:0015031	OG0001868	ADP-ribosylation factor 
+BP	GO:0015031	OG0001911	t-SNARE coiled-coil homology domain-containing protein ; t-SNARE coiled-coil homology domain-containing protein (Fragment) ; Bet1-like SNARE 1-1 
+BP	GO:0015031	OG0001990	Ferredoxin ; UniRef90_P94044Ferredoxin-6, chloroplastic 
+BP	GO:0015031	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+BP	GO:0015031	OG0002187	Heat shock protein 90-5 chloroplastic ; Histidine kinase/HSP90-like ATPase domain-containing protein ; Heat shock protein 90-5, chloroplastic 
+BP	GO:0006044	OG0001641	Beta-1,4-mannosyl-glycoprotein 4-beta-N-acetylglucosaminyltransferase ; Beta-14-N-acetylglucosaminyltransferase family protein 
+BP	GO:0010469	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:0051103	OG0001460	Ubiquitin-specific protease family C19-related protein 
+BP	GO:0071345	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:0000027	OG0001563	Large ribosomal subunit protein uL18 C-terminal eukaryotes domain-containing protein 
+BP	GO:0000027	OG0002207	CDT1 Geminin-binding domain-containing protein ; CDT1-like protein a chloroplastic 
+BP	GO:0006808	OG0001349	Ubiquitin-like domain-containing protein ; UniRef90_P27923Ubiquitin-ribosomal protein eS31 fusion protein ; ubiquitin-ribosomal protein eS31y fusion protein-like 
+BP	GO:0043433	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:2000114	OG0001829	Dynamin-2A ; dynamin GTPase 
+BP	GO:0031120	OG0001848	H/ACA ribonucleoprotein complex subunit 4 
+BP	GO:0009833	OG0001712	Cellulose synthase 
+BP	GO:0009833	OG0001910	Cellulose synthase 
+BP	GO:0010541	OG0001976	ABC transporter B family member 19 
+BP	GO:0010777	OG0001535	Ribosomal protein L15 
+BP	GO:0030418	OG0001754	Nicotianamine synthase 
+BP	GO:0030245	OG0001730	Endoglucanase 
+BP	GO:0030245	OG0002152	glutamate synthase (NADH) 
+BP	GO:0030707	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+BP	GO:0010262	OG0001951	non-specific serine/threonine protein kinase 
+BP	GO:0010288	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:2000045	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:0030155	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:0006588	OG0001412	14-3-3 domain-containing protein ; Putative 14-3-3 protein 
+BP	GO:0045899	OG0002240	AAA+ ATPase domain-containing protein 
+BP	GO:0071163	OG0002207	CDT1 Geminin-binding domain-containing protein ; CDT1-like protein a chloroplastic 
+BP	GO:0090378	OG0001827	NAD(P)H dehydrogenase (quinone) 
+BP	GO:0090378	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+BP	GO:0030308	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:0097054	OG0002152	glutamate synthase (NADH) 
+BP	GO:0006970	OG0001695	non-specific serine/threonine protein kinase ; UniRef90_Q6ZI44Serine/threonine-protein kinase SAPK6 
+BP	GO:0006970	OG0001953	Protein kinase domain-containing protein ; non-specific serine/threonine protein kinase 
+BP	GO:0006970	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+BP	GO:0006970	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+BP	GO:0006970	OG0002187	Heat shock protein 90-5 chloroplastic ; Histidine kinase/HSP90-like ATPase domain-containing protein ; Heat shock protein 90-5, chloroplastic 
+BP	GO:0030174	OG0002207	CDT1 Geminin-binding domain-containing protein ; CDT1-like protein a chloroplastic 
+BP	GO:0009729	OG0001951	non-specific serine/threonine protein kinase 
+BP	GO:0045596	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+BP	GO:0090379	OG0001827	NAD(P)H dehydrogenase (quinone) 
+BP	GO:0071365	OG0001417	Exocyst subunit Exo70 family protein 
+BP	GO:0071365	OG0001568	VAN3-binding protein ; PH domain-containing protein 
+BP	GO:0071365	OG0001827	NAD(P)H dehydrogenase (quinone) 
+BP	GO:0071365	OG0001976	ABC transporter B family member 19 
+BP	GO:0071365	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+BP	GO:0006784	OG0002152	glutamate synthase (NADH) 
+BP	GO:0043481	OG0001976	ABC transporter B family member 19 
+BP	GO:0006012	OG0001586	NAD(P)-binding domain-containing protein ; UDP-glucose 4-epimerase 
+BP	GO:0006012	OG0002152	glutamate synthase (NADH) 
+BP	GO:0015689	OG0001873	Molybdate-anion transporter 
+BP	GO:0030259	OG0001626	Integral membrane Yip1 family protein ; Protein YIP 
+BP	GO:0036104	OG0002152	glutamate synthase (NADH) 
+BP	GO:0006164	OG0001672	Pyruvate dehydrogenase E1 component subunit beta 
+BP	GO:0006164	OG0001725	ATP synthase subunit beta ; UniRef90_P19023ATP synthase subunit beta, mitochondrial ; UniRef90_Q01859ATP synthase subunit beta, mitochondrial 
+BP	GO:0006164	OG0001900	Potassium transporter 
+BP	GO:0006164	OG0002152	glutamate synthase (NADH) 
+BP	GO:0006124	OG0001990	Ferredoxin ; UniRef90_P94044Ferredoxin-6, chloroplastic 
+BP	GO:0019569	OG0002152	glutamate synthase (NADH) 
+BP	GO:0009750	OG0002172	Pyrophosphate--fructose 6-phosphate 1-phosphotransferase subunit alpha 
+BP	GO:0015012	OG0002152	glutamate synthase (NADH) 
+BP	GO:0032147	OG0004184	60S acidic ribosomal protein P1 
+BP	GO:1990481	OG0001848	H/ACA ribonucleoprotein complex subunit 4 
+BP	GO:0016125	OG0001626	Integral membrane Yip1 family protein ; Protein YIP 
+BP	GO:0016125	OG0001895	Protein FAM32A-like ; CGI-like protein 
+BP	GO:0016125	OG0001992	Cytochrome P450 
+BP	GO:0019676	OG0002152	glutamate synthase (NADH) 
+CC	GO:0042788	OG0001505	60S ribosomal protein L27 
+CC	GO:0042788	OG0001535	Ribosomal protein L15 
+CC	GO:0042788	OG0001723	40S ribosomal protein S6 
+CC	GO:0042788	OG0001861	S5 DRBM domain-containing protein 
+CC	GO:0042788	OG0001927	Ribosomal protein L22 ; Large ribosomal subunit protein eL22 
+CC	GO:0022625	OG0001505	60S ribosomal protein L27 
+CC	GO:0022625	OG0001535	Ribosomal protein L15 
+CC	GO:0022625	OG0001563	Large ribosomal subunit protein uL18 C-terminal eukaryotes domain-containing protein 
+CC	GO:0022625	OG0001758	60S ribosomal protein L7a 
+CC	GO:0022625	OG0002207	CDT1 Geminin-binding domain-containing protein ; CDT1-like protein a chloroplastic 
+CC	GO:0022625	OG0004184	60S acidic ribosomal protein P1 
+CC	GO:0005634	OG0001323	PHD finger protein ALFIN-LIKE 
+CC	GO:0005634	OG0001347	ALOG domain-containing protein ; Protein LIGHT-DEPENDENT SHORT HYPOCOTYLS 5 ; protein G1-like8 
+CC	GO:0005634	OG0001349	Ubiquitin-like domain-containing protein ; UniRef90_P27923Ubiquitin-ribosomal protein eS31 fusion protein ; ubiquitin-ribosomal protein eS31y fusion protein-like 
+CC	GO:0005634	OG0001403	Serine/threonine-protein phosphatase 
+CC	GO:0005634	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+CC	GO:0005634	OG0001412	14-3-3 domain-containing protein ; Putative 14-3-3 protein 
+CC	GO:0005634	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+CC	GO:0005634	OG0001417	Exocyst subunit Exo70 family protein 
+CC	GO:0005634	OG0001451	Protein kinase domain-containing protein ; Nuclear pore complex protein NUP93A 
+CC	GO:0005634	OG0001460	Ubiquitin-specific protease family C19-related protein 
+CC	GO:0005634	OG0001482	Protein phosphatase 2A structural subunit ; TOG domain-containing protein ; Serine/threonine-protein phosphatase 2A 65 kDa regulatory subunit A beta isoform ; Protein phosphatase PP2A regulatory subunit A 
+CC	GO:0005634	OG0001506	RNA helicase ; UniRef90_Q41741Eukaryotic initiation factor 4A 
+CC	GO:0005634	OG0001509	GTP-binding protein ; Ras-related protein RABA1f 
+CC	GO:0005634	OG0001535	Ribosomal protein L15 
+CC	GO:0005634	OG0001537	UniRef90_A2X9L8Transcription factor ILI5 ; BHLH domain-containing protein ; Transcription factor ILI5 
+CC	GO:0005634	OG0001563	Large ribosomal subunit protein uL18 C-terminal eukaryotes domain-containing protein 
+CC	GO:0005634	OG0001582	ZF-HD dimerization-type domain-containing protein ; ZF-HD protein dimerization region containing protein ; ZF-HD protein dimerisation region containing protein ; zinc-finger homeodomain protein 1-like ; Zinc-finger homeodomain protein 2 
+CC	GO:0005634	OG0001626	Integral membrane Yip1 family protein ; Protein YIP 
+CC	GO:0005634	OG0001653	ELMO domain-containing protein 
+CC	GO:0005634	OG0001682	Homeobox domain-containing protein ; HB transcription factor 
+CC	GO:0005634	OG0001692	Ribonucleoside-diphosphate reductase small chain (Fragment) ; ribonucleoside-diphosphate reductase small chain C ; Ribonucleoside-diphosphate reductase small chain B 
+CC	GO:0005634	OG0001695	non-specific serine/threonine protein kinase ; UniRef90_Q6ZI44Serine/threonine-protein kinase SAPK6 
+CC	GO:0005634	OG0001702	BHLH transcription factor ; BHLH domain-containing protein 
+CC	GO:0005634	OG0001706	COV1-like protein ; Protein LIKE COV 2 ; COV1-like protein (Fragment) 
+CC	GO:0005634	OG0001719	Coatomer subunit alpha 
+CC	GO:0005634	OG0001725	ATP synthase subunit beta ; UniRef90_P19023ATP synthase subunit beta, mitochondrial ; UniRef90_Q01859ATP synthase subunit beta, mitochondrial 
+CC	GO:0005634	OG0001823	GRAS transcription factor ; GRAS transcription factor (Fragment) ; Protein SHORT-ROOT 1 ;  protein SHORT-ROOT 2-like 
+CC	GO:0005634	OG0001846	DOG1 domain-containing protein ; Transcription factor TGA6 
+CC	GO:0005634	OG0001848	H/ACA ribonucleoprotein complex subunit 4 
+CC	GO:0005634	OG0001868	ADP-ribosylation factor 
+CC	GO:0005634	OG0001870	Calcium-dependent protein kinase 20 
+CC	GO:0005634	OG0001895	Protein FAM32A-like ; CGI-like protein 
+CC	GO:0005634	OG0001921	AP2/ERF domain-containing protein ; UniRef90_B6T5Z6Ethylene-responsive transcription factor WIN1 ; Ethylene-responsive transcription factor WIN1 ; ERF6.3 ; Putative AP2/EREBP transcription factor superfamily protein 
+CC	GO:0005634	OG0001928	Histone H2A/H2B/H3 domain-containing protein ; Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; CCAAT-HAP5 transcription factor ; Os09g0480700 protein 
+CC	GO:0005634	OG0001931	Calcium-dependent protein kinase 13 
+CC	GO:0005634	OG0001945	Glutaredoxin domain-containing protein ; Grx_A2-glutaredoxin subgroup III 
+CC	GO:0005634	OG0001953	Protein kinase domain-containing protein ; non-specific serine/threonine protein kinase 
+CC	GO:0005634	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+CC	GO:0005634	OG0001987	Cytokinin riboside 5'-monophosphate phosphoribohydrolase 
+CC	GO:0005634	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+CC	GO:0005634	OG0002045	ACT domain-containing protein ; DNA binding protein ; BHLH domain-containing protein 
+CC	GO:0005634	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+CC	GO:0005634	OG0002132	GATA-type domain-containing protein ; GATA transcription factor 2 
+CC	GO:0005634	OG0002207	CDT1 Geminin-binding domain-containing protein ; CDT1-like protein a chloroplastic 
+CC	GO:0005634	OG0002240	AAA+ ATPase domain-containing protein 
+CC	GO:0005634	OG0003551	DUF641 domain-containing protein ; Bidirectional sugar transporter SWEET ; DUF641 family protein 
+CC	GO:0005634	OG0004184	60S acidic ribosomal protein P1 
+CC	GO:0000159	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+CC	GO:0000159	OG0001419	BAH domain-containing protein ; Chromatin remodeling protein EBS 
+CC	GO:0000159	OG0001482	Protein phosphatase 2A structural subunit ; TOG domain-containing protein ; Serine/threonine-protein phosphatase 2A 65 kDa regulatory subunit A beta isoform ; Protein phosphatase PP2A regulatory subunit A 
+CC	GO:0016602	OG0001700	Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; Nuclear transcription factor Y subunit B-2 
+CC	GO:0016602	OG0001928	Histone H2A/H2B/H3 domain-containing protein ; Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; CCAAT-HAP5 transcription factor ; Os09g0480700 protein 
+CC	GO:0150034	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+CC	GO:0014069	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+CC	GO:0005737	OG0001268	40S ribosomal protein S26 
+CC	GO:0005737	OG0001323	PHD finger protein ALFIN-LIKE 
+CC	GO:0005737	OG0001349	Ubiquitin-like domain-containing protein ; UniRef90_P27923Ubiquitin-ribosomal protein eS31 fusion protein ; ubiquitin-ribosomal protein eS31y fusion protein-like 
+CC	GO:0005737	OG0001374	Sugar phosphate transporter domain-containing protein 
+CC	GO:0005737	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+CC	GO:0005737	OG0001412	14-3-3 domain-containing protein ; Putative 14-3-3 protein 
+CC	GO:0005737	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+CC	GO:0005737	OG0001417	Exocyst subunit Exo70 family protein 
+CC	GO:0005737	OG0001419	BAH domain-containing protein ; Chromatin remodeling protein EBS 
+CC	GO:0005737	OG0001420	ATP-dependent Clp protease proteolytic subunit 
+CC	GO:0005737	OG0001473	Patellin-5 ; CRAL-TRIO domain-containing protein ; patellin-3-like 
+CC	GO:0005737	OG0001482	Protein phosphatase 2A structural subunit ; TOG domain-containing protein ; Serine/threonine-protein phosphatase 2A 65 kDa regulatory subunit A beta isoform ; Protein phosphatase PP2A regulatory subunit A 
+CC	GO:0005737	OG0001505	60S ribosomal protein L27 
+CC	GO:0005737	OG0001506	RNA helicase ; UniRef90_Q41741Eukaryotic initiation factor 4A 
+CC	GO:0005737	OG0001509	GTP-binding protein ; Ras-related protein RABA1f 
+CC	GO:0005737	OG0001517	RHOMBOID-like protein 
+CC	GO:0005737	OG0001535	Ribosomal protein L15 
+CC	GO:0005737	OG0001537	UniRef90_A2X9L8Transcription factor ILI5 ; BHLH domain-containing protein ; Transcription factor ILI5 
+CC	GO:0005737	OG0001563	Large ribosomal subunit protein uL18 C-terminal eukaryotes domain-containing protein 
+CC	GO:0005737	OG0001583	UniRef90_A0A921RFN8Isocitrate dehydrogenase; UniRef90_K3Z6K9Isocitrate dehydrogenase; isocitrate dehydrogenase (NADP(+)) ; UniRef90_A0A804Q317Isocitrate dehydrogenase
+CC	GO:0005737	OG0001586	NAD(P)-binding domain-containing protein ; UDP-glucose 4-epimerase 
+CC	GO:0005737	OG0001589	RING-type E3 ubiquitin transferase 
+CC	GO:0005737	OG0001609	UniRef90_Q9ATL9Aquaporin TIP2-1 ; Tonoplast intrinsic protein ; UniRef90_Q84RL6Aquaporin TIP2-3 
+CC	GO:0005737	OG0001626	Integral membrane Yip1 family protein ; Protein YIP 
+CC	GO:0005737	OG0001653	ELMO domain-containing protein 
+CC	GO:0005737	OG0001660	NAD-dependent epimerase/dehydratase domain-containing protein 
+CC	GO:0005737	OG0001672	Pyruvate dehydrogenase E1 component subunit beta 
+CC	GO:0005737	OG0001692	Ribonucleoside-diphosphate reductase small chain (Fragment) ; ribonucleoside-diphosphate reductase small chain C ; Ribonucleoside-diphosphate reductase small chain B 
+CC	GO:0005737	OG0001695	non-specific serine/threonine protein kinase ; UniRef90_Q6ZI44Serine/threonine-protein kinase SAPK6 
+CC	GO:0005737	OG0001700	Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; Nuclear transcription factor Y subunit B-2 
+CC	GO:0005737	OG0001708	Nucleotide/sugar transporter family protein ; Sugar phosphate transporter domain-containing protein ; cytokinin riboside 5'-monophosphate phosphoribohydrolase 
+CC	GO:0005737	OG0001719	Coatomer subunit alpha 
+CC	GO:0005737	OG0001725	ATP synthase subunit beta ; UniRef90_P19023ATP synthase subunit beta, mitochondrial ; UniRef90_Q01859ATP synthase subunit beta, mitochondrial 
+CC	GO:0005737	OG0001726	DNAJ heat shock N-terminal domain-containing protein ; J domain-containing protein 
+CC	GO:0005737	OG0001728	Sphingomyelin synthase-like domain-containing protein ; Phosphatidylinositol:ceramide inositolphosphotransferase 1 
+CC	GO:0005737	OG0001758	60S ribosomal protein L7a 
+CC	GO:0005737	OG0001805	5-methyltetrahydropteroyltriglutamate--homocysteine S-methyltransferase 
+CC	GO:0005737	OG0001827	NAD(P)H dehydrogenase (quinone) 
+CC	GO:0005737	OG0001829	Dynamin-2A ; dynamin GTPase 
+CC	GO:0005737	OG0001861	S5 DRBM domain-containing protein 
+CC	GO:0005737	OG0001868	ADP-ribosylation factor 
+CC	GO:0005737	OG0001870	Calcium-dependent protein kinase 20 
+CC	GO:0005737	OG0001873	Molybdate-anion transporter 
+CC	GO:0005737	OG0001895	Protein FAM32A-like ; CGI-like protein 
+CC	GO:0005737	OG0001910	Cellulose synthase 
+CC	GO:0005737	OG0001911	t-SNARE coiled-coil homology domain-containing protein ; t-SNARE coiled-coil homology domain-containing protein (Fragment) ; Bet1-like SNARE 1-1 
+CC	GO:0005737	OG0001928	Histone H2A/H2B/H3 domain-containing protein ; Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; CCAAT-HAP5 transcription factor ; Os09g0480700 protein 
+CC	GO:0005737	OG0001930	Glycosyltransferase 2-like domain-containing protein 
+CC	GO:0005737	OG0001931	Calcium-dependent protein kinase 13 
+CC	GO:0005737	OG0001945	Glutaredoxin domain-containing protein ; Grx_A2-glutaredoxin subgroup III 
+CC	GO:0005737	OG0001953	Protein kinase domain-containing protein ; non-specific serine/threonine protein kinase 
+CC	GO:0005737	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+CC	GO:0005737	OG0001976	ABC transporter B family member 19 
+CC	GO:0005737	OG0001987	Cytokinin riboside 5'-monophosphate phosphoribohydrolase 
+CC	GO:0005737	OG0001990	Ferredoxin ; UniRef90_P94044Ferredoxin-6, chloroplastic 
+CC	GO:0005737	OG0001992	Cytochrome P450 
+CC	GO:0005737	OG0001993	UniRef90_Q6EUH7Actin-depolymerizing factor 1 ; ADF-H domain-containing protein ; Actin-depolymerizing factor 
+CC	GO:0005737	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+CC	GO:0005737	OG0002067	Calcium-transporting ATPase 
+CC	GO:0005737	OG0002091	E3 ubiquitin-protein ligase RMA 
+CC	GO:0005737	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+CC	GO:0005737	OG0002135	UniRef90_Q42843Glutamyl-tRNA reductase 1, chloroplastic ; Glutamyl-tRNA reductase ; glutamyl-tRNA reductase 2-like 
+CC	GO:0005737	OG0002152	glutamate synthase (NADH) 
+CC	GO:0005737	OG0002172	Pyrophosphate--fructose 6-phosphate 1-phosphotransferase subunit alpha 
+CC	GO:0005737	OG0002187	Heat shock protein 90-5 chloroplastic ; Histidine kinase/HSP90-like ATPase domain-containing protein ; Heat shock protein 90-5, chloroplastic 
+CC	GO:0005737	OG0002207	CDT1 Geminin-binding domain-containing protein ; CDT1-like protein a chloroplastic 
+CC	GO:0005737	OG0002240	AAA+ ATPase domain-containing protein 
+CC	GO:0005737	OG0004184	60S acidic ribosomal protein P1 
+CC	GO:0098793	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+CC	GO:0045121	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+CC	GO:0005886	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+CC	GO:0005886	OG0001509	GTP-binding protein ; Ras-related protein RABA1f 
+CC	GO:0005886	OG0001609	UniRef90_Q9ATL9Aquaporin TIP2-1 ; Tonoplast intrinsic protein ; UniRef90_Q84RL6Aquaporin TIP2-3 
+CC	GO:0005886	OG0001675	Membrane-anchored ubiquitin-fold protein ; Membrane-anchored ubiquitin-fold protein 3 ; Ubiquitin-like domain-containing protein (Fragment) 
+CC	GO:0005886	OG0001701	Rhodopsin ; Cysteine-rich transmembrane CYSTM domain-containing protein ; cysteine-rich and transmembrane domain-containing protein A 
+CC	GO:0005886	OG0001712	Cellulose synthase 
+CC	GO:0005886	OG0001798	Ammonium transporter ; ammonium transporter 1 member 1 isoform X1 
+CC	GO:0005886	OG0001827	NAD(P)H dehydrogenase (quinone) 
+CC	GO:0005886	OG0001829	Dynamin-2A ; dynamin GTPase 
+CC	GO:0005886	OG0001900	Potassium transporter 
+CC	GO:0005886	OG0001910	Cellulose synthase 
+CC	GO:0005886	OG0001931	Calcium-dependent protein kinase 13 
+CC	GO:0005886	OG0001951	non-specific serine/threonine protein kinase 
+CC	GO:0005886	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+CC	GO:0005886	OG0001976	ABC transporter B family member 19 
+CC	GO:0005886	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+CC	GO:0005886	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+CC	GO:0005886	OG0003551	DUF641 domain-containing protein ; Bidirectional sugar transporter SWEET ; DUF641 family protein 
+CC	GO:0005967	OG0001672	Pyruvate dehydrogenase E1 component subunit beta 
+CC	GO:0016020	OG0001268	40S ribosomal protein S26 
+CC	GO:0016020	OG0001323	PHD finger protein ALFIN-LIKE 
+CC	GO:0016020	OG0001374	Sugar phosphate transporter domain-containing protein 
+CC	GO:0016020	OG0001403	Serine/threonine-protein phosphatase 
+CC	GO:0016020	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+CC	GO:0016020	OG0001412	14-3-3 domain-containing protein ; Putative 14-3-3 protein 
+CC	GO:0016020	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+CC	GO:0016020	OG0001417	Exocyst subunit Exo70 family protein 
+CC	GO:0016020	OG0001419	BAH domain-containing protein ; Chromatin remodeling protein EBS 
+CC	GO:0016020	OG0001420	ATP-dependent Clp protease proteolytic subunit 
+CC	GO:0016020	OG0001451	Protein kinase domain-containing protein ; Nuclear pore complex protein NUP93A 
+CC	GO:0016020	OG0001460	Ubiquitin-specific protease family C19-related protein 
+CC	GO:0016020	OG0001473	Patellin-5 ; CRAL-TRIO domain-containing protein ; patellin-3-like 
+CC	GO:0016020	OG0001482	Protein phosphatase 2A structural subunit ; TOG domain-containing protein ; Serine/threonine-protein phosphatase 2A 65 kDa regulatory subunit A beta isoform ; Protein phosphatase PP2A regulatory subunit A 
+CC	GO:0016020	OG0001495	Receptor-like protein kinase ; Leucine-rich repeat-containing N-terminal plant-type domain-containing protein ; Cell wall hydroxyproline-rich glycoprotein ; Leucine-rich repeat extensin-like protein 3 
+CC	GO:0016020	OG0001505	60S ribosomal protein L27 
+CC	GO:0016020	OG0001506	RNA helicase ; UniRef90_Q41741Eukaryotic initiation factor 4A 
+CC	GO:0016020	OG0001509	GTP-binding protein ; Ras-related protein RABA1f 
+CC	GO:0016020	OG0001517	RHOMBOID-like protein 
+CC	GO:0016020	OG0001529	Os05g0102500 protein ; Auxin response factor 
+CC	GO:0016020	OG0001535	Ribosomal protein L15 
+CC	GO:0016020	OG0001563	Large ribosomal subunit protein uL18 C-terminal eukaryotes domain-containing protein 
+CC	GO:0016020	OG0001568	VAN3-binding protein ; PH domain-containing protein 
+CC	GO:0016020	OG0001583	UniRef90_A0A921RFN8Isocitrate dehydrogenase; UniRef90_K3Z6K9Isocitrate dehydrogenase; isocitrate dehydrogenase (NADP(+)) ; UniRef90_A0A804Q317Isocitrate dehydrogenase
+CC	GO:0016020	OG0001586	NAD(P)-binding domain-containing protein ; UDP-glucose 4-epimerase 
+CC	GO:0016020	OG0001589	RING-type E3 ubiquitin transferase 
+CC	GO:0016020	OG0001609	UniRef90_Q9ATL9Aquaporin TIP2-1 ; Tonoplast intrinsic protein ; UniRef90_Q84RL6Aquaporin TIP2-3 
+CC	GO:0016020	OG0001626	Integral membrane Yip1 family protein ; Protein YIP 
+CC	GO:0016020	OG0001629	Core-2/I-branching beta-16-N-acetylglucosaminyltransferase family protein ; Glycosyltransferase ; Glycosyltransferase BC10 
+CC	GO:0016020	OG0001641	Beta-1,4-mannosyl-glycoprotein 4-beta-N-acetylglucosaminyltransferase ; Beta-14-N-acetylglucosaminyltransferase family protein 
+CC	GO:0016020	OG0001651	non-specific serine/threonine protein kinase 
+CC	GO:0016020	OG0001653	ELMO domain-containing protein 
+CC	GO:0016020	OG0001660	NAD-dependent epimerase/dehydratase domain-containing protein 
+CC	GO:0016020	OG0001672	Pyruvate dehydrogenase E1 component subunit beta 
+CC	GO:0016020	OG0001675	Membrane-anchored ubiquitin-fold protein ; Membrane-anchored ubiquitin-fold protein 3 ; Ubiquitin-like domain-containing protein (Fragment) 
+CC	GO:0016020	OG0001692	Ribonucleoside-diphosphate reductase small chain (Fragment) ; ribonucleoside-diphosphate reductase small chain C ; Ribonucleoside-diphosphate reductase small chain B 
+CC	GO:0016020	OG0001695	non-specific serine/threonine protein kinase ; UniRef90_Q6ZI44Serine/threonine-protein kinase SAPK6 
+CC	GO:0016020	OG0001700	Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; Nuclear transcription factor Y subunit B-2 
+CC	GO:0016020	OG0001701	Rhodopsin ; Cysteine-rich transmembrane CYSTM domain-containing protein ; cysteine-rich and transmembrane domain-containing protein A 
+CC	GO:0016020	OG0001702	BHLH transcription factor ; BHLH domain-containing protein 
+CC	GO:0016020	OG0001706	COV1-like protein ; Protein LIKE COV 2 ; COV1-like protein (Fragment) 
+CC	GO:0016020	OG0001708	Nucleotide/sugar transporter family protein ; Sugar phosphate transporter domain-containing protein ; cytokinin riboside 5'-monophosphate phosphoribohydrolase 
+CC	GO:0016020	OG0001712	Cellulose synthase 
+CC	GO:0016020	OG0001719	Coatomer subunit alpha 
+CC	GO:0016020	OG0001723	40S ribosomal protein S6 
+CC	GO:0016020	OG0001725	ATP synthase subunit beta ; UniRef90_P19023ATP synthase subunit beta, mitochondrial ; UniRef90_Q01859ATP synthase subunit beta, mitochondrial 
+CC	GO:0016020	OG0001728	Sphingomyelin synthase-like domain-containing protein ; Phosphatidylinositol:ceramide inositolphosphotransferase 1 
+CC	GO:0016020	OG0001730	Endoglucanase 
+CC	GO:0016020	OG0001758	60S ribosomal protein L7a 
+CC	GO:0016020	OG0001798	Ammonium transporter ; ammonium transporter 1 member 1 isoform X1 
+CC	GO:0016020	OG0001805	5-methyltetrahydropteroyltriglutamate--homocysteine S-methyltransferase 
+CC	GO:0016020	OG0001827	NAD(P)H dehydrogenase (quinone) 
+CC	GO:0016020	OG0001829	Dynamin-2A ; dynamin GTPase 
+CC	GO:0016020	OG0001846	DOG1 domain-containing protein ; Transcription factor TGA6 
+CC	GO:0016020	OG0001851	Lysine ketoglutarate reductase trans-splicing related 1 
+CC	GO:0016020	OG0001861	S5 DRBM domain-containing protein 
+CC	GO:0016020	OG0001868	ADP-ribosylation factor 
+CC	GO:0016020	OG0001870	Calcium-dependent protein kinase 20 
+CC	GO:0016020	OG0001873	Molybdate-anion transporter 
+CC	GO:0016020	OG0001895	Protein FAM32A-like ; CGI-like protein 
+CC	GO:0016020	OG0001900	Potassium transporter 
+CC	GO:0016020	OG0001910	Cellulose synthase 
+CC	GO:0016020	OG0001911	t-SNARE coiled-coil homology domain-containing protein ; t-SNARE coiled-coil homology domain-containing protein (Fragment) ; Bet1-like SNARE 1-1 
+CC	GO:0016020	OG0001921	AP2/ERF domain-containing protein ; UniRef90_B6T5Z6Ethylene-responsive transcription factor WIN1 ; Ethylene-responsive transcription factor WIN1 ; ERF6.3 ; Putative AP2/EREBP transcription factor superfamily protein 
+CC	GO:0016020	OG0001927	Ribosomal protein L22 ; Large ribosomal subunit protein eL22 
+CC	GO:0016020	OG0001928	Histone H2A/H2B/H3 domain-containing protein ; Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; CCAAT-HAP5 transcription factor ; Os09g0480700 protein 
+CC	GO:0016020	OG0001930	Glycosyltransferase 2-like domain-containing protein 
+CC	GO:0016020	OG0001931	Calcium-dependent protein kinase 13 
+CC	GO:0016020	OG0001945	Glutaredoxin domain-containing protein ; Grx_A2-glutaredoxin subgroup III 
+CC	GO:0016020	OG0001951	non-specific serine/threonine protein kinase 
+CC	GO:0016020	OG0001953	Protein kinase domain-containing protein ; non-specific serine/threonine protein kinase 
+CC	GO:0016020	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+CC	GO:0016020	OG0001976	ABC transporter B family member 19 
+CC	GO:0016020	OG0001987	Cytokinin riboside 5'-monophosphate phosphoribohydrolase 
+CC	GO:0016020	OG0001990	Ferredoxin ; UniRef90_P94044Ferredoxin-6, chloroplastic 
+CC	GO:0016020	OG0001992	Cytochrome P450 
+CC	GO:0016020	OG0001993	UniRef90_Q6EUH7Actin-depolymerizing factor 1 ; ADF-H domain-containing protein ; Actin-depolymerizing factor 
+CC	GO:0016020	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+CC	GO:0016020	OG0002045	ACT domain-containing protein ; DNA binding protein ; BHLH domain-containing protein 
+CC	GO:0016020	OG0002067	Calcium-transporting ATPase 
+CC	GO:0016020	OG0002091	E3 ubiquitin-protein ligase RMA 
+CC	GO:0016020	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+CC	GO:0016020	OG0002135	UniRef90_Q42843Glutamyl-tRNA reductase 1, chloroplastic ; Glutamyl-tRNA reductase ; glutamyl-tRNA reductase 2-like 
+CC	GO:0016020	OG0002207	CDT1 Geminin-binding domain-containing protein ; CDT1-like protein a chloroplastic 
+CC	GO:0016020	OG0002240	AAA+ ATPase domain-containing protein 
+CC	GO:0016020	OG0003551	DUF641 domain-containing protein ; Bidirectional sugar transporter SWEET ; DUF641 family protein 
+CC	GO:0016020	OG0004184	60S acidic ribosomal protein P1 
+CC	GO:0031429	OG0001848	H/ACA ribonucleoprotein complex subunit 4 
+CC	GO:0042807	OG0001609	UniRef90_Q9ATL9Aquaporin TIP2-1 ; Tonoplast intrinsic protein ; UniRef90_Q84RL6Aquaporin TIP2-3 
+CC	GO:0009513	OG0001990	Ferredoxin ; UniRef90_P94044Ferredoxin-6, chloroplastic 
+CC	GO:0032586	OG0001609	UniRef90_Q9ATL9Aquaporin TIP2-1 ; Tonoplast intrinsic protein ; UniRef90_Q84RL6Aquaporin TIP2-3 
+CC	GO:0009840	OG0001420	ATP-dependent Clp protease proteolytic subunit 
+CC	GO:0045334	OG0001829	Dynamin-2A ; dynamin GTPase 
+MF	GO:0009931	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+MF	GO:0009931	OG0001870	Calcium-dependent protein kinase 20 
+MF	GO:0009931	OG0001931	Calcium-dependent protein kinase 13 
+MF	GO:0009931	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+MF	GO:0009931	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+MF	GO:0004683	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+MF	GO:0004683	OG0001870	Calcium-dependent protein kinase 20 
+MF	GO:0004683	OG0001931	Calcium-dependent protein kinase 13 
+MF	GO:0004683	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+MF	GO:0004683	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+MF	GO:0003924	OG0001323	PHD finger protein ALFIN-LIKE 
+MF	GO:0003924	OG0001509	GTP-binding protein ; Ras-related protein RABA1f 
+MF	GO:0003924	OG0001651	non-specific serine/threonine protein kinase 
+MF	GO:0003924	OG0001829	Dynamin-2A ; dynamin GTPase 
+MF	GO:0003924	OG0001851	Lysine ketoglutarate reductase trans-splicing related 1 
+MF	GO:0003924	OG0001868	ADP-ribosylation factor 
+MF	GO:0003924	OG0001990	Ferredoxin ; UniRef90_P94044Ferredoxin-6, chloroplastic 
+MF	GO:0003924	OG0001992	Cytochrome P450 
+MF	GO:0003924	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+MF	GO:0005515	OG0001323	PHD finger protein ALFIN-LIKE 
+MF	GO:0005515	OG0001349	Ubiquitin-like domain-containing protein ; UniRef90_P27923Ubiquitin-ribosomal protein eS31 fusion protein ; ubiquitin-ribosomal protein eS31y fusion protein-like 
+MF	GO:0005515	OG0001374	Sugar phosphate transporter domain-containing protein 
+MF	GO:0005515	OG0001403	Serine/threonine-protein phosphatase 
+MF	GO:0005515	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+MF	GO:0005515	OG0001412	14-3-3 domain-containing protein ; Putative 14-3-3 protein 
+MF	GO:0005515	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+MF	GO:0005515	OG0001419	BAH domain-containing protein ; Chromatin remodeling protein EBS 
+MF	GO:0005515	OG0001420	ATP-dependent Clp protease proteolytic subunit 
+MF	GO:0005515	OG0001482	Protein phosphatase 2A structural subunit ; TOG domain-containing protein ; Serine/threonine-protein phosphatase 2A 65 kDa regulatory subunit A beta isoform ; Protein phosphatase PP2A regulatory subunit A 
+MF	GO:0005515	OG0001506	RNA helicase ; UniRef90_Q41741Eukaryotic initiation factor 4A 
+MF	GO:0005515	OG0001509	GTP-binding protein ; Ras-related protein RABA1f 
+MF	GO:0005515	OG0001537	UniRef90_A2X9L8Transcription factor ILI5 ; BHLH domain-containing protein ; Transcription factor ILI5 
+MF	GO:0005515	OG0001583	UniRef90_A0A921RFN8Isocitrate dehydrogenase; UniRef90_K3Z6K9Isocitrate dehydrogenase; isocitrate dehydrogenase (NADP(+)) ; UniRef90_A0A804Q317Isocitrate dehydrogenase
+MF	GO:0005515	OG0001626	Integral membrane Yip1 family protein ; Protein YIP 
+MF	GO:0005515	OG0001695	non-specific serine/threonine protein kinase ; UniRef90_Q6ZI44Serine/threonine-protein kinase SAPK6 
+MF	GO:0005515	OG0001700	Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; Nuclear transcription factor Y subunit B-2 
+MF	GO:0005515	OG0001702	BHLH transcription factor ; BHLH domain-containing protein 
+MF	GO:0005515	OG0001725	ATP synthase subunit beta ; UniRef90_P19023ATP synthase subunit beta, mitochondrial ; UniRef90_Q01859ATP synthase subunit beta, mitochondrial 
+MF	GO:0005515	OG0001798	Ammonium transporter ; ammonium transporter 1 member 1 isoform X1 
+MF	GO:0005515	OG0001805	5-methyltetrahydropteroyltriglutamate--homocysteine S-methyltransferase 
+MF	GO:0005515	OG0001829	Dynamin-2A ; dynamin GTPase 
+MF	GO:0005515	OG0001846	DOG1 domain-containing protein ; Transcription factor TGA6 
+MF	GO:0005515	OG0001868	ADP-ribosylation factor 
+MF	GO:0005515	OG0001870	Calcium-dependent protein kinase 20 
+MF	GO:0005515	OG0001928	Histone H2A/H2B/H3 domain-containing protein ; Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; CCAAT-HAP5 transcription factor ; Os09g0480700 protein 
+MF	GO:0005515	OG0001931	Calcium-dependent protein kinase 13 
+MF	GO:0005515	OG0001945	Glutaredoxin domain-containing protein ; Grx_A2-glutaredoxin subgroup III 
+MF	GO:0005515	OG0001951	non-specific serine/threonine protein kinase 
+MF	GO:0005515	OG0001953	Protein kinase domain-containing protein ; non-specific serine/threonine protein kinase 
+MF	GO:0005515	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+MF	GO:0005515	OG0001976	ABC transporter B family member 19 
+MF	GO:0005515	OG0001990	Ferredoxin ; UniRef90_P94044Ferredoxin-6, chloroplastic 
+MF	GO:0005515	OG0001993	UniRef90_Q6EUH7Actin-depolymerizing factor 1 ; ADF-H domain-containing protein ; Actin-depolymerizing factor 
+MF	GO:0005515	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+MF	GO:0005515	OG0002045	ACT domain-containing protein ; DNA binding protein ; BHLH domain-containing protein 
+MF	GO:0005515	OG0002067	Calcium-transporting ATPase 
+MF	GO:0005515	OG0002091	E3 ubiquitin-protein ligase RMA 
+MF	GO:0005515	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+MF	GO:0005515	OG0002135	UniRef90_Q42843Glutamyl-tRNA reductase 1, chloroplastic ; Glutamyl-tRNA reductase ; glutamyl-tRNA reductase 2-like 
+MF	GO:0005515	OG0002172	Pyrophosphate--fructose 6-phosphate 1-phosphotransferase subunit alpha 
+MF	GO:0005515	OG0002187	Heat shock protein 90-5 chloroplastic ; Histidine kinase/HSP90-like ATPase domain-containing protein ; Heat shock protein 90-5, chloroplastic 
+MF	GO:0005515	OG0002207	CDT1 Geminin-binding domain-containing protein ; CDT1-like protein a chloroplastic 
+MF	GO:0005525	OG0001323	PHD finger protein ALFIN-LIKE 
+MF	GO:0005525	OG0001509	GTP-binding protein ; Ras-related protein RABA1f 
+MF	GO:0005525	OG0001651	non-specific serine/threonine protein kinase 
+MF	GO:0005525	OG0001829	Dynamin-2A ; dynamin GTPase 
+MF	GO:0005525	OG0001851	Lysine ketoglutarate reductase trans-splicing related 1 
+MF	GO:0005525	OG0001868	ADP-ribosylation factor 
+MF	GO:0005525	OG0001951	non-specific serine/threonine protein kinase 
+MF	GO:0005525	OG0001990	Ferredoxin ; UniRef90_P94044Ferredoxin-6, chloroplastic 
+MF	GO:0005525	OG0001992	Cytochrome P450 
+MF	GO:0005525	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+MF	GO:0005464	OG0001374	Sugar phosphate transporter domain-containing protein 
+MF	GO:0005464	OG0001708	Nucleotide/sugar transporter family protein ; Sugar phosphate transporter domain-containing protein ; cytokinin riboside 5'-monophosphate phosphoribohydrolase 
+MF	GO:0003735	OG0001268	40S ribosomal protein S26 
+MF	GO:0003735	OG0001349	Ubiquitin-like domain-containing protein ; UniRef90_P27923Ubiquitin-ribosomal protein eS31 fusion protein ; ubiquitin-ribosomal protein eS31y fusion protein-like 
+MF	GO:0003735	OG0001505	60S ribosomal protein L27 
+MF	GO:0003735	OG0001535	Ribosomal protein L15 
+MF	GO:0003735	OG0001563	Large ribosomal subunit protein uL18 C-terminal eukaryotes domain-containing protein 
+MF	GO:0003735	OG0001723	40S ribosomal protein S6 
+MF	GO:0003735	OG0001758	60S ribosomal protein L7a 
+MF	GO:0003735	OG0001848	H/ACA ribonucleoprotein complex subunit 4 
+MF	GO:0003735	OG0001861	S5 DRBM domain-containing protein 
+MF	GO:0003735	OG0001927	Ribosomal protein L22 ; Large ribosomal subunit protein eL22 
+MF	GO:0003735	OG0002207	CDT1 Geminin-binding domain-containing protein ; CDT1-like protein a chloroplastic 
+MF	GO:0003735	OG0004184	60S acidic ribosomal protein P1 
+MF	GO:0005516	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+MF	GO:0005516	OG0001870	Calcium-dependent protein kinase 20 
+MF	GO:0005516	OG0001931	Calcium-dependent protein kinase 13 
+MF	GO:0005516	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+MF	GO:0005516	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+MF	GO:0005516	OG0002067	Calcium-transporting ATPase 
+MF	GO:0001228	OG0001700	Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; Nuclear transcription factor Y subunit B-2 
+MF	GO:0001228	OG0001928	Histone H2A/H2B/H3 domain-containing protein ; Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; CCAAT-HAP5 transcription factor ; Os09g0480700 protein 
+MF	GO:0000976	OG0001323	PHD finger protein ALFIN-LIKE 
+MF	GO:0000976	OG0001582	ZF-HD dimerization-type domain-containing protein ; ZF-HD protein dimerization region containing protein ; ZF-HD protein dimerisation region containing protein ; zinc-finger homeodomain protein 1-like ; Zinc-finger homeodomain protein 2 
+MF	GO:0000976	OG0001682	Homeobox domain-containing protein ; HB transcription factor 
+MF	GO:0000976	OG0001700	Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; Nuclear transcription factor Y subunit B-2 
+MF	GO:0000976	OG0001702	BHLH transcription factor ; BHLH domain-containing protein 
+MF	GO:0000976	OG0001823	GRAS transcription factor ; GRAS transcription factor (Fragment) ; Protein SHORT-ROOT 1 ;  protein SHORT-ROOT 2-like 
+MF	GO:0000976	OG0001846	DOG1 domain-containing protein ; Transcription factor TGA6 
+MF	GO:0000976	OG0001928	Histone H2A/H2B/H3 domain-containing protein ; Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; CCAAT-HAP5 transcription factor ; Os09g0480700 protein 
+MF	GO:0000976	OG0002132	GATA-type domain-containing protein ; GATA transcription factor 2 
+MF	GO:0008883	OG0002135	UniRef90_Q42843Glutamyl-tRNA reductase 1, chloroplastic ; Glutamyl-tRNA reductase ; glutamyl-tRNA reductase 2-like 
+MF	GO:0009918	OG0001895	Protein FAM32A-like ; CGI-like protein 
+MF	GO:0051537	OG0001412	14-3-3 domain-containing protein ; Putative 14-3-3 protein 
+MF	GO:0051537	OG0001945	Glutaredoxin domain-containing protein ; Grx_A2-glutaredoxin subgroup III 
+MF	GO:0051537	OG0001990	Ferredoxin ; UniRef90_P94044Ferredoxin-6, chloroplastic 
+MF	GO:0015200	OG0001609	UniRef90_Q9ATL9Aquaporin TIP2-1 ; Tonoplast intrinsic protein ; UniRef90_Q84RL6Aquaporin TIP2-3 
+MF	GO:0030621	OG0003551	DUF641 domain-containing protein ; Bidirectional sugar transporter SWEET ; DUF641 family protein 
+MF	GO:0002083	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+MF	GO:0008412	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+MF	GO:0044325	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+MF	GO:0047293	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+MF	GO:0050625	OG0001827	NAD(P)H dehydrogenase (quinone) 
+MF	GO:0031386	OG0001349	Ubiquitin-like domain-containing protein ; UniRef90_P27923Ubiquitin-ribosomal protein eS31 fusion protein ; ubiquitin-ribosomal protein eS31y fusion protein-like 
+MF	GO:0031386	OG0001509	GTP-binding protein ; Ras-related protein RABA1f 
+MF	GO:0003830	OG0001641	Beta-1,4-mannosyl-glycoprotein 4-beta-N-acetylglucosaminyltransferase ; Beta-14-N-acetylglucosaminyltransferase family protein 
+MF	GO:0003937	OG0001900	Potassium transporter 
+MF	GO:0004643	OG0001900	Potassium transporter 
+MF	GO:0008705	OG0001805	5-methyltetrahydropteroyltriglutamate--homocysteine S-methyltransferase 
+MF	GO:0045140	OG0001728	Sphingomyelin synthase-like domain-containing protein ; Phosphatidylinositol:ceramide inositolphosphotransferase 1 
+MF	GO:0050378	OG0001660	NAD-dependent epimerase/dehydratase domain-containing protein 
+MF	GO:0005509	OG0001412	14-3-3 domain-containing protein ; Putative 14-3-3 protein 
+MF	GO:0005509	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+MF	GO:0005509	OG0001846	DOG1 domain-containing protein ; Transcription factor TGA6 
+MF	GO:0005509	OG0001870	Calcium-dependent protein kinase 20 
+MF	GO:0005509	OG0001931	Calcium-dependent protein kinase 13 
+MF	GO:0005509	OG0001973	Calcium-dependent protein kinase ; CDPK protein ; UniRef90_Q9FXQ3Calcium-dependent protein kinase 13 ; calcium-dependent protein kinase 13-like ; UniRef90_Q0DYK7Calcium-dependent protein kinase 5 
+MF	GO:0005509	OG0002015	UniRef90_A2ZVI7Calcium-dependent protein kinase 1 ; Calcium-dependent protein kinase ; UniRef90_Q6I587Calcium-dependent protein kinase 15 
+MF	GO:0016906	OG0001626	Integral membrane Yip1 family protein ; Protein YIP 
+MF	GO:0004767	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+MF	GO:0008428	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+MF	GO:0047443	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+MF	GO:0051721	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+MF	GO:0003676	OG0001268	40S ribosomal protein S26 
+MF	GO:0003676	OG0001323	PHD finger protein ALFIN-LIKE 
+MF	GO:0003676	OG0001347	ALOG domain-containing protein ; Protein LIGHT-DEPENDENT SHORT HYPOCOTYLS 5 ; protein G1-like8 
+MF	GO:0003676	OG0001349	Ubiquitin-like domain-containing protein ; UniRef90_P27923Ubiquitin-ribosomal protein eS31 fusion protein ; ubiquitin-ribosomal protein eS31y fusion protein-like 
+MF	GO:0003676	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+MF	GO:0003676	OG0001412	14-3-3 domain-containing protein ; Putative 14-3-3 protein 
+MF	GO:0003676	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+MF	GO:0003676	OG0001460	Ubiquitin-specific protease family C19-related protein 
+MF	GO:0003676	OG0001495	Receptor-like protein kinase ; Leucine-rich repeat-containing N-terminal plant-type domain-containing protein ; Cell wall hydroxyproline-rich glycoprotein ; Leucine-rich repeat extensin-like protein 3 
+MF	GO:0003676	OG0001505	60S ribosomal protein L27 
+MF	GO:0003676	OG0001506	RNA helicase ; UniRef90_Q41741Eukaryotic initiation factor 4A 
+MF	GO:0003676	OG0001517	RHOMBOID-like protein 
+MF	GO:0003676	OG0001535	Ribosomal protein L15 
+MF	GO:0003676	OG0001563	Large ribosomal subunit protein uL18 C-terminal eukaryotes domain-containing protein 
+MF	GO:0003676	OG0001582	ZF-HD dimerization-type domain-containing protein ; ZF-HD protein dimerization region containing protein ; ZF-HD protein dimerisation region containing protein ; zinc-finger homeodomain protein 1-like ; Zinc-finger homeodomain protein 2 
+MF	GO:0003676	OG0001586	NAD(P)-binding domain-containing protein ; UDP-glucose 4-epimerase 
+MF	GO:0003676	OG0001609	UniRef90_Q9ATL9Aquaporin TIP2-1 ; Tonoplast intrinsic protein ; UniRef90_Q84RL6Aquaporin TIP2-3 
+MF	GO:0003676	OG0001626	Integral membrane Yip1 family protein ; Protein YIP 
+MF	GO:0003676	OG0001641	Beta-1,4-mannosyl-glycoprotein 4-beta-N-acetylglucosaminyltransferase ; Beta-14-N-acetylglucosaminyltransferase family protein 
+MF	GO:0003676	OG0001682	Homeobox domain-containing protein ; HB transcription factor 
+MF	GO:0003676	OG0001700	Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; Nuclear transcription factor Y subunit B-2 
+MF	GO:0003676	OG0001702	BHLH transcription factor ; BHLH domain-containing protein 
+MF	GO:0003676	OG0001706	COV1-like protein ; Protein LIKE COV 2 ; COV1-like protein (Fragment) 
+MF	GO:0003676	OG0001723	40S ribosomal protein S6 
+MF	GO:0003676	OG0001725	ATP synthase subunit beta ; UniRef90_P19023ATP synthase subunit beta, mitochondrial ; UniRef90_Q01859ATP synthase subunit beta, mitochondrial 
+MF	GO:0003676	OG0001758	60S ribosomal protein L7a 
+MF	GO:0003676	OG0001805	5-methyltetrahydropteroyltriglutamate--homocysteine S-methyltransferase 
+MF	GO:0003676	OG0001823	GRAS transcription factor ; GRAS transcription factor (Fragment) ; Protein SHORT-ROOT 1 ;  protein SHORT-ROOT 2-like 
+MF	GO:0003676	OG0001846	DOG1 domain-containing protein ; Transcription factor TGA6 
+MF	GO:0003676	OG0001848	H/ACA ribonucleoprotein complex subunit 4 
+MF	GO:0003676	OG0001851	Lysine ketoglutarate reductase trans-splicing related 1 
+MF	GO:0003676	OG0001861	S5 DRBM domain-containing protein 
+MF	GO:0003676	OG0001900	Potassium transporter 
+MF	GO:0003676	OG0001910	Cellulose synthase 
+MF	GO:0003676	OG0001921	AP2/ERF domain-containing protein ; UniRef90_B6T5Z6Ethylene-responsive transcription factor WIN1 ; Ethylene-responsive transcription factor WIN1 ; ERF6.3 ; Putative AP2/EREBP transcription factor superfamily protein 
+MF	GO:0003676	OG0001927	Ribosomal protein L22 ; Large ribosomal subunit protein eL22 
+MF	GO:0003676	OG0001928	Histone H2A/H2B/H3 domain-containing protein ; Transcription factor CBF/NF-Y/archaeal histone domain-containing protein ; CCAAT-HAP5 transcription factor ; Os09g0480700 protein 
+MF	GO:0003676	OG0001945	Glutaredoxin domain-containing protein ; Grx_A2-glutaredoxin subgroup III 
+MF	GO:0003676	OG0001951	non-specific serine/threonine protein kinase 
+MF	GO:0003676	OG0001993	UniRef90_Q6EUH7Actin-depolymerizing factor 1 ; ADF-H domain-containing protein ; Actin-depolymerizing factor 
+MF	GO:0003676	OG0002045	ACT domain-containing protein ; DNA binding protein ; BHLH domain-containing protein 
+MF	GO:0003676	OG0002132	GATA-type domain-containing protein ; GATA transcription factor 2 
+MF	GO:0003676	OG0002135	UniRef90_Q42843Glutamyl-tRNA reductase 1, chloroplastic ; Glutamyl-tRNA reductase ; glutamyl-tRNA reductase 2-like 
+MF	GO:0003676	OG0002187	Heat shock protein 90-5 chloroplastic ; Histidine kinase/HSP90-like ATPase domain-containing protein ; Heat shock protein 90-5, chloroplastic 
+MF	GO:0003676	OG0002207	CDT1 Geminin-binding domain-containing protein ; CDT1-like protein a chloroplastic 
+MF	GO:0003676	OG0003551	DUF641 domain-containing protein ; Bidirectional sugar transporter SWEET ; DUF641 family protein 
+MF	GO:0003676	OG0004184	60S acidic ribosomal protein P1 
+MF	GO:0008270	OG0001349	Ubiquitin-like domain-containing protein ; UniRef90_P27923Ubiquitin-ribosomal protein eS31 fusion protein ; ubiquitin-ribosomal protein eS31y fusion protein-like 
+MF	GO:0008270	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+MF	GO:0008270	OG0001535	Ribosomal protein L15 
+MF	GO:0008270	OG0001586	NAD(P)-binding domain-containing protein ; UDP-glucose 4-epimerase 
+MF	GO:0008270	OG0001589	RING-type E3 ubiquitin transferase 
+MF	GO:0008270	OG0001609	UniRef90_Q9ATL9Aquaporin TIP2-1 ; Tonoplast intrinsic protein ; UniRef90_Q84RL6Aquaporin TIP2-3 
+MF	GO:0008270	OG0001805	5-methyltetrahydropteroyltriglutamate--homocysteine S-methyltransferase 
+MF	GO:0008270	OG0001861	S5 DRBM domain-containing protein 
+MF	GO:0008270	OG0001900	Potassium transporter 
+MF	GO:0008270	OG0001910	Cellulose synthase 
+MF	GO:0008270	OG0001993	UniRef90_Q6EUH7Actin-depolymerizing factor 1 ; ADF-H domain-containing protein ; Actin-depolymerizing factor 
+MF	GO:0008270	OG0002132	GATA-type domain-containing protein ; GATA transcription factor 2 
+MF	GO:0019003	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+MF	GO:0004748	OG0001692	Ribonucleoside-diphosphate reductase small chain (Fragment) ; ribonucleoside-diphosphate reductase small chain C ; Ribonucleoside-diphosphate reductase small chain B 
+MF	GO:0030410	OG0001754	Nicotianamine synthase 
+MF	GO:0003729	OG0001268	40S ribosomal protein S26 
+MF	GO:0003729	OG0001349	Ubiquitin-like domain-containing protein ; UniRef90_P27923Ubiquitin-ribosomal protein eS31 fusion protein ; ubiquitin-ribosomal protein eS31y fusion protein-like 
+MF	GO:0003729	OG0001505	60S ribosomal protein L27 
+MF	GO:0003729	OG0001506	RNA helicase ; UniRef90_Q41741Eukaryotic initiation factor 4A 
+MF	GO:0003729	OG0001535	Ribosomal protein L15 
+MF	GO:0003729	OG0001723	40S ribosomal protein S6 
+MF	GO:0003729	OG0001805	5-methyltetrahydropteroyltriglutamate--homocysteine S-methyltransferase 
+MF	GO:0003729	OG0001861	S5 DRBM domain-containing protein 
+MF	GO:0003729	OG0001927	Ribosomal protein L22 ; Large ribosomal subunit protein eL22 
+MF	GO:0033188	OG0001728	Sphingomyelin synthase-like domain-containing protein ; Phosphatidylinositol:ceramide inositolphosphotransferase 1 
+MF	GO:0047493	OG0001728	Sphingomyelin synthase-like domain-containing protein ; Phosphatidylinositol:ceramide inositolphosphotransferase 1 
+MF	GO:0003871	OG0001805	5-methyltetrahydropteroyltriglutamate--homocysteine S-methyltransferase 
+MF	GO:0004449	OG0001992	Cytochrome P450 
+MF	GO:0033843	OG0001930	Glycosyltransferase 2-like domain-containing protein 
+MF	GO:0003856	OG0002131	UniRef90_Q6EP31Rac-like GTP-binding protein 5 ; Rac-like GTP-binding protein 5 isoform X2 ; UniRef90_Q6ZHA3Rac-like GTP-binding protein 6 ; Rac-like GTP-binding protein 5 
+MF	GO:0004076	OG0001412	14-3-3 domain-containing protein ; Putative 14-3-3 protein 
+MF	GO:0008753	OG0001827	NAD(P)H dehydrogenase (quinone) 
+MF	GO:0016040	OG0002152	glutamate synthase (NADH) 
+MF	GO:0097573	OG0001451	Protein kinase domain-containing protein ; Nuclear pore complex protein NUP93A 
+MF	GO:0097573	OG0001945	Glutaredoxin domain-containing protein ; Grx_A2-glutaredoxin subgroup III 
+MF	GO:0004325	OG0001829	Dynamin-2A ; dynamin GTPase 
+MF	GO:0008426	OG0001412	14-3-3 domain-containing protein ; Putative 14-3-3 protein 
+MF	GO:0102682	OG0001987	Cytokinin riboside 5'-monophosphate phosphoribohydrolase 
+MF	GO:0008022	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+MF	GO:0030553	OG0001931	Calcium-dependent protein kinase 13 
+MF	GO:0004523	OG0001408	Serine/threonine-protein phosphatase ; UniRef90_A2X2G3Serine/threonine-protein phosphatase PP2A-3 catalytic subunit ; protein-serine/threonine phosphatase 
+MF	GO:0004523	OG0001415	Protein kinase domain-containing protein ; CDPK-related kinase 1 
+MF	GO:0004523	OG0001505	60S ribosomal protein L27 
+MF	GO:0004523	OG0002135	UniRef90_Q42843Glutamyl-tRNA reductase 1, chloroplastic ; Glutamyl-tRNA reductase ; glutamyl-tRNA reductase 2-like 
+MF	GO:0015098	OG0001873	Molybdate-anion transporter 
+MF	GO:0047259	OG0001930	Glycosyltransferase 2-like domain-containing protein 
+MF	GO:0004650	OG0001517	RHOMBOID-like protein 
+MF	GO:0004650	OG0001712	Cellulose synthase 
+MF	GO:0016760	OG0001712	Cellulose synthase 
+MF	GO:0016760	OG0001910	Cellulose synthase 
+MF	GO:0003910	OG0001460	Ubiquitin-specific protease family C19-related protein 
+MF	GO:0050105	OG0001505	60S ribosomal protein L27 
+MF	GO:0047334	OG0002172	Pyrophosphate--fructose 6-phosphate 1-phosphotransferase subunit alpha 
+MF	GO:0051538	OG0002152	glutamate synthase (NADH) 
+MF	GO:0106029	OG0001848	H/ACA ribonucleoprotein complex subunit 4 
+MF	GO:0004450	OG0001583	UniRef90_A0A921RFN8Isocitrate dehydrogenase; UniRef90_K3Z6K9Isocitrate dehydrogenase; isocitrate dehydrogenase (NADP(+)) ; UniRef90_A0A804Q317Isocitrate dehydrogenase
