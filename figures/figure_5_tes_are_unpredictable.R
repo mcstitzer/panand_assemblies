@@ -28,12 +28,20 @@ teploidy=ggplot(asize, aes(x=ploidy, y=repeatProp, group=ploidy, color=ploidy, f
 
 ### haploid bp vs time since polyploidy
 
+asizezt=asize
+asizezt$V2zt=ifelse(asize$V2 %in% c('tdacn1', 'tdacs1'), 'trips', asize$V2)
+asizezt$V2zt=ifelse(asize$V2 %in% c("zdgigi", "zdmomo", "zluxur", "zmhuet", "zTIL18", "zTIL25", "zTIL01", "zTIL11", "znicar", "zmB735"), 'zea', asize$V2)
+asizezt=asizezt%>% group_by(V2zt, ploidy) %>% summarize(haploidRepeatSize=median(haploidRepeatSize), medFrac=median(medFrac), meanFrac=median(meanFrac), syntAnchorsCount=median(syntAnchorsCount), syntAnchors=median(syntAnchors), diploidEquivalentsyntAnchors=median(diploidEquivalentsyntAnchors), mya=median(mya))
+
+summary(lm(asizezt$haploidRepeatSize~asizezt$mya))
+## so 110189996 bp per million years!!
+
 teploidyage=ggplot(asize, aes(x=mya, y=haploidRepeatSize, color=ploidy)) + geom_vline(xintercept=c(2,4,6,8,10,12,14), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(1,3,5,7,9,11,13), color='gray80', lty='dashed', alpha=0.3)+ 
   geom_point(size=3) + 
   scale_color_manual(values=ploidycolors)+ xlab('Divergence between\nParental Subgenomes (Mya)') + 
 #  stat_smooth(data=asizezt, method='lm', aes(group=NA), alpha=0.1, se=F, color='gray90')+
   stat_smooth(data=asize[asize$ploidy!='Paleotetraploid' & !asize$V2%in%lowQualAssemblies,], method='lm', lty='longdash', color='gray', se=F)+ 
-#  stat_smooth(data=asize[!asize$V2%in%lowQualAssemblies,], method='lm',color='gray', se=F) + 
+  stat_smooth(data=asizezt, method='lm',color='gray', se=F) + 
   ylab('Repeat Base Pairs')  + theme(legend.position='NULL')
 teploidyage
 

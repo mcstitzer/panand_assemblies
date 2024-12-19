@@ -12,6 +12,17 @@ library(tidypaleo) ## facet species names in italics!!!!!
 library(ggh4x) ## facet strips spanning groups (subtribe)
 
 
+## need to have run in same environment "../sp_tree/plot_sp_tree_pies.R" to have chronopienotip object here
+
+## also to load all the proper mapping packages, "../general_summaries/plot_map_panand.R"
+### to get range map working correctly
+
+## also for heterozygosity... "../general_summaries/plot_heterozygosity.R"
+
+
+
+ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
+names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
 
 
 ## assembly size, since we don't have flow for everybody
