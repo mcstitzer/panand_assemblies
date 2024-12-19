@@ -1,0 +1,60 @@
+---
+title: "Andropogoneae Species"
+output: html_document
+date: "2024-12-19"
+params: 
+  genome: 'achine'
+  species: 'Andropogon chinensis'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+asize=read.table('../../general_summaries/panand_assembly_sizes.txt', header=T, sep='\t')
+```
+
+# `r paste(species, 'assembly')`
+
+Assembly is `r ifelse(asize$haploid[asize$V2==genome], 'haploid', 'allelic')`, and the genome is `r asize$ploidy[asize$V2==genome]`. 
+
+
+
+### Species herbarium records
+```{r}
+pdf_hmap=paste0('~/Documents/GitHub/panand_assemblies/general_summaries/maps_by_sp/', genome, '_range.pdf')
+pdf_hmap
+hmap=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_hmap))))         # Read the PDF file
+ggdraw() +  draw_plot(hmap)
+```
+
+### Highlighted Figure 1
+
+```{r}
+pdf_fig1=paste0('~/Documents/GitHub/panand_assemblies/figures/fig1_by_sp/', genome, '_fig1.pdf')
+fig1=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_fig1))))         # Read the PDF file
+ggdraw() +  draw_plot(fig1)
+```
+
+### Dotplot of 
+```{r}
+
+pdf_dotplot=paste0('~/Documents/GitHub/panand_assemblies/figures/dotplots_by_sp/', genome, '.pdf')
+
+dotplot=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_dotplot))))         # Read the PDF file
+
+ggdraw() +  draw_plot(dotplot)
+```
+
+
+## R Markdown
+
+Run this outside!!!!
+```{r knitall, eval=FALSE, include=FALSE}
+for (genome in asize$V2 ) {
+  rmarkdown::render(input = '../figures/panand_species_htmls/panand_species.Rmd',
+                    output_file = paste0(genome,".html"), 
+                    params = list(genome = genome, species=asize$species[asize$V2==genome]))
+}
+```
