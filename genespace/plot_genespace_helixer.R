@@ -68,28 +68,28 @@ diploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, 
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr, xlabel='',
-                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     chrLabFontSize = 7,labelTheseGenomes='', #labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 tetraploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', tetrasample), #all$V2[all$ploidy=='Tetraploid']), #'atenui', 'rrottb',
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr, xlabel='',
-                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar','zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi', 'tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     chrLabFontSize = 7,labelTheseGenomes='', #labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar','zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi', 'tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 hexaploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', 'blagur', 'agerar', 'hcompr', 'udigit'), #all$V2[all$ploidy=='Hexaploid']),
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=5e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr, xlabel='',
-                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     chrLabFontSize = 7,labelTheseGenomes='', #labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 paleotetraploid=plot_riparian(gsParam=gsParam, refGenome='pvagin', forceRecalcBlocks=F, genomeIDs=c('pvagin', paleosample),#'tdacn1', 'tdacs1', 'zdgigi', 'zdmomo', 'znicar', 'zluxur','zmhuet', 'zTIL25', 'zTIL18', 'zTIL01', 'zTIL11', 'zmB735'), #all$V2[all$ploidy=='Paleotetraploid' & all$V2!='zluxur']),
                      useOrder=F, ## keep chr position info there!!!
                      minChrLen2plot=15e6, ## since we're using chr size, we're only doing 10 Mb scafs
                      invertTheseChrs = invchr, xlabel='',
-                     chrLabFontSize = 7, labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zmhuet', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
+                     chrLabFontSize = 7, labelTheseGenomes='',#labelTheseGenomes = c('zB73v5', 'zTIL25', 'znicar', 'zTIL11', 'zTIL01', 'zTIL18', 'znicar', 'zmhuet', 'zdmomo', 'zdgigi','tdacs1', 'tdacn1','avirgi','sbicol','pvagin'),
                      braidAlpha = .75, chrFill = "lightgrey", addThemes = ggthemes, palette=cust_colors
                     )
 
@@ -114,8 +114,12 @@ pdf(paste0('rip_plot.scaled.', Sys.Date(), '.pdf'), 30,4)
 
 plot_grid(diploid$plotData$ggplotObj, tetraploid$plotData$ggplotObj, hexaploid$plotData$ggplotObj, paleotetraploid$plotData$ggplotObj, ncol=4, rel_widths=c(dipwidth, tetwidth, hexwidth, paleowidth))
 plot_grid(diploid$plotData$ggplotObj, tetraploid$plotData$ggplotObj, hexaploid$plotData$ggplotObj, paleotetraploid$plotData$ggplotObj, ncol=4, rel_widths=c(dipwidth*2, tetwidth, hexwidth, paleowidth))
-margin=-80
-riparians=plot_grid(dip+theme(axis.text = element_text(color = "gray30"), axis.line = element_blank(), axis.text.y=element_text(hjust=0, vjust=-1, margin = margin(r = margin-20))), tet+theme(axis.text = element_text(color = "gray30"), axis.line = element_blank(), axis.text.y=element_text(hjust=0,vjust=-1, margin = margin(r =margin))), hex+theme(axis.text = element_text(color = "gray30"), axis.line = element_blank(), axis.text.y=element_text(hjust=0,vjust=-1, margin = margin(r = margin))), ptet+theme(axis.text = element_text(color = "gray30"), axis.line = element_blank(), axis.text.y=element_text(hjust=0,vjust=-1, margin = margin(r = margin-80))), ncol=4, rel_widths=c(dipwidth, tetwidth, hexwidth, paleowidth),
+margin=-50
+riparians=plot_grid(dip+theme(axis.text = element_text(color = "gray30"), axis.line = element_blank(), axis.text.y=element_text(hjust=0, vjust=-1, size=6, margin = margin(r = margin-1))), 
+                    tet+theme(axis.text = element_text(color = "gray30"), axis.line = element_blank(), axis.text.y=element_text(hjust=0,vjust=-1, size=6, margin = margin(r =margin))), 
+                    hex+theme(axis.text = element_text(color = "gray30"), axis.line = element_blank(), axis.text.y=element_text(hjust=0,vjust=-1, size=6, margin = margin(r = margin))), 
+                    ptet+theme(axis.text = element_text(color = "gray30"), axis.line = element_blank(), axis.text.y=element_text(hjust=0,vjust=-1, size=6, margin = margin(r = margin-40))), 
+                    ncol=4, rel_widths=c(dipwidth*2, tetwidth, hexwidth, paleowidth),
   labels='AUTO')
 riparians
 
