@@ -22,17 +22,17 @@ ksplot
 
 chrs=read.table('../general_summaries/panand_chr_counts.txt', header=T)
 
-asize$chrcount=chrs$haploidchr[match(asize$V2, chrs$sixlettercode)]
+asize$chrCount=chrs$haploidchr[match(asize$V2, chrs$sixlettercode)]
 
 
-cpl=ggplot(asize, aes(x=ploidy, y=chrcount, group=ploidy, color=ploidy)) + 
+cpl=ggplot(asize, aes(x=ploidy, y=chrCount, group=ploidy, color=ploidy)) + 
 #  geom_boxplot(outlier.shape = NA) + 
   scale_color_manual(values=ploidycolors) + ylim(0,32) + 
   ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=31.5) + 
-  geom_hline(yintercept=c(median(asize$chrcount[asize$ploidy=='Diploid'], na.rm=T)*c(1,2,2,3)), lty='dotted', color='darkgray')+
-  annotate("text", x = 4.45, y = median(asize$chrcount[asize$ploidy=='Diploid'], na.rm=T), label = "\u00D71", vjust = -0.5) + 
-  annotate("text", x = 4.45, y = median(asize$chrcount[asize$ploidy=='Diploid'], na.rm=T)*2, label = "\u00D72", vjust = -0.5)+ 
-  annotate("text", x = 4.45, y = median(asize$chrcount[asize$ploidy=='Diploid'], na.rm=T)*3, label = "\u00D73", vjust = -0.5) + 
+  geom_hline(yintercept=c(median(asize$chrCount[asize$ploidy=='Diploid'], na.rm=T)*c(1,2,2,3)), lty='dotted', color='darkgray')+
+  annotate("text", x = 4.45, y = median(asize$chrCount[asize$ploidy=='Diploid'], na.rm=T), label = "\u00D71", vjust = -0.5) + 
+  annotate("text", x = 4.45, y = median(asize$chrCount[asize$ploidy=='Diploid'], na.rm=T)*2, label = "\u00D72", vjust = -0.5)+ 
+  annotate("text", x = 4.45, y = median(asize$chrCount[asize$ploidy=='Diploid'], na.rm=T)*3, label = "\u00D73", vjust = -0.5) + 
   geom_point(position = position_jitter(w=0.3, h=0,seed = 1), size=3)+ 
 
   xlab('Ploidy') + ylab('Chromosome Number') + theme(legend.position='NULL')
@@ -102,13 +102,13 @@ tpl=ggplot(asize, aes(x=ploidy, y=haploidRepeatSize/1e6, group=ploidy, color=plo
 asize$ks=het$ks[match(asize$V2, het$genome)]
 
 
-cplks=ggplot(asize, aes(x=ks, y=chrcount, color=ploidy)) + 
+cplks=ggplot(asize, aes(x=ks, y=chrCount, color=ploidy)) + 
 #  geom_boxplot(outlier.shape = NA) + 
   scale_color_manual(values=ploidycolors) + ylim(0,32) + 
-  geom_hline(yintercept=c(median(asize$chrcount[asize$ploidy=='Diploid'], na.rm=T)*c(1,2,2,3)), lty='dotted', color='darkgray')+
-  annotate("text", x = 0.2, y = median(asize$chrcount[asize$ploidy=='Diploid'], na.rm=T), label = "\u00D71", vjust = -0.5) + 
-  annotate("text", x = 0.2, y = median(asize$chrcount[asize$ploidy=='Diploid'], na.rm=T)*2, label = "\u00D72", vjust = -0.5)+ 
-  annotate("text", x = 0.2, y = median(asize$chrcount[asize$ploidy=='Diploid'], na.rm=T)*3, label = "\u00D73", vjust = -0.5) + 
+  geom_hline(yintercept=c(median(asize$chrCount[asize$ploidy=='Diploid'], na.rm=T)*c(1,2,2,3)), lty='dotted', color='darkgray')+
+  annotate("text", x = 0.2, y = median(asize$chrCount[asize$ploidy=='Diploid'], na.rm=T), label = "\u00D71", vjust = -0.5) + 
+  annotate("text", x = 0.2, y = median(asize$chrCount[asize$ploidy=='Diploid'], na.rm=T)*2, label = "\u00D72", vjust = -0.5)+ 
+  annotate("text", x = 0.2, y = median(asize$chrCount[asize$ploidy=='Diploid'], na.rm=T)*3, label = "\u00D73", vjust = -0.5) + 
   geom_point( size=3)+ 
 
   xlab('Median Ks of Syntenic Homologs') + ylab('Chromosome Number') + theme(legend.position='NULL')
@@ -220,14 +220,14 @@ ksplotrightsp= ggplot(data=ksdat)+
 
 
 
-cplsp=ggplot(asize, aes(x=ploidy, y=chrcount, group=ploidy)) + 
+cplsp=ggplot(asize, aes(x=ploidy, y=chrCount, group=ploidy)) + 
 #  geom_boxplot(outlier.shape = NA) + 
   scale_color_manual(values=c(ploidycolors, 'gray'='gray')) +  scale_fill_manual(values=c(ploidycolors, 'gray'='gray'))+ ylim(0,32) + 
   ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=31.5) + 
-  geom_hline(yintercept=c(median(asize$chrcount[asize$ploidy=='Diploid'], na.rm=T)*c(1,2,2,3)), lty='dotted', color='darkgray')+
-  annotate("text", x = 4.45, y = median(asize$chrcount[asize$ploidy=='Diploid'], na.rm=T), label = "\u00D71", vjust = -0.5) + 
-  annotate("text", x = 4.45, y = median(asize$chrcount[asize$ploidy=='Diploid'], na.rm=T)*2, label = "\u00D72", vjust = -0.5)+ 
-  annotate("text", x = 4.45, y = median(asize$chrcount[asize$ploidy=='Diploid'], na.rm=T)*3, label = "\u00D73", vjust = -0.5) + 
+  geom_hline(yintercept=c(median(asize$chrCount[asize$ploidy=='Diploid'], na.rm=T)*c(1,2,2,3)), lty='dotted', color='darkgray')+
+  annotate("text", x = 4.45, y = median(asize$chrCount[asize$ploidy=='Diploid'], na.rm=T), label = "\u00D71", vjust = -0.5) + 
+  annotate("text", x = 4.45, y = median(asize$chrCount[asize$ploidy=='Diploid'], na.rm=T)*2, label = "\u00D72", vjust = -0.5)+ 
+  annotate("text", x = 4.45, y = median(asize$chrCount[asize$ploidy=='Diploid'], na.rm=T)*3, label = "\u00D73", vjust = -0.5) + 
 #  geom_point(position = position_jitter(w=0.3, h=0,seed = 1), size=3, color='gray')+ 
   geom_point(data=asize %>% mutate(newcolor=ifelse(V2==i,as.character(ploidy),'gray'), size=ifelse(V2==i, 4,3)), position = position_jitter(w=0.3, h=0,seed = 1), aes(size=size, color=newcolor))+ 
   xlab('Ploidy') + ylab('Chromosome Number') + theme(legend.position='NULL')
@@ -296,7 +296,7 @@ aapbarsp <-
 
 
 threerulessp=plot_grid(cplsp+ theme(axis.text.x=element_blank(), axis.title.x=element_blank()), splsp+ theme(axis.text.x=element_blank(), axis.title.x=element_blank()), tplsp+ theme(axis.text.x=element_text(size = 9)), ncol=1, labels=c('B', 'C', 'D'), align='v')
-figure2sp=plot_grid(ksplotsp, threerulessp, ncol=2, labels=c('A',''), rel_widths=c(1,0.8), align='v', axis='b')
+#figure2sp=plot_grid(ksplotsp, threerulessp, ncol=2, labels=c('A',''), rel_widths=c(1,0.8), align='v', axis='b')
 
 figure2rightflipsp=plot_grid(threerulessp, 
              plot_grid(aapbarsp+theme(axis.text.y=element_blank()) + scale_y_reverse(), ksplotrightsp, ncol=2, rel_widths=c(0.4, 1),labels=c('D', 'E'), align='h', axis='tb'),

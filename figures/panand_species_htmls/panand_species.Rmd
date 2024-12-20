@@ -1,5 +1,6 @@
 ---
 title: "Andropogoneae Species"
+author: "Michelle C. Stitzer"
 output: html_document
 date: "2024-12-19"
 params: 
@@ -11,34 +12,88 @@ params:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ```{r include=FALSE}
 asize=read.table('../../general_summaries/panand_assembly_sizes.txt', header=T, sep='\t')
+numberpaths=NA
+numberpaths[asize$ploidy=='Diploid']=1
+numberpaths[asize$ploidy%in%c('Tetraploid', 'Paleotetraploid')]=2
+numberpaths[asize$ploidy=='Hexaploid']=3
+numberpaths=ifelse(asize$haploid, numberpaths, numberpaths*2)
+species=asize$species[asize$V2==genome]
+
+img_attribution=read.table('~/Documents/GitHub/panand_assemblies/figures/images/figure_sources.txt', header=F, sep='\t')
 ```
 
-# `r paste(species, 'assembly')`
+<center>
+# *`r species`*
+</center>
 
-Assembly is `r ifelse(asize$haploid[asize$V2==genome], 'haploid', 'allelic')`, and the genome is `r asize$ploidy[asize$V2==genome]`. 
+```{r echo=FALSE, out.width = "400px", fig.align = 'center'}
+### if picture exists, plot it, and if chromosome squash exists, plot that. 
+
+jpg_image=paste0('~/Documents/GitHub/panand_assemblies/figures/images/', genome, '.jpg')
+if(file.exists(jpg_image)){
+#img=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_hmap))))         # Read the PDF file
+#ggdraw() +  draw_plot(hmap)
+knitr::include_graphics(jpg_image)
+  }
+
+
+
+
+```
+<center>
+
+[`r ifelse(file.exists(paste0('~/Documents/GitHub/panand_assemblies/figures/images/', genome, '.jpg')), img_attribution[img_attribution$V1==genome,2], '')`](`r ifelse(file.exists(paste0('~/Documents/GitHub/panand_assemblies/figures/images/', genome, '.jpg')), img_attribution[img_attribution$V1==genome,3], '')`)
+
+</center>
+
+
+Assembly is `r ifelse(asize$haploid[asize$V2==genome], 'haploid', 'allelic')`, and the genome is `r tolower(asize$ploidy[asize$V2==genome])`. It has a haploid genome size of `r round(c(asize$haploidAssemblySize-asize$haploidNCount)[asize$V2==genome]/1e6, -2)` Mb, and has `r asize$chrCount[asize$V2==genome]` haploid chromosomes.
+
+
+```{r echo=FALSE, fig.align = 'center', out.width='200px'}
+pdf_karyo=paste0('~/Documents/GitHub/panand_assemblies/figures/karyotype/', genome, '_karyotype.pdf')
+if(file.exists(pdf_karyo)){
+karyo=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_karyo))))         # Read the PDF file
+ggdraw() +  draw_plot(karyo)
+}
+```
 
 
 
 ### Species herbarium records
-```{r}
+Herbarium records of *`r species`* from [AuBuchon-Elder et al 2022](https://nph.onlinelibrary.wiley.com/doi/full/10.1002/ppp3.10355) are plotted with black points, The sampled individual this genome was generated from is shown in a colored point. The green background shows the biogeographic ranges of all Andropogoneae species in [AuBuchon-Elder et al 2022](https://nph.onlinelibrary.wiley.com/doi/full/10.1002/ppp3.10355). 
+
+```{r echo=FALSE, fig.align = 'center'}
 pdf_hmap=paste0('~/Documents/GitHub/panand_assemblies/general_summaries/maps_by_sp/', genome, '_range.pdf')
-pdf_hmap
 hmap=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_hmap))))         # Read the PDF file
 ggdraw() +  draw_plot(hmap)
 ```
 
 ### Highlighted Figure 1
-
-```{r}
+Figure 1 from the main text, with *`r species`* highlighted with colored points.
+```{r echo=FALSE, fig.align = 'center', out.width='800px'}
 pdf_fig1=paste0('~/Documents/GitHub/panand_assemblies/figures/fig1_by_sp/', genome, '_fig1.pdf')
 fig1=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_fig1))))         # Read the PDF file
 ggdraw() +  draw_plot(fig1)
 ```
 
-### Dotplot of 
-```{r}
+### Highlighted Figure 2
+Figure 2 from the main text, with *`r species`* highlighted with colored points.
+```{r echo=FALSE, fig.align = 'center', out.width='800px'}
+## probably want to rerun figure 2, since the ploidy order is not correct on boxplots
+pdf_fig2=paste0('~/Documents/GitHub/panand_assemblies/figures/fig2_by_sp/', genome, '_fig2.pdf')
+fig2=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_fig2))))         # Read the PDF file
+ggdraw() +  draw_plot(fig2)
+```
+
+
+### Dotplot of *`r species`* vs. *Paspalum vaginatum*.
+Like dotplots shown in Figure 3 of the main text, this shows syntenic blocks in *`r species`* along the y-axis, vs *P. vaginatum* on the x-axis. As `r species` is a `r tolower(asize$ploidy[asize$V2==genome])` with a`r ifelse(asize$haploid[asize$V2==genome], ' haploid', 'n allelic')`, assembly, we expect `r numberpaths[asize$V2==genome]` paths for any x-axis position. 
+
+```{r echo=FALSE,fig.align = 'center'}
 
 pdf_dotplot=paste0('~/Documents/GitHub/panand_assemblies/figures/dotplots_by_sp/', genome, '.pdf')
 
@@ -47,11 +102,37 @@ dotplot=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_dotplot))))         #
 ggdraw() +  draw_plot(dotplot)
 ```
 
+### Fractionation of `r species` 
+Like plots shown in Figure 4 of the main text, this shows proportion of retained genes in `r species` along the y-axis, vs P. vaginatum chromosomes on the x-axis. As *`r species`* is a `r tolower(asize$ploidy[asize$V2==genome])` with a`r ifelse(asize$haploid[asize$V2==genome], ' haploid', 'n allelic')`, assembly, we expect `r numberpaths[asize$V2==genome]` lines for each subgenome. 
 
-## R Markdown
+```{r echo=FALSE, fig.align='center', include=FALSE}
 
-Run this outside!!!!
+pdf_fractionation=paste0('~/Documents/GitHub/panand_assemblies/figures/fractionation_by_sp/', genome, '.pdf')
+if(file.exists(pdf_fractionation)){
+
+fractionation=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_fractionation))))         # Read the PDF file
+
+ggdraw() +  draw_plot(fractionation)
+}
+```
+
+### Highlighted Figure 5
+Figure 1 from the main text, with *`r species`* highlighted with colored points or lines.
+
+```{r eval=FALSE, fig.align='center', include=FALSE}
+
+pdf_te=paste0('~/Documents/GitHub/panand_assemblies/figures/fig5_by_sp/', genome, '.pdf')
+if(file.exists(pdf_te)){
+
+te=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_te))))         # Read the PDF file
+
+ggdraw() +  draw_plot(fractionation)
+}
+```
+
+
 ```{r knitall, eval=FALSE, include=FALSE}
+## Run this outside!!!!
 for (genome in asize$V2 ) {
   rmarkdown::render(input = '../figures/panand_species_htmls/panand_species.Rmd',
                     output_file = paste0(genome,".html"), 

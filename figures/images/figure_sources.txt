@@ -1,0 +1,11 @@
+irugos	Photo by International Rice Research Institute (IRRI), licensed under CC BY 2.0	https://www.flickr.com/photos/ricephotos/6682922835
+agerar	Photo by Brett Whaley, licensed under CC BY 2.0	https://www.flickr.com/photos/brettwhaley/52306135049
+atenui	Photo by Royal Botanic Gardens, Kew. Source: Plants of the World Online	https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:387620-1/images
+achine	Photo by Richard Gill. Source: iNaturalist, licensed under CC BY-NC	https://www.inaturalist.org/photos/112885485
+avirgi	Photo by Donald Burk, licensed under CC-BY-NC 4.0	https://www.calflora.org/entry/occdetail.html?photo=/app/up/entry/373/112126.jpg
+blagur	Photo by Donald Burk, licensed under CC-BY-NC 4.0	https://www.calflora.org/entry/occdetail.html?seq_num=po196877
+cserru	Photo by Richard Gill, licensed under CC-BY-NC 4.0	https://www.gbif.org/occurrence/3058946140
+ccitra	Photo by Dinesh Valke, licensed under CC-BY-SA 2.0	https://www.flickr.com/photos/dinesh_valke/51324908095
+crefra	Photo by Forest and Kim Starr, licensed under CC-BY 3.0	https://www.flickr.com/photos/starr-environmental/53708577420
+etrips	Photo by Herbario Virtual FMB, licensed under CC-BY-NC 2.0	https://www.flickr.com/photos/98115610@N03/12594000823
+
