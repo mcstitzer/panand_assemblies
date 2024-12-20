@@ -102,8 +102,8 @@ dotplot=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_dotplot))))         #
 ggdraw() +  draw_plot(dotplot)
 ```
 
-### Fractionation of `r species` 
-Like plots shown in Figure 4 of the main text, this shows proportion of retained genes in `r species` along the y-axis, vs P. vaginatum chromosomes on the x-axis. As *`r species`* is a `r tolower(asize$ploidy[asize$V2==genome])` with a`r ifelse(asize$haploid[asize$V2==genome], ' haploid', 'n allelic')`, assembly, we expect `r numberpaths[asize$V2==genome]` lines for each subgenome. 
+### Fractionation of *`r species`*
+Like plots shown in Figure 4 of the main text, this shows proportion of retained genes in `r species` along the y-axis, vs P. vaginatum chromosomes on the x-axis. As *`r species`* is a `r tolower(asize$ploidy[asize$V2==genome])` with a`r ifelse(asize$haploid[asize$V2==genome], ' haploid', 'n allelic')`, assembly, we expect `r numberpaths[asize$V2==genome]` lines,  `r ifelse(asize$haploid[asize$V2==genome], 'one', 'two')` for each subgenome. 
 
 ```{r echo=FALSE, fig.align='center'}
 
@@ -117,7 +117,7 @@ ggdraw() +  draw_plot(fractionation)
 ```
 
 ### Highlighted Figure 5
-Figure 1 from the main text, with *`r species`* highlighted with colored points or lines.
+Figure 5 from the main text, with *`r species`* highlighted with colored points or lines.
 
 ```{r eval=FALSE, fig.align='center', include=FALSE}
 
