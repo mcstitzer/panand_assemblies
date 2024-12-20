@@ -8,9 +8,16 @@ library(RColorBrewer)
 library(tidypaleo) ## facet species names in italics!!!!!
 library(tidyverse)
 library(viridisLite)
+library(data.table)
+library(plyranges)
 
-all=read.table('../panand_sp_ploidy.txt')
+## "/local/workdir/mcs368/panand_assemblies/repeats"
+
+all=read.table('../../panand_sp_ploidy.txt')
 all=all[!all$V2 %in% c('pprate', 'tdactm', 'tzopol', 'osativ', 'bdista', 'agerjg', 'svirid', 'eophiu', 'tdacs2', 'tdacn2'),]
+
+## f i lost sorghum
+all=all[all$V2!='sbicol',]
 
 genomecountlist=vector(mode = "list", length = length(all$V2))
 names(genomecountlist)=all$V2
@@ -26,7 +33,7 @@ gfftypestokeep=c("Gypsy_LTR_retrotransposon",
 
 for( genotype in all$V2){
 ##import gff3
-a=import.gff3(paste0('../trash/repeatmask_tandems/', all$V1[all$V2==genotype], '_EDTATandemRepeat.gff3'))
+a=import.gff3(paste0('trash/', all$V1[all$V2==genotype], '_EDTAandTandemRepeat.gff3'))
 a=a[a$type %in% gfftypestokeep,]
 a$genome=genotype
 # ## get each fam
@@ -151,11 +158,7 @@ for(genome in all$V2){
   if(genome=='znicar'){seqnames(tes)[seqnames(tes) %in% 1:10]=paste0('chr', seqnames(tes)[seqnames(tes) %in% 1:10])}
   if(genome=='sbicol'){seqlevels(gf)[seqlevels(gf) %in% 1:9]=paste0('Chr0', seqlevels(gf)[seqlevels(gf) %in% 1:9])
                       seqlevels(gf)[seqlevels(gf)=='10']='Chr10'}
-gfmin=gf[gf$synindex %in% mindnds$rownumb[mindnds$genome==genome],] ## aaaaaahhhhhh i was not filtering by genome!!! that was why everything was 0
-  gfmax=gf[gf$synindex %in% maxdnds$rownumb[maxdnds$genome==genome],]
  tewindow=join_overlap_intersect(unstrand(gf), tes)      ## cut tes at boundaries of ranges
- tewindowmindnds=join_overlap_intersect(unstrand(gfmin), tes)      ## cut tes at boundaries of ranges
- tewindowmaxdnds=join_overlap_intersect(unstrand(gfmax), tes)      ## cut tes at boundaries of ranges
 
 posplot=data.frame(tewindow[tewindow$ogstrand=='+',])[,c('window', 'width', 'partition')]
   posplot=posplot %>% complete(partition, window, fill=list(width=0))
@@ -163,13 +166,23 @@ posplot=data.frame(tewindow[tewindow$ogstrand=='+',])[,c('window', 'width', 'par
   ## now ask which is the closest/furthest TE for each subgenome (gene copy)
   posplot$quickgene=geneflanks$quickgene[posplot$partition]
   posplothigh=posplot %>% group_by(quickgene,window) %>% summarize(partition[which.max(width)])
-print(  ggplot(posplot, aes(x=window, y=width, group=window)) + geom_boxplot(outlier.shape=NA) + ggtitle(genome) )
+#print(  ggplot(posplot, aes(x=window, y=width, group=window)) + geom_boxplot(outlier.shape=NA) + ggtitle(genome) )
+
+
 # print( ggplot(posplot, aes(x=window, y=width, group=partition)) + geom_line(alpha=0.01) + ggtitle(genome) )
 
   metaplot[,genome]=(posplot %>% group_by(window) %>% summarize(medianTE=median(width)))$medianTE
   metaplot75[,genome]=(posplot %>% group_by(window) %>% summarize(percTE=quantile(width, 0.75)))$percTE
   metaplot25[,genome]=(posplot %>% group_by(window) %>% summarize(percTE=quantile(width, 0.25)))$percTE
   metaplotmean[,genome]=(posplot %>% group_by(window) %>% summarize(meanTE=median(width)))$meanTE
+
+
+
+### didn't run dnds stuff after this!!!
+gfmin=gf[gf$synindex %in% mindnds$rownumb[mindnds$genome==genome],] ## aaaaaahhhhhh i was not filtering by genome!!! that was why everything was 0
+  gfmax=gf[gf$synindex %in% maxdnds$rownumb[maxdnds$genome==genome],]
+ tewindowmindnds=join_overlap_intersect(unstrand(gfmin), tes)      ## cut tes at boundaries of ranges
+ tewindowmaxdnds=join_overlap_intersect(unstrand(gfmax), tes)      ## cut tes at boundaries of ranges
 
   ### minmax dnds
   posplotmindnds=data.frame(tewindowmindnds[tewindowmindnds$ogstrand=='+',])[,c('window', 'width', 'partition')]
@@ -342,4 +355,16 @@ ggplot(metaplotmelt[metaplotmelt$ploidy!='Diploid',], aes(group=variable, x=wind
 ggplot(metaplotmelt[metaplotmelt$ploidy!='Diploid',], aes(group=variable, x=window, y=mindndsvalue-value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line(alpha=0.7) + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('min dnds genes - all genes, Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=rep(c('dashed', 'solid', 'dashed'), 3)) + scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace)))  + theme(axis.text.x=element_text(angle=20,hjust=1)) + facet_wrap(~ploidy, ncol=1)
 ggplot(metaplotmelt[metaplotmelt$ploidy!='Diploid',], aes(group=variable, x=window, y=maxdndsvalue-value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line(alpha=0.7) + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('max dnds genes - all genes, Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=rep(c('dashed', 'solid', 'dashed'), 3)) + scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace)))  + theme(axis.text.x=element_text(angle=20,hjust=1)) + facet_wrap(~ploidy, ncol=1)
 
+dev.off()
+
+
+
+
+
+
+pdf('~/transfer/te_metaplot_syntenic.pdf',12,6)
+ggplot(metaplotmelt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Median TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed')) + scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace)))  + theme(axis.text.x=element_text(angle=20,hjust=1))
+ggplot(metaplot75melt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('75th percentile TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1))
+ggplot(metaplot25melt, aes(group=variable, x=window, y=value, color=ploidy))+ geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('25th percentile TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1))
+ggplot(metaplotmeanmelt, aes(group=variable, x=window, y=value, color=ploidy)) + geom_vline(xintercept=c(1,1:(((flankspace*2)+2000)/1000)*10), color='whitesmoke')+ geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS/TTS') + ylab('Mean TE base pairs in 100bp window') + geom_vline(xintercept=c(flankspace/100, (flankspace/100)+10, (flankspace/100)+20), lty=c('dashed', 'solid', 'dashed'))+ scale_x_continuous(breaks=c(1, flankspace/100, (flankspace/100)+10, (flankspace/100)+20, ((flankspace*2)+2000)/100), labels=c(paste0('-', flankspace), 'TranslationSS', 'X', 'TranslTermS', paste0('+', flankspace))) + theme(axis.text.x=element_text(angle=20,hjust=1))
 dev.off()
