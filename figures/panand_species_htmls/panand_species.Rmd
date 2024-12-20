@@ -105,9 +105,9 @@ ggdraw() +  draw_plot(dotplot)
 ### Fractionation of `r species` 
 Like plots shown in Figure 4 of the main text, this shows proportion of retained genes in `r species` along the y-axis, vs P. vaginatum chromosomes on the x-axis. As *`r species`* is a `r tolower(asize$ploidy[asize$V2==genome])` with a`r ifelse(asize$haploid[asize$V2==genome], ' haploid', 'n allelic')`, assembly, we expect `r numberpaths[asize$V2==genome]` lines for each subgenome. 
 
-```{r echo=FALSE, fig.align='center', include=FALSE}
+```{r echo=FALSE, fig.align='center'}
 
-pdf_fractionation=paste0('~/Documents/GitHub/panand_assemblies/figures/fractionation_by_sp/', genome, '.pdf')
+pdf_fractionation=paste0('~/Documents/GitHub/panand_assemblies/figures/fractionation_by_sp/', genome, '_fract.PvChr01.pdf') #agerar_fract.PvChr01.pdf
 if(file.exists(pdf_fractionation)){
 
 fractionation=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_fractionation))))         # Read the PDF file

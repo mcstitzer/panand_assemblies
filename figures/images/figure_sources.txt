@@ -8,4 +8,28 @@ cserru	Photo by Richard Gill, licensed under CC-BY-NC 4.0	https://www.gbif.org/o
 ccitra	Photo by Dinesh Valke, licensed under CC-BY-SA 2.0	https://www.flickr.com/photos/dinesh_valke/51324908095
 crefra	Photo by Forest and Kim Starr, licensed under CC-BY 3.0	https://www.flickr.com/photos/starr-environmental/53708577420
 etrips	Photo by Herbario Virtual FMB, licensed under CC-BY-NC 2.0	https://www.flickr.com/photos/98115610@N03/12594000823
+hcompr	Photo by 葉子, licensed under CC-0	https://www.inaturalist.org/photos/59102278
+hconto	Photo by Forest and Kim Starr, licensed under CC-BY 3.0	https://www.flickr.com/photos/starr-environmental/24090210134/
+ppanic	Photo by Jean-Philippe Basuyaux, CC-BY-NC 4.0	https://www.gbif.org/occurrence/2980980342
+rrottb	Photo by Bat Vorontsova, released to the public domain under CC0 1.0 Universal	https://www.flickr.com/photos/36803481@N06/6778123604
+rtuber	Photo by Jay Horn, licensed under CC-BY 4.0	https://www.inaturalist.org/observations/127182158
+smicro	Photo by Guillermo Menendez, licensed under CC-BY 4.0	https://www.inaturalist.org/observations/233174167
+sscopa	Photo by Rich Kostecke, licensed under CC-BY 4.0	https://www.inaturalist.org/observations/255597402
+snutan	Photo by Erica Fraley, licensed under CC-BY-NC 4.0	https://www.inaturalist.org/photos/4699574
+telega	Photo by Marco Schmidt, licensed under CC-BY 4.0	https://www.inaturalist.org/observations/20286813
+ttrian	Photo by Richard Gill, licensed under CC-BY-NC 4.0	https://www.inaturalist.org/photos/171287912
+tdacn1	Photo by Judy Gallagher, licensed under CC-BY-SA 4.0	https://www.inaturalist.org/photos/458152814
+tdacs1	Photo by Trish Abalo, licensed under CC-BY-NC 4.0	https://www.inaturalist.org/photos/450073260
+vcuspi	Photo by Mike Wood, licensed under CC-BY-NC 4.0	https://www.inaturalist.org/photos/234245430
+zdgigi	Photo by Jaime Marcelo Aranda Sanchez, licensed under CC-BY-NC 4.0	https://www.inaturalist.org/photos/13375176
+zdmomo	Photo by Francisco Amador, licensed under CC-BY-NC 4.0	https://www.inaturalist.org/photos/57174888
+zluxur	Photo by Rolbin Morales, licensed under CC-BY-NC 4.0	https://www.inaturalist.org/photos/171755440
+zmhuet	Photo by Cesar Azurdia	https://www.fao.org/4/y3841e/y3841e15.htm
+zTIL18	Photo by Michelle Stitzer	
+zTIL25	Photo by Michelle Stitzer	
+zTIL01	Photo by José de Jesús Sánchez González, licensed under CC-BY 4.0	https://journals.plos.org/plosone/article/figure?id=10.1371/journal.pone.0291944.g001
+zTIL11	Photo by Ignacio Torres Garcia, licensed under CC-BY-NC 4.0	https://www.inaturalist.org/photos/161604223
+sbicol	Photo by Adid Jimenez, licensed under CC-BY-NC 4.0	https://www.inaturalist.org/photos/458151676
+zmB735	Photo by Michelle Stitzer	
+znicar	Photo by The New York Botanical Garden, licensed under CC-BY 4.0	https://www.gbif.org/occurrence/1928984842
 
