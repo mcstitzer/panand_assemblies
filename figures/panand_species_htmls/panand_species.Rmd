@@ -96,7 +96,7 @@ ggdraw() +  draw_plot(fig2)
 
 
 ### Dotplot of *`r species`* vs. *Paspalum vaginatum*.
-Like dotplots shown in Figure 3 of the main text, this shows syntenic blocks in *`r species`* along the y-axis, vs *P. vaginatum* on the x-axis. As `r species` is a `r tolower(asize$ploidy[asize$V2==genome])` with a`r ifelse(asize$haploid[asize$V2==genome], ' haploid', 'n allelic')`, assembly, we expect `r numberpaths[asize$V2==genome]` paths for any x-axis position. 
+Like dotplots shown in Figure 3 of the main text, this shows syntenic blocks in *`r species`* along the y-axis, vs *P. vaginatum* on the x-axis. As `r species` is a `r tolower(asize$ploidy[asize$V2==genome])` with a`r ifelse(asize$haploid[asize$V2==genome], ' haploid', 'n allelic')` assembly, we expect `r numberpaths[asize$V2==genome]` paths for any x-axis position. 
 
 ```{r echo=FALSE,fig.align = 'center'}
 
