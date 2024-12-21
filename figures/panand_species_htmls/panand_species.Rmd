@@ -2,7 +2,6 @@
 title: "Andropogoneae Species"
 author: "Michelle C. Stitzer"
 output: html_document
-date: "2024-12-19"
 params: 
   genome: 'achine'
   species: 'Andropogon chinensis'
@@ -50,7 +49,7 @@ knitr::include_graphics(jpg_image)
 </center>
 
 
-Assembly is `r ifelse(asize$haploid[asize$V2==genome], 'haploid', 'allelic')`, and the genome is `r tolower(asize$ploidy[asize$V2==genome])`. It has a haploid genome size of `r round(c(asize$haploidAssemblySize-asize$haploidNCount)[asize$V2==genome]/1e6, -2)` Mb, and has `r asize$chrCount[asize$V2==genome]` haploid chromosomes.
+#### The assembly is `r ifelse(asize$haploid[asize$V2==genome], 'haploid', 'allelic')`, and the genome is `r tolower(asize$ploidy[asize$V2==genome])`. It has a haploid genome size of `r round(c(asize$haploidAssemblySize-asize$haploidNCount)[asize$V2==genome]/1e6, -2)` Mb, and has `r asize$chrCount[asize$V2==genome]` haploid chromosomes.
 
 
 ```{r echo=FALSE, fig.align = 'center', out.width='200px'}
@@ -59,8 +58,14 @@ if(file.exists(pdf_karyo)){
 karyo=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_karyo))))         # Read the PDF file
 ggdraw() +  draw_plot(karyo)
 }
+if(file.exists(pdf_karyo)){
+printKaryoInfo=T
+}else{printKaryoInfo=F}
 ```
+<center>
 
+`r ifelse(printKaryoInfo, paste0('Metaphase chromosomes of ', species, 'root tips, scale bar 10 µm'), '')`
+</center>
 
 
 ### Species herbarium records
