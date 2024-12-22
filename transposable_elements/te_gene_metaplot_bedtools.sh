@@ -77,7 +77,7 @@ echo "Coverage calculations complete!"
   GENOME_ID=$(echo "$line" | awk '{print $1}')
   echo $GENOME_ID
   # Define file paths
-  SYNT_FILE="../syntenic/${GENOME_ID}.syntenicAnchors.gff3"
+  SYNT_FILE="../syntenic/${GENOME_ID}.syntenicAnchors.bed"
   TE_FILE="trash/${GENOME_ID}_EDTAandTandemRepeat.gff3"
   GENOME_SIZE_FILE="../genomes/${GENOME_ID}.fasta.fai"
   OUTPUT_DIR="./coverage_results"

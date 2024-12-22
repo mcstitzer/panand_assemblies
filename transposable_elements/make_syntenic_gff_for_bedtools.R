@@ -54,3 +54,39 @@ for (i in seq_len(nrow(all))) {
 
   cat("Written:", output_file, "\n")
 }
+
+
+
+
+## wait bed might be better to keep track of gene name
+# Iterate through each row of the 'all' data frame
+for (i in seq_len(nrow(all))) {
+  # Get the genome and output file name
+  genome_id <- all$V2[i]
+  output_file <- paste0('../syntenic/', all$V1[i], ".syntenicAnchors.bed")
+
+  # Filter 'syngr' based on matching genome
+  filtered_syngr <- syngr[syngr$genome == genome_id]
+
+  # Prepare data for BED format
+  bed_data <- data.frame(
+    seqnames = as.character(seqnames(filtered_syngr)),
+    start = start(filtered_syngr) - 1,  # BED format uses 0-based start
+    end = end(filtered_syngr),
+    name = filtered_syngr$quickgene,
+    score = ".",
+    strand = as.character(strand(filtered_syngr))
+  )
+
+  # Write to BED file
+  write.table(
+    bed_data,
+    file = output_file,
+    sep = "\t",
+    quote = FALSE,
+    row.names = FALSE,
+    col.names = FALSE
+  )
+
+  cat("Written:", output_file, "\n")
+}
