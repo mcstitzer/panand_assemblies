@@ -24,7 +24,8 @@ teploidy=ggplot(asize, aes(x=ploidy, y=repeatProp, group=ploidy, color=ploidy, f
 #  annotate("text", x = 4.45, y = median(asize$repeatProp[asize$ploidy=='Diploid'], na.rm=T)*2, label = "\u00D72", vjust = -0.5)+ 
 #  annotate("text", x = 4.45, y = median(asize$repeatProp[asize$ploidy=='Diploid'], na.rm=T)*3, label = "\u00D73", vjust = -0.5) + 
   geom_point(position = position_jitter(w=0.3, h=0,seed = 1), size=3, pch=25)+ 
-  xlab('Ploidy') + ylab('Repeat Proportion') + theme(legend.position='NULL')
+  xlab('Ploidy') + ylab('Repeat Proportion') + theme(legend.position='NULL') +
+  scale_x_discrete(labels = c("Diploid" = "Dip.", "Tetraploid" = "Tet.", "Hexaploid" = "Hex.", "Paleotetraploid" = "Paleo."))
 
 ### haploid bp vs time since polyploidy
 
@@ -46,9 +47,31 @@ teploidyage=ggplot(asize, aes(x=mya, y=haploidRepeatSize, color=ploidy)) + geom_
 teploidyage
 
 
+### distance to genes. 
+
+
+combined_data_helixer=read.table('../transposable_elements/combined_tedist_helixer_genes.txt', header=T, sep='\t')
+combined_data_helixer$ploidy=factor(combined_data_helixer$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+
+### upstream
+uph=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%1:200,], aes(group=genome_id, x=(windowadj-200)*100, y=mean, color=ploidy))+ geom_vline(xintercept=c(0:20*10*-100), color='whitesmoke', lty='dotted')+ geom_hline(yintercept=c(0.2,0.4,0.6,0.8), color='seashell2', lty='longdash') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS') + ylab('Mean TE base pairs in 100bp window') + theme(legend.position='NULL')
+### downstream
+downh=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%201:400,], aes(group=genome_id, x=(windowadj-200)*100, y=mean, color=ploidy))+ geom_vline(xintercept=c(0:20*10*100), color='whitesmoke', lty='dotted')+ geom_hline(yintercept=c(0.2,0.4,0.6,0.8), color='seashell2', lty='longdash') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TTS') + ylab('Mean TE base pairs in 100bp window') + theme(legend.position='NULL')
+
+genedists=plot_grid(uph, downh, align='hv', axis='tb', ncol=2, labels=c('D', 'E'))
+
+
 
 #### types of TEs no burst??
 
 ### 
 
-plot_grid(rpgg, teploidy, teploidyage, labels='AUTO', align='hv', ncol=1)
+rowte=plot_grid(rpgg, teploidy, teploidyage, labels='AUTO', align='h', ncol=3)
+
+plot_grid(rowte, genedists, ncol=1, rel_heights=c(0.7,1), align='hv')
+
+pdf('../figures/figure5_tes-are-unpredictable.pdf', 12,8)
+
+plot_grid(rowte, genedists, ncol=1, rel_heights=c(0.7,1), align='hv')
+
+dev.off()

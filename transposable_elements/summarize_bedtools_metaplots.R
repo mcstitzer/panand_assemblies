@@ -134,9 +134,20 @@ asize=fread('../..//panand_assembly_sizes.txt', header=T, quote="", fill=T)
 asize$ploidy=factor(asize$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 
 combined_data_helixer$ploidy=asize$ploidy[match(combined_data_helixer$genome_id, asize$V2)]
+
+write.table(combined_data_helixer, 'combined_tedist_helixer_genes.txt', row.names=F, col.names=T, sep='\t', quote=F)
+
 pdf('~/transfer/combo_metaplot_helixer.pdf',14,8)
 ggplot(combined_data_helixer, aes(x=windowadj, y=med, color=ploidy, group=genome_id)) + geom_line() + scale_color_manual(values=ploidycolors)
 ggplot(combined_data_helixer, aes(x=windowadj, y=mean, color=ploidy, group=genome_id)) + geom_line() + scale_color_manual(values=ploidycolors)
+
+
+### upstream
+uph=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%1:200,], aes(group=genome_id, x=(windowadj-200)*100, y=mean, color=ploidy))+ geom_vline(xintercept=c(0:20*10*-100), color='whitesmoke', lty='dotted')+ geom_hline(yintercept=c(0.2,0.4,0.6,0.8), color='seashell2', lty='longdash') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS') + ylab('Mean TE base pairs in 100bp window') + theme(legend.position='NULL')
+### downstream
+downh=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%201:400,], aes(group=genome_id, x=(windowadj-200)*100, y=mean, color=ploidy))+ geom_vline(xintercept=c(0:20*10*100), color='whitesmoke', lty='dotted')+ geom_hline(yintercept=c(0.2,0.4,0.6,0.8), color='seashell2', lty='longdash') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TTS') + ylab('Mean TE base pairs in 100bp window') + theme(legend.position='NULL')
+
+plot_grid(uph, downh, align='tb', axis='hv', ncol=2, labels=c('B', 'C'))
 
 dev.off()
 

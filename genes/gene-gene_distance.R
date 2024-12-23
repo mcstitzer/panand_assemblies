@@ -83,13 +83,38 @@ asize %>% group_by(ploidy) %>% summarize(medgg=median(medGGdist))
 
 ### got to make a asizezt for this one!
 ggplot(asize, aes(x=haploidRepeatSize-haploidNCount, y=medGGdist)) + geom_point(aes( color=ploidy)) + scale_color_manual(values=ploidycolors) + geom_text(aes(label=V2, color=ploidy)) + stat_smooth(data=asize[asize$ploidy!='Paleotetraploid',], method='lm', lty='longdash', color='gray', se=F)+ stat_smooth(data=asizezt, method='lm',color='gray', se=F)
-summary(lm(medGGdist~haploidRepeatSize-haploidNCount, data=asize[asize$ploidy!='Paleotetraploid',]))
+summary(lm(medGGdist~c(haploidRepeatSize/(haploidAssemblySize-haploidNCount)), data=asize[asize$ploidy!='Paleotetraploid',]))
 
 
 #### finalish
-ggplot(asize, aes(x=haploidRepeatSize/(haploidAssemblySize-haploidNCount), y=medGGdist)) + geom_point(aes( color=ploidy), size=3) + scale_color_manual(values=ploidycolors) + #geom_text(aes(label=V2, color=ploidy)) + 
+rpgg=ggplot(asize, aes(x=haploidRepeatSize/(haploidAssemblySize-haploidNCount), y=medGGdist)) + geom_point(aes( color=ploidy), size=3) + scale_color_manual(values=ploidycolors) + #geom_text(aes(label=V2, color=ploidy)) + 
   stat_smooth(data=asize[asize$ploidy!='Paleotetraploid',], method='lm', lty='longdash', color='gray', se=F)+ 
-  stat_smooth(data=asize, method='lm',color='gray', se=F) + ylab('Median Gene-Gene Distance') + xlab('Genomic Repeat Proportion')
+#  stat_smooth(data=asize, method='lm',color='gray', se=F) + 
+  ylab('Median Syntenic\nGene-Gene Distance') + xlab('Repeat Proportion') + theme(legend.position='NULL')
+rpgg #repeat proportion gg
+
+ggplot(asize, aes(x=haploidRepeatSize, y=medGGdist)) + geom_point(aes( color=ploidy), size=3) + scale_color_manual(values=ploidycolors) + #geom_text(aes(label=V2, color=ploidy)) + 
+  stat_smooth(data=asize[asize$ploidy!='Paleotetraploid',], method='lm', lty='longdash', color='gray', se=F)+ 
+  #  stat_smooth(data=asize, method='lm',color='gray', se=F) + 
+  ylab('Median Syntenic\nGene-Gene Distance') + xlab('Repeat Bases') + theme(legend.position='NULL') + geom_
+##10k genes, 
+
+gsgg=ggplot(asize, aes(x=(haploidAssemblySize-haploidNCount), y=medGGdist)) + geom_point(aes( color=ploidy), size=3) + scale_color_manual(values=ploidycolors) + #geom_text(aes(label=V2, color=ploidy)) + 
+  stat_smooth(data=asize[asize$ploidy!='Paleotetraploid',], method='lm', lty='longdash', color='gray', se=F)+ 
+  #  stat_smooth(data=asize, method='lm',color='gray', se=F) + 
+  ylab('Median Syntenic\nGene-Gene Distance') + xlab('Genome Size') + theme(legend.position='NULL') 
+gsgg ## genome size gene dist
+##
+
+ggplot(asize[!asize$V2%in%lowQualAssemblies,], aes(x=medFrac, y=medGGdist)) + geom_point(aes( color=ploidy), size=3) + scale_color_manual(values=ploidycolors) + #geom_text(aes(label=V2, color=ploidy)) + 
+  stat_smooth(data=asize[asize$ploidy!='Paleotetraploid' & !asize$V2%in%lowQualAssemblies,], method='lm', lty='longdash', color='gray', se=F)+ 
+  stat_smooth(data=asize[!asize$V2%in%lowQualAssemblies,], method='lm',color='gray', se=F) + 
+  ylab('Median Syntenic\nGene-Gene Distance') + xlab('Retained Gene Proportion') + theme(legend.position='NULL')
+
+
+## maybe suplement?? ridgeline of diff gene-gene dists
+ggplot(gddasynt, aes(x=dists+1, y=genome, fill=ploidy)) + geom_density_ridges()  + scale_x_log10() + scale_fill_manual(values=ploidycolors)+ geom_vline(xintercept=c(101,1001,10001,100001, 1000001)) 
+
 
 
 ggplot(gddasynt, aes(x=dists+1, y=reorder(genome, desc(haploidSize)), fill=ploidy)) + geom_density_ridges()  + scale_x_log10() + scale_fill_manual(values=ploidycolors)+ geom_vline(xintercept=c(101,1001,10001,100001, 1000001))
