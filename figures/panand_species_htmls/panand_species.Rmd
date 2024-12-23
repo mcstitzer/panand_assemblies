@@ -64,7 +64,7 @@ printKaryoInfo=T
 ```
 <center>
 
-`r ifelse(printKaryoInfo, paste0('Metaphase chromosomes of ', species, 'root tips, scale bar 10 µm'), '')`
+`r ifelse(printKaryoInfo, paste0('Metaphase chromosomes of ', species, ' root tips, scale bar 10 µm'), '')`
 </center>
 
 
