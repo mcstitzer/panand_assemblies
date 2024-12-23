@@ -111,4 +111,6 @@ echo "Coverage calculations complete!"
 done < "../../panand_sp_ploidy.txt"
   
   
-  
+  ## oh no there's a negative start so sn didn't work :(
+  grep -v "	-1" Sn-CAM1369-DRAFT-PanAnd-1.0_EDTAandTandemRepeat.gff3 > Sn-CAM1369-DRAFT-PanAnd-1.0_EDTAandTandemRepeat.negRemoved.gff3
+  ## then rerun above loop with thi s file...
