@@ -100,7 +100,7 @@ for(i in seq_len(nrow(all))){
   a <- fread(paste0(base_name, '_coverage.txt'))
   a$id <- sub("_[0-9]+$", "", a$V4)
   g <- read.table(paste0(base_name, '_filtered_genes.gff'))
-  g$id <- g$V9
+  g$id <- g$V4
 
   # Process coverage data
   a$strand <- g$V6[match(a$id, g$id)]
