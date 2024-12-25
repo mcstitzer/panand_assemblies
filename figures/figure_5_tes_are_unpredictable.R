@@ -1,5 +1,5 @@
 
-
+library(ggtext)
 
 
 
@@ -88,6 +88,16 @@ format_labels <- function(labels, exceptions) {
   })
 } 
 
+### okay this will work!!! make a stacked bar plot of each of these genome-wide, using these colors
+# Retrotransposon colors (pastel reds and pinks)
+retro_colors <- c(RLG="#F7B7B7", RLC="#F28E8E", RLX="#E67373")
+# DNA transposon colors (cohesive blue gradient)
+dna_colors <- c(DHH="#377EB8", DTA="#4B8EBA", DTC="#5DA9BD", DTH="#70C2BF", 
+                DTM="#83D6C1", DTT="#96E2C3", DTS="#A8EEC5")
+# Tandem repeat color (pastel lavender)
+tandem_color <- c(TandemRepeat="#D4B4F4", TR='#D4B4F4')
+# Combine all colors
+te_colors <- c(retro_colors, dna_colors, tandem_color)
 
 
 bardata=read.table('../transposable_elements/te_barplot_data.txt', header=T, sep='\t')
@@ -104,13 +114,13 @@ bardata$supLegend <- factor(bardata$sup, levels = c(
 )
 
 tebar=ggplot(bardata[!bardata$genome%in%c('zmB735', 'tdacn2', 'tdacs2'),], aes(y=shortSpeciesLabel, x=bp, fill=supLegend)) + geom_col(position='fill') + scale_fill_manual(values=te_colors)+ylab('Genome')+xlab('Proportion of Repeat Base Pairs')+
-  geom_vline(xintercept=c(0.25,0.5,0.75), color='snow', alpha=0.1)+
+  geom_vline(xintercept=c(0.25,0.5,0.75), color='snow', alpha=0.1)+labs(fill='TE superfamily')+
   theme(
     legend.position = "top",                # Place legend at bottom
-    legend.title = element_blank(),            # Remove legend title
+    legend.title = element_text(hjust=0.5, size=9),            
     legend.text = element_text(size = 8),     # Adjust text size
     legend.key.height = unit(0.5, "cm"),       # Reduce height of keys
-    legend.key.width = unit(1, "cm"),           # Adjust width of keys
+    legend.key.width = unit(0.5, "cm"),           # Adjust width of keys
     axis.text.y=element_markdown(size=9),
     legend.justification='center'
   ) +
@@ -131,36 +141,44 @@ combined_data_helixer=read.table('../transposable_elements/combined_tedist_helix
 combined_data_helixer$ploidy=factor(combined_data_helixer$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 
 ### upstream
-uph=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%1:200,], aes(group=genome_id, x=(windowadj-200)*100, y=mean, color=ploidy))+ geom_vline(xintercept=c(0:20*10*-100), color='whitesmoke', lty='dotted')+ geom_hline(yintercept=c(0.2,0.4,0.6,0.8), color='seashell2', lty='longdash') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS') + ylab('Mean TE base pairs in 100bp window') + theme(legend.position='NULL')
+uph=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%1:200,], aes(group=genome_id, x=(windowadj-200)*100, y=mean, color=ploidy))+ geom_vline(xintercept=c(0:20*10*-100), color='whitesmoke', lty='dotted')+ geom_hline(yintercept=c(0.2,0.4,0.6,0.8), color='seashell2', lty='longdash') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS') + ylab('Mean TE base pairs\nin 100bp window') + theme(legend.position='NULL')
 ### downstream
-downh=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%201:400,], aes(group=genome_id, x=(windowadj-200)*100, y=mean, color=ploidy))+ geom_vline(xintercept=c(0:20*10*100), color='whitesmoke', lty='dotted')+ geom_hline(yintercept=c(0.2,0.4,0.6,0.8), color='seashell2', lty='longdash') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TTS') + ylab('Mean TE base pairs in 100bp window') + theme(legend.position='NULL')
+downh=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%201:400,], aes(group=genome_id, x=(windowadj-200)*100, y=mean, color=ploidy))+ geom_vline(xintercept=c(0:20*10*100), color='whitesmoke', lty='dotted')+ geom_hline(yintercept=c(0.2,0.4,0.6,0.8), color='seashell2', lty='longdash') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TTS') + ylab('Mean TE base pairs\nin 100bp window') + theme(legend.position='NULL')
 
-genedists=plot_grid(uph, downh, align='hv', axis='tb', ncol=2, labels=c('D', 'E'))
+genedists=plot_grid(uph, downh, align='hv', axis='tb', ncol=2, labels=c('E', 'F'))
 
 
 
 #### types of TEs no burst??
 
 ages=read.table('../transposable_elements/ages_plot_data.txt', header=T, sep='\t')
-ageplot=ggplot(ages[ages$genome!='zmB735',], aes(x=mya, y=(1-medianage)/6.5e-9/2/1e6, color=ploidy, size=copies)) + geom_point() + scale_color_manual(values=ploidycolors) + ylab('Median Insertion Time, LTR retrotransposon (Mya)')+xlab('Divergence Between Parental Genomes, (Mya)')+
-                    theme(legend.position=c(0.61,0.9), legend.text = element_text(size=8))+guides(color='none', fill='none')+ labs(color='Ploidy', size='LTR Retrotransposon Copies')
+ageplot=ggplot(ages[ages$genome!='zmB735',], aes(x=mya, y=(1-medianage)/6.5e-9/2/1e6, color=ploidy, size=copies)) + geom_point() + scale_color_manual(values=ploidycolors) + ylab('Median Insertion Time,\nLTR retrotransposon (Mya)')+xlab('Divergence Between\nParental Genomes (Mya)')+
+                    theme(legend.position=c(0.55,0.8), legend.title = element_text(hjust=0.5, size=9), legend.text = element_text(size=8))+guides(color='none', fill='none')+ labs(color='Ploidy', size='Total LTR\nRetro. Copies')+
+                    guides(size=guide_legend(ncol=1, byrow=T))
 
 
 evenness=read.table('../transposable_elements/evenness10copies_plot_data.txt', header=T, sep='\t')
-evennessplot=ggplot(evenness[evenness$genome!='zmB735',], aes(y=JN, x=mya, color=ploidy)) + geom_point(aes(size=haploidRepeatSize/1e6)) + scale_color_manual(values=ploidycolors)+
+evennessplot=ggplot(evenness[evenness$genome!='zmB735',], aes(y=nfam, x=JN, color=ploidy)) + geom_point(aes(size=haploidRepeatSize/1e6)) + scale_color_manual(values=ploidycolors)+
                     xlab('Evenness (1 if all families equally sized)')+ylab('Number Families')+
-                    theme(legend.position=c(0.61,0.9), legend.text = element_text(size=8))+guides(color='none', fill='none')+ labs(color='Ploidy', size='Genomic Repeat Mb')
+                    theme(legend.position=c(0.1,0.8), legend.title = element_text(hjust=0.5, size=9), legend.text = element_text(size=8))+guides(color='none', fill='none')+ labs(color='Ploidy', size='Mb of Genomic\nRepeats')+
+                    guides(size=guide_legend(ncol=1, byrow=T))
 
 
 
 ### 
 
-rowte=plot_grid(rpgg, teploidy, teploidyage, labels='AUTO', align='h', ncol=3)
+toprowte=plot_grid(rpgg, teploidy, teploidyage, labels='AUTO', align='h', ncol=3)
 
-plot_grid(rowte, genedists, ncol=1, rel_heights=c(0.7,1), align='hv')
+#plot_grid(toprowte, genedists, ncol=1, rel_heights=c(0.7,1), align='hv')
 
-pdf('../figures/figure5_tes-are-unpredictable.pdf', 12,8)
+rightbottom=plot_grid(evennessplot, ageplot, labels=c('G', 'H'), align='h', axis='tb',ncol=2)
+rightte=plot_grid(genedists, rightbottom, align='v', axis='lr', ncol=1)
 
-plot_grid(rowte, genedists, ncol=1, rel_heights=c(0.7,1), align='hv')
+bottomrowte=plot_grid(tebar, rightte, labels=c('D', ''), ncol=2)#, align='h', axis='t')
+
+
+pdf('../figures/figure5_tes-are-unpredictable.pdf', 14,10)
+
+plot_grid(toprowte, bottomrowte, ncol=1, rel_heights=c(0.4,1), align='vh', axis='lb')
 
 dev.off()
