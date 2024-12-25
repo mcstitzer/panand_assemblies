@@ -95,7 +95,7 @@ ggdraw() +  draw_plot(fig2)
 ```
 
 
-### Dotplot of *`r species`* vs. *Paspalum vaginatum*.
+### Dotplot of *`r species`* vs. *Paspalum vaginatum*
 Like dotplots shown in Figure 3 of the main text, this shows syntenic blocks in *`r species`* along the y-axis, vs *P. vaginatum* on the x-axis. As `r species` is a `r tolower(asize$ploidy[asize$V2==genome])` with a`r ifelse(asize$haploid[asize$V2==genome], ' haploid', 'n allelic')` assembly, we expect `r numberpaths[asize$V2==genome]` paths for any x-axis position. 
 
 ```{r echo=FALSE,fig.align = 'center'}
@@ -108,7 +108,7 @@ ggdraw() +  draw_plot(dotplot)
 ```
 
 ### Fractionation of *`r species`*
-Like plots shown in Figure 4 of the main text, this shows proportion of retained genes in `r species` along the y-axis, vs P. vaginatum chromosomes on the x-axis. As *`r species`* is a `r tolower(asize$ploidy[asize$V2==genome])` with a`r ifelse(asize$haploid[asize$V2==genome], ' haploid', 'n allelic')` assembly, we expect `r numberpaths[asize$V2==genome]` lines,  `r ifelse(asize$haploid[asize$V2==genome], 'one', 'two')` for each subgenome. 
+Like plots shown in Figure 4 of the main text, this shows proportion of retained genes in `r species` along the y-axis, vs P. vaginatum gene index on the x-axis. As *`r species`* is a `r tolower(asize$ploidy[asize$V2==genome])` with a`r ifelse(asize$haploid[asize$V2==genome], ' haploid', 'n allelic')` assembly, we expect `r numberpaths[asize$V2==genome]` lines,  `r ifelse(asize$haploid[asize$V2==genome], 'one', 'two')` for each subgenome. 
 
 ```{r echo=FALSE, fig.align='center'}
 
@@ -131,7 +131,23 @@ if(file.exists(pdf_te)){
 
 te=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_te))))         # Read the PDF file
 
-ggdraw() +  draw_plot(fractionation)
+ggdraw() +  draw_plot(te)
+}
+```
+
+### Spatial distribution of genes and TEs
+Density of genes and repeats along the longest sequence (contig, scaffold, or chromosome) of *`r species`* in 1 Mb bins.
+
+Gene annotation shown is all Helixer genes. 
+
+```{r echo=FALSE, fig.align='center', out.width='800px'}
+
+pdf_techr=paste0('~/Documents/GitHub/panand_assemblies/figures/chr_distribution_by_sp/', genome, '_chrdist.pdf')
+if(file.exists(pdf_techr)){
+
+techr=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_techr))))         # Read the PDF file
+
+ggdraw() +  draw_plot(techr)
 }
 ```
 
