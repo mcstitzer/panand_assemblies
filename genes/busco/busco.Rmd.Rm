@@ -1,0 +1,5 @@
+### Busco of Poales genes in Helixer annotations
+
+Run by Zong-Yan Liu on 12/24/24
+
+Input is aa fastas from `cbsublfs1:/data1/users/mcs368/panand_genomes/helixer_protein_aa/`, produced when generating genespace input here: `../../genespace/helixer_to_genespace_input.sh`

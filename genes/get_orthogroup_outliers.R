@@ -276,3 +276,37 @@ bog$tethexaploid_div_pvalue=results
 head(bog[order(bog$tethexaploid_div_pvalue),c('Orthogroup', diploids, 'tethexaploid_div_pvalue', c(tetraploids, hexaploids, paleotetraploids))])
 
 
+
+## try for old vs new polyploids and gene loss
+oldpp=c( "achine", 'rrottb', 'blagur')
+newpp=c('hcompr', 'vcuspi', 'snutan')
+
+## this fails because constant values...
+results=apply(bog[,-c(1,40,41:ncol(bog))],1,function(row){
+  pheno=as.numeric(row[oldpp])
+  other=as.numeric(row[newpp])
+  t.test(pheno, other)$p.value
+})
+bog$oldnew_pvalue=results
+
+meds=apply(bog[,-c(1,40:ncol(bog))],2, median)
+
+results=apply(bog[,-c(1,40:ncol(bog))], 1, function(row){
+  deviations=row-meds
+  phen=deviations[oldpp]
+  other=deviations[newpp]
+  wilcox.test(phen, other)$p.value
+})
+bog$oldnew_med_pvalue=results
+
+head(bog[order(bog$oldnew_med_pvalue),c('Orthogroup', oldpp, 'oldnew_med_pvalue', newpp)])
+
+results=apply(bog[,-c(1,40:ncol(bog))], 1, function(row){
+  deviations=row-meds
+  phen=deviations[oldpp]
+  other=deviations[newpp]
+  return(mean(phen)-mean(other))
+})
+bog$oldnew_med_oldlarger=results
+
+head(bog[order(-bog$oldnew_med_oldlarger),c('Orthogroup', oldpp, 'oldnew_med_oldlarger', newpp)])
