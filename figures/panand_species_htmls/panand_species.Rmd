@@ -124,9 +124,9 @@ ggdraw() +  draw_plot(fractionation)
 ### Highlighted Figure 5
 Figure 5 from the main text, with *`r species`* highlighted with colored points or lines.
 
-```{r eval=FALSE, fig.align='center', include=FALSE}
+```{r echo=FALSE, fig.align='center', out.width='800px'}
 
-pdf_te=paste0('~/Documents/GitHub/panand_assemblies/figures/fig5_by_sp/', genome, '.pdf')
+pdf_te=paste0('~/Documents/GitHub/panand_assemblies/figures/fig5_by_sp/', genome, '_fig5.pdf')
 if(file.exists(pdf_te)){
 
 te=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_te))))         # Read the PDF file
