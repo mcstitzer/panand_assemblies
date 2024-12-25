@@ -1,0 +1,353 @@
+sup	genome	bp	shortSpeciesLabel	supLegend
+DHH	achine	247468220	A. chinensis	DHH
+DHH	agerar	440468241	A. gerardi	DHH
+DHH	atenui	155869502	"A." burmanicus	DHH
+DHH	avirgi	73717069	A. virginicum	DHH
+DHH	blagur	334701800	B. laguroides	DHH
+DHH	ccitra	314981449	C. citratus	DHH
+DHH	crefra	66703340	C. refractus	DHH
+DHH	cserru	190552663	C. serrulatus	DHH
+DHH	etrips	425424386	E. tripsacoides	DHH
+DHH	hcompr	379783185	H. compressa	DHH
+DHH	hconto	348849060	H. contortus	DHH
+DHH	irugos	71314863	I. rugosum	DHH
+DHH	ppanic	70430752	P. paniceum	DHH
+DHH	rrottb	169801085	R. rottboellioides	DHH
+DHH	rtuber	75882382	R. tuberculosa	DHH
+DHH	smicro	79991500	S. microstachyum	DHH
+DHH	snutan	214728195	S. nutans	DHH
+DHH	sscopa	360484318	S. scoparium	DHH
+DHH	tdacn1	222434747	T. dactyloides KS	DHH
+DHH	tdacn2	192445534	T. dactyloides Northern Hap2	DHH
+DHH	tdacs1	256893553	T. dactyloides FL	DHH
+DHH	tdacs2	220016429	T. dactyloides Southern Hap2	DHH
+DHH	telega	292531506	T. elegans	DHH
+DHH	ttrian	169822749	T. triandra	DHH
+DHH	udigit	535154269	U. digitatum	DHH
+DHH	vcuspi	212091411	V. cuspidata	DHH
+DHH	zTIL01	361602761	Z. mays ssp. parv. TIL01	DHH
+DHH	zTIL11	336302794	Z. mays ssp. parv. TIL11	DHH
+DHH	zTIL18	735158949	Z. mays ssp. mex. TIL18	DHH
+DHH	zTIL25	299794362	Z. mays ssp. mex. TIL25	DHH
+DHH	zdgigi	525354079	Z. diploperennis Gigi	DHH
+DHH	zdmomo	450413094	Z. diploperennis Momo	DHH
+DHH	zluxur	476104522	Z. luxurians	DHH
+DHH	zmB735	39851670	Z. mays ssp. mays B73v5	DHH
+DHH	zmhuet	434328955	Z. mays ssp. huehue.	DHH
+DHH	znicar	516831280	Z. nicaraguensis	DHH
+DTA	achine	7090706	A. chinensis	DTA
+DTA	agerar	56673740	A. gerardi	DTA
+DTA	atenui	14073177	"A." burmanicus	DTA
+DTA	avirgi	4757477	A. virginicum	DTA
+DTA	blagur	27372319	B. laguroides	DTA
+DTA	ccitra	47807935	C. citratus	DTA
+DTA	crefra	4614191	C. refractus	DTA
+DTA	cserru	8233009	C. serrulatus	DTA
+DTA	etrips	46953461	E. tripsacoides	DTA
+DTA	hcompr	64861512	H. compressa	DTA
+DTA	hconto	15639298	H. contortus	DTA
+DTA	irugos	4722314	I. rugosum	DTA
+DTA	ppanic	4504585	P. paniceum	DTA
+DTA	rrottb	14904986	R. rottboellioides	DTA
+DTA	rtuber	7964688	R. tuberculosa	DTA
+DTA	smicro	4196866	S. microstachyum	DTA
+DTA	snutan	14340029	S. nutans	DTA
+DTA	sscopa	23120636	S. scoparium	DTA
+DTA	tdacn1	27595335	T. dactyloides KS	DTA
+DTA	tdacn2	33097451	T. dactyloides Northern Hap2	DTA
+DTA	tdacs1	30028496	T. dactyloides FL	DTA
+DTA	tdacs2	31358172	T. dactyloides Southern Hap2	DTA
+DTA	telega	46667034	T. elegans	DTA
+DTA	ttrian	7657738	T. triandra	DTA
+DTA	udigit	35179475	U. digitatum	DTA
+DTA	vcuspi	16733131	V. cuspidata	DTA
+DTA	zTIL01	27205387	Z. mays ssp. parv. TIL01	DTA
+DTA	zTIL11	43028455	Z. mays ssp. parv. TIL11	DTA
+DTA	zTIL18	23557705	Z. mays ssp. mex. TIL18	DTA
+DTA	zTIL25	26870852	Z. mays ssp. mex. TIL25	DTA
+DTA	zdgigi	34509579	Z. diploperennis Gigi	DTA
+DTA	zdmomo	29398282	Z. diploperennis Momo	DTA
+DTA	zluxur	25459553	Z. luxurians	DTA
+DTA	zmB735	29856674	Z. mays ssp. mays B73v5	DTA
+DTA	zmhuet	24374727	Z. mays ssp. huehue.	DTA
+DTA	znicar	40246591	Z. nicaraguensis	DTA
+DTC	achine	50722197	A. chinensis	DTC
+DTC	agerar	224812776	A. gerardi	DTC
+DTC	atenui	67890489	"A." burmanicus	DTC
+DTC	avirgi	32772374	A. virginicum	DTC
+DTC	blagur	159273974	B. laguroides	DTC
+DTC	ccitra	120961197	C. citratus	DTC
+DTC	crefra	30573188	C. refractus	DTC
+DTC	cserru	44791204	C. serrulatus	DTC
+DTC	etrips	274218349	E. tripsacoides	DTC
+DTC	hcompr	274599999	H. compressa	DTC
+DTC	hconto	63423626	H. contortus	DTC
+DTC	irugos	29914083	I. rugosum	DTC
+DTC	ppanic	21308728	P. paniceum	DTC
+DTC	rrottb	37696180	R. rottboellioides	DTC
+DTC	rtuber	72924232	R. tuberculosa	DTC
+DTC	smicro	29678948	S. microstachyum	DTC
+DTC	snutan	104173115	S. nutans	DTC
+DTC	sscopa	152372479	S. scoparium	DTC
+DTC	tdacn1	64277799	T. dactyloides KS	DTC
+DTC	tdacn2	61368633	T. dactyloides Northern Hap2	DTC
+DTC	tdacs1	73884871	T. dactyloides FL	DTC
+DTC	tdacs2	58596107	T. dactyloides Southern Hap2	DTC
+DTC	telega	272401474	T. elegans	DTC
+DTC	ttrian	47472606	T. triandra	DTC
+DTC	udigit	189783881	U. digitatum	DTC
+DTC	vcuspi	77678560	V. cuspidata	DTC
+DTC	zTIL01	93045031	Z. mays ssp. parv. TIL01	DTC
+DTC	zTIL11	66834560	Z. mays ssp. parv. TIL11	DTC
+DTC	zTIL18	64490638	Z. mays ssp. mex. TIL18	DTC
+DTC	zTIL25	71586144	Z. mays ssp. mex. TIL25	DTC
+DTC	zdgigi	86876959	Z. diploperennis Gigi	DTC
+DTC	zdmomo	85860192	Z. diploperennis Momo	DTC
+DTC	zluxur	129164681	Z. luxurians	DTC
+DTC	zmB735	72426101	Z. mays ssp. mays B73v5	DTC
+DTC	zmhuet	72295793	Z. mays ssp. huehue.	DTC
+DTC	znicar	78635047	Z. nicaraguensis	DTC
+DTH	achine	13427180	A. chinensis	DTH
+DTH	agerar	58031471	A. gerardi	DTH
+DTH	atenui	33614554	"A." burmanicus	DTH
+DTH	avirgi	7877516	A. virginicum	DTH
+DTH	blagur	51296098	B. laguroides	DTH
+DTH	ccitra	39689840	C. citratus	DTH
+DTH	crefra	9791962	C. refractus	DTH
+DTH	cserru	13320554	C. serrulatus	DTH
+DTH	etrips	71365579	E. tripsacoides	DTH
+DTH	hcompr	143418132	H. compressa	DTH
+DTH	hconto	31508630	H. contortus	DTH
+DTH	irugos	8710122	I. rugosum	DTH
+DTH	ppanic	9004482	P. paniceum	DTH
+DTH	rrottb	21432148	R. rottboellioides	DTH
+DTH	rtuber	10807623	R. tuberculosa	DTH
+DTH	smicro	6680779	S. microstachyum	DTH
+DTH	snutan	22078113	S. nutans	DTH
+DTH	sscopa	38520816	S. scoparium	DTH
+DTH	tdacn1	26626921	T. dactyloides KS	DTH
+DTH	tdacn2	24099692	T. dactyloides Northern Hap2	DTH
+DTH	tdacs1	26440667	T. dactyloides FL	DTH
+DTH	tdacs2	23038965	T. dactyloides Southern Hap2	DTH
+DTH	telega	17790893	T. elegans	DTH
+DTH	ttrian	22569500	T. triandra	DTH
+DTH	udigit	50894992	U. digitatum	DTH
+DTH	vcuspi	27463770	V. cuspidata	DTH
+DTH	zTIL01	18263140	Z. mays ssp. parv. TIL01	DTH
+DTH	zTIL11	18601821	Z. mays ssp. parv. TIL11	DTH
+DTH	zTIL18	16905008	Z. mays ssp. mex. TIL18	DTH
+DTH	zTIL25	18038277	Z. mays ssp. mex. TIL25	DTH
+DTH	zdgigi	41215005	Z. diploperennis Gigi	DTH
+DTH	zdmomo	23382137	Z. diploperennis Momo	DTH
+DTH	zluxur	19265116	Z. luxurians	DTH
+DTH	zmB735	21791228	Z. mays ssp. mays B73v5	DTH
+DTH	zmhuet	19045514	Z. mays ssp. huehue.	DTH
+DTH	znicar	20699571	Z. nicaraguensis	DTH
+DTM	achine	27651812	A. chinensis	DTM
+DTM	agerar	193601069	A. gerardi	DTM
+DTM	atenui	54174725	"A." burmanicus	DTM
+DTM	avirgi	38891281	A. virginicum	DTM
+DTM	blagur	113389192	B. laguroides	DTM
+DTM	ccitra	113397505	C. citratus	DTM
+DTM	crefra	26242712	C. refractus	DTM
+DTM	cserru	22446592	C. serrulatus	DTM
+DTM	etrips	187329067	E. tripsacoides	DTM
+DTM	hcompr	147320219	H. compressa	DTM
+DTM	hconto	55459176	H. contortus	DTM
+DTM	irugos	11728351	I. rugosum	DTM
+DTM	ppanic	11690233	P. paniceum	DTM
+DTM	rrottb	29733572	R. rottboellioides	DTM
+DTM	rtuber	25870421	R. tuberculosa	DTM
+DTM	smicro	15251253	S. microstachyum	DTM
+DTM	snutan	55518406	S. nutans	DTM
+DTM	sscopa	78657830	S. scoparium	DTM
+DTM	tdacn1	25967021	T. dactyloides KS	DTM
+DTM	tdacn2	52659561	T. dactyloides Northern Hap2	DTM
+DTM	tdacs1	29777044	T. dactyloides FL	DTM
+DTM	tdacs2	24804216	T. dactyloides Southern Hap2	DTM
+DTM	telega	145351202	T. elegans	DTM
+DTM	ttrian	35158153	T. triandra	DTM
+DTM	udigit	102836538	U. digitatum	DTM
+DTM	vcuspi	156092542	V. cuspidata	DTM
+DTM	zTIL01	97222346	Z. mays ssp. parv. TIL01	DTM
+DTM	zTIL11	68715666	Z. mays ssp. parv. TIL11	DTM
+DTM	zTIL18	124339873	Z. mays ssp. mex. TIL18	DTM
+DTM	zTIL25	84496237	Z. mays ssp. mex. TIL25	DTM
+DTM	zdgigi	49399866	Z. diploperennis Gigi	DTM
+DTM	zdmomo	106096870	Z. diploperennis Momo	DTM
+DTM	zluxur	291883576	Z. luxurians	DTM
+DTM	zmB735	27454578	Z. mays ssp. mays B73v5	DTM
+DTM	zmhuet	25235935	Z. mays ssp. huehue.	DTM
+DTM	znicar	85799608	Z. nicaraguensis	DTM
+DTT	achine	53718506	A. chinensis	DTT
+DTT	agerar	180007208	A. gerardi	DTT
+DTT	atenui	72978412	"A." burmanicus	DTT
+DTT	avirgi	15445701	A. virginicum	DTT
+DTT	blagur	54739344	B. laguroides	DTT
+DTT	ccitra	88243220	C. citratus	DTT
+DTT	crefra	12324174	C. refractus	DTT
+DTT	cserru	44763328	C. serrulatus	DTT
+DTT	etrips	260509300	E. tripsacoides	DTT
+DTT	hcompr	321711086	H. compressa	DTT
+DTT	hconto	44226111	H. contortus	DTT
+DTT	irugos	24116242	I. rugosum	DTT
+DTT	ppanic	16036631	P. paniceum	DTT
+DTT	rrottb	45307579	R. rottboellioides	DTT
+DTT	rtuber	19301172	R. tuberculosa	DTT
+DTT	smicro	15276213	S. microstachyum	DTT
+DTT	snutan	69817409	S. nutans	DTT
+DTT	sscopa	81943556	S. scoparium	DTT
+DTT	tdacn1	13846316	T. dactyloides KS	DTT
+DTT	tdacn2	14503188	T. dactyloides Northern Hap2	DTT
+DTT	tdacs1	14146038	T. dactyloides FL	DTT
+DTT	tdacs2	13209060	T. dactyloides Southern Hap2	DTT
+DTT	telega	28092925	T. elegans	DTT
+DTT	ttrian	18520266	T. triandra	DTT
+DTT	udigit	115210634	U. digitatum	DTT
+DTT	vcuspi	67346094	V. cuspidata	DTT
+DTT	zTIL01	8780385	Z. mays ssp. parv. TIL01	DTT
+DTT	zTIL11	7003338	Z. mays ssp. parv. TIL11	DTT
+DTT	zTIL18	6069593	Z. mays ssp. mex. TIL18	DTT
+DTT	zTIL25	8360269	Z. mays ssp. mex. TIL25	DTT
+DTT	zdgigi	9084785	Z. diploperennis Gigi	DTT
+DTT	zdmomo	6897554	Z. diploperennis Momo	DTT
+DTT	zluxur	6011866	Z. luxurians	DTT
+DTT	zmB735	4016233	Z. mays ssp. mays B73v5	DTT
+DTT	zmhuet	5846193	Z. mays ssp. huehue.	DTT
+DTT	znicar	8329667	Z. nicaraguensis	DTT
+RLC	achine	85485531	A. chinensis	RLC
+RLC	agerar	1058923254	A. gerardi	RLC
+RLC	atenui	225563838	"A." burmanicus	RLC
+RLC	avirgi	147490657	A. virginicum	RLC
+RLC	blagur	493022115	B. laguroides	RLC
+RLC	ccitra	260833711	C. citratus	RLC
+RLC	crefra	114965251	C. refractus	RLC
+RLC	cserru	67223247	C. serrulatus	RLC
+RLC	etrips	816203706	E. tripsacoides	RLC
+RLC	hcompr	1112434608	H. compressa	RLC
+RLC	hconto	274559499	H. contortus	RLC
+RLC	irugos	51955843	I. rugosum	RLC
+RLC	ppanic	105456813	P. paniceum	RLC
+RLC	rrottb	317415727	R. rottboellioides	RLC
+RLC	rtuber	181482346	R. tuberculosa	RLC
+RLC	smicro	97820911	S. microstachyum	RLC
+RLC	snutan	273498786	S. nutans	RLC
+RLC	sscopa	414273860	S. scoparium	RLC
+RLC	tdacn1	733936138	T. dactyloides KS	RLC
+RLC	tdacn2	749960572	T. dactyloides Northern Hap2	RLC
+RLC	tdacs1	714131566	T. dactyloides FL	RLC
+RLC	tdacs2	742474695	T. dactyloides Southern Hap2	RLC
+RLC	telega	466622831	T. elegans	RLC
+RLC	ttrian	159688108	T. triandra	RLC
+RLC	udigit	830912178	U. digitatum	RLC
+RLC	vcuspi	250613057	V. cuspidata	RLC
+RLC	zTIL01	638244024	Z. mays ssp. parv. TIL01	RLC
+RLC	zTIL11	659990223	Z. mays ssp. parv. TIL11	RLC
+RLC	zTIL18	622433028	Z. mays ssp. mex. TIL18	RLC
+RLC	zTIL25	584577101	Z. mays ssp. mex. TIL25	RLC
+RLC	zdgigi	758210309	Z. diploperennis Gigi	RLC
+RLC	zdmomo	619996247	Z. diploperennis Momo	RLC
+RLC	zluxur	686029214	Z. luxurians	RLC
+RLC	zmB735	523708447	Z. mays ssp. mays B73v5	RLC
+RLC	zmhuet	641821430	Z. mays ssp. huehue.	RLC
+RLC	znicar	923895787	Z. nicaraguensis	RLC
+RLG	achine	406388678	A. chinensis	RLG
+RLG	agerar	1372362567	A. gerardi	RLG
+RLG	atenui	629585684	"A." burmanicus	RLG
+RLG	avirgi	343125366	A. virginicum	RLG
+RLG	blagur	988089256	B. laguroides	RLG
+RLG	ccitra	738636615	C. citratus	RLG
+RLG	crefra	306734037	C. refractus	RLG
+RLG	cserru	264171219	C. serrulatus	RLG
+RLG	etrips	1398373894	E. tripsacoides	RLG
+RLG	hcompr	2612431753	H. compressa	RLG
+RLG	hconto	356041293	H. contortus	RLG
+RLG	irugos	295092726	I. rugosum	RLG
+RLG	ppanic	349487454	P. paniceum	RLG
+RLG	rrottb	457465163	R. rottboellioides	RLG
+RLG	rtuber	885565623	R. tuberculosa	RLG
+RLG	smicro	379852091	S. microstachyum	RLG
+RLG	snutan	966063176	S. nutans	RLG
+RLG	sscopa	1287023103	S. scoparium	RLG
+RLG	tdacn1	1096037880	T. dactyloides KS	RLG
+RLG	tdacn2	1083357091	T. dactyloides Northern Hap2	RLG
+RLG	tdacs1	1075102224	T. dactyloides FL	RLG
+RLG	tdacs2	1096327821	T. dactyloides Southern Hap2	RLG
+RLG	telega	1262526818	T. elegans	RLG
+RLG	ttrian	412242885	T. triandra	RLG
+RLG	udigit	1845220318	U. digitatum	RLG
+RLG	vcuspi	527845353	V. cuspidata	RLG
+RLG	zTIL01	1210186940	Z. mays ssp. parv. TIL01	RLG
+RLG	zTIL11	1169597756	Z. mays ssp. parv. TIL11	RLG
+RLG	zTIL18	1280833978	Z. mays ssp. mex. TIL18	RLG
+RLG	zTIL25	1295972628	Z. mays ssp. mex. TIL25	RLG
+RLG	zdgigi	1740240726	Z. diploperennis Gigi	RLG
+RLG	zdmomo	1368279017	Z. diploperennis Momo	RLG
+RLG	zluxur	1881466306	Z. luxurians	RLG
+RLG	zmB735	974389267	Z. mays ssp. mays B73v5	RLG
+RLG	zmhuet	1244689522	Z. mays ssp. huehue.	RLG
+RLG	znicar	2487841076	Z. nicaraguensis	RLG
+RLX	achine	132845566	A. chinensis	RLX
+RLX	agerar	798702627	A. gerardi	RLX
+RLX	atenui	213047107	"A." burmanicus	RLX
+RLX	avirgi	95583724	A. virginicum	RLX
+RLX	blagur	417572964	B. laguroides	RLX
+RLX	ccitra	340563541	C. citratus	RLX
+RLX	crefra	147298935	C. refractus	RLX
+RLX	cserru	148182869	C. serrulatus	RLX
+RLX	etrips	916956542	E. tripsacoides	RLX
+RLX	hcompr	1146790208	H. compressa	RLX
+RLX	hconto	275476298	H. contortus	RLX
+RLX	irugos	78046637	I. rugosum	RLX
+RLX	ppanic	108092885	P. paniceum	RLX
+RLX	rrottb	200788938	R. rottboellioides	RLX
+RLX	rtuber	288426555	R. tuberculosa	RLX
+RLX	smicro	135251687	S. microstachyum	RLX
+RLX	snutan	565070402	S. nutans	RLX
+RLX	sscopa	552810363	S. scoparium	RLX
+RLX	tdacn1	619711590	T. dactyloides KS	RLX
+RLX	tdacn2	609430794	T. dactyloides Northern Hap2	RLX
+RLX	tdacs1	614261085	T. dactyloides FL	RLX
+RLX	tdacs2	633293673	T. dactyloides Southern Hap2	RLX
+RLX	telega	447642412	T. elegans	RLX
+RLX	ttrian	229191575	T. triandra	RLX
+RLX	udigit	1055890678	U. digitatum	RLX
+RLX	vcuspi	266561176	V. cuspidata	RLX
+RLX	zTIL01	395123557	Z. mays ssp. parv. TIL01	RLX
+RLX	zTIL11	401631351	Z. mays ssp. parv. TIL11	RLX
+RLX	zTIL18	355912851	Z. mays ssp. mex. TIL18	RLX
+RLX	zTIL25	316162759	Z. mays ssp. mex. TIL25	RLX
+RLX	zdgigi	581970907	Z. diploperennis Gigi	RLX
+RLX	zdmomo	475620141	Z. diploperennis Momo	RLX
+RLX	zluxur	607611159	Z. luxurians	RLX
+RLX	zmB735	116336425	Z. mays ssp. mays B73v5	RLX
+RLX	zmhuet	434367029	Z. mays ssp. huehue.	RLX
+RLX	znicar	657898165	Z. nicaraguensis	RLX
+TandemRepeat	achine	20966860	A. chinensis	TR
+TandemRepeat	agerar	78538707	A. gerardi	TR
+TandemRepeat	atenui	14838498	"A." burmanicus	TR
+TandemRepeat	avirgi	9414603	A. virginicum	TR
+TandemRepeat	blagur	10189070	B. laguroides	TR
+TandemRepeat	ccitra	8996632	C. citratus	TR
+TandemRepeat	crefra	28754330	C. refractus	TR
+TandemRepeat	etrips	90800000	E. tripsacoides	TR
+TandemRepeat	hcompr	617772667	H. compressa	TR
+TandemRepeat	hconto	157713852	H. contortus	TR
+TandemRepeat	irugos	27532540	I. rugosum	TR
+TandemRepeat	ppanic	5682078	P. paniceum	TR
+TandemRepeat	rrottb	27434427	R. rottboellioides	TR
+TandemRepeat	rtuber	5962820	R. tuberculosa	TR
+TandemRepeat	sscopa	14373429	S. scoparium	TR
+TandemRepeat	tdacn1	269903840	T. dactyloides KS	TR
+TandemRepeat	tdacn2	201340713	T. dactyloides Northern Hap2	TR
+TandemRepeat	tdacs1	528999029	T. dactyloides FL	TR
+TandemRepeat	tdacs2	471455287	T. dactyloides Southern Hap2	TR
+TandemRepeat	udigit	84240730	U. digitatum	TR
+TandemRepeat	zTIL01	652696874	Z. mays ssp. parv. TIL01	TR
+TandemRepeat	zTIL11	199696617	Z. mays ssp. parv. TIL11	TR
+TandemRepeat	zdgigi	178625044	Z. diploperennis Gigi	TR
+TandemRepeat	zdmomo	52695658	Z. diploperennis Momo	TR
+TandemRepeat	zluxur	143415491	Z. luxurians	TR
+TandemRepeat	zmB735	46446331	Z. mays ssp. mays B73v5	TR
+TandemRepeat	zmhuet	90384357	Z. mays ssp. huehue.	TR
+NA	zmB735	54075891	Z. mays ssp. mays B73v5	NA

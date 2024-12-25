@@ -47,6 +47,83 @@ teploidyage=ggplot(asize, aes(x=mya, y=haploidRepeatSize, color=ploidy)) + geom_
 teploidyage
 
 
+
+#### barplot!!
+## generated in ../transposable_elements/plot_te_summaries_along_chr.R
+#### WATCH oUYT
+### changing this here so parv is shortened!!!!! for TILs
+shorttaxonnames=c("Z. mays ssp. parv. TIL11",  "Z. mays ssp. parv. TIL01", "Z. mays ssp. mays B73v5", "Z. mays ssp. mex. TIL25", "Z. mays ssp. mex. TIL18", "Z. mays ssp. huehue.", 
+                  "Z. luxurians", "Z. nicaraguensis", "Z. diploperennis Momo", "Z. diploperennis Gigi", "T. zoloptense", "T. dactyloides FL", "T. dactyloides Southern Hap2", 
+                  "T. dactyloides Northern Hap2", "T. dactyloides KS", "T. dactyloides tetraploid", "U. digitatum", "V. cuspidata", "R. rottboellioides", "R. tuberculosa", 
+                  "H. compressa", "E. tripsacoides", "S. scoparium", "S. microstachyum", "A. virginicum", "A. chinensis", "A. gerardi", 
+                  "C. refractus", "C. citratus", "H. contortus", "T. triandra", "B. laguroides", "P. paniceum", "S. bicolor", 
+                  "I. rugosum", "S. nutans", '"A." burmanicus', "T. elegans", "C. serrulatus", "P. vaginatum")
+names(shorttaxonnames)=c("zTIL11",  "zTIL01", "zmB735", "zTIL25", "zTIL18", "zmhuet", 
+                         "zluxur", "znicar", "zdmomo", "zdgigi", "tzopol", "tdacs1", "tdacs2", 
+                         "tdacn2", "tdacn1", "tdactm", "udigit", "vcuspi", "rrottb", "rtuber", 
+                         "hcompr", "etrips", "sscopa", "smicro", "avirgi", "achine", "agerar", 
+                         "crefra", "ccitra", "hconto", "ttrian", "blagur", "ppanic", "sbicol", 
+                         "irugos", "snutan", "atenui", "telega", "cserru", "pvagin")
+
+# List of substrings to exclude from italics
+exceptions <- c('subsp.', 'ssp.', 'TIL11', 'TIL01', 
+                'TIL25', 'TIL18', 'Momo', 'Gigi', 
+                'Southern Hap1', 'Northern Hap1', 
+                'FL', 'KS', '\\*', '\\"', 'B73v5')
+
+# Custom function to apply italics with exceptions
+format_labels <- function(labels, exceptions) {
+  sapply(labels, function(label) {
+    # Apply italics to everything initially
+    parts <- unlist(strsplit(label, " "))  # Split label into words
+    formatted_parts <- sapply(parts, function(word) {
+      if (word %in% exceptions) {
+        return(word)  # Keep exceptions in regular text
+      } else {
+        return(paste0("<i>", word, "</i>"))  # Italicize other words
+      }
+    })
+    # Combine parts back into a single string
+    return(paste(formatted_parts, collapse = " "))
+  })
+} 
+
+
+
+bardata=read.table('../transposable_elements/te_barplot_data.txt', header=T, sep='\t')
+bardata$shortSpeciesLabel=shorttaxonnames[match(bardata$genome, names(shorttaxonnames))]
+bardata$shortSpeciesLabel=factor(bardata$shortSpeciesLabel, levels=rev(shorttaxonnames))
+
+# Apply the formatting to y-axis labels
+formatted_labels <- format_labels(levels(bardata$shortSpeciesLabel), exceptions)
+formatted_labels[4]='<i>&quot;A.&quot;</i> <i>burmanicus</i>'
+
+bardata$supLegend <- factor(bardata$sup, levels = c(
+  "DHH", "DTA", "DTC", "DTH", "DTM", "DTT", "RLC", "RLG", "RLX", "TandemRepeat"),
+  labels = c("DHH", "DTA", "DTC", "DTH", "DTM", "DTT", "RLC", "RLG", "RLX", "TR")  # Change label to TR
+)
+
+tebar=ggplot(bardata[!bardata$genome%in%c('zmB735', 'tdacn2', 'tdacs2'),], aes(y=shortSpeciesLabel, x=bp, fill=supLegend)) + geom_col(position='fill') + scale_fill_manual(values=te_colors)+ylab('Genome')+xlab('Proportion of Repeat Base Pairs')+
+  geom_vline(xintercept=c(0.25,0.5,0.75), color='snow', alpha=0.1)+
+  theme(
+    legend.position = "top",                # Place legend at bottom
+    legend.title = element_blank(),            # Remove legend title
+    legend.text = element_text(size = 8),     # Adjust text size
+    legend.key.height = unit(0.5, "cm"),       # Reduce height of keys
+    legend.key.width = unit(1, "cm"),           # Adjust width of keys
+    axis.text.y=element_markdown(size=9),
+    legend.justification='center'
+  ) +
+  scale_y_discrete(labels=formatted_labels)+
+  guides(fill = guide_legend(
+    title.position = "top",                    # Moves legend title to top (optional)
+    label.position = "bottom",                    # Places labels above boxes
+    nrow = 1,                                  # Arrange in one row
+    byrow = TRUE,                               # Fill row by row
+    reverse=T
+  ))+ylab('')
+
+
 ### distance to genes. 
 
 
@@ -63,6 +140,18 @@ genedists=plot_grid(uph, downh, align='hv', axis='tb', ncol=2, labels=c('D', 'E'
 
 
 #### types of TEs no burst??
+
+ages=read.table('../transposable_elements/ages_plot_data.txt', header=T, sep='\t')
+ageplot=ggplot(ages[ages$genome!='zmB735',], aes(x=mya, y=(1-medianage)/6.5e-9/2/1e6, color=ploidy, size=copies)) + geom_point() + scale_color_manual(values=ploidycolors) + ylab('Median Insertion Time, LTR retrotransposon (Mya)')+xlab('Divergence Between Parental Genomes, (Mya)')+
+                    theme(legend.position=c(0.61,0.9), legend.text = element_text(size=8))+guides(color='none', fill='none')+ labs(color='Ploidy', size='LTR Retrotransposon Copies')
+
+
+evenness=read.table('../transposable_elements/evenness10copies_plot_data.txt', header=T, sep='\t')
+evennessplot=ggplot(evenness[evenness$genome!='zmB735',], aes(y=JN, x=mya, color=ploidy)) + geom_point(aes(size=haploidRepeatSize/1e6)) + scale_color_manual(values=ploidycolors)+
+                    xlab('Evenness (1 if all families equally sized)')+ylab('Number Families')+
+                    theme(legend.position=c(0.61,0.9), legend.text = element_text(size=8))+guides(color='none', fill='none')+ labs(color='Ploidy', size='Genomic Repeat Mb')
+
+
 
 ### 
 
