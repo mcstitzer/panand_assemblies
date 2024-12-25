@@ -7,8 +7,11 @@ library(ggplot2)
 library(cowplot)
 theme_set(theme_cowplot())
 
-all=read.table('../panand_sp_ploidy.txt')
+## xm01 /workdir/mcs368/panand_assemblies/repeats/
+all=read.table('../../panand_sp_ploidy.txt')
 all=all[!all$V2 %in% c('pprate', 'tdactm', 'tzopol', 'osativ', 'bdista', 'agerjg', 'svirid', 'eophiu'),]
+
+all=all[all$V2!='sbicol',] ## dummy me lost it
 
 genomecountlist=vector(mode = "list", length = length(all$V2))
 names(genomecountlist)=all$V2
@@ -19,7 +22,11 @@ names(repeatlengthslist)=all$V2
 
 for( genotype in all$V2){
 ##import gff3
-a=import.gff3(paste0('../trash/repeatmask_tandems/', all$V1[all$V2==genotype], '_EDTATandemRepeat.gff3'))
+if(genotype=='snutan'){
+a=import.gff3(paste0('trash/', all$V1[all$V2==genotype], '_EDTAandTandemRepeat.negRemoved.gff3'))
+}else{
+a=import.gff3(paste0('trash/', all$V1[all$V2==genotype], '_EDTAandTandemRepeat.gff3'))
+}
 ## get each fam
 temp=data.frame(a) #%>% group_by(fam=gsub('_LTR', '', gsub('_INT', '', Name)), Classification) %>% dplyr::filter(!is.na(as.numeric(Identity))) 
 if('Note' %in% colnames(temp)){temp$Note=''}
@@ -37,7 +44,7 @@ repeatlengthslist[[genotype]]=sum(width(reduce(a, ignore.strand=T)))
 genomecount=do.call(rbind, genomecountlist)
 genomecount$Identity=as.numeric(genomecount$Identity)
 
-write.table(data.frame(genome=names(repeatlengthslist), repeatbp=unlist(repeatlengthslist)),'total_repeat_bp.txt', row.names=F, col.names=T, sep='\t')
+#write.table(data.frame(genome=names(repeatlengthslist), repeatbp=unlist(repeatlengthslist)),'total_repeat_bp.txt', row.names=F, col.names=T, sep='\t')
 
 ## add a superfamily based on matchign up to the classification field - note most of these NAs are relics from the B73 annotation being included!!!!!
 genomecount$sup=c(NA, 'DTA', 'DTC', 'DTH', 'DTM', 'DTT', 'DHH', NA,NA,NA,NA,NA,NA,'RLC', 'RLG', 'RLG', 'RLX', 'DTA', 'DTC', 'DTH', 'DTM', 'DTT', NA,NA,NA)[match(genomecount$Classification, c("Cent/CentC", "DNA/DTA", "DNA/DTC", "DNA/DTH", "DNA/DTM", "DNA/DTT", 
@@ -50,8 +57,13 @@ genomecount$sup=c(NA, 'DTA', 'DTC', 'DTH', 'DTM', 'DTT', 'DHH', NA,NA,NA,NA,NA,N
 #genomecount$sup[genomecount$source=='TRASH']=genomecount$Name[genomecount$source=='TRASH']
 genomecount$sup[genomecount$source=='TRASH']='TandemRepeat'
 
+genomecount$sup[genomecount$source=='RepeatMasker']='TandemRepeat'
+genomecount$Classification[genomecount$source=='RepeatMasker']='TandemRepeat'
 
+## there's still knob in this one znicar family ...
+genomecount=genomecount %>% group_by(genome, fam=gsub('_LTR', '', gsub('_INT', '', Name))) %>% filter(!(fam == "TE_00015576" & genome == "znicar")) %>% mutate(fam=fam)
 
+################## skip to the end for now
 #  agc=unlist(reduce(split(as_granges(genomecount, keep_mcols=T), ~c(Name,genome)))) ## merge bookended or overlapping TRs if they're the same repeat consensus
 
 
@@ -273,3 +285,86 @@ geom_histogram(binwidth=1e6, position='stack') + ggtitle(paste0(genome, i)),
                align='hv', ncol=1, rel_heights=c(1,0.2)))}
 }
 dev.off()
+
+
+ages=genomecount %>% filter(Method=='structural') %>% dplyr::group_by(genome, Method) %>% dplyr::filter(grepl('LTR', type)) %>% dplyr::summarize(copies=dplyr::n(), meanage=mean(as.numeric(ltr_identity), na.rm=T), meanage90=mean(as.numeric(ltr_identity)[as.numeric(ltr_identity)>0.9], na.rm=T), nIdentical=sum(as.numeric(ltr_identity)==1, na.rm=T), nYoung=sum(as.numeric(ltr_identity)>0.99, na.rm=T)) %>% data.frame()  
+ages$propIdentical=ages$nIdentical/ages$copies
+ages$propYoung=ages$nYoung/ages$copies ## young here is 1% divergence :)
+
+evenness=genomecount %>% group_by(genome, sup, fam=gsub('_LTR', '', gsub('_INT', '', Name))) %>% filter(!(fam == "TE_00015576" & genome == "znicar"), !is.na(fam)) %>% summarize(nCopies=n(), bp=sum(width), avgwidth=mean(width)) 
+evennesstoplot=evenness %>% group_by(genome) %>% mutate(total_bp=sum(bp), p_i=bp/total_bp, totalcopies=sum(nCopies), p_iN=nCopies/totalcopies)%>% summarize(nfam=dplyr::n(), H=-sum(p_i*log(p_i)), S=dplyr::n(), HN=-sum(p_iN*log(p_iN))) %>% mutate(J=H/log(S), JN=HN/log(S)) %>% ungroup()
+evennesstoplot4copies=evenness %>% filter(nCopies>3)%>% group_by(genome) %>% mutate(total_bp=sum(bp), p_i=bp/total_bp, totalcopies=sum(nCopies), p_iN=nCopies/totalcopies)%>% summarize(nfam=dplyr::n(), H=-sum(p_i*log(p_i)), S=dplyr::n(), HN=-sum(p_iN*log(p_iN))) %>% mutate(J=H/log(S), JN=HN/log(S)) %>% ungroup()
+evennesstoplot10copies=evenness %>% filter(nCopies>9)%>% group_by(genome) %>% mutate(total_bp=sum(bp), p_i=bp/total_bp, totalcopies=sum(nCopies), p_iN=nCopies/totalcopies)%>% summarize(nfam=dplyr::n(), H=-sum(p_i*log(p_i)), S=dplyr::n(), HN=-sum(p_iN*log(p_iN))) %>% mutate(J=H/log(S), JN=HN/log(S)) %>% ungroup()
+
+
+ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
+names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
+asize=fread('../panand_assembly_sizes.txt', header=T, quote="", fill=T)
+## factor so correct order
+asize$ploidy=factor(asize$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+
+evennesstoplot$ploidy=asize$ploidy[match(evennesstoplot$genome, asize$V2)]
+evennesstoplot$haploidRepeatSize=asize$haploidRepeatSize[match(evennesstoplot$genome, asize$V2)]
+evennesstoplot10copies$ploidy=asize$ploidy[match(evennesstoplot10copies$genome, asize$V2)]
+evennesstoplot10copies$haploidRepeatSize=asize$haploidRepeatSize[match(evennesstoplot10copies$genome, asize$V2)]
+
+pdf('~/transfer/evenness_tefam.pdf',8,8)
+ggplot(evennesstoplot[evennesstoplot$genome!='zmB735',], aes(x=J, y=nfam, color=ploidy)) + geom_point() + scale_color_manual(values=ploidycolors)
+ggplot(evennesstoplot[evennesstoplot$genome!='zmB735',], aes(x=JN, y=nfam, color=ploidy)) + geom_point() + scale_color_manual(values=ploidycolors)
+ggplot(evennesstoplot[evennesstoplot$genome!='zmB735',], aes(x=J, y=nfam, color=ploidy)) + geom_point() + scale_color_manual(values=ploidycolors)+geom_text(aes(label=genome))
+ggplot(evennesstoplot[evennesstoplot$genome!='zmB735',], aes(x=JN, y=nfam, color=ploidy)) + geom_point() + scale_color_manual(values=ploidycolors)+geom_text(aes(label=genome))
+ggplot(evennesstoplot[evennesstoplot$genome!='zmB735',], aes(x=J, y=nfam, color=ploidy)) + geom_point(aes(size=haploidRepeatSize)) + scale_color_manual(values=ploidycolors)
+ggplot(evennesstoplot[evennesstoplot$genome!='zmB735',], aes(x=JN, y=nfam, color=ploidy)) + geom_point(aes(size=haploidRepeatSize)) + scale_color_manual(values=ploidycolors)
+
+ggplot(evennesstoplot10copies[evennesstoplot10copies$genome!='zmB735',], aes(x=J, y=nfam, color=ploidy)) + geom_point(aes(size=haploidRepeatSize)) + scale_color_manual(values=ploidycolors)
+ggplot(evennesstoplot10copies[evennesstoplot10copies$genome!='zmB735',], aes(x=JN, y=nfam, color=ploidy)) + geom_point(aes(size=haploidRepeatSize)) + scale_color_manual(values=ploidycolors)
+
+dev.off()
+
+
+
+### okay this will work!!! make a stacked bar plot of each of these genome-wide, using these colors
+# Retrotransposon colors (muted)
+retro_colors <- c(RLG="#B2182B", RLC="#D6604D", RLX="#F4A582")
+# DNA transposon colors (blue-green gradient)
+dna_colors <- c(DHH="#377EB8", DTA="#4B8EBA", DTC="#5DA9BD", DTH="#70C2BF", DTM="#83D6C1", DTT="#96E2C3", "#A8EEC5")
+# Tandem repeat color (distinct deep purple)
+tandem_color <- c(TandemRepeat="#6A3D9A")
+# Combine all colors
+te_colors <- c(retro_colors, dna_colors, tandem_color)
+
+#### then, make a stacked bar histogram of the largest scaffold/chromosome in each assembly, to show the relative proportions
+
+
+pdf(paste0('~/transfer/chromosomes_panand.mbscaled.', Sys.Date(), '.pdf'), 20, 10)
+for(genome in all$V2){
+#for(i in unique(genomecount$seqnames[genomecount$end>50e6 & genomecount$genome==genome])){
+longest=genomecount[genomecount$genome==genome,]
+longest=longest[longest$seqnames==longest$seqnames[which.max(longest$end)],]
+
+print(
+#plot_grid(
+ggplot(longest, aes(x=start, fill=factor(sup), weight=width)) + scale_fill_manual(values=te_colors)+
+geom_histogram(binwidth=1e6, position='stack') + ggtitle(paste0(genome, longest$seqnames[1]))+ theme(legend.position = "none")#, 
+)
+#               ggplot(genes[genes$seqnames==i & genes$genome==genome,], aes(x=start)) + geom_histogram(binwidth=1e6),
+ #              align='hv', ncol=1, rel_heights=c(1,0.2)))
+ #              }
+}
+dev.off()
+
+
+
+
+
+pdf('~/transfer/barplots_tesup.pdf',8,8)
+
+bardata=genomecount%>% group_by(sup, genome) %>% summarize(bp=sum(width),.groups='drop')
+ggplot(bardata, aes(y=genome, x=bp, fill=sup)) + geom_bar(stat='identity') + scale_fill_manual(values=te_colors)+ylab('Genome')+xlab('Total bp')
+ggplot(bardata, aes(y=genome, x=bp, fill=sup)) + geom_col(position='fill') + scale_fill_manual(values=te_colors)+ylab('Genome')+xlab('Proportion of TE base pairs')
+
+dev.off()
+
+
+
+
