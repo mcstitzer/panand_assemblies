@@ -204,7 +204,7 @@ names(shorttaxonnames)=c("zTIL11",  "zTIL01", "zmB735", "zTIL25", "zTIL18", "zmh
 
 ## from ks_plotting
 out$shortSpeciesLabel=shorttaxonnames[match(out$genome, names(shorttaxonnames))]
-out$shortspeciesLabel=factor(out$shortSpeciesLabel, levels=shorttaxonnames)
+out$shortSpeciesLabel=factor(out$shortSpeciesLabel, levels=shorttaxonnames)
 
 
 fractchr=ggplot(out[out$genome%in% fig3sp & out$pvChr==chr& !out$genome%in%lowQualAssemblies & !out$filterSwitch & out$fractBias>0.2 & out$synt_window_start_index<1981 & out$stretchLen>1,], 
