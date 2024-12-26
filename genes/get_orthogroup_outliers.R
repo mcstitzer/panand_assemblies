@@ -305,8 +305,24 @@ results=apply(bog[,-c(1,40:ncol(bog))], 1, function(row){
   deviations=row-meds
   phen=deviations[oldpp]
   other=deviations[newpp]
-  return(mean(phen)-mean(other))
+  return(all(phen)>=0 & all(other)< -0.5)
 })
 bog$oldnew_med_oldlarger=results
 
+results=apply(bog[,-c(1,40,41:ncol(bog))],1,function(row){
+  pheno=as.numeric(row[oldpp])
+  other=as.numeric(row[newpp])
+    return(all(pheno)>4 & all(other)<3)
+
+})
+bog$oldnew_counts=results
+
+
 head(bog[order(-bog$oldnew_med_oldlarger),c('Orthogroup', oldpp, 'oldnew_med_oldlarger', newpp)])
+## with cutoff of 1, there are three genes...
+## OG0005245
+## OG0012685
+## OG0017096
+
+dput(head(bog[bog$oldnew_med_oldlarger,]$Orthogroup,100))
+

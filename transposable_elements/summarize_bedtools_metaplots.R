@@ -249,3 +249,20 @@ downh=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%201:400,],
 plot_grid(uph, downh, align='tb', axis='hv', ncol=2, labels=c('B', 'C'))
 
 dev.off()
+
+
+### measure distance to 0.5 coverage
+
+combined_data_helixer %>%
++     group_by(genome_id, ploidy) %>%
++     filter(mean < 0.5) %>%          # Filter rows where mean < 0.5
++     slice_min(windowadj) %>%       # Select the first occurrence based on windowadj
++     select(genome_id, windowadj)%>% group_by(ploidy) %>% summarize(median(windowadj))  # Keep only relevant columns
+
+
+## supplemental figure: repeat proportion doesn't explain rearrangments
+pdf('../figures/supp_fig_repeat_prop_vs_rearrangements.pdf',8,8)
+ggplot(asize, aes(x=repeatProp, y=scaledTransloc, color=ploidy))+geom_point(size=3)+xlab('Proportion Repeats')+ylab('Rearrangements per Diploid Equivalent')+scale_color_manual(values=ploidycolors)+theme(legend.position='NULL')
+dev.off()
+
+

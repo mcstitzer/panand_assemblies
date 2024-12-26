@@ -342,6 +342,10 @@ ggplot(ages[ages$genome!='zmB735',], aes(x=mya, y=(1-medianage)/6.5e-9/2/1e6, co
 
 dev.off()
 
+## look for evenness differences by ploidy
+pairwise.wilcox.test(evenness$JN, evenness$ploidy, p.adjust.method = "BH")
+data$group <- ifelse(data$ploidy == "Tetraploid", "Paleotetraploid", "Other")
+wilcox.test(JN ~ ploidy=='Paleotetraploid', data = evenness)
 
 
 ### okay this will work!!! make a stacked bar plot of each of these genome-wide, using these colors
