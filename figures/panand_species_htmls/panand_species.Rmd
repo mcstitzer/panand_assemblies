@@ -136,9 +136,7 @@ ggdraw() +  draw_plot(te)
 ```
 
 ### Spatial distribution of genes and TEs
-Density of genes and repeats along the longest sequence (contig, scaffold, or chromosome) of *`r species`* in 1 Mb bins.
-
-Gene annotation shown is all Helixer genes. 
+Density of genes and repeats along the longest sequence (contig, scaffold, or chromosome) of *`r species`* in 1 Mb bins. Gene annotation shown is all Helixer genes. 
 
 ```{r echo=FALSE, fig.align='center', out.width='800px'}
 
