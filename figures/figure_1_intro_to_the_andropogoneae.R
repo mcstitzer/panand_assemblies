@@ -108,7 +108,7 @@ rsp=drop.tip(rsp, c('pvagin', 'tdacn2', 'tdacs2'))
 #densit=ggtree(force.ultrametric(rsp, method='extend'))
 p2 <- tibble(ymin = c(1,which(!duplicated(subtribedf$subtribe[subtribedf$genome %in% asize$V2]))[-1])-1, ymax = c(which(!duplicated(subtribedf$subtribe[subtribedf$genome %in% asize$V2]))[-1],sum(subtribedf$genome %in% asize$V2)+1)-1, fill = unique(subtribedf$subtribe)) %>%  ggplot() +
   geom_rect(aes(xmin = 0.1, xmax = 0.9, ymin = ymin+0.1, ymax = ymax), color='black', fill='snow2') +
-  geom_text(aes(x = .5, y = (ymin  + ymax) / 2, label = fill), angle = 90, size=2, fontface = "bold") +scale_y_reverse(breaks = seq(1, 10), expand = expansion(mult = c(0, 0))) +scale_x_continuous(breaks = c(0), expand = expansion(mult = c(0, 0))) +guides(fill = FALSE) +theme_void()
+  geom_text(aes(x = .5, y = (ymin  + ymax) / 2, label = fill), angle = 90, size=2.4, fontface = "bold") +scale_y_reverse(breaks = seq(1, 10), expand = expansion(mult = c(0, 0))) +scale_x_continuous(breaks = c(0), expand = expansion(mult = c(0, 0))) +guides(fill = FALSE) +theme_void()
 
 
 tip_order <- chronopienotip$data %>%
@@ -125,8 +125,22 @@ levels(asize$speciesLabel)[levels(asize$speciesLabel) %in% asize$species[asize$h
 
 
 ### plot the haploid genome size, but nee
+## and fake a legend
+legend_data <- data.frame(
+  shape = c("Genome", "TE + TR"),
+  fill='black',
+  color='black',
+  x = c(1,1),
+  y = c(100, 100) ## otuside of ylim??
+)
+
 hgs=ggplot(asize, aes(x=(haploidAssemblySize-haploidNCount)/1e9, y=1, color=ploidy)) + geom_vline(xintercept=c(2,4), color='snow2', linetype='dotted') + geom_vline(xintercept=c(1,3,5), color='snow3', linetype='dotted') + 
-geom_segment(aes(y=1,yend=1, x=0, xend=haploidAssemblySize/1e9)) + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) + geom_point(aes(x=haploidAssemblySize/1e9), color='snow3', size=2)+ geom_point(size=4)+ geom_point(aes(x=haploidRepeatSize/1e9, bg=ploidy, y=1.6), shape=25, size=3)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0, hjust=1), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ theme(legend.position = "none") + ylab('')+ xlab('Haploid Size (Gb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + ylim(0,2)
+geom_segment(aes(y=1,yend=1, x=0, xend=haploidAssemblySize/1e9)) + scale_color_manual(values=ploidycolors) + scale_fill_manual(values=ploidycolors) + geom_point(aes(x=haploidAssemblySize/1e9), color='snow3', size=2)+ geom_point(size=4)+ geom_point(aes(x=haploidRepeatSize/1e9, bg=ploidy, y=1.6), shape=25, size=3)+ facet_wrap(~speciesLabel, ncol=1, strip.position='left', labeller=purrr::partial(label_species, dont_italicize=c('subsp.', 'ssp.', 'TIL11', 'TIL01', 'TIL25', 'TIL18', 'Momo', 'Gigi', 'Southern Hap1', 'Northern Hap1', 'FL', 'KS',  '\\*', '\\"', 'B73v5'))) + theme(strip.placement = "outside",  strip.background = element_blank(), strip.text.y.left = element_text(angle=0, hjust=1), panel.spacing = unit(3, "pt"), axis.text=element_text(size=9))+ #theme(legend.position = "none") + 
+ylab('')+ xlab('Haploid Size (Gb)') + theme(axis.text.y=element_blank(), axis.ticks.y=element_blank()) + ylim(0,2) +
+geom_point(data=legend_data, aes(x=x, y=y, shape=shape), size=3, fill='black', color='black')+
+scale_shape_manual(values=c('Genome'=21, 'TE + TR'=25))+
+theme(legend.position=c(0.71,0.3), legend.text = element_text(size=10)) +
+  labs(color='Ploidy', pch='') +guides(color='none', fill='none')
 
 
 
@@ -166,10 +180,43 @@ maphetflow=plot_grid(rangemap, hetflow, ncol=1, align='v', labels=c('C',''), rel
 
 figure1=plot_grid(treesubtribegs, maphetflow, align='hv', axis='tb', ncol=2, rel_widths=c(1,0.8), labels='')
 
+
+### rethinking because these figures are small!!
+
+## zuerst, try to put points of polyploidy timing
+maxage=max(chronogram$edge.length[chronogram$edge.length<25]) ## not the paspalum branch
+tree_data=fortify(chronogram)
+point_data=merge(het, tree_data, by.x='genome', by.y='label')
+perennialmedian=median(point_data$mya[point_data$genome%in%c('tdacn1', 'tdacs1', 'znicar', 'zluxur', 'zdgigi', 'zdmomo')])
+perennialy=26.4 ## right above nicaraguensis
+point_data=point_data[,c('genome', 'mya', 'y', 'ploidy')]
+point_data$mya[point_data$ploidy%in%c('Diploid', 'Paleotetraploid')]=NA
+point_data=rbind(point_data, data.frame(genome='tripsacinae', mya=perennialmedian, y=perennialy, ploidy='Paleotetraploid'))
+
+
+offsettip=3.4 ## offset for the plot margin
+tree_plot <- chronopienotip+  
+#scale_x_continuous(breaks=c( maxage-20+4,maxage-10+4, maxage+4), labels=c('20','10','0')) + 
+scale_x_continuous(breaks=c(maxage-20+offsettip,maxage-15+offsettip,maxage-10+offsettip,maxage-5+offsettip,maxage+offsettip), labels=c('20','15', '10', '5', '0'))+ ## extra 3.5 because of plot margin
+xlab('Divergence (Mya)') + 
+geom_point(data=point_data, aes(x=maxage-mya+offsettip, y=y), shape=18, size=4.4, color='black')+ ## don't mess up fill legend
+geom_point(data=point_data, aes(x=maxage-mya+offsettip, y=y, color=factor(ploidy,levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid') )),shape=18, size=4)+ scale_color_manual(values=ploidycolors) +theme(legend.box.spacing = unit(-1, "cm"), legend.margin = margin(-0.5, 0, 0, 0, unit='cm'), axis.title.x=element_text(size=11), legend.text = element_text(size=10))+ labs(color='', fill='')#+ theme(legend.box = "horizontal")
+
+
+
+treesubtribegs=plot_grid(tree_plot, p2, NULL, hgs, align='h', axis='tb', ncol=4, rel_widths=c(0.1,0.01,-0.008,0.2), labels=c('A', '', 'B', '', ''))
+
+maphet=plot_grid(NULL, ggdraw(rangemap), hethomeo, ncol=3, align='v', labels=c('','C','D'), rel_widths=c(-0.15,1,0.5), label_x=c(NA, 0.17, 0.01), label_y=c(NA, 1,    1))
+
+figure1=plot_grid(treesubtribegs, maphet, align='hv', axis='tb', ncol=1, rel_heights=c(1,0.4), labels='')
+
+
 #plot_grid(densit, p2, NULL, hgs, cpb,NULL,aap, ksp, align='hv',axis='tb', ncol=8, rel_widths=c(0.2,0.05,-0.05,0.7,0.2,-0.03,0.2,0.3), labels=c('a', '','b','', 'c', 'd','', 'e')),
 #  bottomlayer,newbottom, ncol=1, align='hv', rel_heights=c(0.7,0.2,0.2))
 
-pdf('../figures/figure1_intro-to-the-andropogoneae.pdf',18,8)
+#pdf('../figures/figure1_intro-to-the-andropogoneae.pdf',18,8)
+
+pdf('../figures/figure1_intro-to-the-andropogoneae.pdf',10,12)
 figure1
 dev.off()
 

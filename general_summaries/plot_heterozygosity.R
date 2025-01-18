@@ -167,8 +167,18 @@ heterozygosity=ggplot(het, aes(x = het, y = 0, color=ploidy)) +  # Keep y=0 to r
         panel.grid = element_blank())  # Remove y-axis and other clutter
 
 hethomeo=ggplot(het[!is.na(het$type),], aes(x=het, y=ks, color=ploidy, pch=ifelse(type=='autopolyploid', 'autopolyploid', ifelse(ploidy=='Diploid', 'diploid', 'allopolyploid'))))+geom_abline(slope=1, intercept=0, lwd=5, color='gray90') +
-  geom_point(size=3, alpha=0.8)+
-  scale_color_manual(values=ploidycolors)+theme(legend.position=c(0.61,0.9), legend.text = element_text(size=8)) +
+  geom_point(size=4, alpha=0.8)+
+  scale_color_manual(values=ploidycolors)+theme(legend.position=c(0.55,0.9), legend.text = element_text(size=10)) +
   ylab('Ks between\nduplicates') + xlab('Heterozygosity') + labs(color='Ploidy', pch='') +guides(color='none')+
   theme() # Remove y-axis and other clutter
+
+
+hethomeomya=ggplot(het[!is.na(het$type),], aes(x=het, y=ks/2/6.5e-9/1e6, color=ploidy, pch=ifelse(type=='autopolyploid', 'autopolyploid', ifelse(ploidy=='Diploid', 'diploid', 'allopolyploid'))))+geom_abline(slope=76.92, intercept=0, lwd=5, color='gray90') +
+  geom_point(size=3, alpha=0.8)+
+  scale_color_manual(values=ploidycolors)+theme(legend.position=c(0.61,0.9), legend.text = element_text(size=8)) +
+  ylab('Parental Divergence (Mya)') + xlab('Heterozygosity') + labs(color='Ploidy', pch='') +guides(color='none')+
+  theme() # Remove y-axis and other clutter
+
+
+
 
