@@ -41,11 +41,13 @@ teploidyage=ggplot(asize, aes(x=mya, y=haploidRepeatSize, color=ploidy)) + geom_
   geom_point(size=3) + 
   scale_color_manual(values=ploidycolors)+ xlab('Divergence between\nParental Subgenomes (Mya)') + 
 #  stat_smooth(data=asizezt, method='lm', aes(group=NA), alpha=0.1, se=F, color='gray90')+
-  stat_smooth(data=asize[asize$ploidy!='Paleotetraploid' & !asize$V2%in%lowQualAssemblies,], method='lm', lty='longdash', color='gray', se=F)+ 
+#  stat_smooth(data=asize[asize$ploidy!='Paleotetraploid' & !asize$V2%in%lowQualAssemblies,], method='lm', lty='longdash', color='gray', se=F)+ 
   stat_smooth(data=asizezt, method='lm',color='gray', se=F) + 
   ylab('Repeat Base Pairs')  + theme(legend.position='NULL')
 teploidyage
 
+cor.test(asizezt$mya, asizezt$haploidRepeatSize)
+cor.test(asize[asize$ploidy!='Paleotetraploid' & !asize$V2%in%lowQualAssemblies,]$mya, asize[asize$ploidy!='Paleotetraploid' & !asize$V2%in%lowQualAssemblies,]$haploidRepeatSize)
 
 
 #### barplot!!
@@ -141,12 +143,16 @@ combined_data_helixer=read.table('../transposable_elements/combined_tedist_helix
 combined_data_helixer$ploidy=factor(combined_data_helixer$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 
 ### upstream
-uph=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%1:200,], aes(group=genome_id, x=(windowadj-200)*100, y=mean, color=ploidy))+ geom_vline(xintercept=c(0:20*10*-100), color='whitesmoke', lty='dotted')+ geom_hline(yintercept=c(0.2,0.4,0.6,0.8), color='seashell2', lty='longdash') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS') + ylab('Mean TE base pairs\nin 100bp window') + theme(legend.position='NULL')
+uph=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%1:200 & !combined_data_helixer$genome_id %in%c('znicar', 'zmB735'),], aes(group=genome_id, x=(windowadj-200)*100, y=mean, color=ploidy))+ geom_vline(xintercept=c(0:20*10*-100), color='whitesmoke', lty='dotted')+ geom_hline(yintercept=c(0.2,0.4,0.6,0.8), color='seashell2', lty='longdash') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TSS') + ylab('Mean TE base pairs\nin 100bp window') + theme(legend.position='NULL') + ylim(0,0.9)
 ### downstream
-downh=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%201:400,], aes(group=genome_id, x=(windowadj-200)*100, y=mean, color=ploidy))+ geom_vline(xintercept=c(0:20*10*100), color='whitesmoke', lty='dotted')+ geom_hline(yintercept=c(0.2,0.4,0.6,0.8), color='seashell2', lty='longdash') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TTS') + ylab('Mean TE base pairs\nin 100bp window') + theme(legend.position='NULL')
+downh=ggplot(combined_data_helixer[combined_data_helixer$windowadj%in%201:400 & !combined_data_helixer$genome_id %in%c('znicar', 'zmB735'),], aes(group=genome_id, x=(windowadj-200)*100, y=mean, color=ploidy))+ geom_vline(xintercept=c(0:20*10*100), color='whitesmoke', lty='dotted')+ geom_hline(yintercept=c(0.2,0.4,0.6,0.8), color='seashell2', lty='longdash') + geom_line() + scale_color_manual(values=ploidycolors)  + xlab('Base pairs away from TTS') + ylab('Mean TE base pairs\nin 100bp window') + theme(legend.position='NULL')+ylim(0,0.9)
 
 genedists=plot_grid(uph, downh, align='hv', axis='tb', ncol=2, labels=c('E', 'F'))
 
+genedistsmerged=plot_grid(uph+ theme(plot.margin = margin(5, -8, 5, 5)), downh + theme(plot.margin = margin(5, 5, 5, -8))+ theme(axis.text.y=element_blank(), axis.title.y=element_blank(), axis.ticks.y=element_blank(), axis.line.y=element_blank()), 
+          align='hv', axis='tb', ncol=2, labels=c('E', ''), panel_spacing = unit(0.8, "cm"))
+genedistsmerged=plot_grid(uph + theme(plot.margin = margin(5, -18, 5, 5)), NULL, downh + theme(plot.margin = margin(5, 5, 5, -18), axis.text.y=element_blank(), axis.title.y=element_blank(), axis.ticks.y=element_blank(), axis.line.y=element_blank()), 
+          align='hv', axis='tblr', ncol=3, labels=c('G', '',''), rel_widths=c(1,-0.25,1))
 
 
 #### types of TEs no burst??
@@ -155,6 +161,18 @@ ages=read.table('../transposable_elements/ages_plot_data.txt', header=T, sep='\t
 ageplot=ggplot(ages[ages$genome!='zmB735',], aes(x=mya, y=(1-medianage)/6.5e-9/2/1e6, color=ploidy, size=copies)) + geom_point() + scale_color_manual(values=ploidycolors) + ylab('Median Insertion Time,\nLTR retrotransposon (Mya)')+xlab('Divergence Between\nParental Genomes (Mya)')+
                     theme(legend.position=c(0.55,0.8), legend.title = element_text(hjust=0.5, size=9), legend.text = element_text(size=8))+guides(color='none', fill='none')+ labs(color='Ploidy', size='Total LTR\nRetro. Copies')+
                     guides(size=guide_legend(ncol=1, byrow=T))
+
+ageplotnumber=ggplot(ages[ages$genome!='zmB735',], aes(x=mya, y=copies, color=ploidy, size=(1-medianage)/6.5e-9/2/1e6)) + geom_point() + scale_color_manual(values=ploidycolors) + ylab('Number LTR Retrotransposons')+xlab('Divergence Between\nParental Genomes (Mya)')+
+                    theme(legend.position=c(0.55,0.8), legend.title = element_text(hjust=0.5, size=9), legend.text = element_text(size=8))+guides(color='none', fill='none')+ labs(color='Ploidy', size='Insertion Time (Mya)')+
+                    guides(size=guide_legend(ncol=1, byrow=T))
+
+ageplotnumbernodip=ggplot(ages[ages$genome!='zmB735' & ages$ploidy!='Diploid',], aes(x=mya, y=copies, color=ploidy, size=(1-medianage)/6.5e-9/2/1e6)) + geom_point(size=3) + scale_color_manual(values=ploidycolors) + ylab('Number LTR Retrotransposons')+xlab('Divergence Between\nParental Genomes (Mya)')+
+                    theme(legend.position='right', legend.title = element_text(hjust=0.5, size=9), legend.text = element_text(size=8))+guides(color='none', fill='none')+ labs(color='Ploidy', size='Insertion Time (Mya)')+
+                    guides(size=guide_legend(ncol=1, byrow=T))+xlim(0,15)
+ageplotnumbernodip=ggplot(ages[ages$genome!='zmB735' & ages$ploidy!='Diploid',], aes(x=mya, y=copies, color=ploidy, size=(1-medianage)/6.5e-9/2/1e6)) + geom_point() + scale_color_manual(values=ploidycolors) + ylab('Number LTR Retrotransposons')+xlab('Divergence Between\nParental Genomes (Mya)')+
+                    theme(legend.position='right', legend.title = element_text(hjust=0.5, size=9), legend.text = element_text(size=8))+guides(color='none', fill='none')+ labs(color='Ploidy', size='Insertion Time (Mya)')+
+                    guides(size=guide_legend(ncol=1, byrow=T))+xlim(0,15)+scale_size_continuous(range = c(3, 15))
+
 
 
 evenness=read.table('../transposable_elements/evenness10copies_plot_data.txt', header=T, sep='\t')
@@ -171,8 +189,8 @@ toprowte=plot_grid(rpgg, teploidy, teploidyage, labels='AUTO', align='h', ncol=3
 
 #plot_grid(toprowte, genedists, ncol=1, rel_heights=c(0.7,1), align='hv')
 
-rightbottom=plot_grid(evennessplot, ageplot, labels=c('G', 'H'), align='h', axis='tb',ncol=2)
-rightte=plot_grid(genedists, rightbottom, align='v', axis='lr', ncol=1)
+rightbottom=plot_grid(evennessplot, ageplot, labels=c('E', 'F'), align='h', axis='tb',ncol=2)
+rightte=plot_grid(rightbottom,genedistsmerged,  align='v', axis='lr', ncol=1)
 
 bottomrowte=plot_grid(tebar, rightte, labels=c('D', ''), ncol=2)#, align='h', axis='t')
 

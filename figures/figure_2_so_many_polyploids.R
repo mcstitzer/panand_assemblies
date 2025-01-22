@@ -76,6 +76,26 @@ hpl=ggplot(asize, aes(x=ploidy, y=helixerCount, group=ploidy, color=ploidy)) +
 
   xlab('Ploidy') + ylab('Helixer Genes') + theme(legend.position='NULL')
 
+### orthology filtered helixer genes
+ogsf=ogs[ogs$Total>40&ogs$Total<200,]
+asize$helixerCountOrthFilt=colSums(ogsf[,-1])[asize$V2]
+asize$helixerCountOrthFilt=ifelse(asize$haploid, asize$helixerCountOrthFilt, asize$helixerCountOrthFilt/2)
+
+hplof=ggplot(asize, aes(x=ploidy, y=helixerCountOrthFilt, group=ploidy, color=ploidy)) + 
+  geom_boxplot(outlier.shape = NA) + 
+  scale_color_manual(values=ploidycolors) + ylim(0,105000) + 
+  ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=100000) + 
+  geom_hline(yintercept=c(median(asize$helixerCountOrthFilt[asize$ploidy=='Diploid'], na.rm=T)*c(1,2,2,3)), lty='dotted', color='darkgray')+
+  annotate("text", x = 4.45, y = median(asize$helixerCountOrthFilt[asize$ploidy=='Diploid'], na.rm=T), label = "\u00D71", vjust = -0.5) + 
+  annotate("text", x = 4.45, y = median(asize$helixerCountOrthFilt[asize$ploidy=='Diploid'], na.rm=T)*2, label = "\u00D72", vjust = -0.5)+ 
+  annotate("text", x = 4.45, y = median(asize$helixerCountOrthFilt[asize$ploidy=='Diploid'], na.rm=T)*3, label = "\u00D73", vjust = -0.5) + 
+  geom_point(position = position_jitter(seed = 1), size=3)+ 
+
+  xlab('Ploidy') + ylab('Orthology Filtered\nHelixer Genes') + theme(legend.position='NULL')
+
+pdf('../figures/supp_fig_helixer_genes.pdf',12,4)
+plot_grid(hpl, hplof, labels='AUTO', ncol=2, align='hv')
+dev.off()
 
 ## D is TE/repeat bp by ploidy boxplots
 
