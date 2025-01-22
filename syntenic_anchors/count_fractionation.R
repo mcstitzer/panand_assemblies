@@ -6,6 +6,7 @@ theme_set(theme_cowplot())
 library(rtracklayer)
 library(stringr)
 library(zoo)
+library(patchwork)
 
 all=read.table('../panand_sp_ploidy.txt')
 all$V3[all$V2=='rtuber']=2
@@ -55,6 +56,7 @@ names(results_list)=all$V2
 ##pdf('~/Downloads/fractionationBias.rollingSyntenic.pdf',8,4)
 for(x in all$V2){
   bg=b[b$genome==x,]
+  bg <- bg %>% filter(substr(gene, 1, 7) == "Pavag01")
   #  a1=makeGRangesFromDataFrame(bg[!duplicated(bg$gene),1:3], seqnames.field='refChr')
   a2=makeGRangesFromDataFrame(bg[,4:6], seqnames.field='queryChr')
   a2$gene=bg$gene
@@ -78,7 +80,7 @@ for(x in all$V2){
         group_by(window = geneIndex %/% 100, pvChr) %>%
         summarize(fractTotal = sum(geneCount)/100, fractMax=max(geneCount), .groups = 'drop'),
       by = c("window", "pvChr")
-    )
+    )%>% filter(pvChr=='Pavag01')
   # Convert synt to a vector
   synt_genes <- synt$V1
   
@@ -99,20 +101,37 @@ for(x in all$V2){
   # Apply the rolling window function on synt_genes and store results
   result <- data.frame()
   
-  for (chr in unique(bg$queryChr)) {
-    rolling_results <- rollapply(1:length(synt_genes), width = 100, FUN = function(idx) {
-      synt_window <- synt_genes[idx]
-      count_bg_genes_with_index(synt_window, idx[1], bg, chr)
-    }, by.column = FALSE, fill = NA, align = "right")
-    
-    rolling_results_df <- as.data.frame(rolling_results)
-    rolling_results_df$queryChr <- chr
-    rolling_results_df$synt_window_start_index <- as.numeric(rolling_results_df$first_gene_index)
-    rolling_results_df$first_gene <- as.character(rolling_results_df$first_gene)
-    rolling_results_df$count <- as.numeric(rolling_results_df$count)
-    rolling_results_df$total=as.numeric(rolling_results_df$total)
-    result <- rbind(result, rolling_results_df)
-  }
+for (chr in unique(bg$queryChr)) {
+  chr_length <- length(synt_genes)
+rolling_results <- rollapply(1:chr_length, width = 100, FUN = function(idx) {
+  synt_window <- synt_genes[idx]
+  # Determine the actual size of the window
+  actual_window_size <- min(100, chr_length - idx[1] + 1)
+  
+  result <- count_bg_genes_with_index(synt_window, idx[1], bg, chr)
+  
+  # Extract numeric values for calculations
+  count <- as.numeric(result["count"])
+  total <- as.numeric(result["total"])
+  
+  # Adjust counts for the actual window size
+  result["adjusted_fractBias"] <- count / actual_window_size
+  result["adjusted_fractTotal"] <- total / actual_window_size
+  
+  return(result)
+}, by.column = FALSE, fill = NA, align = "right")
+
+  rolling_results_df <- as.data.frame(rolling_results)
+  rolling_results_df$queryChr <- chr
+  rolling_results_df$synt_window_start_index <- as.numeric(rolling_results_df$first_gene_index)
+  rolling_results_df$first_gene <- as.character(rolling_results_df$first_gene)
+  rolling_results_df$count <- as.numeric(rolling_results_df$count)
+  rolling_results_df$total <- as.numeric(rolling_results_df$total)
+  rolling_results_df$adjusted_fractBias <- as.numeric(rolling_results_df$adjusted_fractBias)
+  rolling_results_df$adjusted_fractTotal <- as.numeric(rolling_results_df$adjusted_fractTotal)
+  result <- rbind(result, rolling_results_df)
+}
+
   
   # Add pvChr and fractBias columns
   result$pvChr <- substr(result$first_gene, 1, 7)
@@ -297,6 +316,7 @@ ggplot(out[out$pvChr==chr & !out$genome%in%lowQualAssemblies & out$first_gene_in
 
 
 label_species <- function(species_name, dont_italicize = c()) {
+ species_name=as.character(species_name)
   # Split the species name into words
   words <- unlist(strsplit(species_name, " "))
   
@@ -330,7 +350,7 @@ filtered_data <- out %>%
 
 
 # Unique species
-species_list <- unique(filtered_data$shortSpeciesLabel)
+species_list <- as.character(unique(filtered_data$shortSpeciesLabel))
 
 # Calculate medians for each species
 medians <- filtered_data %>%
@@ -348,6 +368,13 @@ for (i in seq_along(species_list)) {
                                                              'TIL25', 'TIL18', 'Momo', 'Gigi', 
                                                              'Southern Hap1', 'Northern Hap1', 
                                                              'FL', 'KS', '\\*', '\\"', 'B73v5'))
+  
+  ## filter edges:
+  species_data <- species_data %>%
+  group_by(queryChr) %>% # Group by queryChr
+  filter(row_number() > 90 & row_number() <= (n() - 90)) %>% # Keep entries outside the first and last 100
+  ungroup() # Ungroup after filtering
+
   
   # Line plot
   line_plot <- ggplot(species_data, aes(x = synt_window_start_index, y = fractBias, group = queryChr, color = ploidy)) +
@@ -384,7 +411,7 @@ for (i in seq_along(species_list)) {
     labs(y = NULL, x = NULL)
   
   # Combine line plot and density plot horizontally with width ratio
-  combined <- line_plot + density_plot + plot_layout(widths = c(6, 1), guides = "collect") & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0))
+  combined <- line_plot + density_plot + plot_layout(widths = c(6, 2), guides = "collect") & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0))
   
   # Add combined plot to the list
   plot_list[[species]] <- combined
@@ -413,7 +440,7 @@ filtered_data <- out %>%
 
 
 # Unique species
-species_list <- unique(filtered_data$shortSpeciesLabel)
+species_list <- as.character(unique(filtered_data$shortSpeciesLabel))
 
 # Calculate medians for each species
 medians <- filtered_data %>%
@@ -431,7 +458,12 @@ for (i in seq_along(species_list)) {
                                                              'TIL25', 'TIL18', 'Momo', 'Gigi', 
                                                              'Southern Hap1', 'Northern Hap1', 
                                                              'FL', 'KS', '\\*', '\\"', 'B73v5'))
-  
+    ## filter edges:
+  species_data <- species_data %>%
+  group_by(queryChr) %>% # Group by queryChr
+  filter(row_number() > 90 & row_number() <= (n() - 90)) %>% # Keep entries outside the first and last 100
+  ungroup() # Ungroup after filtering
+
   # Line plot
   line_plot <- ggplot(species_data, aes(x = synt_window_start_index, y = fractBias, group = queryChr, color = ploidy)) +
     geom_line(alpha = 0.8) +
@@ -467,7 +499,7 @@ for (i in seq_along(species_list)) {
     labs(y = NULL, x = NULL)
   
   # Combine line plot and density plot horizontally with width ratio
-  combined <- line_plot + density_plot + plot_layout(widths = c(6, 1), guides = "collect") & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0))
+  combined <- line_plot + density_plot + plot_layout(widths = c(6, 2), guides = "collect") & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0))
   
   # Add combined plot to the list
   plot_list[[species]] <- combined
@@ -494,7 +526,7 @@ filtered_data <- out %>%
 
 
 # Unique species
-species_list <- unique(filtered_data$shortSpeciesLabel)
+species_list <- as.character(unique(filtered_data$shortSpeciesLabel))
 
 # Calculate medians for each species
 medians <- filtered_data %>%
@@ -512,7 +544,12 @@ for (i in seq_along(species_list)) {
                                                              'TIL25', 'TIL18', 'Momo', 'Gigi', 
                                                              'Southern Hap1', 'Northern Hap1', 
                                                              'FL', 'KS', '\\*', '\\"', 'B73v5'))
-  
+    ## filter edges:
+  species_data <- species_data %>%
+  group_by(queryChr) %>% # Group by queryChr
+  filter(row_number() > 90 & row_number() <= (n() - 90)) %>% # Keep entries outside the first and last 100
+  ungroup() # Ungroup after filtering
+
   # Line plot
   line_plot <- ggplot(species_data, aes(x = synt_window_start_index, y = fractBias, group = queryChr, color = ploidy)) +
     geom_line(alpha = 0.8) +
@@ -548,7 +585,7 @@ for (i in seq_along(species_list)) {
     labs(y = NULL, x = NULL)
   
   # Combine line plot and density plot horizontally with width ratio
-  combined <- line_plot + density_plot + plot_layout(widths = c(6, 1), guides = "collect") & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0))
+  combined <- line_plot + density_plot + plot_layout(widths = c(6, 2), guides = "collect") & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0))
   
   # Add combined plot to the list
   plot_list[[species]] <- combined
@@ -575,7 +612,7 @@ filtered_data <- out %>%
 
 
 # Unique species
-species_list <- unique(filtered_data$shortSpeciesLabel)
+species_list <- as.character(unique(filtered_data$shortSpeciesLabel))
 
 # Calculate medians for each species
 medians <- filtered_data %>%
@@ -593,7 +630,12 @@ for (i in seq_along(species_list)) {
                                                              'TIL25', 'TIL18', 'Momo', 'Gigi', 
                                                              'Southern Hap1', 'Northern Hap1', 
                                                              'FL', 'KS', '\\*', '\\"', 'B73v5'))
-  
+    ## filter edges:
+  species_data <- species_data %>%
+  group_by(queryChr) %>% # Group by queryChr
+  filter(row_number() > 90 & row_number() <= (n() - 90)) %>% # Keep entries outside the first and last 100
+  ungroup() # Ungroup after filtering
+
   # Line plot
   line_plot <- ggplot(species_data, aes(x = synt_window_start_index, y = fractBias, group = queryChr, color = ploidy)) +
     geom_line(alpha = 0.8) +
@@ -629,7 +671,7 @@ for (i in seq_along(species_list)) {
     labs(y = NULL, x = NULL)
   
   # Combine line plot and density plot horizontally with width ratio
-  combined <- line_plot + density_plot + plot_layout(widths = c(6, 1), guides = "collect") & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0))
+  combined <- line_plot + density_plot + plot_layout(widths = c(6, 2), guides = "collect") & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0))
   
   # Add combined plot to the list
   plot_list[[species]] <- combined

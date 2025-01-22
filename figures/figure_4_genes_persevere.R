@@ -2,7 +2,8 @@ library(data.table)
 library(ggplot2)
 library(cowplot)
 theme_set(theme_cowplot())
-
+library(grid)
+library(magick)
 
 
 asize=fread('../general_summaries/panand_assembly_sizes.txt', header=T, quote="", fill=T)
@@ -35,13 +36,13 @@ medFracPlot
 
 ## armin
 
-pdf_one='../figures/scheben_plots/Figure_AS2_CNS_enrichment_trimmed.pdf'
+pdf_one='../figures/scheben_plots/Fig4F_conserved_sequence_feature_enrichment.pdf'
 
 pdf_one_grob=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_one))))         # Read the PDF file
 
 ## armin
 
-pdf_two='../figures/scheben_plots/Figure_AS5_TFBS_turnover_trimmed.pdf'
+pdf_two='../figures/scheben_plots/Fig4G_TFBS_turnover_clean.pdf'
 pdf_two_grob=rasterGrob(as.raster(image_trim(image_read_pdf(pdf_two))))         # Read the PDF file
 
 
@@ -72,7 +73,7 @@ rightside <- plot_grid(
   labels = c('E', '')
 )
 
-pdf('../figures/figure4_genes-persevere.pdf', 12,8)
+pdf('../figures/figure4_genes-persevere.pdf', 12,9)
 
 plot_grid(final_with_xlab, rightside, rel_widths=c(1,0.7), axis='tb', ncol=2)
 dev.off()
