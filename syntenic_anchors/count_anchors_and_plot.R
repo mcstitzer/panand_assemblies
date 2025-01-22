@@ -362,7 +362,7 @@ process_anchors_to_dotplot_ZeaTrip <- function(filepath,
 
 
 process_anchors_to_dotplot_FIGURE <- function(filepath, color_palette=muted_colors, minBlock=10, title='', refChrs=c(paste0('Chr0', 1:9), 'Chr10'), queryChrs='', 
-                                              queryChrtoFlip='', ylabelspecies='', pathtokaryotype='', pathtoalluvial='', ploidy='') {
+                                              queryChrtoFlip='', ylabelspecies='', pathtokaryotype='', pathtoalluvial='', ploidy='', alluvialx=0, alluvialy=0, chrx=0, chry=0, yaxisticks=T, xscale=1, yscale=1) {
   # Load data
   data <- read.table(filepath, header = TRUE)
   data <- data[data$gene != 'interanchor', ]
@@ -413,7 +413,7 @@ process_anchors_to_dotplot_FIGURE <- function(filepath, color_palette=muted_colo
   # Convert the image to a rasterGrob
   img <- rasterGrob(as.raster(image_raster), 
  #                   x = 0.9, y = 0.12, width = 0.25, height = 0.25, just = c("right", "bottom"))
-  x = 0.90, y = 0.15, width = 0.25, height = 0.25, just = c("right", "bottom"))
+  x = 0.90+chrx, y = 0.15+chry, width = 0.25*xscale, height = 0.25*yscale, just = c("right", "bottom"))
 
   # Create a black border (rectangular grob)
 #  border <- rectGrob(gp = gpar(col = "black", fill = NA, lwd = 2))  # lwd sets the thickness of the border
@@ -428,7 +428,7 @@ process_anchors_to_dotplot_FIGURE <- function(filepath, color_palette=muted_colo
   
   # Convert the image to a rasterGrob
   imgA <- rasterGrob(as.raster(image_rasterA), 
-                    x = 0.1, y = 0.88, width = 0.35, height = 0.15, just = c("left", "top"))
+                    x = 0.1+alluvialx, y = 0.88+alluvialy, width = 0.35*xscale, height = 0.15*yscale, just = c("left", "top"))
   
   # Combine the image and the border into a single grob
 #  imgA <- grobTree(border, imgA)
@@ -462,6 +462,9 @@ process_anchors_to_dotplot_FIGURE <- function(filepath, color_palette=muted_colo
     scale_x_continuous(breaks = scales::breaks_pretty(n = 2), expand=c(0,0)) +  # Automatically choose 3 breaks for x-axis
     scale_y_continuous(breaks = scales::breaks_pretty(n = 2), expand=c(0,0))    # Automatically choose 3 breaks for y-axis
   
+  if(yaxisticks==F){
+  p=p+theme(axis.text.y=element_blank())
+  }
  
 #  p + annotation_custom(img, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf)
   ggdraw(p) + 
@@ -469,12 +472,12 @@ process_anchors_to_dotplot_FIGURE <- function(filepath, color_palette=muted_colo
   }
 
 
-av=process_anchors_to_dotplot_FIGURE(filepath = '../syntenic_anchors/anchors/avirgi-Pv-2', minBlock=20, queryChrtoFlip = 'chr9', ylabelspecies = 'A. virginicum', pathtokaryotype = '~/Downloads/avirginicum_karyotype.pdf', pathtoalluvial = '~/Downloads/evoday_alluvial.pdf', ploidy='Diploid')
+av=process_anchors_to_dotplot_FIGURE(filepath = '../syntenic_anchors/anchors/avirgi-Pv-2', minBlock=20, queryChrtoFlip = 'chr9', ylabelspecies = 'A. virginicum', pathtokaryotype = '~/Downloads/avirginicum_karyotype.pdf', pathtoalluvial = '~/Downloads/evoday_alluvial.pdf', ploidy='Diploid', alluvialy=-0.02, chrx=0.05)
 av
 process_anchors_to_dotplot_FIGURE(filepath = '../syntenic_anchors/anchors/snutan-Pv-4', minBlock=50, ylabelspecies = 'S. nutans', pathtokaryotype = '~/Downloads/snutans_karyotype.pdf', pathtoalluvial = '~/Downloads/blagur_alluvial.pdf', ploidy='Tetraploid')
 process_anchors_to_dotplot_FIGURE(filepath = '../syntenic_anchors/anchors/hconto-Pv-4', minBlock=50, ylabelspecies = 'H. contortus', pathtokaryotype = '~/Downloads/hcontortus_karyotype.pdf', pathtoalluvial = '~/Downloads/blagur_alluvial.pdf', ploidy='Tetraploid')
 
-bl=process_anchors_to_dotplot_FIGURE(filepath = '../syntenic_anchors/anchors/blagur-Pv-6', minBlock=20, ylabelspecies = 'B. laguroides', pathtokaryotype = '~/Downloads/blaguroides_karyotype.pdf', pathtoalluvial = '~/Downloads/blagur_alluvial.pdf', ploidy='Hexaploid')
+bl=process_anchors_to_dotplot_FIGURE(filepath = '../syntenic_anchors/anchors/blagur-Pv-6', minBlock=20, ylabelspecies = 'B. laguroides', pathtokaryotype = '~/Downloads/blaguroides_karyotype.pdf', pathtoalluvial = '~/Downloads/blagur_alluvial.pdf', ploidy='Hexaploid', alluvialy=0.04, chry=-0.05, chrx=0.05, yaxisticks=F, yscale=0.58) ## 1/1.7 of the combined leftside rel_heights
 bl
 
 td=process_anchors_to_dotplot_Tripsacinae(filepath = '../syntenic_anchors/anchors/tdacs1-Pv-2', minBlock=20, ylabelspecies = 'T. dactyloides FL')

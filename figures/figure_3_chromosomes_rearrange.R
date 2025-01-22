@@ -50,6 +50,9 @@ dev.off()
 
 
 
-
+## testing sizing
+pdf('~/Downloads/test_chr.pdf',12,10)
+plot_grid(NULL, bottompart, ncol=1, rel_heights=c(0.3,1))
+dev.off()
 
 

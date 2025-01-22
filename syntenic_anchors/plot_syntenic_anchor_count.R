@@ -35,10 +35,11 @@ asizezt$V2zt=ifelse(asize$V2 %in% c("zdgigi", "zdmomo", "zluxur", "zmhuet", "zTI
 asizezt=asizezt%>% group_by(V2zt, ploidy) %>% summarize(syntAnchorsCount=median(syntAnchorsCount), syntAnchors=median(syntAnchors), diploidEquivalentsyntAnchors=median(diploidEquivalentsyntAnchors), mya=median(mya))
 
 cor.test(asizezt$diploidEquivalentsyntAnchors, asizezt$mya)
+summary(lm(asizezt$diploidEquivalentsyntAnchors~asizezt$mya))
 ## negative -0.5081658 
 cor.test(asizezt$diploidEquivalentsyntAnchors[!asizezt$ploidy%in%c('Diploid', 'Paleotetraploid')], asizezt$mya[!asizezt$ploidy%in%c('Diploid', 'Paleotetraploid')])
 ## positive 0.5994824 
-
+summary(lm(asizezt$diploidEquivalentsyntAnchors[!asizezt$ploidy%in%c('Diploid', 'Paleotetraploid')]~asizezt$mya[!asizezt$ploidy%in%c('Diploid', 'Paleotetraploid')])))
 
 
 fig_fracage = ggplot(asize, aes(x=mya, y=diploidEquivalentsyntAnchors, color=ploidy)) + geom_vline(xintercept=c(2,4,6,8,10,12,14), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(1,3,5,7,9,11,13), color='gray80', lty='dashed', alpha=0.3)+

@@ -668,6 +668,39 @@ final_with_xlab
 
 
 
+## now try to plot points for each subgenome/chr
+out$max_n=as.numeric(out$max)
+## filter low qual
+sgfrac=out[out$genome%in% fig3sp & out$pvChr==chr& !out$genome%in%lowQualAssemblies & !out$filterSwitch & out$fractBias>0.2 & out$synt_window_start_index<1981 & out$stretchLen>1,]%>% 
+           group_by(shortSpeciesLabel, queryChr, genome, max_n) %>% 
+summarize(medFrac=median(fractBias, na.rm=T), count=dplyr::n()) %>% ungroup()
+## keep all
+# sgfrac=out[ out$pvChr==chr& !out$genome%in%lowQualAssemblies & !out$filterSwitch & out$fractBias>0.2 & out$synt_window_start_index<1981 & out$stretchLen>1,]%>% 
+#            group_by(shortSpeciesLabel, queryChr, genome, max_n) %>% 
+# summarize(medFrac=median(fractBias, na.rm=T), count=dplyr::n()) %>% ungroup()
+
+
+sgfrac <- sgfrac %>%
+  group_by(genome) %>%  # Split by genome
+  slice_max(order_by=count, n=6) %>% ## whatever this is not working dynamicaly
+  filter(count > 50)  # Filter rows with count > 100
+sgfrac$ploidy=factor(asize$ploidy[match(sgfrac$genome, asize$V2)], levels=c('Diploid', 'Tetraploid', 'Hexaploid', 'Paleotetraploid'))
+sgfrac$mya=asize$mya[match(sgfrac$genome, asize$V2)]
+
+sgfrac=sgfrac[sgfrac$queryChr!='alt-scaf_37',] ## remove luxurians alt scaffold
+
+## cjhatgpt solution
+## mnevermid sometimes i hate chatgpt
+sgfrac_plot=ggplot(sgfrac, 
+  aes(x=genome, y=medFrac, color=ploidy, group=genome)) +
+  geom_point(size=3, alpha=0.8)+geom_line()+
+scale_color_manual(values=ploidycolors)+scale_fill_manual(values=ploidycolors) +
+  ylab('Median Proportion Retained Genes') + 
+  labs(color='Ploidy', pch='') +guides(color='none', fill='none')+
+geom_hline(yintercept=c(0,0.25,0.5,0.75,1), lty='dotted', color='gray90') +
+ylim(0,1)+ facet_wrap(~ploidy, ncol=4, drop=T, scales='free_x')+
+  theme() # Remove y-axis and other clutter
+
 
 
 

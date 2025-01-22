@@ -1,5 +1,12 @@
 library(data.table)
 library(ggrepel)
+library(dplyr)
+library(rtracklayer)
+library(ggplot2)
+library(cowplot)
+theme_set(theme_cowplot())
+
+all=read.table('../panand_sp_ploidy.txt', header=F)
 
 asize=fread('../general_summaries/panand_assembly_sizes.txt', header=T, quote="", fill=T)
 asize$ploidy=factor(asize$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
@@ -8,6 +15,7 @@ asize$ploidy=factor(asize$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetrap
 diploids=c('cserru', 'irugos', 'sbicol', 'ppanic', 'ttrian', 'crefra', 'avirgi', 'smicro', 'rtuber')
 tetraploids=c('snutan', 'hconto', 'ccitra', 'achine', 'sscopa', 'etrips',  'vcuspi')
 hexaploids=c('udigit', 'agerar', 'hcompr', 'blagur')
+paleotetraploids=c("tdacn1", "tdacs1", "zdgigi", "zdmomo", "zluxur", "zmhuet", "zTIL18", "zTIL25", "zTIL01", "zTIL11", "znicar", "zmB735")
 
 countRearrangements <- function(filepath, color_palette=muted_colors, minBlock=20) {
   # Load data
@@ -26,9 +34,37 @@ countRearrangements <- function(filepath, color_palette=muted_colors, minBlock=2
   # Filter data based on block length
   data <- data[data$blockLength > minBlock, ]
   data$refChr <- factor(data$refChr, levels = c(paste0('Chr0', 1:9), 'Chr10'))
+  # Step 4: Identify fusion points
+  fusion_data <- data %>%
+    group_by(queryChr) %>%
+    arrange(queryChr, queryStart) %>%
+    mutate(
+      ref_transition = refChr != lag(refChr, default = refChr[1]), # Detect transitions in refChr
+      fusion_point = ifelse(ref_transition, queryStart, NA)
+    ) %>%
+    filter(ref_transition) %>%
+    select(queryChr, fusion_point, refChr) %>%
+    tidyr::drop_na(fusion_point)
   
-  temp=data %>% filter(blockLength>minBlock) %>% group_by(queryChr)%>% summarize(n=length(unique(refChr)))
-  sum(temp$n>1)
+  # Step 5: Summarize counts of unique reference chromosomes
+  rearrangement_counts <- fusion_data %>%
+    group_by(queryChr) %>%
+    summarize(
+      n_fusions = n(), # Count the number of fusion points
+      unique_refChrs = length(unique(refChr)), # Count unique reference chromosomes
+      .groups = "drop"
+    )
+  
+  # Combine results
+  result <- list(
+    fusion_data = fusion_data,
+    rearrangement_summary = rearrangement_counts
+  )
+  
+  return(sum(rearrangement_counts$n_fusions))
+  
+#   temp=data %>% filter(blockLength>minBlock) %>% group_by(queryChr)%>% summarize(n=length(unique(refChr)))
+#   sum(temp$n>1)
 }
 
 for(i in diploids){
@@ -53,6 +89,9 @@ asize %>% group_by(ploidy) %>% summarize(translocMean=mean(transloc, na.rm=T), s
 kruskal.test(transloc~ploidy, data=asize) ## pvalue=0.0001115 --> sig diff between group
 pairwise.wilcox.test(asize$transloc, asize$ploidy,
                      p.adjust.method = "BH")
+kruskal.test(transloc/chrCount~ploidy, data=asize) ## pvalue=0.0001932 --> sig diff between group
+pairwise.wilcox.test(asize$transloc/asize$chrCount, asize$ploidy,
+                     p.adjust.method = "BH")
 
 
 ggplot(asize[!asize$V2%in%lowQualAssemblies], aes(x=ploidy, y=transloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=2, aes(shape=haploid))+ scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=10)
@@ -75,8 +114,9 @@ ggplot(asize, aes(x=ploidy, y=transloc, group=ploidy, color=ploidy)) + geom_boxp
 
 
 ## numbers for paper
-asize %>% filter(!V2 %in% lowQualAssemblies) %>% group_by(ploidy) %>% summarize(meanrearr=mean(transloc, na.rm=T), meanscaled=mean(scaledTransloc, na.rm=T))
-
+asize %>% filter(!V2 %in% lowQualAssemblies) %>% group_by(ploidy) %>% summarize(meanrearr=mean(transloc, na.rm=T), meanscaled=mean(scaledTransloc, na.rm=T), meanchrscaled=mean(transloc/chrCount, na.rm=T))
+## sloppy way to get tripsacum and zea
+asize %>% filter(!V2 %in% lowQualAssemblies) %>% group_by(V2%in%c('tdacs1', 'tdacn1'), substr(V2,1,1)=='z') %>% summarize(meanrearr=mean(transloc, na.rm=T), meanscaled=mean(scaledTransloc, na.rm=T), meanchrscaled=mean(transloc/chrCount, na.rm=T))
 
 
 ggplot(asize[!asize$V2%in%lowQualAssemblies,], aes(x=ploidy, y=scaledTransloc, group=ploidy, color=ploidy)) + geom_boxplot(outlier.shape=NA) +geom_point(position = position_jitter(seed = 1),  size=2, aes(shape=haploid))+ geom_text(aes(label=V2), position = position_jitter(seed = 1)) + scale_color_manual(values=ploidycolors) + theme(legend.position='none')+ ggpubr::stat_compare_means(aes(group=ploidy, x=ploidy), label = 'p.signif', show.legend = F,ref.group = "Diploid", label.y=6) + ylab('Translocations per haploid equivalent') + xlab('Ploidy')
@@ -108,7 +148,8 @@ asizezt=asizezt%>% group_by(V2zt, ploidy) %>% summarize(chrCount=median(chrCount
 
 ## with regression line
 fig_chrrearr=ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(9,11:19,21:29), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(10,20,30), color='gray80', lty='dashed', alpha=0.3)+ 
-  geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + scale_color_manual(values=ploidycolors)+ 
+  geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8)+ #, pch=1, stroke=3) + 
+  scale_color_manual(values=ploidycolors)+ 
   xlab('Haploid Chromosome Number') + ylab('Rearrangements per\nDiploid Equivalent') + 
   stat_smooth(data=asizezt, method='lm', aes(group=NA), se=F, color='gray80')
 fig_chrrearr 
@@ -117,7 +158,7 @@ cor.test(asizezt$scaledTransloc, asizezt$chrCount)
 
 ### compare rearrangemnets to age
 fig_agerearr=ggplot(asize, aes(x=mya, y=scaledTransloc, color=ploidy)) + geom_vline(xintercept=c(2,4,6,8,10,12,14), color='gray90', lty='dotted', alpha=0.3) + geom_vline(xintercept=c(1,3,5,7,9,11,13), color='gray80', lty='dashed', alpha=0.3)+ 
-  geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8, pch=1, stroke=3) + 
+  geom_point(size=4, position=position_jitter(seed=9,width = 0.1), alpha=0.8)+#, pch=1, stroke=3) + 
   scale_color_manual(values=ploidycolors)+ xlab('Divergence between\nParental Subgenomes (Mya)') + 
 #  stat_smooth(data=asizezt, method='lm', aes(group=NA), alpha=0.1, se=F, color='gray90')+
   ylab('Rearrangements per\nDiploid Equivalent') 
@@ -258,3 +299,123 @@ for(i in diploids){
   print(syntenicCoverage(Sys.glob(paste0('../syntenic_anchors/anchors/', i, '-Pv-*')), minBlock = 3))
 }
 
+
+
+#tes=import.gff3(paste0('trash/', all$V1[all$V2==genotype], '_EDTAandTandemRepeat.gff3'))
+
+#### also now count knobs
+countKnobsCent <- function(filepath, tefilepath, genome='', distance=10000,color_palette=muted_colors, minBlock=20) {
+  # Load data
+  anchors <- read.table(filepath, header = TRUE)
+  anchors <- anchors[anchors$gene != 'interanchor', ]
+  
+  # Reduce to blocks and calculate stats
+  anchors <- anchors %>%
+    group_by(blockIndex) %>%
+    mutate(blockLength = n()) %>%
+    group_by(queryChr) %>%
+    mutate(freqStrand = names(which.max(table(strand))),
+           maxChr = max(queryStart),
+           freqRef = names(which.max(table(refChr))))
+  
+  # Filter data based on block length
+  anchors <- anchors[anchors$blockLength > minBlock, ]
+ # Identify fusions and calculate query positions
+  fusion_data <- anchors %>%
+    filter(blockLength > minBlock) %>%
+    group_by(queryChr) %>%
+    arrange(queryChr, queryStart) %>% # Ensure sorted order by queryStart
+    mutate(
+      ref_transition = refChr != lag(refChr, default = refChr[1]), # Detect transitions in refChr
+      fusion_point = ifelse(ref_transition, queryStart, NA) # Record query position of the transition
+    ) %>%
+    filter(ref_transition) %>% # Retain only rows with transitions
+    select(queryChr, fusion_point, refChr)%>% tidyr::drop_na(fusion_point)
+#     summarize(
+#       queryChr = dplyr::first(queryChr),
+#       fusion_positions = paste(na.omit(fusion_point), collapse = ", "),
+#       involved_refChrs = paste(unique(refChr), collapse = ", ")
+#     ) %>% tidyr::unnest(fusion_positions)
+#   
+  # Print fusion information
+  print(fusion_data)
+
+ tes=import.gff(tefilepath)
+ knob180=tes[grepl('179bp_repeat|180bp_repeat', tes$Target),]
+ if(length(knob180)>0){knob180$repeattype='knob180'}
+ knobtr1=tes[grepl('357bp_repeat|358bp_repeat', tes$Target),]
+ if(length(knobtr1)>0){knobtr1$repeattype='knobtr1'}
+ cent=tes[grepl('154bp_repeat|155bp_repeat|156bp_repeat', tes$Target),]
+ if(length(cent)>0){cent$repeattype='cent'}
+ tands=c(knob180,knobtr1,cent)
+ print(table(tands$repeattype))
+ ## only get from chromsomes, as there are those giant contigs of knob that we don't have in the assembly chr to see if they're syntenic...
+ print(sum(width(reduce(knob180[seqnames(knob180)%in%paste0('chr',1:10),], min.gapwidth=10))))
+# print(sum(width(knob180)))
+
+if(genome=='zmB735'){
+print(sum(width(tes[grepl('knob180', tes$Classification),])))
+tands=tes[tes$type%in%c('centromeric_repeat', 'knob'),]
+tands$repeattype=tands$type
+print(head(seqlevels(tands)))
+print(class(seqlevels(tands)))
+tands_df <- as.data.frame(tands)
+# Step 2: Remove the "B73_" prefix from seqnames
+tands_df$seqnames <- gsub("^B73_", "", tands_df$seqnames)
+# Step 3: Convert the data frame back to GRanges
+tands <- makeGRangesFromDataFrame(tands_df, keep.extra.columns = TRUE)
+
+
+}
+
+breakpoints_gr=GRanges(seqnames=fusion_data$queryChr, ranges=IRanges(start=fusion_data$fusion_point, end=fusion_data$fusion_point))
+if(length(tands)>0){
+overlaps=findOverlaps(breakpoints_gr, tands, maxgap=distance, ignore.strand=T)
+
+  # Summarize results
+  overlap_results <- as.data.frame(overlaps) %>%
+    mutate(
+      queryChr = as.character(seqnames(breakpoints_gr))[queryHits],
+      refChr = fusion_data$refChr[queryHits],
+      fusion_point = start(breakpoints_gr)[queryHits],
+      repeat_info = mcols(tands)$repeattype[subjectHits]
+    ) %>%
+    group_by(queryChr, fusion_point, repeat_info, refChr) %>%
+    summarize(count=n())
+  
+  print(overlap_results)
+     # Add counts to fusion_data
+    fusion_data <- fusion_data %>%
+      left_join(overlap_results %>%
+                  group_by(queryChr, fusion_point) %>%
+                  summarize(total_repeats = sum(count), .groups = "drop"),
+                by = c("queryChr", "fusion_point"))
+    
+    # Replace NA counts with 0
+    fusion_data$total_repeats[is.na(fusion_data$total_repeats)] <- 0
+  } else {
+    fusion_data$total_repeats <- 0
+  }
+if(genome!=''){fusion_data$genome=genome}
+return(fusion_data)
+
+
+
+}
+
+## /Users/mcs368/Downloads/repeatmask_tandems/Td-FL_9056069_6-REFERENCE-PanAnd-2.0a_EDTAandTandemRepeat.gff3
+
+for(i in paleotetraploids){
+print(i)
+countKnobsCent(paste0('../syntenic_anchors/anchors/',i, '-Pv-', all$V3[all$V2==i]*2), paste0('~/Downloads/repeatmask_tandems/',all$V1[all$V2==i], '_EDTAandTandemRepeat.gff3'), genome=i, distance=1e6, minBlock=30)
+}
+
+fused_list=lapply(paleotetraploids, function(i){
+countKnobsCent(paste0('../syntenic_anchors/anchors/',i, '-Pv-', all$V3[all$V2==i]*2), paste0('~/Downloads/repeatmask_tandems/',all$V1[all$V2==i], '_EDTAandTandemRepeat.gff3'), genome=i, distance=1e6, minBlock=30)
+})
+
+fused=do.call(rbind, fused_list)
+
+
+## get unique copies
+fused[fused$total_repeats>0,] %>% group_by(queryChr, refChr) %>% summarize(mean=mean(total_repeats))
