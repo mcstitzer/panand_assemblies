@@ -1,4 +1,5 @@
 # scp cbsublfs1:/data1/users/shengkaihsu/p_panAndOGASR/output/anchorAln_omega_v2/* .
+### putting on ceres!!! /project/buckler_lab_panand/michelle.stitzer/anchorAln_omega_v2
 
 library(data.table)
 
