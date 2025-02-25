@@ -19,3 +19,26 @@ done < ../../panand_sp_ploidy.txt
 
 #TRASH_Av-Kellogg1287_8-REFERENCE-PanAnd-1.0.fasta.gff
 #./TRASH_run.sh --def ../../genomes/Td-KS_B6_1-REFERENCE-PanAnd-1.0.fasta --par 11 --o /workdir/mcs368/panand_htt/trash/tdacts/
+
+
+#wget https://github.com/vlothec/TRASH/raw/main/TRASH.v1.2.tar.gz
+#tar -xzvf TRASH.v1.2.tar.gz
+
+## lol i have to make the directory first!!! e.g. zTIL18 
+
+./TRASH_run.sh --def ../Zx-TIL25-REFERENCE-PanAnd-1.0.fasta --par 48 --o /workdir/mcs368/panand_assemblies/repeats/zTIL25/
+
+
+./TRASH_run.sh --def /workdir/mcs368/panand_assemblies/genomes/Zx-TIL18-REFERENCE-PanAnd-1.0.fasta --par 48 --o /workdir/mcs368/panand_assemblies/repeats/zTIL18/
+
+./TRASH_run.sh --def /workdir/mcs368/panand_assemblies/genomes/Zn-PI615697-REFERENCE-PanAnd-1.0.fasta --par 48 --o /workdir/mcs368/panand_assemblies/repeats/znicar/
+
+
+### rerun anything that is absent 
+./TRASH_run.sh --def /workdir/mcs368/panand_assemblies/genomes/Vc-Pasquet1098-DRAFT-PanAnd-1.0.fasta --par 48 --o /workdir/mcs368/panand_assemblies/repeats/vcuspi/
+
+./TRASH_run.sh --def /workdir/mcs368/panand_assemblies/genomes/Sn-CAM1369-DRAFT-PanAnd-1.0.fasta --par 48 --o /workdir/mcs368/panand_assemblies/repeats/snutan/
+./TRASH_run.sh --def /workdir/mcs368/panand_assemblies/genomes/Cs-KelloggPI219580-DRAFT-PanAnd-1.0.fasta --par 48 --o /workdir/mcs368/panand_assemblies/repeats/cserru/
+./TRASH_run.sh --def /workdir/mcs368/panand_assemblies/genomes/Tt-AUB21_1-DRAFT-PanAnd-1.0.fasta --par 48 --o /workdir/mcs368/panand_assemblies/repeats/ttrian/
+./TRASH_run.sh --def /workdir/mcs368/panand_assemblies/genomes/Sm-PI203595-DRAFT-PanAnd-1.0.fasta --par 48 --o /workdir/mcs368/panand_assemblies/repeats/smicro/
+
