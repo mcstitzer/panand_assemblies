@@ -31,7 +31,7 @@ ros$totbp=ros$most.freq.value.N*ros$repeats
 
 ros%>% arrange(desc(totbp)) 
 
-## my filters - remove repeats with sequence found at least five positions in the genome
+## my filters - remove repeats with sequence not found at least five positions in the genome
 tanr=ros[ros$n>5,] ## n is positions per species
 
 

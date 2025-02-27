@@ -33,3 +33,17 @@ cp ../../repeats_final/Tt-AUB21_1-DRAFT-PanAnd-1.0_EDTA.gff3 Tt-AUB21_1-DRAFT-Pa
 #cp ../repeats_final/Tz-DC_05_58_3A-DRAFT-PanAnd-1.0_EDTA.gff3 Tz-DC_05_58_3A-DRAFT-PanAnd-1.0_EDTATandemRepeat.gff3 
 cp ../../repeats_final/Vc-Pasquet1098-DRAFT-PanAnd-1.0_EDTA.gff3 Vc-Pasquet1098-DRAFT-PanAnd-1.0_EDTATandemRepeat.gff3 
 cp ../../repeats_final/Sbicolor_454_v3.0.1_EDTA.gff3 Sorghum_bicolor.Sorghum_bicolor_NCBIv3.dna.toplevel_EDTATandemRepeat.gff3 
+
+
+## ookay redoing on cbsu cbsuxm01
+#/local/workdir/mcs368/panand_assemblies/repeats/trash
+
+while read filename genome ploidy
+do
+if [ -f ${filename}_TandemRepeat.gff3 ]
+then
+## -A removes entire TE that overlaps with a tandem repeat - I think this is okay, because tandem boundaries aren't perfect
+bedtools subtract -A -a /local/workdir/mcs368/panand_assemblies/repeats/trash/${filename}_EDTAandTandemRepeat.gff3 -b ${filename}_TandemRepeat.gff3 > ${filename}_EDTA.filteredTandemRepeat.gff3
+bedtools sort -i <(cat ${filename}_EDTA.filteredTandemRepeat.gff3 ${filename}_TandemRepeat.gff3 ) > ${filename}_EDTAandTandemRepeat.gff3
+fi
+done < ../../../panand_sp_ploidy.txt
