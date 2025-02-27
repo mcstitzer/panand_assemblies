@@ -145,7 +145,7 @@ het$ks[het$ploidy=='Diploid']=0
 
 het$type=ifelse(het$het==het$ks, 'autopolyploid', 'allopolyploid')
 het$type[het$genome%in%c('achine', 'ccitra', 'blagur', 'agerar', 'sscopa')| het$ploidy=='Paleotetraploid']='non-monophyletic allopolyploid'
-
+het$mya=asize$mya[match(het$genome, asize$V2)]
 
 library(ggrepel)
 heterozygosity=ggplot(het, aes(x = het, y = 0, color=ploidy)) +  # Keep y=0 to represent the number line , pch=type
