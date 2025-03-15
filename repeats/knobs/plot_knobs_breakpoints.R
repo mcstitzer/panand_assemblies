@@ -31,11 +31,42 @@ ggplot(df_bins,
   labs(x = "Genomic Position")
   
   
-  
-  
-  
-  
-  
+
+### subgenome enrichment  ??
+## get nam subgneome assignment
+pg=read.table('~/Downloads/pan_gene_matrix_v3_cyverse.csv', sep=',', header=T)
+## just b73
+pgb=pg[substr(pg$Pan_gene_id,1,9)=='Zm00001eb' & !is.na(pg$Subgenome),]
+## get genes for positions
+gene=import.gff3('~/Downloads/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.gff3.gz')
+## subset positions to just subgenome defined
+gp=gene[gene$ID %in% pgb$Pan_gene_id,]
+gp$subgenome=pgb$Subgenome[match(gp$ID, pgb$Pan_gene_id)]
+seqlevels(gp)=gsub('c', 'C', seqlevels(gp))
+## ready to plot!
+
+ggplot(df_bins, 
+       aes(x = start,
+           xend = end,
+           y = factor(seqnames, levels=rev(paste0('Chr',1:10))),
+           yend = factor(seqnames, levels=rev(paste0('Chr',1:10))),
+           color = knob_status)) +
+  geom_segment(size = 6) +
+  scale_color_manual(values = c("No Knob" = "gray70", "Knob" = "gray50", 'M1'='blue', 'M2'='red')) +
+  theme(
+    axis.title.y = element_blank(),
+    legend.title = element_blank()
+  ) +
+  labs(x = "Genomic Position")+
+geom_point(data=data.frame(gp), aes(x=start, y=factor(gsub('c','C',seqnames), levels=rev(paste0('Chr',1:10))), color=subgenome),size=0.8,inherit.aes=F)
+
+
+kb=makeGRangesFromDataFrame(df_bins,keep.extra.columns = T)
+kb$M1=countOverlaps(kb, gp[gp$subgenome=='M1'])
+kb$M2=countOverlaps(kb, gp[gp$subgenome=='M2'])
+kb$subgenome=ifelse(kb$M1>kb$M2, 'M1', 'M2')
+
+table(data.frame(kb[kb$knob_status=='Knob',c('knob', 'M1', 'M2', 'subgenome')])$subgenome)
 
 #### also now count knobs
 countKnobsCent <- function(filepath, bins, genome='', distance=10000,color_palette=muted_colors, minBlock=20) {
