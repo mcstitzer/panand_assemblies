@@ -78,7 +78,7 @@ merged_results <- list()
 # Loop through each file, process it, and append it to the merged_results list
 for (file in all$V2) {
   # Read in the ks file
-  ks <- fread(paste0('ks_self/', file, '_matches.txt'))
+  ks <- fread(paste0('../syntenic_anchors/ks_self/', file, '_matches.txt'))
   
   # Extract gene information
   ks$gene <- str_split_fixed(ks$V3, '_', 3)[, 2]

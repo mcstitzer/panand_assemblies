@@ -3,6 +3,11 @@ library(ggtext)
 
 
 
+asize=fread('../general_summaries/panand_assembly_sizes.txt', header=T, quote="", fill=T)
+## factor so correct order
+asize$ploidy=factor(asize$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
+
+lowQualAssemblies=c('telega', 'atenui', 'rrottb', 'ccitra')
 
 ### gene-gene distance
 ## from ../genes/gene-gene_distance.R
@@ -32,7 +37,9 @@ teploidy=ggplot(asize, aes(x=ploidy, y=repeatProp, group=ploidy, color=ploidy, f
 asizezt=asize
 asizezt$V2zt=ifelse(asize$V2 %in% c('tdacn1', 'tdacs1'), 'trips', asize$V2)
 asizezt$V2zt=ifelse(asize$V2 %in% c("zdgigi", "zdmomo", "zluxur", "zmhuet", "zTIL18", "zTIL25", "zTIL01", "zTIL11", "znicar", "zmB735"), 'zea', asize$V2)
-asizezt=asizezt%>% group_by(V2zt, ploidy) %>% summarize(haploidRepeatSize=median(haploidRepeatSize), medFrac=median(medFrac), meanFrac=median(meanFrac), syntAnchorsCount=median(syntAnchorsCount), syntAnchors=median(syntAnchors), diploidEquivalentsyntAnchors=median(diploidEquivalentsyntAnchors), mya=median(mya))
+asizezt=asizezt%>% group_by(V2zt, ploidy) %>% summarize(haploidRepeatSize=median(haploidRepeatSize), 
+           #           medFrac=median(medFrac), meanFrac=median(meanFrac), 
+                      syntAnchorsCount=median(syntAnchorsCount), syntAnchors=median(syntAnchors), diploidEquivalentsyntAnchors=median(diploidEquivalentsyntAnchors), mya=median(mya))
 
 summary(lm(asizezt$haploidRepeatSize~asizezt$mya))
 ## so 110189996 bp per million years!!

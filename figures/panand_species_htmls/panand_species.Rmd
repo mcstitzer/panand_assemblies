@@ -108,7 +108,7 @@ ggdraw() +  draw_plot(dotplot)
 ```
 
 ### Fractionation of *`r species`*
-Like plots shown in Figure 4 of the main text, this shows proportion of retained genes in `r species` along the y-axis, vs P. vaginatum gene index on the x-axis. As *`r species`* is a `r tolower(asize$ploidy[asize$V2==genome])` with a`r ifelse(asize$haploid[asize$V2==genome], ' haploid', 'n allelic')` assembly, we expect `r numberpaths[asize$V2==genome]` lines,  `r ifelse(asize$haploid[asize$V2==genome], 'one', 'two')` for each subgenome. 
+Like plots shown in Figure 4 of the main text, this shows proportion of retained genes in `r species` along the y-axis, vs *P. vaginatum* gene index on the x-axis. As *`r species`* is a `r tolower(asize$ploidy[asize$V2==genome])` with a`r ifelse(asize$haploid[asize$V2==genome], ' haploid', 'n allelic')` assembly, we expect `r numberpaths[asize$V2==genome]` lines,  `r ifelse(asize$haploid[asize$V2==genome], 'one', 'two')` for each subgenome. 
 
 ```{r echo=FALSE, fig.align='center'}
 

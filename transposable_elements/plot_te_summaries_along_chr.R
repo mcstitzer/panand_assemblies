@@ -20,7 +20,6 @@ names(genomecountlist)=all$V2
 repeatlengthslist=vector(mode = "list", length = length(all$V2))
 names(repeatlengthslist)=all$V2
 
-
 for( genotype in all$V2){
 ##import gff3
 if(genotype=='snutan'){
@@ -45,7 +44,7 @@ repeatlengthslist[[genotype]]=sum(width(reduce(a, ignore.strand=T)))
 genomecount=do.call(rbind, genomecountlist)
 genomecount$Identity=as.numeric(genomecount$Identity)
 
-#write.table(data.frame(genome=names(repeatlengthslist), repeatbp=unlist(repeatlengthslist)),'total_repeat_bp.txt', row.names=F, col.names=T, sep='\t')
+#write.table(data.frame(genome=names(repeatlengthslist), repeatbp=unlist(repeatlengthslist)),'total_repeat_bp.txt', row.names=F, col.names=T, sep='\t', quote=F)
 
 ## add a superfamily based on matchign up to the classification field - note most of these NAs are relics from the B73 annotation being included!!!!!
 genomecount$sup=c(NA, 'DTA', 'DTC', 'DTH', 'DTM', 'DTT', 'DHH', NA,NA,NA,NA,NA,NA,'RLC', 'RLG', 'RLG', 'RLX', 'DTA', 'DTC', 'DTH', 'DTM', 'DTT', NA,NA,NA)[match(genomecount$Classification, c("Cent/CentC", "DNA/DTA", "DNA/DTC", "DNA/DTH", "DNA/DTM", "DNA/DTT", 
@@ -172,6 +171,11 @@ nfam100$ploidy=factor(nfam100$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleote
 
 amm$ploidy=factor(amm$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 
+
+
+
+
+#### these need amm from plot_te_summary_figure.R !!!! not the above all!!!!
 
 pdf(paste0('~/transfer/te_panand_fig.', Sys.Date(), '.pdf'), 15,4)
                                       

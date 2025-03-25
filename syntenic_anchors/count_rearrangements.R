@@ -139,6 +139,9 @@ ggplot(asize, aes(x=chrCount, y=scaledTransloc, color=ploidy)) + geom_vline(xint
 
 summary(lm(data=asize, scaledTransloc~chrCount))
 
+sqrt(summary(lm(data=asize, scaledTransloc~chrCount))$r.squared)
+
+
 ## get medians for zea and tripsacum genera separately
 asizezt=asize
 asizezt$V2zt=ifelse(asize$V2 %in% c('tdacn1', 'tdacs1'), 'trips', asize$V2)

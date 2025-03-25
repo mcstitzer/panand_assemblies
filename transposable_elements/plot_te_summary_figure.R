@@ -7,8 +7,10 @@ library(reshape2)
 library(RColorBrewer)
 library(tidypaleo) ## facet species names in italics!!!!!
 
+## cbsuxm01
+## xm01 /workdir/mcs368/panand_assemblies/repeats/
 
-all=read.table('../panand_sp_ploidy.txt')
+all=read.table('../../panand_sp_ploidy.txt')
 all=all[!all$V2 %in% c('pprate', 'tdactm', 'tzopol', 'osativ', 'bdista', 'agerjg', 'svirid', 'eophiu', 'tdacs2', 'tdacn2'),]
 
 genomecountlist=vector(mode = "list", length = length(all$V2))
@@ -23,9 +25,16 @@ gfftypestokeep=c("Gypsy_LTR_retrotransposon",
 "helitron", "hAT_TIR_transposon", "PIF_Harbinger_TIR_transposon", 
 "Tc1_Mariner_TIR_transposon", "Mutator_TIR_transposon", 'tandem_repeat') 
 
+
+
 for( genotype in all$V2){
 ##import gff3
-a=import.gff3(paste0('../trash/repeatmask_tandems/', all$V1[all$V2==genotype], '_EDTATandemRepeat.gff3'))
+if(genotype=='snutan'){
+a=import.gff3(paste0('trash/', all$V1[all$V2==genotype], '_EDTAandTandemRepeat.negRemoved.gff3'))
+}else{
+a=import.gff3(paste0('trash/', all$V1[all$V2==genotype], '_EDTAandTandemRepeat.gff3'))
+}
+#a=import.gff3(paste0('repeatmask_tandems/', all$V1[all$V2==genotype], '_EDTAandTandemRepeat.gff3'))
 all[all$V2==genotype,gfftypestokeep]=sapply(gfftypestokeep, function (x) sum(width(reduce(a[a$type==x,]))))
 all[all$V2==genotype,'tebp']=sum(width(reduce(a[a$type %in% gfftypestokeep & a$type!='tandem_repeat',])))
 
