@@ -23,7 +23,7 @@ atenui	1849
 tdactm	NA
 tdacts	NA
 tdactn	NA
-irugos	NA
+irugos	633.2
 zdmomo	NA
 zdgigi	NA
 tzopol	NA
