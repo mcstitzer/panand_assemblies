@@ -1,86 +1,21 @@
-## this should be relatively hard - 0.7% het, Bionano, 5% ks btwn dups, 4.6Gb
+## this should be interesting - 5.1% het, no Bionano
+## 1698 mb flow
 conda activate panand_assemblies
 
-## big so in two parts?
-scp cbsublfs1:/data4/Incoming/Corteva/Aug2025_PanAndtransfers/082525_PanAnd/AV9240008_Elionurus_tripsacoides_HiC_pairsR1_PART1.fq.gz .
-scp cbsublfs1:/data4/Incoming/Corteva/Aug2025_PanAndtransfers/082525_PanAnd/AV9240008_Elionurus_tripsacoides_HiC_pairsR1_PART2.fq.gz .
-scp cbsublfs1:/data4/Incoming/Corteva/Aug2025_PanAndtransfers/082525_PanAnd/AV9240008_Elionurus_tripsacoides_HiC_pairsR2_PART1.fq.gz .
-scp cbsublfs1:/data4/Incoming/Corteva/Aug2025_PanAndtransfers/082525_PanAnd/AV9240008_Elionurus_tripsacoides_HiC_pairsR2_PART2.fq.gz .
+hicR1=AV9240004_Thelepogon_elegans_HiC_pairsR1.fq.gz
+hicR2=AV9240004_Thelepogon_elegans_HiC_pairsR2.fq.gz
+six=telega
 
-cat AV9240008_Elionurus_tripsacoides_HiC_pairsR1_PART1.fq.gz AV9240008_Elionurus_tripsacoides_HiC_pairsR1_PART2.fq.gz > etrips.hic.read1.fq.gz
-cat AV9240008_Elionurus_tripsacoides_HiC_pairsR2_PART1.fq.gz AV9240008_Elionurus_tripsacoides_HiC_pairsR2_PART2.fq.gz > etrips.hic.read2.fq.gz
-
-rm AV9240008_Elionurus_tripsacoides_HiC_pairsR1_PART1.fq.gz
-rm AV9240008_Elionurus_tripsacoides_HiC_pairsR1_PART2.fq.gz
-rm AV9240008_Elionurus_tripsacoides_HiC_pairsR2_PART1.fq.gz
-rm AV9240008_Elionurus_tripsacoides_HiC_pairsR2_PART2.fq.gz
-
-samtools bam2fq -@ 64 /workdir/mcs368/panand_snps/input/etrips_reads_withQ.bam > etrips_hifi.fastq
-
-## oh great! Cinta has lots of nanopore for this
-# scp cbsublfs1:/data1/PanAnd1/RawSeqData/nanopore/andropogoneae/MinION/A1021-0002_02-recall.5.0.16/A1021-0002_02-fastq.tgz .
-# scp cbsublfs1:/data1/PanAnd1/RawSeqData/nanopore/andropogoneae/MinION/A1021-0002_03-recall.5.0.16/A1021-0002_03-fastq.tgz .
-# scp cbsublfs1:/data1/PanAnd1/RawSeqData/nanopore/andropogoneae/MinION/A1021-0002_04-recall.5.0.16/A1021-0002_04-fastq.tgz .
-# scp cbsublfs1:/data1/PanAnd1/RawSeqData/nanopore/andropogoneae/MinION/A1021_01-recall.5.0.16/A1021_01-fastq.tgz .
-# scp cbsublfs1:/data1/PanAnd1/RawSeqData/nanopore/andropogoneae/MinION/A1021_05-recall.5.0.16/A1021_05-fastq.tgz .
-# scp cbsublfs1:/data1/PanAnd1/RawSeqData/nanopore/andropogoneae/MinION/A1021_06-recall.5.0.16/A1021_06-fastq.tgz .
-# scp cbsublfs1:/data1/PanAnd1/RawSeqData/nanopore/andropogoneae/MinION/A1021_07-recall.5.0.16/A1021_07-fastq.tgz .
-# scp cbsublfs1:/data1/PanAnd1/RawSeqData/nanopore/andropogoneae/MinION/A1021_08-recall.5.0.16/A1021_08-fastq.tgz .
-# 
-
-
-# Base remote path
-REMOTE_BASE="cbsublfs1:/data1/PanAnd1/RawSeqData/nanopore/andropogoneae/MinION"
-# List of dataset directories and .tgz filenames (without full path)
-FILES=(
-    "A1021-0002_02-recall.5.0.16/A1021-0002_02-fastq.tgz"
-    "A1021-0002_03-recall.5.0.16/A1021-0002_03-fastq.tgz"
-    "A1021-0002_04-recall.5.0.16/A1021-0002_04-fastq.tgz"
-    "A1021_01-recall.5.0.16/A1021_01-fastq.tgz"
-    "A1021_05-recall.5.0.16/A1021_05-fastq.tgz"
-    "A1021_06-recall.5.0.16/A1021_06-fastq.tgz"
-    "A1021_07-recall.5.0.16/A1021_07-fastq.tgz"
-    "A1021_08-recall.5.0.16/A1021_08-fastq.tgz"
-)
-# Loop through each file
-for FILE in "${FILES[@]}"; do
-    echo "Processing $FILE..."
-    # scp from remote
-    scp "${REMOTE_BASE}/${FILE}" .
-    # Get the local filename, dataset name (strip .tgz)
-    TGZ=$(basename "$FILE")
-    SAMPLE=${TGZ%.tgz}
-    # Extract
-    tar -xzvf "$TGZ"
-    # Run seqkit (assuming fastq files are in SAMPLE/basecalls/fastq_pass/)
-    /programs/seqkit-0.15.0/seqkit seq -m 50000 "${SAMPLE}/pass/"*.fastq > "${SAMPLE}.50000.fq"
-    # Run bbmap stats
-    /programs/bbmap-38.96/stats.sh -Xmx200g in="${SAMPLE}.50000.fq" out="${SAMPLE}.50000.stats.txt"
-    # Delete original tgz
-    rm "$TGZ"
-    echo "Done with $SAMPLE"
-    echo "----------------------"
-done
-
-cat *.50000.fq > etrips.50000.fq
-bgzip etrips.50000.fq
-/programs/bbmap-38.96/stats.sh -Xmx200g in="etrips.50000.fq.gz" out="etrips.50000.stats.txt"
-
-
-#### okay finally got all those files so let's start!
-
-hicR1=etrips.hic.read1.fq.gz
-hicR2=etrips.hic.read2.fq.gz
-six=etrips
+scp cbsublfs1:/data4/Incoming/Corteva/Aug2025_PanAndtransfers/082525_PanAnd/AV9240004_Thelepogon_elegans_HiC_pairsR1.fq.gz .
+scp cbsublfs1:/data4/Incoming/Corteva/Aug2025_PanAndtransfers/082525_PanAnd/AV9240004_Thelepogon_elegans_HiC_pairsR2.fq.gz .
+samtools bam2fq -@ 64 ../../../panand_snps/input/telega_reads_withQ.bam > ${six}_hifi.fastq
 
 
 ## check kmers first!
-mkdir tmp
-/programs/kmc-3.2.4/kmc -k21 -t10 -m64 -ci1 -cs10000 etrips_hifi.fastq.gz etripskmc tmp/
-/programs/kmc-3.2.4/kmc_tools transform etripskmc histogram etrips.histo -cx10000
-
-../genomescope2.0/genomescope.R -i etrips.histo -o etrips_genomescope -k 21
-
+mkdir -p tmp
+/programs/kmc-3.2.4/kmc -k21 -t10 -m64 -ci1 -cs10000 ${six}_hifi.fastq ${six}kmc tmp/
+/programs/kmc-3.2.4/kmc_tools transform ${six}kmc histogram ${six}.histo -cx10000
+../genomescope2.0/genomescope.R -i ${six}.histo -o ${six}_genomescope -k 21
 
 export PATH=/programs/fastk-1.1/bin:$PATH
 export PATH=/programs/smudgeplot-0.4.0/bin:$PATH
@@ -98,29 +33,28 @@ smudgeplot.py hetmers -L 12 -t 4 -o ${six}_kmerpairs --verbose ${six}_FastK_Tabl
 smudgeplot.py all -o ${six}_smudgeplot ${six}_kmerpairs_text.smu
 
 
-
-## dual-scaf, hic assembly, with some long nanopore!
- hifiasm -o ${six}.asm -t64 --dual-scaf --ul etrips.50000.fq.gz --h1 $hicR1 --h2 $hicR2 ${six}_hifi.fastq.gz
-
+## dual-scaf, hic assembly
+# hifiasm -o ${six}.asm -t64 --dual-scaf --h1 $hicR1 --h2 $hicR2 ${six}_hifi.fastq.gz
+## i guess try lower s for high het??
+ hifiasm -o ${six}.asm -t64 -s 0.1 --hom-cov 30 --dual-scaf --h1 $hicR1 --h2 $hicR2 ${six}_hifi.fastq.gz
 
 
 awk '/^S/{print ">"$2"\n"$3}' ${six}.asm.hic.hap1.p_ctg.gfa > ${six}.asm.hic.hap1.p_ctg.fa
 awk '/^S/{print ">"$2"\n"$3}' ${six}.asm.hic.hap2.p_ctg.gfa > ${six}.asm.hic.hap2.p_ctg.fa
+awk '/^S/{print ">"$2"\n"$3}' ${six}.asm.hic.p_ctg.gfa > ${six}.asm.hic.p_ctg.fa
 
 
 ## check assembly, how many contigs per chromosome??
 /programs/bbmap-38.96/stats.sh -Xmx200g in="${six}.asm.hic.hap1.p_ctg.fa" out="${six}.asm.hic.hap1.p_ctg.stats.txt" overwrite='true'
 /programs/bbmap-38.96/stats.sh -Xmx200g in="${six}.asm.hic.hap2.p_ctg.fa" out="${six}.asm.hic.hap2.p_ctg.stats.txt" overwrite='true'
-## hap1 925 Mb, 882 scaffolds, N50 82 Mb 5 scaffold N50
-## hap2 899 Mb, 158 scaffolds, N50 83 Mb 5 scaffold N50
+/programs/bbmap-38.96/stats.sh -Xmx200g in="${six}.asm.hic.p_ctg.fa" out="${six}.asm.hic.p_ctg.stats.txt" overwrite='true'
+
 
 ## check out a dotplot
 cd ..
 ./fa_to_dotplot.sh ${six}/${six}.asm.hic.hap1.p_ctg.fa ${six}Hap1 1
 ./fa_to_dotplot.sh ${six}/${six}.asm.hic.hap2.p_ctg.fa ${six}Hap2 1
 cd ${six}
-
-
 
 
 ## combine haplotypes and haphic
@@ -193,35 +127,33 @@ bwa mem -5SP -t 128 ${six}.asm.hic.hap2.p_ctg.fa $hicR1 $hicR2 | samblaster | sa
 python ../../../juicebox_scripts/juicebox_scripts/juicebox_assembly_converter.py -a out_JBAT.review.${six}Hap2.assembly -f scaffolds.fa -s
 
 ###
-juicer post -o ${six}Hap1_aggressivecorrection ${six}Hap1_aggressivecorrection.out_JBAT.review.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.hap1.p_ctg.fa
-cd ../../../
-./fa_to_dotplot.sh ${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa ${six}Hap1aggressive 3
+juicer post -o ${six}Hap1_lightcorrection ${six}Hap1_lightcorrection.out_JBAT.review.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.hap1.p_ctg.fa
+juicer post -o ${six}Hap1_aggressivecorrection ${six}Hap1_aggressivecorrection.out_JBAT.review.assembly.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.hap1.p_ctg.fa
+cd ../../
+./fa_to_dotplot.sh ${six}/${six}Hap1/04.build/${six}Hap1_lightcorrection.FINAL.fa ${six}Hap1light 1
+./fa_to_dotplot.sh ${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa ${six}Hap1aggressive 1
 
 
+### check these assemblies...
+teloscope/build/bin/teloscope -f ${six}/${six}Hap1/04.build/${six}Hap1_lightcorrection.FINAL.fa -o ${six}Hap1_lightcorrection -j 24 -c TTTAGGG 
+teloscope/build/bin/teloscope -f ${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa -o ${six}Hap1_aggressivecorrection -j 24 -c TTTAGGG 
 
 ## ribosomes
 ## where are the repeats on the genomes??
 ## ugh telomeres mess it up so make temp
-
+GENOME=${six}/${six}Hap1/04.build/${six}Hap1_lightcorrection.FINAL.fa 
+sed 's/^[ACGT][ACGT][ACGT][ACGT]/GATC/' $GENOME > $GENOME.tmp
+barrnap --quiet --kingdom euk $GENOME.tmp > ${GENOME%.fa}.rrna.gff3
+rm $GENOME.tmp
 GENOME=${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa 
 sed 's/^[ACGT][ACGT][ACGT][ACGT]/GATC/' $GENOME > $GENOME.tmp
 barrnap --quiet --kingdom euk $GENOME.tmp > ${GENOME%.fa}.rrna.gff3
 rm $GENOME.tmp
 
 ## run trash2
-conda activate TRASH_2
-mkdir -p ${six}Hap1_aggressivecorrection_TRASH2
-Rscript /workdir/mcs368/panand_assemblies/repeats/TRASH_2/src/TRASH.R -f ${six}Hap1_aggressivecorrection.FINAL.fa -o /workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection_TRASH2 -p 48
-
-### or if trash2 is stupid and fails, do trash
-conda activate panand_assemblies
-mkdir -p /workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection_TRASH
-/workdir/mcs368/panand_assemblies/repeats/TRASH/TRASH_run.sh --def /workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa --par 48 --o /workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection_TRASH
-
-
+Rscript /workdir/mcs368/panand_assemblies/repeats/TRASH_2/src/TRASH.R -f ${six}Hap1_aggressivecorrection.FINAL.fa -o /workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection_TRASH2 -p 24
 
 ## run tidk
-conda activate tidk
 tidk find --clade Poales --output ${six}Hap1_aggressivecorrection.tidk --dir . ${six}Hap1_aggressivecorrection.FINAL.fa 
 
 ## run helixer
@@ -231,21 +163,8 @@ scp cbsuxm01:/workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${
 singularity run --nv --bind $PWD --pwd $PWD /programs/helixer-0.3.5/helixer.sif Helixer.py --fasta-path ${six}Hap1_aggressivecorrection.FINAL.fa --lineage land_plant --gff-output-path ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3
 scp ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3 cbsuxm01:/workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.helixer.gff3
 
-### OR ON ATLAS
-cp ${six}Hap1_aggressivecorrection.FINAL.fa ~/transfer/
-##reload six on atlas
-scp mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/${six}Hap1_aggressivecorrection.FINAL.fa .
-srun -A buckler_lab_panand -p gpu-a100 --gres=gpu:a100:1 --ntasks-per-node=16 --time=1-00:00 --pty bash
-module load apptainer
-## first time had to download models!
-# /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif 
-# Singularity> fetch_helixer_models.py --lineage land_plant
-time apptainer exec --nv /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif Helixer.py --fasta-path ${six}Hap1_aggressivecorrection.FINAL.fa  --lineage land_plant --gff-output-path ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3
-scp ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3 mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/
-
 
 ### gc content
-conda activate panand_assemblies
 samtools faidx ${six}Hap1_aggressivecorrection.FINAL.fa
 bedtools makewindows -g ${six}Hap1_aggressivecorrection.FINAL.fa.fai -w 1000000 > ${six}Hap1_aggressivecorrection.FINAL.1mbwindows.bed
 bedtools nuc -fi ${six}Hap1_aggressivecorrection.FINAL.fa -bed ${six}Hap1_aggressivecorrection.FINAL.1mbwindows.bed > ${six}Hap1_aggressivecorrection.FINAL.1mbnuccontent.bed

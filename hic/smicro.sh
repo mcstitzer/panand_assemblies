@@ -107,4 +107,87 @@ rm smicro.asm.hic.hap2.p_ctg.tmp.fasta
 ## from the 04 directory...
 python ../../../juicebox_scripts/juicebox_scripts/juicebox_assembly_converter.py -a out_JBAT.review.smicroHap2.assembly -f scaffolds.fa -s
 
+###
+juicer post -o smicroHap1_lightcorrection smicroHap1_lightcorrection.out_JBAT.review.assembly out_JBAT.liftover.agp ../../smicro.asm.hic.hap1.p_ctg.fa
+juicer post -o smicroHap1_aggressivecorrection smicroHap1_aggressivecorrection.out_JBAT.review.assembly.assembly out_JBAT.liftover.agp ../../smicro.asm.hic.hap1.p_ctg.fa
+cd ../../
+./fa_to_dotplot.sh smicro/smicroHap1/04.build/smicroHap1_lightcorrection.FINAL.fa smicroHap1light 1
+./fa_to_dotplot.sh smicro/smicroHap1/04.build/smicroHap1_aggressivecorrection.FINAL.fa smicroHap1aggressive 1
 
+
+### check these assemblies...
+teloscope/build/bin/teloscope -f smicro/smicroHap1/04.build/smicroHap1_lightcorrection.FINAL.fa -o smicroHap1_lightcorrection -j 24 -c TTTAGGG 
+teloscope/build/bin/teloscope -f smicro/smicroHap1/04.build/smicroHap1_aggressivecorrection.FINAL.fa -o smicroHap1_aggressivecorrection -j 24 -c TTTAGGG 
+
+## ribosomes
+## where are the repeats on the genomes??
+## ugh telomeres mess it up so make temp
+GENOME=smicro/smicroHap1/04.build/smicroHap1_lightcorrection.FINAL.fa 
+sed 's/^[ACGT][ACGT][ACGT][ACGT]/GATC/' $GENOME > $GENOME.tmp
+barrnap --quiet --kingdom euk $GENOME.tmp > ${GENOME%.fa}.rrna.gff3
+rm $GENOME.tmp
+GENOME=smicro/smicroHap1/04.build/smicroHap1_aggressivecorrection.FINAL.fa 
+sed 's/^[ACGT][ACGT][ACGT][ACGT]/GATC/' $GENOME > $GENOME.tmp
+barrnap --quiet --kingdom euk $GENOME.tmp > ${GENOME%.fa}.rrna.gff3
+rm $GENOME.tmp
+
+## run trash2
+Rscript /workdir/mcs368/panand_assemblies/repeats/TRASH_2/src/TRASH.R -f smicroHap1_aggressivecorrection.FINAL.fa -o /workdir/mcs368/panand_assemblies/hic/smicro/smicroHap1/04.build/smicroHap1_aggressivecorrection_TRASH2 -p 24
+
+## run tidk
+tidk find --clade Poales --output smicroHap1_aggressivecorrection.tidk --dir . smicroHap1_aggressivecorrection.FINAL.fa 
+
+## run helixer
+ssh cbsugpu08
+cd /workdir/mcs368/
+scp cbsuxm01:/workdir/mcs368/panand_assemblies/hic/smicro/smicroHap1/04.build/smicroHap1_aggressivecorrection.FINAL.fa .
+singularity run --nv --bind $PWD --pwd $PWD /programs/helixer-0.3.5/helixer.sif Helixer.py --fasta-path smicroHap1_aggressivecorrection.FINAL.fa --lineage land_plant --gff-output-path smicroHap1_aggressivecorrection.FINAL.helixer.gff3
+scp smicroHap1_aggressivecorrection.FINAL.helixer.gff3 cbsuxm01:/workdir/mcs368/panand_assemblies/hic/smicro/smicroHap1/04.build/smicroHap1_aggressivecorrection.FINAL.helixer.gff3
+
+
+### gc content
+samtools faidx smicroHap1_aggressivecorrection.FINAL.fa
+bedtools makewindows -g smicroHap1_aggressivecorrection.FINAL.fa.fai -w 1000000 > smicroHap1_aggressivecorrection.FINAL.1mbwindows.bed
+bedtools nuc -fi smicroHap1_aggressivecorrection.FINAL.fa -bed smicroHap1_aggressivecorrection.FINAL.1mbwindows.bed > smicroHap1_aggressivecorrection.FINAL.1mbnuccontent.bed
+
+
+
+
+
+############# NOW DO IT ALL WITH HAP2!!!!
+###
+juicer post -o smicroHap2_aggressivecorrection smicroHap2_aggressivecorrection.out_JBAT.review.assembly out_JBAT.liftover.agp ../../smicro.asm.hic.hap2.p_ctg.fa
+cd ../../../
+./fa_to_dotplot.sh smicro/smicroHap2/04.build/smicroHap2_aggressivecorrection.FINAL.fa smicroHap2aggressive 1
+
+
+
+## ribosomes
+## where are the repeats on the genomes??
+## ugh telomeres mess it up so make temp
+GENOME=smicro/smicroHap2/04.build/smicroHap2_aggressivecorrection.FINAL.fa 
+sed 's/^[ACGT][ACGT][ACGT][ACGT]/GATC/' $GENOME > $GENOME.tmp
+barrnap --quiet --kingdom euk $GENOME.tmp > ${GENOME%.fa}.rrna.gff3
+rm $GENOME.tmp
+
+## run trash2
+cd smicro/smicroHap2/04.build
+mkdir -p smicroHap2_aggressivecorrection_TRASH2
+Rscript /workdir/mcs368/panand_assemblies/repeats/TRASH_2/src/TRASH.R -f smicroHap2_aggressivecorrection.FINAL.fa -o /workdir/mcs368/panand_assemblies/hic/smicro/smicroHap2/04.build/smicroHap2_aggressivecorrection_TRASH2 -p 24
+
+## run tidk
+conda activate tidk
+tidk find --clade Poales --output smicroHap2_aggressivecorrection.tidk --dir . smicroHap2_aggressivecorrection.FINAL.fa 
+
+## run helixer
+ssh cbsugpu08
+cd /workdir/mcs368/
+scp cbsuxm01:/workdir/mcs368/panand_assemblies/hic/smicro/smicroHap2/04.build/smicroHap2_aggressivecorrection.FINAL.fa .
+singularity run --nv --bind $PWD --pwd $PWD /programs/helixer-0.3.5/helixer.sif Helixer.py --fasta-path smicroHap2_aggressivecorrection.FINAL.fa --lineage land_plant --gff-output-path smicroHap2_aggressivecorrection.FINAL.helixer.gff3
+scp smicroHap2_aggressivecorrection.FINAL.helixer.gff3 cbsuxm01:/workdir/mcs368/panand_assemblies/hic/smicro/smicroHap2/04.build/smicroHap2_aggressivecorrection.FINAL.helixer.gff3
+
+
+### gc content
+samtools faidx smicroHap2_aggressivecorrection.FINAL.fa
+bedtools makewindows -g smicroHap2_aggressivecorrection.FINAL.fa.fai -w 1000000 > smicroHap2_aggressivecorrection.FINAL.1mbwindows.bed
+bedtools nuc -fi smicroHap2_aggressivecorrection.FINAL.fa -bed smicroHap2_aggressivecorrection.FINAL.1mbwindows.bed > smicroHap2_aggressivecorrection.FINAL.1mbnuccontent.bed

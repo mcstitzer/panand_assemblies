@@ -42,3 +42,6 @@ done < ../../panand_sp_ploidy.txt
 ./TRASH_run.sh --def /workdir/mcs368/panand_assemblies/genomes/Tt-AUB21_1-DRAFT-PanAnd-1.0.fasta --par 48 --o /workdir/mcs368/panand_assemblies/repeats/ttrian/
 ./TRASH_run.sh --def /workdir/mcs368/panand_assemblies/genomes/Sm-PI203595-DRAFT-PanAnd-1.0.fasta --par 48 --o /workdir/mcs368/panand_assemblies/repeats/smicro/
 
+
+
+./TRASH_run.sh --def /workdir/mcs368/panand_assemblies/genomes/Cr-AUB069-DRAFT-PanAnd-1.0.fasta --par 48 --o /workdir/mcs368/panand_assemblies/repeats/crefra/
