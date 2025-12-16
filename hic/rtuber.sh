@@ -110,6 +110,15 @@ conda activate TRASH_2
 mkdir -p ${six}Hap1_aggressivecorrection_TRASH2
 Rscript /workdir/mcs368/panand_assemblies/repeats/TRASH_2/src/TRASH.R -f ${six}Hap1_aggressivecorrection.FINAL.fa -o /workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection_TRASH2 -p 48
 
+## trash2 on atlas
+## on atlas - not having error?!?!?!?!
+cd /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats
+six=rtuber
+mkdir -p ${six}Hap1_aggressivecorrection_TRASH2
+conda activate trash ## i guess do it before???
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=rtuber; conda activate trash; Rscript /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/TRASH_2/src/TRASH.R -f /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/${six}Hap1_aggressivecorrection.FINAL.fa -o /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats/${six}Hap1_aggressivecorrection_TRASH2 -p 46"
+
+
 ### or if trash2 is stupid and fails, do trash
 conda activate panand_assemblies
 mkdir -p /workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection_TRASH

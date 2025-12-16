@@ -36,8 +36,9 @@ smudgeplot.py all -o ${six}_smudgeplot ${six}_kmerpairs_text.smu
 ## dual-scaf, hic assembly
 # hifiasm -o ${six}.asm -t64 --dual-scaf --h1 $hicR1 --h2 $hicR2 ${six}_hifi.fastq.gz
 ## i guess try lower s for high het??
- hifiasm -o ${six}.asm -t64 -s 0.1 --hom-cov 30 --dual-scaf --h1 $hicR1 --h2 $hicR2 ${six}_hifi.fastq.gz
-
+hifiasm -o ${six}.asm -t64 -l 0 --dual-scaf --h1 $hicR1 --h2 $hicR2 ${six}_hifi.fastq.gz
+## it's still pretty big (3gb per haploytpe, when flow suggests 1698mb for n)
+## but i'm losing it on this genome. maybe it endoreduplicated, i don't know. 
 
 awk '/^S/{print ">"$2"\n"$3}' ${six}.asm.hic.hap1.p_ctg.gfa > ${six}.asm.hic.hap1.p_ctg.fa
 awk '/^S/{print ">"$2"\n"$3}' ${six}.asm.hic.hap2.p_ctg.gfa > ${six}.asm.hic.hap2.p_ctg.fa
@@ -52,8 +53,8 @@ awk '/^S/{print ">"$2"\n"$3}' ${six}.asm.hic.p_ctg.gfa > ${six}.asm.hic.p_ctg.fa
 
 ## check out a dotplot
 cd ..
-./fa_to_dotplot.sh ${six}/${six}.asm.hic.hap1.p_ctg.fa ${six}Hap1 1
-./fa_to_dotplot.sh ${six}/${six}.asm.hic.hap2.p_ctg.fa ${six}Hap2 1
+./fa_to_dotplot.sh ${six}/${six}.asm.hic.hap1.p_ctg.fa ${six}Hap1 3
+./fa_to_dotplot.sh ${six}/${six}.asm.hic.hap2.p_ctg.fa ${six}Hap2 3
 cd ${six}
 
 
@@ -106,7 +107,16 @@ bwa mem -5SP -t 128 ${six}.asm.hic.hap1.p_ctg.fa $hicR1 $hicR2 | samblaster | sa
 ## filtering reduces 27 Gb bam to 165 mb =--- seems dangerous! I think it's because this is so low heterozygosity.
 
 ## and can use the gfa to deal with depths and mis-pairing
-../HapHiC/haphic pipeline ${six}.asm.hic.hap1.p_ctg.fa ${six}Hap1.filtered.bam 10 --outdir ${six}Hap1
+../HapHiC/haphic pipeline ${six}.asm.hic.hap1.p_ctg.fa ${six}Hap1.filtered.bam 20 --outdir ${six}Hap1
+
+juicer post -o ${six}Hap1_aggressivecorrection ${six}Hap1_aggressivecorrection.out_JBAT.review.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.hap1.p_ctg.fa
+cd ../../../
+./fa_to_dotplot.sh ${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa ${six}Hap1aggressive 3
+### dang this thing is really tetraploid - redo scaffolding with 20 chrom
+
+
+
+
 
 ## hap2
 bwa index ${six}.asm.hic.hap2.p_ctg.fa
@@ -124,89 +134,73 @@ bwa mem -5SP -t 128 ${six}.asm.hic.hap2.p_ctg.fa $hicR1 $hicR2 | samblaster | sa
 ### then use corrected contact maps
 # Generate the final FASTA file for the scaffolds
 ## from the 04 directory...
-python ../../../juicebox_scripts/juicebox_scripts/juicebox_assembly_converter.py -a out_JBAT.review.${six}Hap2.assembly -f scaffolds.fa -s
 
 ###
-juicer post -o ${six}Hap1_lightcorrection ${six}Hap1_lightcorrection.out_JBAT.review.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.hap1.p_ctg.fa
 juicer post -o ${six}Hap1_aggressivecorrection ${six}Hap1_aggressivecorrection.out_JBAT.review.assembly.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.hap1.p_ctg.fa
-cd ../../
-./fa_to_dotplot.sh ${six}/${six}Hap1/04.build/${six}Hap1_lightcorrection.FINAL.fa ${six}Hap1light 1
-./fa_to_dotplot.sh ${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa ${six}Hap1aggressive 1
+cd ../../../
+./fa_to_dotplot.sh ${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa ${six}Hap1aggressive 3
 
 
-### check these assemblies...
-teloscope/build/bin/teloscope -f ${six}/${six}Hap1/04.build/${six}Hap1_lightcorrection.FINAL.fa -o ${six}Hap1_lightcorrection -j 24 -c TTTAGGG 
-teloscope/build/bin/teloscope -f ${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa -o ${six}Hap1_aggressivecorrection -j 24 -c TTTAGGG 
+
+
+
+
 
 ## ribosomes
 ## where are the repeats on the genomes??
 ## ugh telomeres mess it up so make temp
-GENOME=${six}/${six}Hap1/04.build/${six}Hap1_lightcorrection.FINAL.fa 
-sed 's/^[ACGT][ACGT][ACGT][ACGT]/GATC/' $GENOME > $GENOME.tmp
-barrnap --quiet --kingdom euk $GENOME.tmp > ${GENOME%.fa}.rrna.gff3
-rm $GENOME.tmp
-GENOME=${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa 
+GENOME=${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa
 sed 's/^[ACGT][ACGT][ACGT][ACGT]/GATC/' $GENOME > $GENOME.tmp
 barrnap --quiet --kingdom euk $GENOME.tmp > ${GENOME%.fa}.rrna.gff3
 rm $GENOME.tmp
 
-## run trash2
-Rscript /workdir/mcs368/panand_assemblies/repeats/TRASH_2/src/TRASH.R -f ${six}Hap1_aggressivecorrection.FINAL.fa -o /workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection_TRASH2 -p 24
-
-## run tidk
-tidk find --clade Poales --output ${six}Hap1_aggressivecorrection.tidk --dir . ${six}Hap1_aggressivecorrection.FINAL.fa 
-
-## run helixer
-ssh cbsugpu08
-cd /workdir/mcs368/
-scp cbsuxm01:/workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa .
-singularity run --nv --bind $PWD --pwd $PWD /programs/helixer-0.3.5/helixer.sif Helixer.py --fasta-path ${six}Hap1_aggressivecorrection.FINAL.fa --lineage land_plant --gff-output-path ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3
-scp ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3 cbsuxm01:/workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.helixer.gff3
-
-
+cd ${six}/${six}Hap1/04.build/
 ### gc content
 samtools faidx ${six}Hap1_aggressivecorrection.FINAL.fa
 bedtools makewindows -g ${six}Hap1_aggressivecorrection.FINAL.fa.fai -w 1000000 > ${six}Hap1_aggressivecorrection.FINAL.1mbwindows.bed
 bedtools nuc -fi ${six}Hap1_aggressivecorrection.FINAL.fa -bed ${six}Hap1_aggressivecorrection.FINAL.1mbwindows.bed > ${six}Hap1_aggressivecorrection.FINAL.1mbnuccontent.bed
 
-
-
-
-
-############# NOW DO IT ALL WITH HAP2!!!!
-###
-juicer post -o ${six}Hap2_aggressivecorrection ${six}Hap2_aggressivecorrection.out_JBAT.review.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.hap2.p_ctg.fa
-cd ../../../
-./fa_to_dotplot.sh ${six}/${six}Hap2/04.build/${six}Hap2_aggressivecorrection.FINAL.fa ${six}Hap2aggressive 1
-
-
-
-## ribosomes
-## where are the repeats on the genomes??
-## ugh telomeres mess it up so make temp
-GENOME=${six}/${six}Hap2/04.build/${six}Hap2_aggressivecorrection.FINAL.fa 
-sed 's/^[ACGT][ACGT][ACGT][ACGT]/GATC/' $GENOME > $GENOME.tmp
-barrnap --quiet --kingdom euk $GENOME.tmp > ${GENOME%.fa}.rrna.gff3
-rm $GENOME.tmp
-
-## run trash2
-cd ${six}/${six}Hap2/04.build
-mkdir -p ${six}Hap2_aggressivecorrection_TRASH2
-Rscript /workdir/mcs368/panand_assemblies/repeats/TRASH_2/src/TRASH.R -f ${six}Hap2_aggressivecorrection.FINAL.fa -o /workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap2/04.build/${six}Hap2_aggressivecorrection_TRASH2 -p 24
-
 ## run tidk
 conda activate tidk
-tidk find --clade Poales --output ${six}Hap2_aggressivecorrection.tidk --dir . ${six}Hap2_aggressivecorrection.FINAL.fa 
-
-## run helixer
-ssh cbsugpu08
-cd /workdir/mcs368/
-scp cbsuxm01:/workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap2/04.build/${six}Hap2_aggressivecorrection.FINAL.fa .
-singularity run --nv --bind $PWD --pwd $PWD /programs/helixer-0.3.5/helixer.sif Helixer.py --fasta-path ${six}Hap2_aggressivecorrection.FINAL.fa --lineage land_plant --gff-output-path ${six}Hap2_aggressivecorrection.FINAL.helixer.gff3
-scp ${six}Hap2_aggressivecorrection.FINAL.helixer.gff3 cbsuxm01:/workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap2/04.build/${six}Hap2_aggressivecorrection.FINAL.helixer.gff3
+tidk find --clade Poales --output ${six}Hap1_aggressivecorrection.tidk --dir . ${six}Hap1_aggressivecorrection.FINAL.fa 
 
 
-### gc content
-samtools faidx ${six}Hap2_aggressivecorrection.FINAL.fa
-bedtools makewindows -g ${six}Hap2_aggressivecorrection.FINAL.fa.fai -w 1000000 > ${six}Hap2_aggressivecorrection.FINAL.1mbwindows.bed
-bedtools nuc -fi ${six}Hap2_aggressivecorrection.FINAL.fa -bed ${six}Hap2_aggressivecorrection.FINAL.1mbwindows.bed > ${six}Hap2_aggressivecorrection.FINAL.1mbnuccontent.bed
+cd ../../../
+Rscript generate_subphaser_input_cmdline.R ${six}Hap1aggressive-Pv-6 2 ${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa.fai
+
+
+## prepare for atlas!!!!
+cp ${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa ~/transfer/
+cp ${six}Hap1aggressive_subphaserinput.txt ~/transfer/
+
+### ON ATLAS
+six=telega
+scp mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/${six}Hap1_aggressivecorrection.FINAL.fa .
+
+## trash2 on atlas
+## on atlas - not having error?!?!?!?!
+cd /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats
+mkdir ${six}Hap1_aggressivecorrection_TRASH2
+conda activate trash ## i guess do it before???
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=telega; conda activate trash; Rscript /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/TRASH_2/src/TRASH.R -f /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/${six}Hap1_aggressivecorrection.FINAL.fa -o /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats/${six}Hap1_aggressivecorrection_TRASH2 -p 46"
+
+### then helixer
+cd ..
+module load apptainer
+## first time had to download models!
+# /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif 
+# Singularity> fetch_helixer_models.py --lineage land_plant
+### submit as script!~!!!! 
+#### AAAHHH IT DOESN'T SET variable as variable, swicht in wrap stamentment
+##six=achine
+sbatch -A buckler_lab_panand -p gpu-a100 --gres=gpu:a100:1 --ntasks-per-node=16 --time=1-00:00 --wrap='six=telega; module load apptainer; time apptainer exec --nv /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif Helixer.py --fasta-path ${six}Hap1_aggressivecorrection.FINAL.fa  --lineage land_plant --gff-output-path ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3'
+
+
+conda activate SubPhaser
+cd subphaser
+scp mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/${six}Hap1aggressive_subphaserinput.txt .
+
+## generate subphaser in put through my script from anchorwave output (need to improve usability)
+six=telegaHap1
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=telegaHap1; subphaser -i ../${six}_aggressivecorrection.FINAL.fa -c ${six}aggressive_subphaserinput.txt -pre ${six}_aggressivecorrection -k 15 -f 2 -q 50 -nsg 2 -non_specific -p 46"
+

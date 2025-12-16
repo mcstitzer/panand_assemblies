@@ -39,6 +39,7 @@ smudgeplot.py all -o ${six}_smudgeplot ${six}_kmerpairs_text.smu
 
 
 
+
 awk '/^S/{print ">"$2"\n"$3}' ${six}.asm.hic.hap1.p_ctg.gfa > ${six}.asm.hic.hap1.p_ctg.fa
 awk '/^S/{print ">"$2"\n"$3}' ${six}.asm.hic.hap2.p_ctg.gfa > ${six}.asm.hic.hap2.p_ctg.fa
 awk '/^S/{print ">"$2"\n"$3}' ${six}.asm.hic.p_ctg.gfa > ${six}.asm.hic.p_ctg.fa
@@ -58,6 +59,111 @@ cd ..
 cd ${six}
 
 
+## combine haplotypes and haphic
+
+
+conda activate haphic
+
+cat ${six}.asm.hic.hap1.p_ctg.fa ${six}.asm.hic.hap2.p_ctg.fa >${six}.asm.hic.bothhaps.p_ctg.fa
+
+bwa index ${six}.asm.hic.bothhaps.p_ctg.fa
+bwa mem -5SP -t 128 ${six}.asm.hic.bothhaps.p_ctg.fa $hicR1 $hicR2 | samblaster | samtools view - -@ 64 -S -h -b -F 3340 -o ${six}BothHaps.bam
+## duh it can't index if not sorted
+##samtools index ${six}BothHaps.bam
+
+# (2) Filter the alignments with MAPQ 1 (mapping quality ≥ 1) and NM 3 (edit distance < 3)
+../HapHiC/utils/filter_bam ${six}BothHaps.bam 1 --nm 3 --threads 64 | samtools view - -b -@ 64 -o ${six}BothHaps.filtered.bam
+
+## filtering reduces 27 Gb bam to 165 mb =--- seems dangerous! I think it's because this is so low heterozygosity.
+
+## and can use the gfa to deal with depths and mis-pairing
+../HapHiC/haphic pipeline ${six}.asm.hic.bothhaps.p_ctg.fa ${six}BothHaps.filtered.bam 32 --gfa "${six}.asm.hic.hap1.p_ctg.gfa,${six}.asm.hic.hap2.p_ctg.gfa" --outdir ${six}BothHaps
+
+## skip filtering? potential rec here https://github.com/zengxiaofei/HapHiC/issues/86
+## use gfa to be sure not to combine haps
+../HapHiC/haphic pipeline ${six}.asm.hic.bothhaps.p_ctg.fa ${six}BothHaps.bam 32 --gfa "${six}.asm.hic.hap1.p_ctg.gfa,${six}.asm.hic.hap2.p_ctg.gfa" --outdir ${six}BothHapsUnfiltered
+
+## can't see homeologs in the hic map with them combined, but that's okay!
+###
+juicer post -o ${six}BothHaps_aggressivecorrection ${six}BothHaps_aggressivecorrection.out_JBAT.review.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.bothhaps.p_ctg.fa
+cd ../../../
+./fa_to_dotplot.sh ${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection.FINAL.fa ${six}BothHapsaggressive 3
+
+## then  updated with betterscaffolding Try2
+juicer post -o ${six}BothHaps_aggressivecorrection ${six}BothHaps_aggressivecorrectionTry2.out_JBAT.review.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.bothhaps.p_ctg.fa
+cd ../../../
+./fa_to_dotplot.sh ${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection.FINAL.fa ${six}BothHapsaggressive 3
+
+
+
+
+## ribosomes
+## where are the repeats on the genomes??
+## ugh telomeres mess it up so make temp
+GENOME=${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection.FINAL.fa
+sed 's/^[ACGT][ACGT][ACGT][ACGT]/GATC/' $GENOME > $GENOME.tmp
+barrnap --quiet --kingdom euk $GENOME.tmp > ${GENOME%.fa}.rrna.gff3
+rm $GENOME.tmp
+
+## run trash2
+conda activate TRASH_2
+cd ${six}/${six}BothHaps/04.build
+mkdir -p ${six}BothHaps_aggressivecorrection_TRASH2
+Rscript /workdir/mcs368/panand_assemblies/repeats/TRASH_2/src/TRASH.R -f /workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection.FINAL.fa -o /workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection_TRASH2 -p 24
+
+## trash2 on atlas
+## on atlas - not having error?!?!?!?!
+cd /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats
+six=achine
+mkdir ${six}BothHaps_aggressivecorrection_TRASH2
+conda activate trash ## i guess do it before???
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=achine; conda activate trash; Rscript /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/TRASH_2/src/TRASH.R -f /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/${six}BothHaps_aggressivecorrection.FINAL.fa -o /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats/${six}BothHaps_aggressivecorrection_TRASH2 -p 46"
+
+
+
+## run tidk
+conda activate tidk
+tidk find --clade Poales --output ${six}BothHaps_aggressivecorrection.tidk --dir . ${six}BothHaps_aggressivecorrection.FINAL.fa 
+
+## run helixer
+ssh cbsugpu08
+cd /workdir/mcs368/
+nvidia-smi ## check if anybody's using gpu
+scp cbsuxm01:/workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection.FINAL.fa .
+singularity run --nv --bind $PWD --pwd $PWD /programs/helixer-0.3.5/helixer.sif Helixer.py --fasta-path ${six}BothHaps_aggressivecorrection.FINAL.fa --lineage land_plant --gff-output-path ${six}BothHaps_aggressivecorrection.FINAL.helixer.gff3
+scp ${six}BothHaps_aggressivecorrection.FINAL.helixer.gff3 cbsuxm01:/workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection.FINAL.helixer.gff3
+
+## atlas
+
+### OR ON ATLAS
+cp ${six}Hap1_aggressivecorrection.FINAL.fa ~/transfer/
+##reload six on atlas
+scp mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/${six}Hap1_aggressivecorrection.FINAL.fa .
+srun -A buckler_lab_panand -p gpu-a100 --gres=gpu:a100:1 --ntasks-per-node=16 --time=1-00:00 --pty bash
+module load apptainer
+## first time had to download models!
+# /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif 
+# Singularity> fetch_helixer_models.py --lineage land_plant
+time apptainer exec --nv /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif Helixer.py --fasta-path ${six}Hap1_aggressivecorrection.FINAL.fa  --lineage land_plant --gff-output-path ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3
+scp ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3 mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/
+### submit as script!~!!!! 
+#### AAAHHH IT DOESN'T SET variable as variable, swicht in wrap stamentment
+##six=achine
+sbatch -A buckler_lab_panand -p gpu-a100 --gres=gpu:a100:1 --ntasks-per-node=16 --time=1-00:00 --wrap='six=achine; module load apptainer; time apptainer exec --nv /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif Helixer.py --fasta-path ${six}BothHaps_aggressivecorrection.FINAL.fa  --lineage land_plant --gff-output-path ${six}BothHaps_aggressivecorrection.FINAL.helixer.gff3'
+scp ${six}BothHaps_aggressivecorrection.FINAL.helixer.gff3 mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/
+
+
+### gc content
+samtools faidx ${six}BothHaps_aggressivecorrection.FINAL.fa
+bedtools makewindows -g ${six}BothHaps_aggressivecorrection.FINAL.fa.fai -w 1000000 > ${six}BothHaps_aggressivecorrection.FINAL.1mbwindows.bed
+bedtools nuc -fi ${six}BothHaps_aggressivecorrection.FINAL.fa -bed ${six}BothHaps_aggressivecorrection.FINAL.1mbwindows.bed > ${six}BothHaps_aggressivecorrection.FINAL.1mbnuccontent.bed
+
+
+
+
+
+
+
 
 
 #########################
@@ -74,7 +180,19 @@ bwa mem -5SP -t 128 ${six}.asm.hic.hap1.p_ctg.fa $hicR1 $hicR2 | samblaster | sa
 ## filtering reduces 27 Gb bam to 165 mb =--- seems dangerous! I think it's because this is so low heterozygosity.
 
 ## and can use the gfa to deal with depths and mis-pairing
-../HapHiC/haphic pipeline ${six}.asm.hic.hap1.p_ctg.fa ${six}Hap1.filtered.bam 20 --outdir ${six}Hap1
+../HapHiC/haphic pipeline ${six}.asm.hic.hap1.p_ctg.fa ${six}Hap1.filtered.bam 16 --outdir ${six}Hap1
+## also try 18
+../HapHiC/haphic pipeline ${six}.asm.hic.hap1.p_ctg.fa ${six}Hap1.filtered.bam 18 --outdir ${six}Hap1chr18
+
+
+juicer post -o ${six}Hap1chr18_aggressivecorrection ${six}Hap1chr18_aggressivecorrection.out_JBAT.review.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.hap1.p_ctg.fa
+cd ../../../
+./fa_to_dotplot.sh ${six}/${six}Hap1chr18/04.build/${six}Hap1chr18_aggressivecorrection.FINAL.fa ${six}Hap1chr18aggressive 3
+
+juicer post -o ${six}Hap1chr18_aggressivecorrection ${six}Hap1chr18_aggressivecorrectionTry2.out_JBAT.review.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.hap1.p_ctg.fa
+cd ../../../
+./fa_to_dotplot.sh ${six}/${six}Hap1chr18/04.build/${six}Hap1chr18_aggressivecorrection.FINAL.fa ${six}Hap1chr18aggressive 3
+
 
 ## hap2
 bwa index ${six}.asm.hic.hap2.p_ctg.fa
@@ -97,57 +215,67 @@ python ../../../juicebox_scripts/juicebox_scripts/juicebox_assembly_converter.py
 ###
 juicer post -o ${six}Hap1_aggressivecorrection ${six}Hap1_aggressivecorrection.out_JBAT.review.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.hap1.p_ctg.fa
 cd ../../../
-./fa_to_dotplot.sh ${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa ${six}Hap1aggressive 1
+./fa_to_dotplot.sh ${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa ${six}Hap1aggressive 3
+
 
 
 ## ribosomes
 ## where are the repeats on the genomes??
 ## ugh telomeres mess it up so make temp
-
-GENOME=${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa 
+GENOME=${six}/${six}Hap1chr18/04.build/${six}Hap1chr18_aggressivecorrection.FINAL.fa
 sed 's/^[ACGT][ACGT][ACGT][ACGT]/GATC/' $GENOME > $GENOME.tmp
 barrnap --quiet --kingdom euk $GENOME.tmp > ${GENOME%.fa}.rrna.gff3
 rm $GENOME.tmp
 
-## run trash2
-conda activate TRASH_2
-mkdir -p ${six}Hap1_aggressivecorrection_TRASH2
-Rscript /workdir/mcs368/panand_assemblies/repeats/TRASH_2/src/TRASH.R -f ${six}Hap1_aggressivecorrection.FINAL.fa -o /workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection_TRASH2 -p 48
-
-### or if trash2 is stupid and fails, do trash
-conda activate panand_assemblies
-mkdir -p /workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection_TRASH
-/workdir/mcs368/panand_assemblies/repeats/TRASH/TRASH_run.sh --def ${six}Hap1_aggressivecorrection.FINAL.fa --par 48 --o /workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection_TRASH
-
-
+cd ${six}/${six}Hap1chr18/04.build/
+### gc content
+samtools faidx ${six}Hap1chr18_aggressivecorrection.FINAL.fa
+bedtools makewindows -g ${six}Hap1chr18_aggressivecorrection.FINAL.fa.fai -w 1000000 > ${six}Hap1chr18_aggressivecorrection.FINAL.1mbwindows.bed
+bedtools nuc -fi ${six}Hap1chr18_aggressivecorrection.FINAL.fa -bed ${six}Hap1chr18_aggressivecorrection.FINAL.1mbwindows.bed > ${six}Hap1chr18_aggressivecorrection.FINAL.1mbnuccontent.bed
 
 ## run tidk
 conda activate tidk
-tidk find --clade Poales --output ${six}Hap1_aggressivecorrection.tidk --dir . ${six}Hap1_aggressivecorrection.FINAL.fa 
+tidk find --clade Poales --output ${six}Hap1chr18_aggressivecorrection.tidk --dir . ${six}Hap1chr18_aggressivecorrection.FINAL.fa 
 
-## run helixer
-ssh cbsugpu08
-cd /workdir/mcs368/
-scp cbsuxm01:/workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.fa .
-singularity run --nv --bind $PWD --pwd $PWD /programs/helixer-0.3.5/helixer.sif Helixer.py --fasta-path ${six}Hap1_aggressivecorrection.FINAL.fa --lineage land_plant --gff-output-path ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3
-scp ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3 cbsuxm01:/workdir/mcs368/panand_assemblies/hic/${six}/${six}Hap1/04.build/${six}Hap1_aggressivecorrection.FINAL.helixer.gff3
 
-### OR ON ATLAS
-scp mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/${six}Hap1_aggressivecorrection.FINAL.fa .
-srun -A buckler_lab_panand -p gpu-a100 --gres=gpu:a100:1 --ntasks-per-node=16 --time=1-00:00 --pty bash
+cd ../../../
+Rscript generate_subphaser_input_cmdline.R ${six}Hap1chr18aggressive-Pv-6 2 ${six}/${six}Hap1chr18/04.build/${six}Hap1chr18_aggressivecorrection.FINAL.fa.fai
+
+
+## prepare for atlas!!!!
+cp ${six}/${six}Hap1chr18/04.build/${six}Hap1chr18_aggressivecorrection.FINAL.fa ~/transfer/
+cp ${six}Hap1chr18aggressive_subphaserinput.txt ~/transfer/
+
+### ON ATLAS
+six=rrottb
+scp mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/${six}Hap1chr18_aggressivecorrection.FINAL.fa .
+
+## trash2 on atlas
+## on atlas - not having error?!?!?!?!
+cd /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats
+mkdir ${six}Hap1chr18_aggressivecorrection_TRASH2
+conda activate trash ## i guess do it before???
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=rrottb; conda activate trash; Rscript /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/TRASH_2/src/TRASH.R -f /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/${six}Hap1chr18_aggressivecorrection.FINAL.fa -o /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats/${six}Hap1chr18_aggressivecorrection_TRASH2 -p 46"
+
+### then helixer
+cd ..
 module load apptainer
 ## first time had to download models!
 # /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif 
 # Singularity> fetch_helixer_models.py --lineage land_plant
-time apptainer exec --nv /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif Helixer.py --fasta-path rtuberHap1_aggressivecorrection.FINAL.fa  --lineage land_plant --gff-output-path rtuberHap1_aggressivecorrection.FINAL.helixer.gff3
-scp ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3 mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/
+### submit as script!~!!!! 
+#### AAAHHH IT DOESN'T SET variable as variable, swicht in wrap stamentment
+##six=achine
+sbatch -A buckler_lab_panand -p gpu-a100 --gres=gpu:a100:1 --ntasks-per-node=16 --time=1-00:00 --wrap='six=rrottb; module load apptainer; time apptainer exec --nv /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif Helixer.py --fasta-path ${six}Hap1chr18_aggressivecorrection.FINAL.fa  --lineage land_plant --gff-output-path ${six}Hap1chr18_aggressivecorrection.FINAL.helixer.gff3'
 
 
-### gc content
-conda activate panand_assemblies
-samtools faidx ${six}Hap1_aggressivecorrection.FINAL.fa
-bedtools makewindows -g ${six}Hap1_aggressivecorrection.FINAL.fa.fai -w 1000000 > ${six}Hap1_aggressivecorrection.FINAL.1mbwindows.bed
-bedtools nuc -fi ${six}Hap1_aggressivecorrection.FINAL.fa -bed ${six}Hap1_aggressivecorrection.FINAL.1mbwindows.bed > ${six}Hap1_aggressivecorrection.FINAL.1mbnuccontent.bed
+conda activate SubPhaser
+cd subphaser
+scp mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/${six}Hap1chr18aggressive_subphaserinput.txt .
+
+## generate subphaser in put through my script from anchorwave output (need to improve usability)
+six=rrottbHap1chr18
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=rrottbHap1chr18; subphaser -i ../${six}_aggressivecorrection.FINAL.fa -c ${six}aggressive_subphaserinput.txt -pre ${six}_aggressivecorrection -k 15 -f 2 -q 50 -nsg 2 -non_specific -p 46"
 
 
 

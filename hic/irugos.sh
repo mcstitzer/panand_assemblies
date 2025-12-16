@@ -102,6 +102,15 @@ cd /workdir/mcs368/panand_assemblies/repeats/TRASH/
 /workdir/mcs368/panand_assemblies/repeats/TRASH/TRASH_run.sh --def /workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection.FINAL.fa --par 48 --o /workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection_TRASH
 
 
+## trash2 on atlas
+## on atlas - not having error?!?!?!?!
+cd /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats
+six=irugos
+mkdir -p ${six}BothHaps_aggressivecorrection_TRASH2
+conda activate trash ## i guess do it before???
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=irugos; conda activate trash; Rscript /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/TRASH_2/src/TRASH.R -f /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/${six}BothHaps_aggressivecorrection.FINAL.fa -o /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats/${six}BothHaps_aggressivecorrection_TRASH2 -p 46"
+
+
 ## run tidk
 conda activate tidk
 tidk find --clade Poales --output irugosBothHaps_aggressivecorrection.tidk --dir . irugosBothHaps_aggressivecorrection.FINAL.fa 

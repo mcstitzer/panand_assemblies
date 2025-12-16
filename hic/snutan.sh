@@ -118,3 +118,24 @@ samtools faidx ${six}_aggressivecorrection.FINAL.fa
 bedtools makewindows -g ${six}_aggressivecorrection.FINAL.fa.fai -w 1000000 > ${six}_aggressivecorrection.FINAL.1mbwindows.bed
 bedtools nuc -fi ${six}_aggressivecorrection.FINAL.fa -bed ${six}_aggressivecorrection.FINAL.1mbwindows.bed > ${six}_aggressivecorrection.FINAL.1mbnuccontent.bed
 ## oh, this also gets me n's!!! plot those too
+
+
+
+
+Rscript generate_subphaser_input_cmdline.R snutanaggressive-Pv-4 4 snutan/snutan/04.build/snutan_aggressivecorrection.FINAL.fa.fai 
+
+conda activate SubPhaser
+## had to do this to get final subphaser step to work https://github.com/conda-forge/perl-feedstock/issues/37
+cd subphaser
+## generate subphaser in put through my script from anchorwave output (need to improve usability)
+six=snutan
+##sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=snutan; subphaser -i ../${six}_aggressivecorrection.FINAL.fa -c ${six}_aggressivecorrection_subphaserinput.txt -pre ${six}_aggressivecorrection -k 13 -f 2 -q 50 -nsg 2 -non_specific -p 46"
+## 17mer got 20 chroms per subgenome
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=snutan; subphaser -i ../${six}_aggressivecorrection.FINAL.fa -c ${six}_aggressivecorrection_subphaserinput.txt -pre ${six}_aggressivecorrection -k 17 -f 2 -q 50 -nsg 2 -non_specific -p 46"
+
+
+
+
+
+
+

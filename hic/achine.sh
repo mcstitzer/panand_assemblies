@@ -107,13 +107,14 @@ cd ${six}/${six}BothHaps/04.build
 mkdir -p ${six}BothHaps_aggressivecorrection_TRASH2
 Rscript /workdir/mcs368/panand_assemblies/repeats/TRASH_2/src/TRASH.R -f /workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection.FINAL.fa -o /workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection_TRASH2 -p 24
 
+## trash2 on atlas
+## on atlas - not having error?!?!?!?!
+cd /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats
+six=achine
+mkdir ${six}BothHaps_aggressivecorrection_TRASH2
+conda activate trash ## i guess do it before???
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=achine; conda activate trash; Rscript /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/TRASH_2/src/TRASH.R -f /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/${six}BothHaps_aggressivecorrection.FINAL.fa -o /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats/${six}BothHaps_aggressivecorrection_TRASH2 -p 46"
 
-### or if trash2 is stupid and fails, do trash
-conda activate panand_assemblies
-six=${six}
-mkdir -p /workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection_TRASH
-cd /workdir/mcs368/panand_assemblies/repeats/TRASH/
-/workdir/mcs368/panand_assemblies/repeats/TRASH/TRASH_run.sh --def /workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection.FINAL.fa --par 48 --o /workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection_TRASH
 
 
 ## run tidk
@@ -128,6 +129,25 @@ scp cbsuxm01:/workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.buil
 singularity run --nv --bind $PWD --pwd $PWD /programs/helixer-0.3.5/helixer.sif Helixer.py --fasta-path ${six}BothHaps_aggressivecorrection.FINAL.fa --lineage land_plant --gff-output-path ${six}BothHaps_aggressivecorrection.FINAL.helixer.gff3
 scp ${six}BothHaps_aggressivecorrection.FINAL.helixer.gff3 cbsuxm01:/workdir/mcs368/panand_assemblies/hic/${six}/${six}BothHaps/04.build/${six}BothHaps_aggressivecorrection.FINAL.helixer.gff3
 
+## atlas
+
+### OR ON ATLAS
+cp ${six}Hap1_aggressivecorrection.FINAL.fa ~/transfer/
+##reload six on atlas
+scp mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/${six}Hap1_aggressivecorrection.FINAL.fa .
+srun -A buckler_lab_panand -p gpu-a100 --gres=gpu:a100:1 --ntasks-per-node=16 --time=1-00:00 --pty bash
+module load apptainer
+## first time had to download models!
+# /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif 
+# Singularity> fetch_helixer_models.py --lineage land_plant
+time apptainer exec --nv /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif Helixer.py --fasta-path ${six}Hap1_aggressivecorrection.FINAL.fa  --lineage land_plant --gff-output-path ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3
+scp ${six}Hap1_aggressivecorrection.FINAL.helixer.gff3 mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/
+### submit as script!~!!!! 
+#### AAAHHH IT DOESN'T SET variable as variable, swicht in wrap stamentment
+##six=achine
+sbatch -A buckler_lab_panand -p gpu-a100 --gres=gpu:a100:1 --ntasks-per-node=16 --time=1-00:00 --wrap='six=achine; module load apptainer; time apptainer exec --nv /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif Helixer.py --fasta-path ${six}BothHaps_aggressivecorrection.FINAL.fa  --lineage land_plant --gff-output-path ${six}BothHaps_aggressivecorrection.FINAL.helixer.gff3'
+scp ${six}BothHaps_aggressivecorrection.FINAL.helixer.gff3 mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/
+
 
 ### gc content
 samtools faidx ${six}BothHaps_aggressivecorrection.FINAL.fa
@@ -135,11 +155,16 @@ bedtools makewindows -g ${six}BothHaps_aggressivecorrection.FINAL.fa.fai -w 1000
 bedtools nuc -fi ${six}BothHaps_aggressivecorrection.FINAL.fa -bed ${six}BothHaps_aggressivecorrection.FINAL.1mbwindows.bed > ${six}BothHaps_aggressivecorrection.FINAL.1mbnuccontent.bed
 
 
+cd ../../../
+Rscript generate_subphaser_input_cmdline.R achineBothHapsaggressive-Pv-6 4 achine/achineBothHaps/04.build/achineBothHaps_aggressivecorrection.FINAL.fa.fai
 
 
 
-
-
+conda activate SubPhaser
+cd subphaser
+## generate subphaser in put through my script from anchorwave output (need to improve usability)
+six=achineBothHaps
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=achineBothHaps; subphaser -i ../${six}_aggressivecorrection.FINAL.fa -c ${six}_aggressivecorrection_subphaserinput.txt -pre ${six}_aggressivecorrection -k 13 -f 2 -q 50 -nsg 2 -non_specific -p 46"
 
 
 
