@@ -22,7 +22,7 @@ library(ggh4x) ## facet strips spanning groups (subtribe)
 
 
 ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
-names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
+names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Pentaploid', 'Paleotetraploid')
 
 
 ## assembly size, since we don't have flow for everybody

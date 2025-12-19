@@ -1,0 +1,39 @@
+six	species	ploidy	chrcount	haploid	assemblysize	assemblyn	helixer	similarsubgenomechr
+avirgi	Anatherum virginicum	Diploid	10	T	905672832	84587	44975	NA
+atenui	"Andropogon" burmanicus							
+achine	Andropogon chinensis	Tetraploid	40	F	2487901147	5043192	208081	0.7
+agerar	Andropogon gerardi	Hexaploid	60					
+blagur	Bothriochloa laguroides	Hexaploid	60	F	3514588688	17047791	246201	0.95
+cserru	Chrysopogon serrulatus	Diploid	20	F	1325371531	209130648	87179	NA
+ccitra	Cymbopogon citratus							
+crefra	Cymbopogon refractus	Diploid	10	T	812930549	4410462	41854	NA
+etrips	Elionurus tripsacoides	Paleotetraploid	10	T	4032943100	79878993	88440	
+hcompr	Hemarthria compressa	HexaploidReduced	54					
+hconto	Heteropogon contortus	Tetraploid	40	F	2076391228	17002474	178549	0.95
+irugos	Ischaemum rugosum	Diploid	20	F	1152771802	9111120	92690	NA
+ppanic	Pogonatherum paniceum	Diploid	10	T	799623234	910	36803	NA
+rrottb	Rhytachne rottboellioides	TetraploidReduced	16	T	1275591424	134710	63814	0.8
+rtuber	Rottboellia tuberculosa	DiploidReduced	9	T	1566987099	3973116	39082	NA
+smicro	Schizachyrium microstachyum	Diploid	10	T	925072617	165794	57670	NA
+sscopa	Schizachyrium scoparium	Tetraploid	40	F	3660666212	4114916	192848	0.8
+snutan	Sorghastrum nutans	Tetraploid	40	F	5340316586	1386004624	150274	0.8
+telega	Thelepogon elegans	Paleotetraploid	10	T			72306	
+ttrian	Themeda triandra	Pentaploid	50	F	3253327056	11966989	268545	
+ttrianDIPLOID	Themeda triandra	Diploid	20	F	1573231434	183463421	106047	NA
+tdacn1	Tripsacum dactyloides (northern)-hap1	TetraploidReduced	18	T	2597784462	602162	43899	0.7
+tdacn2	Tripsacum dactyloides (northern)-hap2	TetraploidReduced	18	T			43127	0.7
+tdacs1	Tripsacum dactyloides (southern)-hap1	TetraploidReduced	18	T			44282	0.7
+tdacs2	Tripsacum dactyloides (southern)-hap2	TetraploidReduced	18	T	2701095028	772510	44797	0.7
+udigit	Urelytrum digitatum	Hexaploid	30	T	4673235769	919236	123769	0.65
+vcuspi	Vossia cuspidata							
+zdgigi	Zea diploperennis (Gigi)	Paleotetraploid	10	T	2113369117	25104031	38205	
+zdmomo	Zea diploperennis (Momo)	Paleotetraploid	10	T	2108695972	16900	39741	
+zluxur	Zea luxurians	Paleotetraploid	10	T	3007261191	42649153	40008	
+zmhueh	Zea mays subsp. huehuetenangensis	Paleotetraploid	10	T	2189338183	7200	40974	
+zTIL18	Zea mays subsp. mexicana (TIL18)	Paleotetraploid	10	T	2426380173	1485553	39347	
+zTIL25	Zea mays subsp. mexicana (TIL25)	Paleotetraploid	10	T	2088922306	1993201	39361	
+zTIL01	Zea mays subsp. parviglumis (TIL01)	Paleotetraploid	10	T	2494128126	8796511	40943	
+zTIL18	Zea mays subsp. parviglumis (TIL11)	Paleotetraploid	10	T	2218224865	4795205	40683	
+znicar	Zea nicaraguensis	Paleotetraploid	10	T	2376648079	32500	32060	
+sbicol	Sorghum bicolor	Diploid	10	T	708735358	33371440		
+zmB735	Zea mays	Paleotetraploid	10	T	2131846805	3807886		

@@ -1,10 +1,19 @@
 library(ape)
 library(stringr)
+library(dplyr)
+library(data.table)
+library(tidyr)
+library(ggplot2)
+library(cowplot)
+theme_set(theme_cowplot())
+library(purrr)
 
-## on blfs1
 
+## on blfs1 /users/mcs368/panand_gene_trees/gene_trees_with_paspalumCDS_Dec2023
+species='blagur'
+ploidy=6
 input_dir='.'
-output_file='~/transfer/all_hconto_trees.tre'
+output_file=paste0('~/transfer/all_', species,'_trees.tre')
 tree_files <- list.files(input_dir, pattern = "00$", full.names = TRUE)
 
 process_tree_file <- function(file) {
@@ -18,7 +27,7 @@ process_tree_file <- function(file) {
 
   # Subset trees: keep tips with "hconto" or "pvagin" in the name
   subset_trees <- lapply(trees, function(tree) {
-    tips_to_keep <- tree$tip.label[str_detect(tree$tip.label, "hconto|pvagin")]
+    tips_to_keep <- tree$tip.label[str_detect(tree$tip.label, paste0(species,"|pvagin"))]
     drop.tip(tree, setdiff(tree$tip.label, tips_to_keep))
   })
 
@@ -40,10 +49,18 @@ cat("Subset trees written to:", output_file, "\n")
 
 ## on cbsuxm01
 
-subset_trees=read.tree('~/transfer/all_hconto_trees.tre')
+### chatgpt got out of control on this. i'll try again with thinkikng a bit more about individual topologies...
+
+## essentially, I need to canonnicalize rooted topology, and then count
+## maybe not even care about majority rule consensus tree?
+## but it would be nice to have on a chromosome by chromsome basis...
+
+
+
+subset_trees=read.tree(paste0('~/transfer/all_',species,'_trees.tre'))
 # Function to check if a tree has any `hconto` tips
 has_hconto_tips <- function(tree) {
-  any(str_detect(tree$tip.label, "hconto"))
+  any(str_detect(tree$tip.label, species))
 }
 
 # Filter trees that contain at least one `hconto` tip
@@ -51,23 +68,23 @@ filtered_trees <- subset_trees[sapply(subset_trees, has_hconto_tips)]
 
 # If no matching trees remain after filtering
 if (length(filtered_trees) == 0) {
-  stop("No trees contain any `hconto` tips after filtering.")
+  stop("No trees contain any species tips after filtering.")
 }
 
-cat("Number of trees with `hconto` tips:", length(filtered_trees), "\n")
+cat("Number of trees with species tips:", length(filtered_trees), "\n")
 
 
 
 
 
-agp_mapping <- read.table("hconto.agp", header = F, stringsAsFactors = FALSE)
+agp_mapping <- read.table(paste0(species,".agp"), header = F, stringsAsFactors = FALSE)
 
 # Example of expected column names: agp_mapping$Scaffold, agp_mapping$Chromosome
 scaffold_to_chr <- setNames(agp_mapping$V1, agp_mapping$V6)
 
 convert_scaffold_to_chr <- function(tree) {
   # Extract all unique scaffolds in the tree's tip labels
-  scaffolds_in_tree <- unique(str_extract(tree$tip.label, "scaf_[0-9]+"))
+  scaffolds_in_tree <- unique(str_extract(tree$tip.label, "(alt-)?scaf_[0-9]+"))
   
 #   # Check if all scaffolds are in the AGP mapping
 #   if (any(is.na(scaffolds_in_tree)) || !all(scaffolds_in_tree %in% names(scaffold_to_chr))) {
@@ -77,7 +94,7 @@ convert_scaffold_to_chr <- function(tree) {
   # Simplify and standardize tip labels
   tree$tip.label <- sapply(tree$tip.label, function(label) {
     # Extract scaffold name
-    scaffold_match <- str_extract(label, "scaf_[0-9]+")
+     scaffold_match <- str_extract(label, "(alt-)?scaf_[0-9]+")
     
     # Check if the label is a pvagin outgroup OR an hconto ingroup
     if (str_detect(label, "^pvagin")) {
@@ -94,7 +111,13 @@ convert_scaffold_to_chr <- function(tree) {
       # Otherwise, handle hconto or other species that rely on scaffold-to-chromosome mapping
       chromosome <- scaffold_to_chr[scaffold_match]
       species_name <- str_extract(label, "^[^_]+")  # Extract species name
-      return(paste0(species_name, "_", chromosome))
+           # Handle cases where the scaffold is missing from mapping
+      if (is.na(chromosome)) {
+        return(paste0(species_name, "_NA"))  # Assign NA if no scaffold-chromosome mapping is found
+      } else {
+        return(paste0(species_name, "_", chromosome))  # Combine species name with chromosome
+      }
+
     }
   })
 
@@ -104,7 +127,70 @@ convert_scaffold_to_chr <- function(tree) {
 
 # Apply the conversion to all subset trees
 trees_with_chr <- lapply(subset_trees, convert_scaffold_to_chr)
+
+
+convert_scaffold_to_chr_metadata_optimized <- function(tree, agp_mapping) {
+  # Ensure scaffolds in AGP mapping are formatted consistently
+#   agp_mapping <- agp_mapping %>%
+#     mutate(V6 = str_replace(V6, "scaf_0?([0-9]+)", "scaf_\\1"))
+#   
+  # Check if tree is invalid and handle gracefully
+  if (is.null(tree) || !("tip.label" %in% names(tree)) || length(tree$tip.label) == 0) {
+    return(NULL)
+  }
+
+  # Extract metadata for all tip labels
+  df <- data.frame(
+    tip_label = tree$tip.label,
+    scaffold_match = str_extract(tree$tip.label, "(alt-)?scaf_[0-9]+"),  # Extract scaffold
+    scaffold_start = as.numeric(str_match(tree$tip.label, "_([0-9]+)-([0-9]+)")[, 2]),  # Extract start
+    scaffold_end = as.numeric(str_match(tree$tip.label, "_([0-9]+)-([0-9]+)")[, 3])     # Extract end
+  )
+  
+  # Add extracted coordinates for scaffold-based or chromosome-based positions
+  df <- df %>%
+    mutate(
+      pvagin_chromosome = str_extract(tip_label, "Chr[0-9A-Za-z]+")
+    )
+  
+  # Perform a left join with the AGP mapping file to merge scaffold-based metadata
+  df <- df %>%
+    left_join(agp_mapping, by = c("scaffold_match" = "V6")) %>%  # Join by scaffold column in AGP Mapping ("V6")
+    mutate(
+      species = ifelse(str_detect(tip_label, "^pvagin"), "pvagin", str_extract(tip_label, "^[^_]+")),
+      chromosome = ifelse(str_detect(tip_label, "^pvagin"), pvagin_chromosome, V1),   # Use pvagin chromosome or AGP mapping chromosome
+      chrom_start_adjusted = case_when(
+        str_detect(tip_label, "^pvagin") ~ scaffold_start,  # For pvagin, use direct chromosome start position
+        !is.na(scaffold_start) & !is.na(V2) ~ V2 + scaffold_start - 1,  # Adjust scaffold start position to chromosome start
+        TRUE ~ NA_real_
+      ),
+      chrom_end_adjusted = case_when(
+        str_detect(tip_label, "^pvagin") ~ scaffold_end,    # For pvagin, use direct chromosome end position
+        !is.na(scaffold_end) & !is.na(V2) ~ V2 + scaffold_end - 1,      # Adjust scaffold end position to chromosome start
+        TRUE ~ NA_real_
+      )
+    ) %>%
+    select(
+      tip_label, species, chromosome, chrom_start_adjusted, chrom_end_adjusted, scaffold_start, scaffold_end
+    ) # Keep only relevant columns
+  
+  # Filter out rows with invalid data if necessary
+  if (nrow(df) == 0) {
+    return(NULL)
+  }
+  
+  return(df)
+}
+
+chr_with_chr <- lapply(subset_trees, function(x) convert_scaffold_to_chr_metadata_optimized(x, agp_mapping))
+
+
+## remove from both!
+chr_with_chr <- chr_with_chr[!sapply(trees_with_chr, is.null)]
 trees_with_chr <- trees_with_chr[!sapply(trees_with_chr, is.null)]
+
+
+
 
 
 # Ensure pvagin is used as the root for all trees
@@ -126,198 +212,265 @@ rooted_trees <- lapply(trees_with_chr, root_trees_on_pvagin)
 
 cat("All trees successfully rooted on pvagin.\n")
 
+# Canonicalize tree ensuring sorted clades
+canonicalize_tree <- function(tree) {
+  # Recursive function to process clades
+  process_clades <- function(node) {
+    # Get descendant nodes for the current node
+    descendants <- tree$edge[tree$edge[, 1] == node, 2]
+    
+    # Check if the node is a tip (leaf)
+    if (length(descendants) == 0) {
+      return(tree$tip.label[node])  # Return the tip label directly
+    }
+    
+    # Process each descendant recursively
+    child_clades <- sapply(descendants, process_clades)
+    
+    # Convert to atomic structure: combine child clades and sort them
+    sorted_clades <- sort(child_clades)
+    
+    # Combine sorted clades into Newick representation
+    return(paste0("(", paste(sorted_clades, collapse = ","), ")"))
+  }
+  
+  # Identify the root node (unique parent that isn't listed as a child)
+  root_node <- setdiff(tree$edge[, 1], tree$edge[, 2])[1]
+  
+  # Generate canonical Newick string starting from the root
+  canonical_tree <- process_clades(root_node)
+  
+  # Return the complete Newick string
+  return(paste0(canonical_tree, ";"))
+}
+
+
+
 
 
 # Convert rooted trees to Newick strings
-topology_strings <- sapply(rooted_trees, write.tree)
+### tip count depends on ploidy, so ploidy+pvagin
+fivetips=sapply(rooted_trees, function(x){ length(x$tip.label)==ploidy+1})
+topology_strings <- sapply(rooted_trees[fivetips], canonicalize_tree)
+chr_with_chr_final=chr_with_chr[fivetips]
 
-clean_newick <- function(newick_string) {
-  # Remove all branch lengths (anything after `:`) using regex
-  no_branch_lengths <- gsub(":.*?(\\)|,)", "\\1", newick_string)
-  # Remove node labels (e.g., `Root` or `100`) using regex
-  cleaned_string <- gsub("\\)\\w+", ")", no_branch_lengths)
-  return(cleaned_string)
-}
-# Clean all topology strings (remove branch lengths and node labels)
-cleaned_topology_strings <- sapply(topology_strings, clean_newick)
+# Extract only the `pvagin` rows from each data frame in the list
+pvagin_rows <- lapply(chr_with_chr_final, function(df) {
+  df[df$species == "pvagin", ]
+})
 
+# Combine all extracted `pvagin` rows into a single data frame
+pvagin_df <- do.call(rbind, pvagin_rows)
 
-cleaned_topology_counts <- as.data.frame(table(cleaned_topology_strings))
-colnames(cleaned_topology_counts) <- c("topology", "count")  # Rename columns
+#### AAHAAHAHAH THIS IS AMAZING!!!! IT'S WORKIHNG!!!!
 
-cleaned_topology_counts <- cleaned_topology_counts %>%
-  mutate(
-    pvagin_chr = str_extract(topology, "Chr[0-9A-Za-z]+")
-  )
-
-# View the updated table
-cleaned_topology_counts %>% filter(pvagin_chr=='Chr01')
-  arrange(-count) %>%
-  head(20)
+## now i just have to plot the topologies along each chromosome!!
 
 
 
 
-# Step 1: Normalize pvagin naming in topologies
-filtered_topologies <- cleaned_topology_counts %>%
-  mutate(topology = as.character(topology)) %>%  # Ensure topology is character
-  mutate(topology = str_replace_all(topology, "(?i)pvagin", "pvagin")) %>%  # Standardize pvagin
-  filter(str_detect(topology, "pvagin"))  # Keep only topologies with pvagin
 
-# Step 2: Filter for topologies with exactly four hconto tips
-filter_four_hconto <- function(topology) {
-  hconto_tips <- str_extract_all(topology, "hconto_chr[0-9]+_[0-9]+")[[1]]
-  return(length(hconto_tips) == 4)
-}
 
-filtered_topologies <- filtered_topologies %>%
-  filter(sapply(topology, filter_four_hconto))
 
-# Step 3: Canonicalize topologies while keeping the root
-canonicalize_rooted_topology <- function(topology) {
-  # Parse the tree
-  tree <- tryCatch({
-    read.tree(text = topology)
-  }, error = function(e) {
-    message("Invalid topology detected and skipped:\n", topology)
-    return(NULL)  # Skip invalid topology
-  })
-  
-  # Check if any tip label starts with "pvagin"
-  if (is.null(tree) || !any(grepl("^pvagin", tree$tip.label))) {
-    message("Skipping topology: pvagin not found as a tip\n", topology)
-    return(NULL)
-  }
-  
-  # Canonicalize the tree: retain root and reorder branches
-  tree <- ape::ladderize(tree, right = FALSE)  # Order branches consistently
-  
-  # Rewrite into canonical Newick string
-  return(write.tree(tree))
-}
 
-filtered_topologies <- filtered_topologies %>%
-  mutate(
-    canonical_topology = sapply(topology, canonicalize_rooted_topology)
-  ) %>%
-  filter(!is.na(canonical_topology))  # Remove rows with NULL canonical_topology
 
-# Step 4: Group by canonicalized topologies and count
-canonical_topology_counts <- filtered_topologies %>%
-  group_by(canonical_topology, pvagin_chr) %>%
-  summarise(count = sum(count), .groups = "drop") %>%
-  arrange(pvagin_chr,desc(count))
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
 ### now convert to a mrc
+#topologies=data.frame(topology=topology_strings, pvaginChr=sub(".*pvagin_([A-Za-z0-9]{5}).*", "\\1", topology_strings))
 
-canonicalize_tree <- function(tree) {
-  # Internal function to reorder the edges of a phylo object recursively
-  reorder_subtree <- function(node, tree) {
-    if (node <= length(tree$tip.label)) {
-      # Return terminal node (tip)
-      return(tree$tip.label[node])
-    }
-    
-    # Identify the indices of children (subtrees)
-    children <- which(tree$edge[, 1] == node)
-    child_nodes <- tree$edge[children, 2]
-    
-    # Recursively order child nodes
-    ordered_children <- lapply(child_nodes, reorder_subtree, tree = tree)
-    
-    # Sort children lexicographically and rebuild subtree
-    ordered_children <- ordered_children[order(sapply(ordered_children, function(x) {
-      if (is.character(x)) return(x)  # Sort by tip label lexicographically
-      return(paste(sort(unlist(x)), collapse = ""))  # Internal node
-    }))]
-    
-    return(ordered_children)
+# chr1=lapply(topologies[topologies$pvaginChr=='Chr01',]$topology, function(x) read.tree(text=x))
+# 
+# chr1tips=chr1[unlist(lapply(chr1, function(x) all(x$tip.label%in%c("hconto_chr3_1", "hconto_chr3_2", "hconto_chr3_3", "hconto_chr3_4", 
+# "pvagin_Chr01"))))]
+# 
+# # Combine all tree objects into a single `multiPhylo` object
+# chr1mrc=consensus(chr1tips, p=0.5, check.labels=T)
+
+topologies=data.frame(topology=topology_strings, pvaginChr=sub(".*pvagin_([A-Za-z0-9]{5}).*", "\\1", topology_strings), pvaginStart=pvagin_df$chrom_start_adjusted)
+
+chromosomes <- paste0("Chr", sprintf("%02d", 1:10)) # Generates Chr01, Chr02, ..., Chr10
+
+
+# Iterate over all chromosomes
+chromosome_trees <- lapply(chromosomes, function(chrom) {
+  # Filter rows for the current chromosome
+  topologies_chr <- topologies[topologies$pvaginChr == chrom, ]
+  newick_strings <- topologies_chr$topology
+  
+  # Parse all Newick strings into tree objects
+  trees <- lapply(newick_strings, function(x) read.tree(text = x))
+  
+  # Convert trees to Newick format for topology comparison
+  topology_strings <- sapply(trees, write.tree)  # Get the Newick string for each tree
+  
+  # Identify the most common topology
+  most_common_topology <- names(sort(table(topology_strings), decreasing = TRUE))[1]
+  
+  # Parse the most common topology back into a tree object
+  most_common_tree <- read.tree(text = most_common_topology)
+  
+  # Extract the tip labels from the most common topology
+  most_common_tips <- most_common_tree$tip.label
+  
+  # Filter trees containing exactly the tips in the most common topology
+filter_vector <- unlist(lapply(trees, function(x) 
+  all(x$tip.label %in% most_common_tips) && all(most_common_tips %in% x$tip.label)
+))
+
+# Use `filter_vector` to filter trees
+filtered_trees <- trees[filter_vector]
+
+  # If filtered_trees is empty, skip
+  if (length(filtered_trees) == 0) {
+    return(NULL)
   }
   
-  # Start from the root and reorder the entire tree recursively
-  reordered_tree <- reorder_subtree(length(tree$tip.label) + 1, tree)
-  
-  # Rewrite the reordered tree into a newick-compatible object
-  return(write.tree(tree))
-}
-canonicalize_topologies <- function(topologies) {
-  # Convert Newick strings into ape trees
-  trees <- lapply(topologies, function(topology) read.tree(text = topology))
-  
-  # Canonicalize each tree to remove rotational ambiguities
-  canonicalized_trees <- lapply(trees, function(tree) {
-    tryCatch({
-      canonicalize_tree(tree)
-    }, error = function(e) {
-      message("Error canonicalizing tree: ", e$message)
-      return(NULL)
-    })
-  })
-  
-  # Return canonicalized Newick strings, removing any NULL results
-  return(canonicalized_trees)
-}
+  filtered_topology_strings <- sapply(filtered_trees, write.tree)
 
-expand_topologies <- canonical_topology_counts %>%
-  group_by(pvagin_chr) %>%
-  summarise(
-    expanded_topologies = list(rep(canonical_topology, count)),  # Replicate trees by count
-    .groups = "drop"
+  # Create the filtered data frame
+  filtered_topologies <- data.frame(
+    topology = filtered_topology_strings,
+    pvaginChr = sub(".*pvagin_([A-Za-z0-9]{5}).*", "\\1", filtered_topology_strings),
+    pvaginStart=topologies_chr$pvaginStart[filter_vector]
   )
 
-standardize_tip_labels <- function(trees) {
-  # Get all unique tip labels across all trees
-  all_tips <- unique(unlist(lapply(trees, function(tree) tree$tip.label)))
+
+  return(filtered_topologies) # Return the filtered data frame
+})
+
+# Combine all filtered data frames into a single unified data frame
+too <- rbindlist(chromosome_trees, fill = TRUE)
+
+#### aaah somethign went wrong with chromsome_trees there are way too many here!?!?!
+
+
+ too %>% group_by(topology, pvaginChr)%>%summarize(n=n())%>%arrange(-n)
+
+
+## yikes this is a messy string, but gets at proportion of topologies with paired clades...
+ too %>%group_by(pvaginChr)%>%mutate(totaltrees=n())%>%ungroup()%>% group_by(topology, pvaginChr, totaltrees)%>%filter(grepl('\\)\\,\\(', topology))%>%summarize(n=n())%>%ungroup()%>%group_by(pvaginChr)%>%mutate(total=sum(n))%>%ungroup()%>%group_by(topology,pvaginChr)%>%mutate(prop=n/total, proptotal=n/totaltrees)%>%arrange(pvaginChr,-n)%>%data.frame
+
+
+## okay, just plot!
+
+stoo= too %>%group_by(pvaginChr)%>%mutate(totaltrees=n())%>% group_by(topology, pvaginChr, totaltrees)%>%summarize(n=n())
+
+pdf(paste0('~/transfer/',species,'_topologies.pdf'),16,10)
+for(i in chromosomes){
+alongchr <- ggplot(too[too$pvaginChr == i, ], aes(x = pvaginStart, y = topology, color = topology)) +
+  geom_point(alpha = 0.1) +
+  theme(legend.position = 'NULL') +
+  labs(x = "pvaginStart", y = "Topology", title=i)
+
+# Bar plot (fix axes and alignment for combining with scatter plot)
+bp <- ggplot(stoo[stoo$pvaginChr == i, ], aes(x = n/totaltrees, y = factor(topology), fill = factor(topology))) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Proportion", y = "Topology", title = i) +
+  theme_minimal() +
+  guides(fill = guide_legend(title = "Topology")) +
+  theme(legend.position = 'NULL', 
+        axis.text.y = element_blank(), # To remove redundant y-labels
+        axis.title.y = element_blank())
+
+# Combine plots side by side ensuring alignment
+combined_plot <- plot_grid(alongchr, bp, nrow = 1, rel_widths = c(2, 1), align = 'h', axis = 'b')
+
+# Display final combined plot
+print(combined_plot)
+}
+dev.off()
+
+## deconvolute to pairs in trees?
+
+# Step 1: Create a function to extract pairs
+extract_pairs <- function(topology) {
+  # Clean the topology string by removing text outside the relevant tree structure
+  topology_clean <- gsub("pvagin_Chr01.*", "", topology)  # Remove ending text
+  topology_clean <- gsub(";|\\s+", "", topology)          # Remove semicolons and spaces
   
-  # Add missing tips as "zero-length" polytomies to each tree
-  standardized_trees <- lapply(trees, function(tree) {
-    # Identify missing tips
-    missing_tips <- setdiff(all_tips, tree$tip.label)
-    
-    # If no tips are missing, return the tree as-is
-    if (length(missing_tips) == 0) {
-      return(tree)
-    }
-    
-    # Create dummy trees for missing tips
-    dummy_trees <- lapply(missing_tips, function(tip) {
-      read.tree(text = paste0("(", tip, ");"))  # Create single-tip trees
-    })
-    
-    # Add the missing tips to the original tree
-    tree <- Reduce(function(x, y) bind.tree(x, y, where = "root"), dummy_trees, init = tree)
-    return(tree)
-  })
-  
-  return(standardized_trees)
+  # Match valid leaf pairs anywhere in the string
+  matches <- str_extract_all(topology_clean, paste0(species,paste0("_chr\\d+_\\d+,",species,"_chr\\d+_\\d+")))[[1]]
+
+  # Return the matches or NULL if none are found
+  if (length(matches) > 0) {
+    return(matches)
+  } else {
+    return(NULL)
+  }
 }
 
-# Canonicalize topologies for each chromosome
-canonical_species_trees <- expand_topologies %>%
-  mutate(expanded_topologies = lapply(expanded_topologies, canonicalize_topologies))
-  
-  
-  build_species_tree <- function(canonicalized_topologies) {
-  # Convert canonicalized topologies back to trees
-  trees <- lapply(canonicalized_topologies, function(topology) read.tree(text = topology))
-  
-  # Standardize tips if necessary (optional, ensure consistency across trees)
-  standardized_trees <- standardize_tip_labels(trees)
-  
-  # Compute consensus tree
-  return(consensus(standardized_trees, p = 0.5))  # Majority-rule consensus tree
-}
 
-# Apply consensus tree building per chromosome
-species_trees <- canonical_species_trees %>%
-  mutate(species_tree = lapply(expanded_topologies, build_species_tree))
-  
-  
-  
+# Step 2: Apply the function and expand rows
+too_expanded <- too %>%                  # Filter for Chr01
+  mutate(pairs = map(topology, extract_pairs)) %>%  # Apply the function to extract pairs
+  unnest(pairs) %>%                                 # Expand rows for multiple pairs
+  mutate(pairs = str_remove_all(pairs, "[()]")) %>%    # Clean out parentheses in pairs
+  mutate(
+    simplified_pair = str_replace_all(pairs, ".*_(\\d+),.*_(\\d+)", "\\1,\\2")  # Extract final digits
+  )
+
+## this may not work for hexaploids?? or need to think ahrder
+too_expanded$sortedpairs=NA
+too_expanded$sortedpairs[too_expanded$simplified_pair%in%c('1,2','3,4')]='1,2-3,4'
+too_expanded$sortedpairs[too_expanded$simplified_pair%in%c('1,3','2,4')]='1,3-2,4'
+too_expanded$sortedpairs[too_expanded$simplified_pair%in%c('1,4','2,3')]='1,4-2,3'
+
+
+## switch to simplified_pair for now
+#stoo_expanded= too_expanded %>%group_by(pvaginChr)%>%mutate(totaltrees=n())%>% group_by(sortedpairs, pvaginChr, totaltrees)%>%summarize(n=n())
+stoo_expanded= too_expanded %>%group_by(pvaginChr)%>%mutate(totaltrees=n())%>% group_by(simplified_pair, pvaginChr, totaltrees)%>%summarize(n=n())
+
+pdf(paste0('~/transfer/',species,'_pairs.pdf'),16,10)
+for(i in chromosomes){
+alongchr <- ggplot(too_expanded[too_expanded$pvaginChr == i, ], aes(x = pvaginStart, y = simplified_pair, color = simplified_pair)) +
+  geom_point(alpha = 0.1) +
+  theme(legend.position = 'NULL') +
+  labs(x = "pvaginStart", y = "Topology", title=i)
+
+# Bar plot (fix axes and alignment for combining with scatter plot)
+bp <- ggplot(stoo_expanded[stoo_expanded$pvaginChr == i, ], aes(x = n/totaltrees, y = factor(simplified_pair), fill = factor(simplified_pair))) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Proportion", y = "Topology", title = i) +
+  theme_minimal() +
+  guides(fill = guide_legend(title = "Topology")) +
+  theme(legend.position = 'NULL', 
+        axis.text.y = element_blank(), # To remove redundant y-labels
+        axis.title.y = element_blank())
+
+# Combine plots side by side ensuring alignment
+combined_plot <- plot_grid(alongchr, bp, nrow = 1, rel_widths = c(2, 1), align = 'h', axis = 'b')
+
+# Display final combined plot
+print(combined_plot)
+}
+dev.off()
+
+
+
+
+########## all below doesn't work!
+
+
+
+
+
+topologies%>%group_by(pvaginChr)%>%summarize(sptree=consensus(topology, p=0.5, check.labels=T))
+
   
   
 # Step 2: Build a weighted species tree for each chromosome

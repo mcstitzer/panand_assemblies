@@ -27,16 +27,16 @@ if(ploidy==2){
 grouped=b %>% group_by(refChr, queryChr) %>% summarize(n=n()) %>% top_n(n=ploidy) %>% data.frame() %>% filter(grepl('Chr', refChr))
 out=grouped %>% group_by(refChr) %>% summarize(first=first(queryChr), second=nth(queryChr, 2))
 ## get all contigs with synteny! 
-#singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
-output=c(paste(out$first, out$second, sep='\t'))#, singletons)
+singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
+output=c(paste(out$first, out$second, sep='\t'), singletons)
   write.table(output, paste0('subphaser_config/', all$V2[i],'_subphaserinput.aw.txt'), col.names=F, row.names=F, quote=F)
 }
   if(ploidy==3){
     grouped=b %>% group_by(refChr, queryChr) %>% summarize(n=n()) %>% top_n(n=ploidy) %>% data.frame() %>% filter(grepl('Chr', refChr))
 out=grouped %>% group_by(refChr) %>% summarize(first=first(queryChr), second=nth(queryChr, 2), third=nth(queryChr,3))
 ## get all contigs with synteny! 
-#singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
-output=c(paste(out$first, out$second, out$third, sep='\t'))#, singletons)
+singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
+output=c(paste(out$first, out$second, out$third, sep='\t'), singletons)
     write.table(output, paste0('subphaser_config/', all$V2[i],'_subphaserinput.aw.txt'), col.names=F, row.names=F, quote=F)
     }
   
@@ -66,8 +66,8 @@ if(ploidy==2){
 grouped=b %>% group_by(refChr, queryChr) %>% summarize(n=n()) %>% top_n(n=ploidy*2) %>% data.frame() %>% filter(grepl('Chr', refChr))
 out=grouped %>% group_by(refChr) %>% summarize(first=first(queryChr), second=nth(queryChr, 2), third=nth(queryChr,3), fourth=nth(queryChr,4))
 ## get all contigs with synteny! 
-#singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
-output=c(paste(out$first, out$second, out$third, out$fourth, sep='\t'))#, singletons)
+singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
+output=c(paste(out$first, out$second, out$third, out$fourth, sep='\t'), singletons)
   write.table(output, paste0('subphaser_config/',all$V2[i],'_subphaserinput.awd.txt'), col.names=F, row.names=F, quote=F)
 }
   if(ploidy==3){
@@ -77,9 +77,9 @@ out=grouped %>% group_by(refChr) %>% summarize(first=first(queryChr), second=nth
 ## add in step to get the unplaced scaffolds?!?
 bl=read.table('blagur/blagur/04.build/blagur_aggressivecorrection.FINAL.fa.fai', header=F)
 #singletons=unique(b$queryChr)[! unique(b$queryChr) %in% grouped$queryChr]
-#singletons=unique(bl$V1[!bl$V1%in%grouped$queryChr])
+singletons=unique(bl$V1[!bl$V1%in%grouped$queryChr])
 
-output=c(paste(out$first, out$second, out$third, out$fourth, out$fifth, out$sixth, sep='\t'))#, singletons)
+output=c(paste(out$first, out$second, out$third, out$fourth, out$fifth, out$sixth, sep='\t'), singletons)
     write.table(output, paste0('subphaser_config/', all$V2[i],'_subphaserinput.awd.txt'), col.names=F, row.names=F, quote=F)
     }
   

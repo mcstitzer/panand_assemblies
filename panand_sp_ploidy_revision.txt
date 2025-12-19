@@ -1,0 +1,41 @@
+achineBothHaps_aggressivecorrection.FINAL	achine	4	achineBothHaps	/local/workdir/mcs368/panand_assemblies/hic/achine/achineBothHaps/04.build/
+Ag-CAM1351-DRAFT-PanAnd-1.0	agerar	3	
+Ab-Traiperm_572-DRAFT-PanAnd-1.0	atenui	2	
+Av-Kellogg1287_8-REFERENCE-PanAnd-1.0	avirgi	1	avirgi	/local/workdir/mcs368/panand_assemblies/original_genomes/
+blagur_aggressivecorrection.FINAL	blagur	6	blagur	/local/workdir/mcs368/panand_assemblies/hic/blagur/blagur/04.build/
+Cs-KelloggPI219580-DRAFT-PanAnd-1.0.chrSuperScaf	cserru	2	cserru	/local/workdir/mcs368/panand_assemblies/scaffolding/
+Cc-PI314907-DRAFT-PanAnd-1.0	ccitra	2	
+Cr-AUB069-DRAFT-PanAnd-1.0.chrSuperScaf	crefra	1	crefra	/local/workdir/mcs368/panand_assemblies/scaffolding/
+etripsHap1_aggressivecorrection.FINAL	etrips	2	etripsHap1	/local/workdir/mcs368/panand_assemblies/hic/etrips/etripsHap1/04.build/
+Hp-KelloggPI404118-DRAFT-PanAnd-1.0	hcompr	3	
+Hc-AUB53_1-DRAFT-PanAnd-1.0.chrSuperScaf	hconto	4	hconto	/local/workdir/mcs368/panand_assemblies/scaffolding/
+irugosBothHaps_aggressivecorrection.FINAL	irugos	2	irugosBothHaps	/local/workdir/mcs368/panand_assemblies/hic/irugos/irugosBothHaps/04.build/
+Pi-Clark-DRAFT-PanAnd-1.0.chrSuperScaf	ppanic	1	ppanic	/local/workdir/mcs368/panand_assemblies/scaffolding/
+rrottbHap1chr18_aggressivecorrection.FINAL	rrottb	2	rrottbHap1chr18	/local/workdir/mcs368/panand_assemblies/hic/rrottb/rrottbHap1chr18/04.build/
+rtuberHap1_aggressivecorrection.FINAL	rtuber	1	rtuberHap1	/local/workdir/mcs368/panand_assemblies/hic/rtuber/rtuberHap1/04.build/
+smicroHap1_aggressivecorrection.FINAL	smicro	1	smicroHap1	/local/workdir/mcs368/panand_assemblies/hic/smicro/smicroHap1/04.build/
+sscopaBothHaps_aggressivecorrection.FINAL	sscopa	4	sscopaBothHaps	/local/workdir/mcs368/panand_assemblies/hic/sscopa/sscopaBothHaps/04.build/
+snutan_aggressivecorrection.FINAL	snutan	4	snutan	/local/workdir/mcs368/panand_assemblies/hic/snutan/snutan/04.build/
+telegaHap1_aggressivecorrection.FINAL	telega	2	telegaHap1	/local/workdir/mcs368/panand_assemblies/hic/telega/telegaHap1/04.build/
+ttrianDIPLOIDqv_aggressivecorrection.FINAL	ttriaa	2	ttrianDIPLOIDqv	/local/workdir/mcs368/panand_assemblies/hic/ttrian/ttrianDIPLOIDqv/04.build/
+ttrianBothHapsUnfiltered_aggressivecorrection.FINAL	ttrias	5	ttrianBothHapsUnfiltered	/local/workdir/mcs368/panand_assemblies/hic/ttrian/ttrianBothHapsUnfiltered/04.build/
+Td-KS_B6_1-REFERENCE-PanAnd-2.0a	tdacn1	2	tdacn1	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Td-KS_B6_1-REFERENCE-PanAnd-2.0b	tdacn2	2	tdacn2	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Td-FL_9056069_6-REFERENCE-PanAnd-2.0a	tdacs1	2	tdacs1	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Td-FL_9056069_6-REFERENCE-PanAnd-2.0b	tdacs2	2	tdacs2	/local/workdir/mcs368/panand_assemblies/original_genomes/
+udigitHap1_aggressivecorrection.FINAL	udigit	3	udigitHap1	/local/workdir/mcs368/panand_assemblies/hic/udigit/udigitHap1/04.build/
+Vc-Pasquet1098-DRAFT-PanAnd-1.0	vcuspi	2	
+Zd-Gigi-REFERENCE-PanAnd-1.0	zdgigi	2	zdgigi	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Zd-Momo-REFERENCE-PanAnd-1.0	zdmomo	2	zdmomo	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Zl-RIL003-REFERENCE-PanAnd-1.0	zluxur	2	zluxur	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Zh-RIMHU001-REFERENCE-PanAnd-1.0	zmhuet	2	zmhuet	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Zx-TIL18-REFERENCE-PanAnd-1.0	zTIL18	2	zTIL18	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Zx-TIL25-REFERENCE-PanAnd-1.0	zTIL25	2	zTIL25	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Zv-TIL01-REFERENCE-PanAnd-1.0	zTIL01	2	zTIL01	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Zv-TIL11-REFERENCE-PanAnd-1.0	zTIL11	2	zTIL11	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Zn-PI615697-REFERENCE-PanAnd-1.0	znicar	2	znicar	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Sorghum_bicolor.Sorghum_bicolor_NCBIv3.dna.toplevel	sbicol	1	sbicol	/local/workdir/mcs368/panand_assemblies/original_genomes/
+Zm-B73-REFERENCE-NAM-5.0	zmB735	2	zmB735	/local/workdir/mcs368/panand_assemblies/original_genomes/
+
+
+

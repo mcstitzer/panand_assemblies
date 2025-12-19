@@ -87,5 +87,5 @@ names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleot
 #process_anchors_to_dotplot('../syntenic_anchors/anchors/agerar-Pv-6', minBlock=20, refChrs='Chr01')
 
 pdf(paste0('~/transfer/', genotype, '_dotplot.pdf'), 14,14)
-process_anchors_to_dotplot(paste0(genotype, '-Pv-', as.character(as.numeric(ploidy)*2)), minBlock=3, title=genotype)
+process_anchors_to_dotplot(paste0(genotype, '-Pv-', as.character(as.numeric(ploidy))), minBlock=3, title=genotype)
 dev.off()

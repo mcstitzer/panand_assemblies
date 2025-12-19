@@ -195,7 +195,8 @@ cp ${six}BothHapsUnfiltered_aggressivecorrection.FINAL.fa ~/transfer/
 cp ../../../${six}BothHapsUnfilteredaggressive_subphaserinput.txt ~/transfer/
 
 ### ON ATLAS
-six=sscopa
+six=ttrian
+
 scp mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/${six}BothHapsUnfiltered_aggressivecorrection.FINAL.fa .
 
 ## trash2 on atlas
@@ -203,7 +204,7 @@ scp mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/${six}BothHapsUnfiltered_agg
 cd /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats
 mkdir ${six}BothHapsUnfiltered_aggressivecorrection_TRASH2
 conda activate trash ## i guess do it before???
-sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=sscopa; conda activate trash; Rscript /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/TRASH_2/src/TRASH.R -f /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/${six}BothHapsUnfiltered_aggressivecorrection.FINAL.fa -o /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats/${six}BothHapsUnfiltered_aggressivecorrection_TRASH2 -p 46"
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=ttrianBothHapsUnfiltered; conda activate trash; Rscript /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/TRASH_2/src/TRASH.R -f /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/${six}BothHapsUnfiltered_aggressivecorrection.FINAL.fa -o /project/buckler_lab_panand/michelle.stitzer/panand_assemblies/hic/repeats/${six}BothHapsUnfiltered_aggressivecorrection_TRASH2 -p 46"
 
 ### then helixer
 cd ..
@@ -214,7 +215,7 @@ module load apptainer
 ### submit as script!~!!!! 
 #### AAAHHH IT DOESN'T SET variable as variable, swicht in wrap stamentment
 ##six=achine
-sbatch -A buckler_lab_panand -p gpu-a100 --gres=gpu:a100:1 --ntasks-per-node=16 --time=1-00:00 --wrap='six=sscopa; module load apptainer; time apptainer exec --nv /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif Helixer.py --fasta-path ${six}BothHapsUnfiltered_aggressivecorrection.FINAL.fa  --lineage land_plant --gff-output-path ${six}BothHapsUnfiltered_aggressivecorrection.FINAL.helixer.gff3'
+sbatch -A buckler_lab_panand -p gpu-a100 --gres=gpu:a100:1 --ntasks-per-node=16 --time=1-00:00 --wrap='six=ttrian; module load apptainer; time apptainer exec --nv /project/buckler_lab_panand/zachary.miller/helixerDocker/helixer-docker_helixer_v0.3.2_cuda_11.8.0-cudnn8.sif Helixer.py --fasta-path ${six}BothHapsUnfiltered_aggressivecorrection.FINAL.fa  --lineage land_plant --gff-output-path ${six}BothHapsUnfiltered_aggressivecorrection.FINAL.helixer.gff3'
 
 
 conda activate SubPhaser
@@ -222,9 +223,9 @@ cd subphaser
 scp mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/${six}BothHapsUnfilteredaggressive_subphaserinput.txt .
 
 ## generate subphaser in put through my script from anchorwave output (need to improve usability)
-six=sscopaBothHapsUnfiltered
-sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=sscopaBothHapsUnfiltered; subphaser -i ../${six}_aggressivecorrection.FINAL.fa -c ${six}_aggressivecorrection_subphaserinput.txt -pre ${six}_aggressivecorrection -k 15 -f 2 -q 50 -nsg 2 -non_specific -p 46"
-
+six=ttrianBothHapsUnfiltered
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=ttrianBothHapsUnfiltered; subphaser -i ../${six}_aggressivecorrection.FINAL.fa -c ${six}_aggressivecorrection_subphaserinput.txt -pre ${six}_aggressivecorrection -k 15 -f 2 -q 50 -nsg 2 -non_specific -p 46"
+## tried 5 subgenomes for 19 and 21... 2 for all others
 
 
 #####also map hic to existing referenceand try toscaffold??!?!

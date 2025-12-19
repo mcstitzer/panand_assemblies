@@ -225,6 +225,11 @@ bwa mem -5SP -t 128 ${six}.asm.hic.hap1.p_ctg.fa $hicR1 $hicR2 | samblaster | sa
 ## try unfiltered hap1, 30 chr
 ../HapHiC/haphic pipeline ${six}.asm.hic.hap1.p_ctg.fa ${six}Hap1.bam $chrcount --outdir ${six}Hap1Unfiltered
 
+## try unfiltered qv
+../HapHiC/haphic pipeline ${six}.asm.hic.hap1.p_ctg.fa ${six}Hap1.bam $chrcount --outdir ${six}Hap1Unfilteredqv --quick_view
+
+
+
 juicer post -o ${six}Hap1Unfiltered_aggressivecorrection ${six}Hap1Unfiltered_aggressivecorrection.out_JBAT.review.assembly out_JBAT.liftover.agp ../../${six}.asm.hic.hap1.p_ctg.fa
 cd ../../../
 ./fa_to_dotplot.sh ${six}/${six}Hap1Unfiltered/04.build/${six}Hap1Unfiltered_aggressivecorrection.FINAL.fa ${six}Hap1Unfilteredaggressive 1

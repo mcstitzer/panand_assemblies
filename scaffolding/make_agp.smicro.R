@@ -268,3 +268,6 @@ mcols(smcgr)$refChr[refChrLabels$queryHits] <- refChrLabels$refChr
 
 ggplot(data.frame(smcgr[substr(seqnames(smcgr),1,3)=='chr',]), aes(y=depth, x=start, color=refChr))+facet_wrap(~seqnames, ncol=1)+geom_point()+scale_color_manual(values=muted_colors)+geom_hline(yintercept=74, lty='dashed', color='black')
 
+
+
+

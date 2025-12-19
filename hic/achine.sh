@@ -164,7 +164,7 @@ conda activate SubPhaser
 cd subphaser
 ## generate subphaser in put through my script from anchorwave output (need to improve usability)
 six=achineBothHaps
-sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=achineBothHaps; subphaser -i ../${six}_aggressivecorrection.FINAL.fa -c ${six}_aggressivecorrection_subphaserinput.txt -pre ${six}_aggressivecorrection -k 13 -f 2 -q 50 -nsg 2 -non_specific -p 46"
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=achineBothHaps; subphaser -i ../${six}_aggressivecorrection.FINAL.fa -c ${six}_aggressivecorrection_subphaserinput.txt -pre ${six}_aggressivecorrection -k 15 -f 2 -q 50 -nsg 2 -non_specific -p 46"
 
 
 

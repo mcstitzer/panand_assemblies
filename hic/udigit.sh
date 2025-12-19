@@ -154,7 +154,7 @@ cd subphaser
 scp mcs368@cbsulogin2.biohpc.cornell.edu:~/transfer/${six}Hap1aggressive_subphaserinput.txt .
 
 ## generate subphaser in put through my script from anchorwave output (need to improve usability)
-six=sscopaHap1
-sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=udigitHap1; subphaser -i ../${six}_aggressivecorrection.FINAL.fa -c ${six}aggressive_subphaserinput.txt -pre ${six}_aggressivecorrection -k 15 -f 2 -q 50 -nsg 2 -non_specific -p 46"
+six=udigitHap1
+sbatch -A buckler_lab_panand -p atlas --ntasks-per-node=48 --time=10-00:00 --wrap="six=udigitHap1; subphaser -i ../${six}_aggressivecorrection.FINAL.fa -c ${six}aggressive_subphaserinput.txt -pre ${six}_aggressivecorrection -k 17 -f 2 -q 50 -nsg 3 -non_specific -p 46"
 
 

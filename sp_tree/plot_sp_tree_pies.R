@@ -117,7 +117,28 @@ chronopienotip <- ggtree(chronogram) +
     fill = guide_legend(override.aes = list(size = 5))  # Make legend points larger
   )
 
-
+##### for maize meeting, remove pies
+chronoMGCnotip <- ggtree(chronogram) +
+ # geom_tiplab() +
+ geom_point(data = dummy_data, aes(x = -Inf, y = -Inf, fill = group), 
+             shape = 21, size = 0.000001, color = "black") +  # Use shape 21 for fill support
+#   scale_fill_manual(
+#     values = pie_colors,
+#     labels = pie_labels,
+#     name = ""
+#   ) +
+  theme_tree2()+ scale_x_continuous( labels = abs)+
+  theme(legend.position='NULL',
+#    legend.position = c(0.05, 1),  # Top-left corner (x, y)
+    legend.justification = c(0, 1),  # Align legend by top-left corner
+    legend.title = element_text(size = 1),
+    legend.text = element_text(size = 8),
+    axis.text=element_text(size=9)
+  )#+
+#     geom_inset(pies, x = "node", height=0.12, width=0.12)+
+#     guides(
+#     fill = guide_legend(override.aes = list(size = 5))  # Make legend points larger
+#   )
 
 ddd=lapply(dd, function(tree){
  nt=tree

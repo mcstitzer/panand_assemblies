@@ -19,3 +19,21 @@ done < "../panand_sp_ploidy.txt" > panand_assembly_sizes.txt
 ## while loop is doing weird things and printing genome instead of gNA variable?????
 #### lolol i'm stupid - there is no alt scaf in Ac????
 ## there go three hours of my life
+
+
+while read base six ploidy newsix path
+do
+ bp=$(cat ${path}/${base}.1mbnuccontent.bed | awk '{sum+=$6+$7+$8+$9+$10} END{print sum}')
+ ns=$(cat ${path}/${base}.1mbnuccontent.bed | awk '{sum+=$10} END{print sum}')
+ printf '%s\t%s\t%s\t%s\n' "$six" "$newsix" "$bp" "$ns" #"$tebp"
+
+ done < "../panand_sp_ploidy_revision.txt"
+ 
+ ### to get zea chrom only!!!
+ while read base six ploidy newsix path
+do
+ bp=$(cat ${path}/${base}.1mbnuccontent.bed | grep chr | awk '{sum+=$6+$7+$8+$9+$10} END{print sum}')
+ ns=$(cat ${path}/${base}.1mbnuccontent.bed | grep chr | awk '{sum+=$10} END{print sum}')
+ printf '%s\t%s\t%s\t%s\n' "$six" "$newsix" "$bp" "$ns" #"$tebp"
+
+ done < "../panand_sp_ploidy_revision.txt"

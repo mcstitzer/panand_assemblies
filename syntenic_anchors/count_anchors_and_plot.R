@@ -561,8 +561,9 @@ process_anchors_to_dotplot_SUPP <- function(filepath, color_palette=muted_colors
   
   # Filter data based on block length
   data <- data[data$blockLength > minBlock, ]
-  data$refChr <- factor(data$refChr, levels = c(paste0('Chr0', 1:9), 'Chr10'))
-  
+#  data$refChr <- factor(data$refChr, levels = c(paste0('Chr0', 1:9), 'Chr10'))
+  data$refChr <- factor(data$refChr, levels = refChrs)
+
   # Reverse strand calculations
   data <- data %>%
     arrange(freqRef, referenceStart, queryStart)

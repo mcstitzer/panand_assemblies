@@ -11,7 +11,7 @@ asize=fread('../general_summaries/panand_assembly_sizes.txt', header=T, quote=""
 asize$ploidy=factor(asize$ploidy, levels=c('Diploid', 'Tetraploid', 'Paleotetraploid', 'Hexaploid'))
 
 ploidycolors=c( '#FFC857', '#A997DF', '#E5323B', '#2E4052', '#97cddf')
-names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Octaploid', 'Paleotetraploid')
+names(ploidycolors)=c('Diploid', 'Tetraploid', 'Hexaploid', 'Pentaploid', 'Paleotetraploid')
 
 ## A is ks distribution for polyploids
 ## generated in syntenic_anchors/polyploidy_plotting.R
@@ -36,6 +36,9 @@ cpl=ggplot(asize, aes(x=ploidy, y=chrCount, group=ploidy, color=ploidy)) +
   geom_point(position = position_jitter(w=0.3, h=0,seed = 1), size=3)+ 
 
   xlab('Ploidy') + ylab('Chromosome Number') + theme(legend.position='NULL')
+
+
+
 
 
 ## C is gene or anchor count by ploidy boxplots
